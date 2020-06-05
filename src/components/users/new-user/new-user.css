@@ -1,0 +1,41 @@
+.new-user-form {
+    margin: 20px 0;
+}
+
+.new-user-box {
+    padding: 30px;
+}
+
+.new-user-form form {
+    display: flex;
+    width: 100%;
+}
+
+.add-img {
+    width: 130px;
+    height: 130px;
+    padding-right: 5px;
+}
+
+.new-user-form .blue-btn {
+    top: -75px;
+    right: 65px;
+}
+
+.new-user-form .white-btn {
+    top: -75px;
+    right: 0px;
+    padding: 9px;
+}
+
+.new-user-box .form-input {
+    width: 350px;
+}
+
+.new-user-box .form-input {
+    margin-top: 30px;
+}
+
+.new-user-box .form-input:first-child {
+    margin-top: 0;
+}

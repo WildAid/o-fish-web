@@ -1,0 +1,47 @@
+
+.MuiTypography-root{
+  background-color: #fafafa;
+}
+
+.MuiTypography-root>.MuiBox-root{
+    padding: 0px;
+}
+
+.MuiTextField-root .MuiInput-underline:before{
+    border-bottom: solid 1px #ccc
+}
+
+.MuiTab-root.MuiTab-textColorPrimary:not(.Mui-selected){
+  color: #89989B;
+}
+
+.MuiTab-root.MuiTab-textColorPrimary.Mui-selected{
+  background-color: #DAE0DF;
+  color: #000000;
+}
+
+.MuiTab-root.MuiTab-textColorPrimary.Mui-selected .MuiTouchRipple-root{
+  border-bottom: solid 5px #DAE0DF;
+}
+
+.MuiGrid-root.paper-box{
+  background-color: white;
+  margin-bottom: 15px;
+  box-shadow: 0px 3px 5px #ccc;
+  padding: 10px;
+}
+
+.MuiButton-label{
+  color: white;
+  font-weight: bold;
+}
+
+.full-screen-flex.flex-start .MuiFormControl-root.MuiTextField-root{
+   width: 60%;
+}
+
+.MuiListItem-root.MuiListItem-gutters {
+  padding-left: 20%;
+  box-shadow: 0px 2px 7px #ccc;
+  margin-bottom: 10px;
+}

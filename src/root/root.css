@@ -1,0 +1,314 @@
+main {
+    height: 100vh;
+}
+
+/* Custom library */
+
+/* Row-column */
+.flex-row {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Aligning */
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+.align-stretch {
+    align-items: stretch;
+}
+
+.align-baseline {
+    align-items: baseline;
+}
+
+/* Justifying */
+.justify-center {
+    justify-content: center;
+}
+
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-stretch {
+    justify-content: stretch;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+/* Page styles */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.padding {
+    padding: 18px;
+}
+
+.padding-bottom {
+    padding-bottom: 18px;
+}
+
+.padding-top {
+    padding-top: 18px;
+}
+
+.padding-right {
+    padding-right: 10px;
+}
+
+.padding-left {
+    padding-left: 18px;
+}
+
+.margin-left {
+    margin-left: 18px;
+}
+
+.margin-right {
+    margin-right: 18px;
+}
+
+.margin-bottom {
+    margin-bottom: 18px;
+}
+
+.margin-top {
+    margin-top: 18px;
+}
+
+.full-view {
+    width: 100%;
+}
+
+.standard-view {
+    width: 78%;
+}
+
+.half-row-view {
+    width: 47%;
+}
+
+.items-amount {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 15px 0;
+}
+
+.item-label {
+    color: #b1b1b1;
+}
+
+.item-name {
+    font-size: 25px;
+}
+
+/* Backgrounds */
+.white-bg {
+    background-color: white;
+}
+
+/* Fonts */
+.font-12 {
+    font-size: 12px;
+}
+
+.font-14 {
+    font-size: 14px;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+/* Icons */
+.icon {
+    width: 100%;
+    height: 100%;
+}
+
+.captain-icon {
+    border-radius: 15px;
+    background: #d3d2d2;
+    padding: 5px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.edit-img {
+    border-radius: 3px;
+    border: 1px solid #b9b9b9;
+    width: 35px;
+    margin: 0 auto;
+}
+
+/* Buttons */
+.white-btn {
+    color: #0a4074;
+    background-color: white;
+    margin: 18px 0 15px 0;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #0a4074;
+    cursor: pointer;
+    outline-color: rgba(95, 95, 95, 0.6);
+}
+
+.blue-btn {
+    color: white;
+    background-color: #0a4074;
+    margin: 18px 20px 20px 0;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline-color: rgba(95, 95, 95, 0.6);
+    font-weight: 600;
+    outline-color: transparent;
+}
+
+.status-btn {
+    background-color: #dedddd;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-weight: 600;
+}
+
+.active-status-btn {
+    color: #448d63;
+    background-color: #deefe5;
+}
+
+.inactive-status-btn {
+    color: #252525;
+}
+
+/* Table */
+.table-name {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 600;
+    padding-right: 5px;
+}
+
+.table-wrapper {
+    width: 80%;
+    margin-left: 15px;
+    background: white;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    -webkit-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+    -moz-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+    box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+}
+
+.custom-table {
+    width: 100%;
+    color: #747171;
+    border-collapse: collapse;
+}
+
+td {
+    width: 20%;
+    padding: 10px;
+}
+
+.table-row {
+    height: 50px;
+    border-bottom: 1px solid #e2e2e2;
+    cursor: pointer;
+}
+
+.row-head {
+    font-size: 12px;
+}
+
+.row-body {
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+}
+
+.delivery-date {
+    width: 190px;
+    margin-right: 5px;
+}
+
+/* Borders & Box-shadows */
+.border {
+    border: 1px solid #e6e3e3;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #efeded;
+}
+
+.box-shadow {
+    box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+    -webkit-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+    -moz-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
+}
+
+/* Links */
+.custom-link {
+    font-size: 16px;
+    font-weight: 500;
+    color: #413e3e;
+    text-decoration: none;
+    padding-right: 25px;
+}
+
+/* Highlighter */
+.highlighted {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+/* Check-box */
+.check-item {
+    margin-top: 4px;
+    margin-right: 20px;
+}
+
+/* Charts */
+.lg-chart {
+    height: 400px;
+}
+
+.md-chart {
+    height: 200px;
+}
+
+.chart-name {
+    margin-left: 20px;
+}
+
+.pointer {
+    cursor: pointer;
+}

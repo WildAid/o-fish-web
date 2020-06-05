@@ -1,0 +1,55 @@
+.header-top {
+  background: #0a4074;
+  color: white;
+}
+
+.header-logo-img {
+  width: 45px;
+}
+
+/* Navigation */
+.nav-menu {
+  border-radius: 5px;
+  z-index: 5;
+  width: 132px;
+  top: 25px;
+}
+
+.dashboard-menu {
+  width: 135px;
+}
+
+.boardings-menu {
+  width: 128px;
+}
+
+.users-menu {
+  width: 128px;
+}
+
+.agencies-menu {
+  width: 142px;
+}
+
+.nav-link {
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  border-bottom: 1px solid #cbcbcb;
+}
+
+.nav-link:hover {
+  background-color: #f5f5f5;
+}
+.nav-link:first-child:hover {
+  border-radius: 5px 5px 0 0;
+}
+
+.nav-link:last-child:hover {
+  border-radius: 5px;
+}
+
+.nav-item {
+  padding-right: 7px;
+}

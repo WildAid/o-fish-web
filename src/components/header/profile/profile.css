@@ -1,0 +1,25 @@
+.profile .nav-menu {
+  top: 45px;
+  left: 10px;
+  width: 205px;
+}
+
+.profile-info {
+  padding-right: 20px;
+}
+
+.profile-img {
+  padding: 5px;
+  width: 45px;
+}
+
+.profile-name {
+  font-size: 12px;
+  padding-right: 7px;
+}
+
+.logout {
+  font-size: 14px;
+  color: black;
+  padding: 10px;
+}

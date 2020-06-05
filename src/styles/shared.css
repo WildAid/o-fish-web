@@ -1,0 +1,47 @@
+.left-aligned{
+  text-align: left;
+}
+
+.no-padding{
+  padding: 0!important;
+}
+
+.error-message{
+  color: red;
+}
+
+.success-message{
+  color: green;
+}
+
+/* .flex-row{
+  box-sizing: border-box;
+} */
+
+.material-btn {
+    color: #797575;
+    background-color: white;
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    border: 1px solid #b9b9b9;
+    cursor: pointer;
+    outline-color: rgba(95, 95, 95, 0.6);
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+.material-btn:hover{
+  background-color: rgba(240, 240, 240, 1);
+}
+
+.material-btn.primary {
+    color: white;
+    background-color: #707070;
+    border: none;
+    outline-color: rgba(95, 95, 95, 0.6);
+    font-weight: 400;
+}
+
+.material-btn.primary:hover{
+  background-color: #787878;
+}

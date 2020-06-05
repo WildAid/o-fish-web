@@ -1,0 +1,102 @@
+/* Agency main info */
+.agency-header {
+    padding: 20px 0;
+}
+
+.agency-box {
+    padding-top: 10px;
+    color: #0c4175;
+}
+
+.agency-box-img {
+    width: 20px;
+    padding-right: 5px;
+}
+
+/* Tabs */
+.agency-tab {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.active-agency-tab {
+    border-bottom: 2px solid #979797;
+}
+
+.agency-tab-content {
+    padding: 0 20px;
+    margin-top: 15px;
+}
+
+/* Officers info */
+.agency-info-box {
+    margin: 0 10px;
+}
+
+.officer-container-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+/* Form info */
+.form-content {
+    padding: 15px;
+}
+
+.form-content-menu {
+    width: 20%;
+    background: #efefef;
+    padding: 15px;
+    margin: 20px 0;
+    height: 100px;
+}
+
+.form-menu-item {
+    padding: 10px 0;
+    border-bottom: 1px solid;
+}
+
+.form-menu-item:first-child {
+    padding-top: 0;
+}
+
+.form-menu-item:last-child {
+    border-bottom: none;
+}
+
+.active-form-menu-item {
+    font-weight: 700;
+}
+
+.form-search {
+    width: 75%;
+}
+
+.form-search-panel {
+    padding-left: 25px;
+}
+
+.form-search-field {
+    border: 1px solid #707070;
+    border-radius: 3px;
+    height: 35px;
+    padding: 5px;
+}
+
+.form-checkbox-list {
+    margin-left: 25px;
+}
+
+.form-checkbox-list .box {
+    border-bottom: 1px solid #cdcdcd;
+    padding: 10px 0;
+}
+
+.form-checkbox-list .box:last-child {
+    border-bottom: none;
+}
+
+.form-info-box {
+    margin: 10px;
+}

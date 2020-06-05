@@ -1,0 +1,17 @@
+.section-block {
+  width: 35%;
+  border-right: 1px solid #cdcccc;
+}
+
+.section-block:last-child{
+  border-right: none;
+}
+
+.section-block .text {
+  margin-bottom: 10px;
+}
+
+.boarding-view .table-wrapper {
+  width: inherit;
+  margin-left: 0;
+}

@@ -1,0 +1,63 @@
+.version-control-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 25%;
+    position: absolute;
+    background: white;
+    padding: 2em;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px 3px #eee;
+    text-align: left;
+}
+
+.version-control-panel .version-control-item{
+  padding: 1em 0em;
+  border-bottom: solid 1px #ccc;
+}
+
+.version-control-panel .version-info-row{
+  text-align: left;
+  cursor: pointer;
+}
+
+.version-control-panel .version-info-row:hover .version-controls{
+    font-weight: bold;
+}
+
+.version-control-panel .version-controls{
+  cursor: pointer;
+}
+
+.version-control-panel .version-details{
+  background-color: #f0f0f0;
+  margin-top: 1em;
+  padding: 1em 1em 1em 1em;
+}
+
+.version-control-panel .version-details .added{
+  color: green;
+  font-weight: bold;
+}
+
+.version-control-panel .version-details .deleted{
+  color: #D31B0F;
+  font-weight: bold;
+}
+
+.version-control-panel .version-details .changed{
+  color: #3D9ABF;
+  font-weight: bold;
+}
+
+.version-control-panel .version-details .row{
+  padding: 4px;
+}
+
+.version-control-panel .version-details .changes-row{
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: solid 1px #ccc;
+}

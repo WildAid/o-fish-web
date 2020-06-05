@@ -1,0 +1,28 @@
+.modified-info {
+  font-size: 11px;
+  margin-bottom: 15px;
+}
+
+.error-msg {
+  color: red;
+  padding: 5px;
+}
+
+section .white-btn {
+  padding: 0px 5px;
+  border-radius: 5px;
+}
+
+.chart-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.basic-info .chart-box.with-map {
+  margin-left: -1em;
+  height: 400px;
+}
+
+.buttons-container {
+  width: 80px;
+}

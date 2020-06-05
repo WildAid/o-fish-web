@@ -1,0 +1,36 @@
+.login-box {
+  height: 100%;
+  background-image: url("../../assets/login-bg.jpg");
+  background-size: cover;
+}
+
+.login-box .login {
+  border-radius: 5px;
+  padding: 90px 120px;
+}
+
+.login-logo-img {
+  width: 150px;
+  margin-bottom: 40px;
+}
+
+.login-form {
+  width: 260px;
+  height: 200px;
+}
+
+.login-box .blue-btn {
+  width: 100%;
+  margin: 0;
+}
+
+.forgot-password-link {
+  font-size: 12px;
+  color: #747171;
+  text-decoration: none;
+}
+
+.login-box .error-messages{
+  color: red;
+  margin-top: 25px;
+}

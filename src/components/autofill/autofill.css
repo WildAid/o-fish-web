@@ -1,0 +1,33 @@
+.autofill {
+    top: 80px;
+    z-index: 100;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.preview-item-name {
+    color: #a09a9a;
+    padding: 20px 20px 10px 20px;
+}
+
+.preview-item-info {
+    padding: 0 20px 10px 20px;
+}
+
+.preview-item-img {
+    width: 35px;
+    padding-right: 10px;
+}
+
+.preview-search {
+    padding: 20px;
+}
+
+.preview-search-text {
+    padding-left: 20px;
+}
+
+.preview-info .text {
+    padding-right: 40px;
+}
+

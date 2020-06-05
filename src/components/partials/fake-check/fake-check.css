@@ -1,0 +1,18 @@
+.fake-check{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.fake-check .fake-check-box {
+  display: inline-flex;
+  border: solid 1px #ccc;
+  border-radius: 2px;
+  margin-right: 1em;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.fake-check .fake-check-box .MuiIcon-root{
+  font-size: 0.8rem;
+}

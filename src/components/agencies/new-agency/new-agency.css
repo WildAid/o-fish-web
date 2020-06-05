@@ -1,0 +1,26 @@
+.new-agency-form {
+    margin: 20px 0;
+}
+
+.new-agency-box {
+    padding: 30px;
+}
+
+.new-agency-form .blue-btn {
+    top: -75px;
+    right: 65px;
+}
+
+.new-agency-form .white-btn {
+    top: -75px;
+    right: 0px;
+    padding: 9px;
+}
+
+.new-agency-box .form-input {
+    width: 350px;
+}
+
+.new-agency-box .form-input:last-child {
+    margin-top: 10px;
+}

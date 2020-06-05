@@ -1,0 +1,32 @@
+.item-info {
+  display: flex;
+  height: 100px;
+}
+
+.icon-img {
+  width: 100px;
+  padding-right: 20px;
+}
+
+.icon-image {
+  width: 100%;
+}
+
+.name-info {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 5px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
