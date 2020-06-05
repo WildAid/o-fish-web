@@ -6,7 +6,7 @@ O-FISH (Officer Fishery Information Sharing Hub) is a multi-platform application
 
 This repo implements the O-FISH web app.
 
-Details on installing all applications making up the solution can be found [here](https://github.com/WildAid/o-fish.github.io).
+Details on installing all applications making up the solution can be found [here](http://wildaid.github.io/).
 
 ## Prerequisites
 
