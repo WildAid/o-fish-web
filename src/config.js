@@ -1,10 +1,10 @@
 const config = {
   appName: 'WildAid O-Fish',
-  realmServiceName: '',
+  realmServiceName: 'mongodb-atlas',
   realmAppId: '',
-  database: '',
+  database: 'wildaid',
   chartsConfig: {
-    baseUrl: "dashboard-base-url",
+    baseUrl: "https://charts-dev.mongodb.com/charts-wildaid-xxxxx",
     "boardings": {
       chartId: "chart-id"
     },

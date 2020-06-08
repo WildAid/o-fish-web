@@ -29,7 +29,7 @@ module.exports = {
     realmAppId: 'wildaid-xxxxx',
     database: 'wildaid',
     chartsConfig: {
-      baseUrl: "https://charts-dev.mongodb.com/charts-wildaid-xxxxx",
+      baseUrl: "https://charts.mongodb.com/charts-wildaid-xxxxx",
       "boardings": {
         chartId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       },
