@@ -115,10 +115,6 @@ class Vessels extends Component {
     });
   };
 
-  componentDidMount() {
-    this.loadData();
-  }
-
   loadData(newState){
     newState = newState ? newState : {};
     newState.loading = true;
@@ -138,6 +134,10 @@ class Vessels extends Component {
           console.error(error);
         });
     });
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 
   render() {

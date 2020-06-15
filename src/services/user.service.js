@@ -1,4 +1,3 @@
-import { BSON } from "mongodb-stitch-browser-sdk";
 import StitchService from "./stitch.service";
 
 const stitchService = StitchService.getInstance();
@@ -17,36 +16,11 @@ export default class UserService {
     return stitchService.database.collection("User").findOne(critheria);
   }
 
-  getUsers(critheria) {
-    return stitchService.database.collection("User").find(critheria).toArray();
+  getUsers(limit, offset, searchQuery, currentFilter) {    
+    return stitchService.client.callFunction("searchFacetByUsers", [limit, offset, searchQuery, currentFilter]);
   }
 
   searchUsers(emailSearch) {
     return stitchService.client.callFunction("searchUsers", [emailSearch]);
-  }
-
-  createUser(login, password, agency) {
-    return stitchService.client.auth
-      .getProviderClient(UserPasswordAuthProviderClient.factory)
-      .registerWithEmail(login, password)
-      .then((result) => {
-        return stitchService.database
-          .collection("User")
-          .findOne({ email: login })
-          .then((user) => {
-            if (user) {
-              return this._database.collection("User").updateOne({
-                email: login,
-                agency: { name: agency },
-                global: { admin: false },
-              });
-            } else {
-              console.error("User does not exists!");
-              throw new Error(
-                "A user " + login + " registered but not found on DB!"
-              );
-            }
-          });
-      });
   }
 }

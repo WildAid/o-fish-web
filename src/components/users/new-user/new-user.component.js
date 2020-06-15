@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
+import { Select } from "@material-ui/core";
+import { MenuItem } from "@material-ui/core";
 
 import "./new-user.css";
 
@@ -11,12 +13,30 @@ class NewUser extends Component {
       agency: "",
       email: "",
       password: "",
-      adminType: "",
+      userType: "",
     },
   };
 
   saveUser = (values) => {
-    //TO DO - add request and get data to render
+    let newUser = {
+      _id: "1234567890",
+      realmUserID: "1234567890",
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      active: true,
+      createdAt: "",
+    };
+
+    if (values.userType === "Global Admin") {
+      newUser = {
+        ...newUser,
+        global: { admin: true },
+        agency: { name: values.agency },
+      };
+    } else if (values.userType === "Agency Admin") {
+      newUser = { ...newUser, agency: { name: values.agency, admin: true } };
+    }
   };
 
   render() {
@@ -37,7 +57,7 @@ class NewUser extends Component {
               email: "",
               password: "",
             }}
-            onSubmit={this.saveAgency}
+            onSubmit={this.saveUser}
             render={({
               errors,
               values,
@@ -75,15 +95,27 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("agency", e.target.value)}
                     value={values.agency}
                   />
-                  <TextField
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
                     label="Admin Type"
-                    name="adminType"
+                    value={values.userType}
+                    name="userType"
+                    onChange={(e) => setFieldValue("userType", e.target.value)}
+                  >
+                    <MenuItem>Global Admin</MenuItem>
+                    <MenuItem>Agency Admin</MenuItem>
+                    <MenuItem>Field Officer</MenuItem>
+                  </Select>
+                  {/* <TextField
+                    label="Admin Type"
+                    name="userType"
                     type="text"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("adminType", e.target.value)}
-                    value={values.adminType}
-                  />
+                    onChange={(e) => setFieldValue("userType", e.target.value)}
+                    value={values.userType}
+                  /> */}
                 </div>
                 <div className="flex-column new-user-box">
                   <TextField
@@ -105,16 +137,11 @@ class NewUser extends Component {
                     value={values.password}
                   />
                 </div>
-                <button
-                  className="blue-btn absolute"
-                  type="submit"
-                  onClick={this.saveAgency}
-                >
+                <button className="blue-btn absolute" type="submit">
                   Save
                 </button>
                 <button
                   className="white-btn absolute"
-                  type="submit"
                   // onClick={this.clearForm}
                 >
                   Cancel
