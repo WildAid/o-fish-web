@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import TextField from "../text-field.component";
 import ChartBox from "../../../charts/chart-box.component";
 
+
+import StitchService from "./../../../../services/stitch.service";
+
+const stitchService = StitchService.getInstance();
+
 const boardingChartOptions = {
-  chartId: "5b79cc2a-96b0-413a-9eb4-4afc9f515c8b",
   width: "100%",
   height: "100%",
   refreshInterval: 1300,
-  filter: {},
+  useAuthenticatedAccess: true,
+  ...stitchService.chartsConfig["boardings"]
 };
 
 export default class BasicInfoSection extends Component {
