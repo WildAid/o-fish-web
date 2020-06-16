@@ -1,4 +1,5 @@
 import StitchService from "./stitch.service";
+import { UserPasswordAuthProviderClient } from "mongodb-stitch-browser-sdk";
 
 const stitchService = StitchService.getInstance();
 
@@ -16,11 +17,27 @@ export default class UserService {
     return stitchService.database.collection("User").findOne(critheria);
   }
 
-  getUsers(limit, offset, searchQuery, currentFilter) {    
-    return stitchService.client.callFunction("searchFacetByUsers", [limit, offset, searchQuery, currentFilter]);
+  getUsers(limit, offset, searchQuery, currentFilter) {
+    return stitchService.client.callFunction("searchFacetByUsers", [
+      limit,
+      offset,
+      searchQuery,
+      currentFilter,
+    ]);
   }
 
   searchUsers(emailSearch) {
     return stitchService.client.callFunction("searchUsers", [emailSearch]);
+  }
+
+  createUser(password, data) {
+    return stitchService.client.auth
+      .getProviderClient(UserPasswordAuthProviderClient.factory)
+      .registerWithEmail(data.email, password)
+      .then((result) => {
+        console.log(result);
+
+        return stitchService.database.collection("User").insertOne(data);
+      });
   }
 }

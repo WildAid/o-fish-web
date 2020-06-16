@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
+import moment from "moment";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
@@ -112,7 +113,7 @@ class UsersMain extends React.Component {
       page,
       searchQuery,
       highlighted,
-      loading
+      loading,
     } = this.state;
 
     return (
@@ -120,94 +121,107 @@ class UsersMain extends React.Component {
         <SearchPanel handler={this.search} value={searchQuery} />
         <div className="flex-row standard-view">
           <div className="items-amount">
-            {loading ? "Loading..." : `${total} Users`}
+            {loading
+              ? "Loading..."
+              : !!users.length
+              ? `${total} Users`
+              : "No Users found"}
           </div>
         </div>
-        <div className="flex-row standard-view">
-          <NavLink to={USERS_ACTIVITIES_PAGE}>
-            <button className="blue-btn">
-              See Activity
-              {activitiesAmount.length ? `(${activitiesAmount.length})` : ""}
-            </button>
-          </NavLink>
-          <button className="blue-btn">+ Filter</button>
-        </div>
-        <div className="table-wrapper">
-          <table className="custom-table">
-            <thead>
-              <tr className="table-row row-head">
-                <td>
-                  <div className="flex-row align-center">
-                    <input className="check-item" type="checkbox" />
-                    <p>Name</p>
-                  </div>
-                </td>
-                <td>Agency</td>
-                <td>User Type</td>
-                <td>Created on</td>
-                <td>Status</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((item, ind) => {
-                const status = item.active ? "active" : "inactive";
-                return (
-                  <tr className="table-row row-body" key={ind}>
-                    <td>
-                      <div className="flex-row align-center">
-                        <input
-                          className="check-item"
-                          type="checkbox"
-                          onChange={(e) => this.checkUsers(e, item)}
-                        />
-                        <div className="user-img">
-                          <img
-                            className="full-view"
-                            src={require("../../assets/user-icon.png")}
-                            alt="no logo"
+        {!!users.length && (
+          <div className="flex-row standard-view">
+            <NavLink to={USERS_ACTIVITIES_PAGE}>
+              <button className="blue-btn">
+                See Activity
+                {activitiesAmount.length ? `(${activitiesAmount.length})` : ""}
+              </button>
+            </NavLink>
+            <button className="blue-btn">+ Filter</button>
+          </div>
+        )}
+        {!!users.length && (
+          <div className="table-wrapper">
+            <table className="custom-table">
+              <thead>
+                <tr className="table-row row-head">
+                  <td>
+                    <div className="flex-row align-center">
+                      <input className="check-item" type="checkbox" />
+                      <p>Name</p>
+                    </div>
+                  </td>
+                  <td>Agency</td>
+                  <td>User Type</td>
+                  <td>Created on</td>
+                  <td>Status</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((item, ind) => {
+                  const status = item.active ? "active" : "inactive";
+
+                  return (
+                    <tr className="table-row row-body" key={ind}>
+                      <td>
+                        <div className="flex-row align-center">
+                          <input
+                            className="check-item"
+                            type="checkbox"
+                            onChange={(e) => this.checkUsers(e, item)}
+                          />
+                          <div className="user-img">
+                            <img
+                              className="full-view"
+                              src={require("../../assets/user-icon.png")}
+                              alt="no logo"
+                            />
+                          </div>
+                          <Highlighter
+                            highlightClassName="highlighted"
+                            searchWords={highlighted}
+                            autoEscape={true}
+                            textToHighlight={`${item.name.first} ${item.name.last}`}
                           />
                         </div>
+                      </td>
+                      <td>
                         <Highlighter
                           highlightClassName="highlighted"
                           searchWords={highlighted}
                           autoEscape={true}
-                          textToHighlight={`${item.name.first} ${item.name.last}`}
+                          textToHighlight={item.agency.name}
                         />
-                      </div>
-                    </td>
-                    <td>
-                      <Highlighter
-                        highlightClassName="highlighted"
-                        searchWords={highlighted}
-                        autoEscape={true}
-                        textToHighlight={item.agency.name}
-                      />
-                    </td>
-                    <td>{checkUserType(item)}</td>
-                    <td>{item.createdAt || "N/A"}</td>
-                    <td>
-                      <div className={`status-icon ${status}-status-icon`}>
-                        {status}
-                      </div>
-                    </td>
-                    <td>
-                      <NavLink to={EDIT_USER_PAGE}>
-                        <div className="edit-img">
-                          <img
-                            className="full-view"
-                            src={require("../../assets/edit-icon.png")}
-                            alt="no icon"
-                          />
+                      </td>
+                      <td>{checkUserType(item)}</td>
+                      <td>
+                        {item.createdAt
+                          ? moment(item.createdAt).format("LLL")
+                          : "N/A"}
+                      </td>
+                      <td>
+                        <div className={`status-icon ${status}-status-icon`}>
+                          {status}
                         </div>
-                      </NavLink>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                      <td>
+                        <NavLink to={EDIT_USER_PAGE}>
+                          <div className="edit-img">
+                            <img
+                              className="full-view"
+                              src={require("../../assets/edit-icon.png")}
+                              alt="no icon"
+                            />
+                          </div>
+                        </NavLink>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
         {total > limit && (
           <Pagination
             page={page}

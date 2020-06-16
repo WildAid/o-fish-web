@@ -3,19 +3,24 @@ import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import moment from "moment";
 
+import UserService from "./../../../services/user.service";
+
 import "./new-user.css";
 
+const userService = UserService.getInstance();
 
 class NewUser extends Component {
   saveUser = (values) => {
     //For creating New User
     let newUser = {
-      realmUserID: "",
+      realmUserId: "",
       email: values.email,
-      password: values.password,
-      name: values.name,
+      name: {
+        first: values.firstName,
+        last: values.lastName,
+      },
       active: true,
-      createdAt: moment(),
+      createdAt: moment().format(),
     };
 
     if (values.adminType === "Global Admin") {
@@ -29,7 +34,12 @@ class NewUser extends Component {
     } else {
       newUser = { ...newUser, agency: { name: values.agency } };
     }
-    //Needs to be finished
+    userService
+      .createUser(values.password, newUser)
+      .then(() => window.location.href = "/users")
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   render() {
@@ -44,7 +54,8 @@ class NewUser extends Component {
         <div className="flex-row standard-view white-bg box-shadow relative new-user-form">
           <Formik
             initialValues={{
-              name: "",
+              firstName: "",
+              lastName: "",
               agency: "",
               adminType: "",
               email: "",
@@ -71,13 +82,22 @@ class NewUser extends Component {
                 </div>
                 <div className="flex-column new-user-box">
                   <TextField
-                    label="Name"
-                    name="name"
+                    label="First Name"
+                    name="firstName"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("name", e.target.value)}
+                    onChange={(e) => setFieldValue("firstName", e.target.value)}
                     type="text"
-                    value={values.name}
+                    value={values.firstName}
+                  />
+                  <TextField
+                    label="Last Name"
+                    name="lastName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("lastName", e.target.value)}
+                    type="text"
+                    value={values.lastName}
                   />
                   <TextField
                     label="Agency"
@@ -88,6 +108,8 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("agency", e.target.value)}
                     value={values.agency}
                   />
+                </div>
+                <div className="flex-column new-user-box">
                   <TextField
                     label="Admin Type"
                     name="adminType"
@@ -97,8 +119,6 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("adminType", e.target.value)}
                     value={values.adminType}
                   />
-                </div>
-                <div className="flex-column new-user-box">
                   <TextField
                     label="Email"
                     name="email"
