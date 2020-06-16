@@ -5,14 +5,8 @@ import moment from "moment";
 
 import "./new-user.css";
 
-const USER_TYPE_OPTIONS = ["Global Admin", "Agency Admin", "Field Officer"];
 
 class NewUser extends Component {
-  state = {
-    selectedValue: "User Type",
-    showOptionsList: false,
-  };
-
   saveUser = (values) => {
     //For creating New User
     let newUser = {
