@@ -70,7 +70,9 @@ export const getRanks = (data) => {
   data.map((crewMember) => {
     return crewMember.highlights.map((el) => {
       if (el.path.includes("captain")) {
-        const addedCrew = allCrew.find((item)=>item.name === crewMember.captain.name);
+        const addedCrew = allCrew.find(
+          (item) => item.name === crewMember.captain.name
+        );
         if (!addedCrew) {
           allCrew.push({
             name: crewMember.captain.name,
@@ -85,7 +87,7 @@ export const getRanks = (data) => {
           });
           return null;
         } else {
-            addedCrew.vessels.push(crewMember.vessel.name);
+          addedCrew.vessels.push(crewMember.vessel.name);
         }
         return null;
       } else {
@@ -97,8 +99,8 @@ export const getRanks = (data) => {
             return null;
           }).value;
           if (member.name.includes(foundCrewMember)) {
-            const addedCrew = allCrew.find((item)=>item.name === member.name);
-            if (addedCrew){
+            const addedCrew = allCrew.find((item) => item.name === member.name);
+            if (addedCrew) {
               addedCrew.vessels.push(crewMember.vessel.name);
             } else {
               allCrew.push({
@@ -125,7 +127,6 @@ export const getRanks = (data) => {
   return allCrew;
 };
 
-
 export const getHighlightedText = (data) => {
   const add = [];
 
@@ -144,15 +145,15 @@ export const getHighlightedText = (data) => {
 };
 
 export const checkUserType = (user) => {
-    let userRole = "";
-    
-    if (user.global && user.global.admin) {
-      userRole = "Global Admin";
-    } else if (user.agency.admin) {
-      userRole = "Agency Admin";
-    } else {
-      userRole = "Field Officer";
-    }
+  let userRole = "";
 
-    return userRole;
-  };
+  if (user.global && user.global.admin) {
+    userRole = "Global Admin";
+  } else if (user.agency.admin) {
+    userRole = "Agency Admin";
+  } else {
+    userRole = "Field Officer";
+  }
+
+  return userRole;
+};

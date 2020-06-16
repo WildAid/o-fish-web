@@ -38,11 +38,7 @@ class NewUser extends Component {
     //Needs to be finished
   };
 
-  setNewUserType = (option) => {};
-
   render() {
-    const { selectedValue, showOptionsList } = this.state;
-
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
