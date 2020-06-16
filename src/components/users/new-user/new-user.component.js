@@ -1,45 +1,48 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
-import { Select } from "@material-ui/core";
-import { MenuItem } from "@material-ui/core";
+import moment from "moment";
 
 import "./new-user.css";
 
+const USER_TYPE_OPTIONS = ["Global Admin", "Agency Admin", "Field Officer"];
+
 class NewUser extends Component {
   state = {
-    newUser: {
-      name: "",
-      agency: "",
-      email: "",
-      password: "",
-      userType: "",
-    },
+    selectedValue: "User Type",
+    showOptionsList: false,
   };
 
   saveUser = (values) => {
+    //For creating New User
     let newUser = {
-      _id: "1234567890",
-      realmUserID: "1234567890",
+      realmUserID: "",
       email: values.email,
       password: values.password,
       name: values.name,
       active: true,
-      createdAt: "",
+      createdAt: moment(),
     };
 
-    if (values.userType === "Global Admin") {
+    if (values.adminType === "Global Admin") {
       newUser = {
         ...newUser,
         global: { admin: true },
         agency: { name: values.agency },
       };
-    } else if (values.userType === "Agency Admin") {
+    } else if (values.adminType === "Agency Admin") {
       newUser = { ...newUser, agency: { name: values.agency, admin: true } };
+    } else {
+      newUser = { ...newUser, agency: { name: values.agency } };
     }
+    //Needs to be finished
   };
 
+  setNewUserType = (option) => {};
+
   render() {
+    const { selectedValue, showOptionsList } = this.state;
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
@@ -95,27 +98,15 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("agency", e.target.value)}
                     value={values.agency}
                   />
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                  <TextField
                     label="Admin Type"
-                    value={values.userType}
-                    name="userType"
-                    onChange={(e) => setFieldValue("userType", e.target.value)}
-                  >
-                    <MenuItem>Global Admin</MenuItem>
-                    <MenuItem>Agency Admin</MenuItem>
-                    <MenuItem>Field Officer</MenuItem>
-                  </Select>
-                  {/* <TextField
-                    label="Admin Type"
-                    name="userType"
+                    name="adminType"
                     type="text"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("userType", e.target.value)}
-                    value={values.userType}
-                  /> */}
+                    onChange={(e) => setFieldValue("adminType", e.target.value)}
+                    value={values.adminType}
+                  />
                 </div>
                 <div className="flex-column new-user-box">
                   <TextField

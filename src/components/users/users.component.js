@@ -112,13 +112,16 @@ class UsersMain extends React.Component {
       page,
       searchQuery,
       highlighted,
+      loading
     } = this.state;
 
     return (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel handler={this.search} value={searchQuery} />
         <div className="flex-row standard-view">
-          <div className="items-amount">{total} Users</div>
+          <div className="items-amount">
+            {loading ? "Loading..." : `${total} Users`}
+          </div>
         </div>
         <div className="flex-row standard-view">
           <NavLink to={USERS_ACTIVITIES_PAGE}>
@@ -182,7 +185,7 @@ class UsersMain extends React.Component {
                       />
                     </td>
                     <td>{checkUserType(item)}</td>
-                    <td>{item.createdAt || 'N/A'}</td>
+                    <td>{item.createdAt || "N/A"}</td>
                     <td>
                       <div className={`status-icon ${status}-status-icon`}>
                         {status}
