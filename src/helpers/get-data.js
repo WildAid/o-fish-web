@@ -141,3 +141,17 @@ export const getHighlightedText = (data) => {
 
   return [...new Set(add)];
 };
+
+export const checkUserType = (user) => {
+  let userRole = "";
+
+  if (user.global && user.global.admin) {
+    userRole = "Global Admin";
+  } else if (user.agency.admin) {
+    userRole = "Agency Admin";
+  } else {
+    userRole = "Field Officer";
+  }
+
+  return userRole;
+};

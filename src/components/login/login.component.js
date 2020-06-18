@@ -73,7 +73,6 @@ class Login extends Component {
                   <TextField
                     label="Email/Username:"
                     name="login"
-                    // className="form-input"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
                     type="text"
@@ -83,7 +82,6 @@ class Login extends Component {
                     label="Password:"
                     name="password"
                     type="password"
-                    // className="form-input"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("password", e.target.value)}
                     value={values.password}

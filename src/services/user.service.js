@@ -31,7 +31,7 @@ export default class UserService {
   }
 
   createUser(password, data) {
-    stitchService.database.collection("User").insertOne(data)
+    stitchService.database.collection("User").insertOne(data);
 
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
