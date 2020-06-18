@@ -239,6 +239,12 @@ td {
     padding: 10px;
 }
 
+thead td {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
+}
+
 .table-row {
     height: 50px;
     border-bottom: 1px solid #e2e2e2;

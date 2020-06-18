@@ -17,11 +17,11 @@ import RisksSection from './risks/risks.section';
 import NotesSection from './notes/notes.section';
 */
 
+import RiskIcon from "../../partials/risk-icon/risk-icon.component";
+
 import BoardingService from "./../../../services/boarding.service";
 
 import history from "../../../root/root.history";
-
-import { getColor } from "./../../../helpers/get-data";
 
 import { VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
 
@@ -100,20 +100,19 @@ class BoardingEditPage extends Component {
               <div className="item-name padding-right">
                 {new Date(dataObject ? dataObject.date : null).toLocaleString()}
               </div>
-              <div
-                className="risk-icon"
-                style={{
-                  background: getColor(
-                    dataObject
-                      ? dataObject.inspection.summary.safetyLevel.level.toLowerCase()
-                      : ""
-                  ),
-                }}
-              ></div>
+              <RiskIcon
+                safetyLevel={
+                  dataObject
+                    ? dataObject.inspection.summary.safetyLevel.level
+                    : ""
+                }
+              />
             </div>
           </div>
           <div className="flex-column align-end edit-btn">
-            <button className="blue-btn" onClick={this.saveBoarding}>Save Boarding</button>
+            <button className="blue-btn" onClick={this.saveBoarding}>
+              Save Boarding
+            </button>
             <div className="item-label modified-info margin-bottom margin-right">{`Last Modified on
                 ${new Date(
                   dataObject ? dataObject.date : null

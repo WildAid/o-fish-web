@@ -14,9 +14,9 @@ import SeizuresSection from './seizures/seizures.section';
 import RisksSection from './risks/risks.section';
 import NotesSection from './notes/notes.section';*/
 
-import history from "../../../root/root.history";
+import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
-import { getColor } from "./../../../helpers/get-data";
+import history from "../../../root/root.history";
 
 import { EDIT_BOARDING_PAGE } from "../../../root/root.constants.js";
 
@@ -76,21 +76,21 @@ class BoardingViewPage extends Component {
               <div className="item-name padding-right">
                 {new Date(boarding ? boarding.date : null).toLocaleString()}
               </div>
-              <div
-                className="risk-icon"
-                style={{
-                  background: getColor(
-                    boarding
-                      ? boarding.inspection.summary.safetyLevel.level.toLowerCase()
-                      : ""
-                  ),
-                }}
-              ></div>
+              <RiskIcon
+                safetyLevel={
+                  boarding ? boarding.inspection.summary.safetyLevel.level : ""
+                }
+              />
             </div>
           </div>
           <div className="flex-column align-end edit-btn">
-            <button className="blue-btn" onClick={this.goEdit}>Edit Boarding</button>
-            <div className="item-label modified-info margin-bottom margin-right" onClick={this.showVersions}>{`Last Modified on
+            <button className="blue-btn" onClick={this.goEdit}>
+              Edit Boarding
+            </button>
+            <div
+              className="item-label modified-info margin-bottom margin-right"
+              onClick={this.showVersions}
+            >{`Last Modified on
                 ${new Date(boarding ? boarding.date : null).toLocaleString()}
                 by Officer Krupke`}</div>
           </div>

@@ -19,13 +19,11 @@ export const getCatches = (arr) => {
 export const getColor = (color) => {
   switch (color) {
     case "red":
-      return "red";
-    case "yellow":
-      return "yellow";
+      return { bg: "#f6d4d4", color: "#a24242" };
     case "green":
-      return "green";
+      return { bg: "#deefe5", color: "#0b6831" };
     case "amber":
-      return "#FFBF00";
+      return { bg: "#ffecbc", color: "#725614" };
     default:
       return;
   }
@@ -70,7 +68,9 @@ export const getRanks = (data) => {
   data.map((crewMember) => {
     return crewMember.highlights.map((el) => {
       if (el.path.includes("captain")) {
-        const addedCrew = allCrew.find((item)=>item.name === crewMember.captain.name);
+        const addedCrew = allCrew.find(
+          (item) => item.name === crewMember.captain.name
+        );
         if (!addedCrew) {
           allCrew.push({
             name: crewMember.captain.name,
@@ -85,7 +85,7 @@ export const getRanks = (data) => {
           });
           return null;
         } else {
-            addedCrew.vessels.push(crewMember.vessel.name);
+          addedCrew.vessels.push(crewMember.vessel.name);
         }
         return null;
       } else {
@@ -97,8 +97,8 @@ export const getRanks = (data) => {
             return null;
           }).value;
           if (member.name.includes(foundCrewMember)) {
-            const addedCrew = allCrew.find((item)=>item.name === member.name);
-            if (addedCrew){
+            const addedCrew = allCrew.find((item) => item.name === member.name);
+            if (addedCrew) {
               addedCrew.vessels.push(crewMember.vessel.name);
             } else {
               allCrew.push({
@@ -124,7 +124,6 @@ export const getRanks = (data) => {
 
   return allCrew;
 };
-
 
 export const getHighlightedText = (data) => {
   const add = [];

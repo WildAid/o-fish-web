@@ -1,0 +1,11 @@
+.search-results-for .records-found {
+    color: #000000;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.search-results-for .results-for {
+    font-size: 16px;
+    color: #b1b1b1;
+    font-weight: 400;
+}
