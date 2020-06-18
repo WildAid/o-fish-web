@@ -13,7 +13,7 @@ class NewUser extends Component {
   saveUser = (values) => {
     //For creating New User
     let newUser = {
-      realmUserId: "",
+      realmUserID: "",
       email: values.email,
       name: {
         first: values.firstName,

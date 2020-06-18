@@ -31,13 +31,10 @@ export default class UserService {
   }
 
   createUser(password, data) {
+    stitchService.database.collection("User").insertOne(data);
+
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
-      .registerWithEmail(data.email, password)
-      .then((result) => {
-        console.log(result);
-
-        return stitchService.database.collection("User").insertOne(data);
-      });
+      .registerWithEmail(data.email, password);
   }
 }
