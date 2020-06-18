@@ -5,12 +5,14 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getColor, getHighlightedText } from "./../../helpers/get-data";
+import { getHighlightedText } from "./../../helpers/get-data";
 
 import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
+import RiskIcon from "./../partials/risk-icon/risk-icon.component";
+import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
@@ -32,7 +34,7 @@ const boardingsChartOptions = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["boardings"]
+  ...stitchService.chartsConfig["boardings"],
 };
 
 const filterConfiguration = {
@@ -67,11 +69,13 @@ const filterConfiguration = {
       name: "date",
       title: "Date",
       type: "date",
-    },{
+    },
+    {
       name: "date-from",
       title: "Date from",
       type: "date",
-    },{
+    },
+    {
       name: "date-to",
       title: "Date To",
       type: "date",
@@ -120,7 +124,7 @@ const filterConfiguration = {
       partTitle: "LD Location",
     },
   ],
-  "Catch": [
+  Catch: [
     {
       name: "inspection.actualCatch.species",
       title: "Species",
@@ -151,7 +155,7 @@ class Boardings extends Component {
         : "",
     highlighted: [],
     loading: true,
-    page: 1
+    page: 1,
   };
 
   search = (value) => {
@@ -227,7 +231,7 @@ class Boardings extends Component {
       isMapShown,
       highlighted,
       searchQuery,
-      page
+      page,
     } = this.state;
 
     boardingsChartOptions.filter = {
@@ -237,10 +241,15 @@ class Boardings extends Component {
     return (
       <div className="flex-column justify-center align-center padding-bottom">
         <SearchPanel handler={this.search} value={searchQuery} />
-        <div className="flex-row justify-between standard-view">
-          <div className="items-amount">
-            {loading ? "Loading..." : `${total} Boardings`}
-          </div>
+        <div className="flex-row justify-between standard-view align-center">
+            {loading ? (
+              <div className="items-amount">Loading...</div> 
+            ) : (
+              <SearchResultsFor
+                query={searchQuery}
+                total={`${total} Boarding `}
+              />
+            )}
           <button className="white-btn" onClick={this.goNewBoarding}>
             + New boarding
           </button>
@@ -260,7 +269,7 @@ class Boardings extends Component {
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
-          ></FilterPanel>
+          />
         </div>
 
         {boardings && boardings.length && !loading ? (
@@ -270,7 +279,7 @@ class Boardings extends Component {
                 <ChartBox
                   options={boardingsChartOptions}
                   className="with-map"
-                ></ChartBox>
+                />
               </div>
             )}
             <div className="table-wrapper">
@@ -279,10 +288,11 @@ class Boardings extends Component {
                   <tr className="table-row row-head">
                     <td>Date</td>
                     <td>Time</td>
-                    <td>Vessel Name</td>
+                    <td>Vessel</td>
                     <td>Permit Number</td>
                     <td>Captain</td>
                     <td>Violations</td>
+                    <td>Bordered by</td>
                     <td>Risk</td>
                   </tr>
                 </thead>
@@ -310,19 +320,16 @@ class Boardings extends Component {
                           ? item.inspection.summary.violations.length
                           : "No violations"}
                       </td>
+                      <td>{`${item.reportingOfficer.name.first} ${item.reportingOfficer.name.last}`}</td>
                       <td>
-                        <div
-                          className="risk-icon"
-                          style={{
-                            background: `${getColor(
-                              (item.inspection.summary.safetyLevel &&
-                              item.inspection.summary.safetyLevel.level
-                                ? item.inspection.summary.safetyLevel.level
-                                : item.inspection.summary.safetyLevel
-                              ).toLowerCase()
-                            )}`,
-                          }}
-                        ></div>
+                        <RiskIcon
+                          safetyLevel={
+                            item.inspection.summary.safetyLevel &&
+                            item.inspection.summary.safetyLevel.level
+                              ? item.inspection.summary.safetyLevel.level
+                              : item.inspection.summary.safetyLevel
+                          }
+                        />
                       </td>
                     </tr>
                   ))}

@@ -19768,9 +19768,9 @@ class AgenciesMain extends React.Component {
                   <td>{item.description}</td>
                   <td>{item.officers.length}</td>
                   <td>
-                    <button className={`status-btn ${item.status}-status-btn`}>
+                    <div className={`status-icon ${item.status}-status-icon`}>
                       {item.status}
-                    </button>
+                    </div>
                   </td>
                   <td>
                     <div

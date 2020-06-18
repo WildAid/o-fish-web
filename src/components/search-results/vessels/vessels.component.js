@@ -13,9 +13,9 @@ class FoundVessels extends Component {
     const { vesselsList, total, searchWords } = this.props;
 
     return (
-      <div className="item-block">
-        <div className="all-items-list">
-          <div className="item-all-info">
+      <div className="standard-view">
+        <div className="white-bg box-shadow all-items-list">
+          <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
             <div className="main-info">
               <div className="item-name">Records of Vessels ({total})</div>
             </div>
@@ -26,25 +26,15 @@ class FoundVessels extends Component {
             )}
           </div>
           <div className="items-list">
-            <div className="item">
-              <div className="item-wrapper">
-                <ItemInfo
-                  name={vesselsList[0]._id}
-                  icon="vessel"
-                  mainText={vesselsList[0].catches.slice(0, 3).join(", ")}
-                  subText="Catches"
-                  searchWords={searchWords}
-                />
-              </div>
-              <button
-                className="view-item-btn"
-                type="submit"
-                // onClick={this.viewRecord}
-                variant="contained"
-                color="primary"
-              >
-                View Vessel
-              </button>
+            <div className="flex-row align-center border-bottom padding">
+              <ItemInfo
+                name={vesselsList[0]._id}
+                icon="vessel"
+                mainText={vesselsList[0].catches.slice(0, 3).join(", ")}
+                subText="Catches"
+                label="Vessel"
+                searchWords={searchWords}
+              />
             </div>
           </div>
         </div>

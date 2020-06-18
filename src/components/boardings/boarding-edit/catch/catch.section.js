@@ -92,7 +92,6 @@ export default class CatchSection extends Component {
             </div>
             <div className="flex-row justify-between">
               <TextField
-                id="speciesField"
                 label="Species:"
                 style={{ width: "49%" }}
                 name="species"
@@ -100,7 +99,6 @@ export default class CatchSection extends Component {
                 onChange={(e) => this.setSpeciesdValue(e.target.value, index)}
               />
               <TextField
-                id="countField"
                 label="Count:"
                 style={{ width: "19%" }}
                 name="number"
@@ -108,7 +106,6 @@ export default class CatchSection extends Component {
                 onChange={(e) => this.setCountValue(e.target.value, index)}
               />
               <TextField
-                id="weightField"
                 label="Weight:"
                 style={{ width: "19%" }}
                 name="weight"
@@ -116,7 +113,6 @@ export default class CatchSection extends Component {
                 onChange={(e) => this.setWeightValue(e.target.value, index)}
               />
               <TextField
-                id="unitField"
                 label="Units:"
                 style={{ width: "9%" }}
                 name="units"

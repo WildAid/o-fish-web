@@ -1,22 +1,45 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
+import moment from "moment";
+
+import UserService from "./../../../services/user.service";
 
 import "./new-user.css";
 
-class NewUser extends Component {
-  state = {
-    newUser: {
-      name: "",
-      agency: "",
-      email: "",
-      password: "",
-      adminType: "",
-    },
-  };
+const userService = UserService.getInstance();
 
+class NewUser extends Component {
   saveUser = (values) => {
-    //TO DO - add request and get data to render
+    //For creating New User
+    let newUser = {
+      realmUserID: "",
+      email: values.email,
+      name: {
+        first: values.firstName,
+        last: values.lastName,
+      },
+      active: true,
+      createdAt: moment().format(),
+    };
+
+    if (values.adminType === "Global Admin") {
+      newUser = {
+        ...newUser,
+        global: { admin: true },
+        agency: { name: values.agency },
+      };
+    } else if (values.adminType === "Agency Admin") {
+      newUser = { ...newUser, agency: { name: values.agency, admin: true } };
+    } else {
+      newUser = { ...newUser, agency: { name: values.agency } };
+    }
+    userService
+      .createUser(values.password, newUser)
+      .then(() => window.location.href = "/users")
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   render() {
@@ -31,13 +54,14 @@ class NewUser extends Component {
         <div className="flex-row standard-view white-bg box-shadow relative new-user-form">
           <Formik
             initialValues={{
-              name: "",
+              firstName: "",
+              lastName: "",
               agency: "",
               adminType: "",
               email: "",
               password: "",
             }}
-            onSubmit={this.saveAgency}
+            onSubmit={this.saveUser}
             render={({
               errors,
               values,
@@ -58,13 +82,22 @@ class NewUser extends Component {
                 </div>
                 <div className="flex-column new-user-box">
                   <TextField
-                    label="Name"
-                    name="name"
+                    label="First Name"
+                    name="firstName"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("name", e.target.value)}
+                    onChange={(e) => setFieldValue("firstName", e.target.value)}
                     type="text"
-                    value={values.name}
+                    value={values.firstName}
+                  />
+                  <TextField
+                    label="Last Name"
+                    name="lastName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("lastName", e.target.value)}
+                    type="text"
+                    value={values.lastName}
                   />
                   <TextField
                     label="Agency"
@@ -75,6 +108,8 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("agency", e.target.value)}
                     value={values.agency}
                   />
+                </div>
+                <div className="flex-column new-user-box">
                   <TextField
                     label="Admin Type"
                     name="adminType"
@@ -84,8 +119,6 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("adminType", e.target.value)}
                     value={values.adminType}
                   />
-                </div>
-                <div className="flex-column new-user-box">
                   <TextField
                     label="Email"
                     name="email"
@@ -105,16 +138,11 @@ class NewUser extends Component {
                     value={values.password}
                   />
                 </div>
-                <button
-                  className="blue-btn absolute"
-                  type="submit"
-                  onClick={this.saveAgency}
-                >
+                <button className="blue-btn absolute" type="submit">
                   Save
                 </button>
                 <button
                   className="white-btn absolute"
-                  type="submit"
                   // onClick={this.clearForm}
                 >
                   Cancel

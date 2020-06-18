@@ -2,8 +2,9 @@ import React, { memo } from "react";
 import moment from "moment";
 import Highlighter from "react-highlight-words";
 
+import RiskIcon from "../../partials/risk-icon/risk-icon.component";
+
 import TextViewer from "../../partials/text-viewer/text-viewer";
-import { getColor } from "./../../../helpers/get-data";
 
 import "../autofill.css";
 
@@ -46,19 +47,18 @@ const PreviewItem = ({
               textToHighlight={name}
             />
             {isBoardings && (
-              <div
-                className="risk-icon"
-                style={{
-                  background: getColor(
+              <div className="margin-left">
+                <RiskIcon
+                  safetyLevel={
                     item.safetyLevel.level
-                      ? item.safetyLevel.level.toLowerCase()
-                      : item.safetyLevel.toLowerCase()
-                  ),
-                }}
-              ></div>
+                      ? item.safetyLevel.level
+                      : item.safetyLevel
+                  }
+                />
+              </div>
             )}
           </div>
-          <div className="font-12 preview-info">
+          <div className="flex-row font-12 preview-info">
             <TextViewer
               mainText={text}
               subText={subText}
