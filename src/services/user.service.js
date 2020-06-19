@@ -31,10 +31,16 @@ export default class UserService {
   }
 
   createUser(password, data) {
-    stitchService.database.collection("User").insertOne(data);
-
+    // TODO: Need to handle errors
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
-      .registerWithEmail(data.email, password);
+      .registerWithEmail(data.email, password)
+      .then(() => {
+        console.log(`Registered user ${data.email} with Realm`);
+        return stitchService.database.collection("User").insertOne(data);
+      },
+      error => {
+        console.log(`Failed to register new Realm user: ${error}`);
+      })
   }
 }

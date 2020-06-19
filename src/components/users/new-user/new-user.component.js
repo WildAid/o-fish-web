@@ -20,7 +20,8 @@ class NewUser extends Component {
         last: values.lastName,
       },
       active: true,
-      createdAt: moment().format(),
+      // TODO: this needs to be a date/ISODate so that it can be parsed as a date by Realm
+      createdOn: moment().format(),
     };
 
     if (values.adminType === "Global Admin") {

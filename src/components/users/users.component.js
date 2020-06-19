@@ -195,8 +195,8 @@ class UsersMain extends React.Component {
                       </td>
                       <td>{checkUserType(item)}</td>
                       <td>
-                        {item.createdAt
-                          ? moment(item.createdAt).format("LLL")
+                        {item.createdOn
+                          ? moment(item.createdOn).format("LLL")
                           : "N/A"}
                       </td>
                       <td>
