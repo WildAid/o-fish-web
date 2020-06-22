@@ -1,5 +1,5 @@
-import { BSON } from "mongodb-stitch-browser-sdk";
 import StitchService from "./stitch.service";
+import { UserPasswordAuthProviderClient } from "mongodb-stitch-browser-sdk";
 
 const stitchService = StitchService.getInstance();
 
@@ -17,36 +17,30 @@ export default class UserService {
     return stitchService.database.collection("User").findOne(critheria);
   }
 
-  getUsers(critheria) {
-    return stitchService.database.collection("User").find(critheria).toArray();
+  getUsers(limit, offset, searchQuery, currentFilter) {
+    return stitchService.client.callFunction("searchFacetByUsers", [
+      limit,
+      offset,
+      searchQuery,
+      currentFilter,
+    ]);
   }
 
   searchUsers(emailSearch) {
     return stitchService.client.callFunction("searchUsers", [emailSearch]);
   }
 
-  createUser(login, password, agency) {
+  createUser(password, data) {
+    // TODO: Need to handle errors
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
-      .registerWithEmail(login, password)
-      .then((result) => {
-        return stitchService.database
-          .collection("User")
-          .findOne({ email: login })
-          .then((user) => {
-            if (user) {
-              return this._database.collection("User").updateOne({
-                email: login,
-                agency: { name: agency },
-                global: { admin: false },
-              });
-            } else {
-              console.error("User does not exists!");
-              throw new Error(
-                "A user " + login + " registered but not found on DB!"
-              );
-            }
-          });
-      });
+      .registerWithEmail(data.email, password)
+      .then(() => {
+        console.log(`Registered user ${data.email} with Realm`);
+        return stitchService.database.collection("User").insertOne(data);
+      },
+      error => {
+        console.log(`Failed to register new Realm user: ${error}`);
+      })
   }
 }

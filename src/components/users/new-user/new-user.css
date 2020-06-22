@@ -6,6 +6,23 @@
     padding: 30px;
 }
 
+.user-type-select {
+    height: 40px;
+    margin-top: 30px;
+    color: #6f6d6d;
+    font-size: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #979797;
+}
+
+.user-type-menu {
+    margin-top: 72px;
+}
+
+.user-type-option {
+    margin-top: 72px;
+}
+
 .new-user-form form {
     display: flex;
     width: 100%;

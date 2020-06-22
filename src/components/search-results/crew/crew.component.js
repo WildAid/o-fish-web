@@ -13,9 +13,9 @@ class FoundCrew extends Component {
     const { crewList, total, searchWords } = this.props;
 
     return (
-      <div className="item-block">
-        <div className="all-items-list">
-          <div className="item-all-info">
+      <div className="standard-view">
+        <div className="white-bg box-shadow all-items-list">
+          <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
             <div className="main-info">
               <div className="item-name">
                 Captains &amp; Crew {`(${total})`}
@@ -28,28 +28,17 @@ class FoundCrew extends Component {
             )}
           </div>
           <div className="items-list">
-            <div className="item">
-              <div className="item-wrapper">
-                <ItemInfo
-                  name={crewList[0].name}
-                  searchWords={searchWords}
-                  nameIcon={crewList[0].rank === "captain"}
-                  icon="crew"
-                  mainText={crewList[0].vessels.slice(0, 3).join(", ")}
-                  subText="Vessels"
-                />
-              </div>
-              <div className="btn-wrapper">
-                <button
-                  className="view-item-btn"
-                  type="submit"
-                  // onClick={this.viewRecord}
-                  variant="contained"
-                  color="primary"
-                >
-                  View Crew Member
-                </button>
-              </div>
+            <div className="flex-row align-center border-bottom padding">
+              <ItemInfo
+                name={crewList[0].name}
+                searchWords={searchWords}
+                nameIcon={crewList[0].rank === "captain"}
+                icon="crew"
+                mainText={crewList[0].vessels.slice(0, 3).join(", ")}
+                subText="Vessels"
+                label="Crew Member"
+              />
+              <div className="btn-wrapper"></div>
             </div>
           </div>
         </div>

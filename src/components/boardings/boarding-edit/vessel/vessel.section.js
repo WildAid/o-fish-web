@@ -106,14 +106,14 @@ export default class VesselSection extends Component {
               label="Vessel Name:"
               className="half-row-view"
               name="name"
-              value={vessel.name}
+              value={vessel.name || ''}
               onChange={(e) => this.setFieldValue("name", e.target.value)}
             />
             <TextField
               label="Home Port:"
               className="half-row-view"
               name="homePort"
-              value={vessel.homePort}
+              value={vessel.homePort || ''}
               onChange={(e) => this.setFieldValue("homePort", e.target.value)}
             />
           </div>
@@ -122,7 +122,7 @@ export default class VesselSection extends Component {
               label="Permit Number:"
               className="half-row-view"
               name="permitNumber"
-              value={vessel.permitNumber}
+              value={vessel.permitNumber || ''}
               onChange={(e) =>
                 this.setFieldValue("permitNumber", e.target.value)
               }
@@ -131,7 +131,7 @@ export default class VesselSection extends Component {
               label="Nationality:"
               className="half-row-view"
               name="nationality"
-              value={vessel.nationality}
+              value={vessel.nationality || ''}
               onChange={(e) =>
                 this.setFieldValue("nationality", e.target.value)
               }
@@ -161,14 +161,14 @@ export default class VesselSection extends Component {
               label="Date:"
               className="half-row-view"
               name="ldod_date"
-              value={lastDelivery.date}
+              value={lastDelivery.date || ''}
               onChange={(e) => this.setLdodFieldValue("date", e.target.value)}
             />
             <TextField
               label="Location:"
               className="half-row-view"
               name="ldod_location"
-              value={lastDelivery.location}
+              value={lastDelivery.location || ''}
               onChange={(e) =>
                 this.setLdodFieldValue("location", e.target.value)
               }
@@ -179,7 +179,7 @@ export default class VesselSection extends Component {
               label="Business:"
               className="half-row-view"
               name="ldod_business"
-              value={lastDelivery.business}
+              value={lastDelivery.business || ''}
               onChange={(e) =>
                 this.setLdodFieldValue("business", e.target.value)
               }
@@ -198,14 +198,14 @@ export default class VesselSection extends Component {
               label="Type:"
               className="half-row-view"
               name="ems-type"
-              value={ems.type}
+              value={ems.type || ''}
               onChange={(e) => this.setEmsFieldValue("type", e.target.value)}
             />
             <TextField
               label="Registry Number:"
               className="half-row-view"
               name="ems-registry"
-              value={ems.registry}
+              value={ems.registry || ''}
               onChange={(e) =>
                 this.setEmsFieldValue("registry", e.target.value)
               }
@@ -216,7 +216,7 @@ export default class VesselSection extends Component {
               label="Description:"
               className="half-row-view"
               name="ems-description"
-              value={ems.description}
+              value={ems.description || ''}
               onChange={(e) =>
                 this.setEmsFieldValue("description", e.target.value)
               }

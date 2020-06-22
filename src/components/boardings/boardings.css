@@ -14,20 +14,15 @@
   margin-left: 1em;
 }
 
-.boardings-table td:first-child {
+.boardings-table td:first-child,
+.boardings-table td:nth-child(5),
+.boardings-table td:nth-child(4) {
     width: 15%;
 }
 
-.boardings-table td:nth-child(2) {
-    width: 10%;
-}
-
+.boardings-table td:nth-child(2),
+.boardings-table td:nth-child(6),
 .boardings-table td:last-child {
     width: 10%;
 }
 
-.risk-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-}

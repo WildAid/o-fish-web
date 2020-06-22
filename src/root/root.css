@@ -191,7 +191,8 @@ main {
     outline-color: transparent;
 }
 
-.status-btn {
+.status-icon {
+    width: max-content;
     background-color: #dedddd;
     border-radius: 35px;
     border: none;
@@ -200,12 +201,12 @@ main {
     font-weight: 600;
 }
 
-.active-status-btn {
+.active-status-icon {
     color: #448d63;
     background-color: #deefe5;
 }
 
-.inactive-status-btn {
+.inactive-status-icon {
     color: #252525;
 }
 
@@ -237,6 +238,12 @@ main {
 td {
     width: 20%;
     padding: 10px;
+}
+
+thead td {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000;
 }
 
 .table-row {

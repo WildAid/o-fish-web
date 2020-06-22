@@ -7,6 +7,7 @@ import Boardings from "./boardings/boardings.component";
 import Crew from "./crew/crew.component";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
+import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
 
 import "./search-results.css";
 
@@ -37,7 +38,6 @@ class SearchResults extends Component {
   };
 
   componentDidMount() {
-    console.log(searchService.searchResults);
     this.setState(searchService.searchResults);
   }
 
@@ -49,12 +49,18 @@ class SearchResults extends Component {
       vesselsAmount,
       boardingsAmount,
       highlighted,
-      query
+      query,
     } = this.state;
 
     return (
-      <div className="search-results">
+      <div className="flex-column align-center padding-bottom">
         <SearchPanel handler={this.search} value={query} />
+        <div className="standard-view ">
+          <SearchResultsFor
+            query={query}
+            total={vesselsAmount + crew.length + boardingsAmount}
+          />
+        </div>
         {!!vessels.length && (
           <Vessels
             vesselsList={vessels}
