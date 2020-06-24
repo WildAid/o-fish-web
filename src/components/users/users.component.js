@@ -118,7 +118,11 @@ class UsersMain extends React.Component {
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <SearchPanel handler={this.search} value={searchQuery} />
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
         <div className="flex-row standard-view">
           <div className="items-amount">
             {loading

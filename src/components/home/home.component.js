@@ -8,6 +8,8 @@ import Autofill from "./../autofill/autofill.component";
 
 import SearchService from "./../../services/search.service";
 
+import "./home.css";
+
 const searchService = SearchService.getInstance();
 
 class Home extends Component {
@@ -35,9 +37,17 @@ class Home extends Component {
     const { vessels, boardings, crew, searchQuery, highlighted } = this.state;
 
     return (
-      <div className="flex-column full-view align-center relative">
-        <SearchPanel handler={this.search} />
-        {!!searchQuery && (
+      <div className="flex-column full-view align-center home">
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          vessels={vessels}
+          boardings={boardings}
+          crew={crew}
+          searchWords={highlighted}
+          isAutofill={true}
+        />
+        {/* {!!searchQuery && (
           <Autofill
             vessels={vessels}
             boardings={boardings}
@@ -45,7 +55,7 @@ class Home extends Component {
             searchQuery={searchQuery}
             searchWords={highlighted}
           />
-        )}
+        )} */}
         <h1>Overview for April 01, 2020 - April 25, 2020</h1>
         <ComplianceRateSection />
         <BoardingsSection />

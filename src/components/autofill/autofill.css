@@ -1,8 +1,10 @@
 .autofill {
-    top: 80px;
-    z-index: 100;
-    border-radius: 5px;
+    top: 75px;
+    z-index: 5;
+    border-radius: 0 0 30px 30px;
     font-weight: 600;
+    border: 1.5px solid #0a4074;
+    border-top: 1px solid #eeeeee;
 }
 
 .preview-item-name {
@@ -17,14 +19,6 @@
 .preview-item-img {
     width: 35px;
     padding-right: 10px;
-}
-
-.preview-search {
-    padding: 20px;
-}
-
-.preview-search-text {
-    padding-left: 20px;
 }
 
 .preview-info .text {

@@ -8,6 +8,7 @@ import { getColor, getHighlightedText } from "./../../helpers/get-data";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
+import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
@@ -243,11 +244,20 @@ class Crew extends Component {
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <SearchPanel handler={this.search} value={searchQuery} />
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
         <div className="flex-row justify-between standard-view">
-          <div className="items-amount">
-            {loading ? "Loading..." : `${total} Crew Members`}
-          </div>
+          {loading ? (
+            <div className="items-amount">Loading...</div>
+          ) : (
+            <SearchResultsFor
+              query={searchQuery}
+              total={`${total} Crew Members `}
+            />
+          )}
           <FilterPanel
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
