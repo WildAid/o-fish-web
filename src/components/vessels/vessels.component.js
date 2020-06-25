@@ -9,6 +9,7 @@ import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
+import RiskIcon from "../partials/risk-icon/risk-icon.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
@@ -232,6 +233,13 @@ class Vessels extends Component {
                               )}`,
                             }}
                           ></div>
+                          <RiskIcon
+                            safetyLevel={
+                              item.safetyLevel && item.safetyLevel.level
+                                ? item.safetyLevel.level
+                                : item.safetyLevel
+                            }
+                          />
                         </div>
                       </td>
                     </tr>

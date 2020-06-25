@@ -4,7 +4,6 @@ import ComplianceRateSection from "./compliance-rate-section/compliance-rate.sec
 import BoardingsSection from "./boardings-section/boardings.section";
 import PatrolHoursSection from "./patrol-hours-section/patrol-hours.section";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
-import Autofill from "./../autofill/autofill.component";
 
 import SearchService from "./../../services/search.service";
 

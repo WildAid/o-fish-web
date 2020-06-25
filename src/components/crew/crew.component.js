@@ -300,7 +300,7 @@ class Crew extends Component {
                       <td>
                         {item && item.violations
                           ? item.violations
-                          : "No violations"}
+                          : "N/A"}
                       </td>
                       <td>
                         <div className="flex-row">

@@ -191,6 +191,19 @@ main {
     outline-color: transparent;
 }
 
+.grey-btn {
+    color: white;
+    background-color: #797979;
+    margin: 18px 20px 20px 0;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline-color: rgba(95, 95, 95, 0.6);
+    font-weight: 600;
+    outline-color: transparent;
+}
+
 .status-icon {
     width: max-content;
     background-color: #dedddd;

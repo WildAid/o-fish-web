@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
+import Icon from "@material-ui/core/Icon";
+
 import moment from "moment";
 
 import UserService from "./../../../services/user.service";
@@ -10,8 +12,15 @@ import "./new-user.css";
 const userService = UserService.getInstance();
 
 class NewUser extends Component {
+  state = {
+    error: null,
+  };
+
+  removeErrMsg = () => {
+    this.setState({ error: null });
+  };
+  
   saveUser = (values) => {
-    //For creating New User
     let newUser = {
       realmUserID: "",
       email: values.email,
@@ -20,8 +29,7 @@ class NewUser extends Component {
         last: values.lastName,
       },
       active: true,
-      // TODO: this needs to be a date/ISODate so that it can be parsed as a date by Realm
-      createdOn: moment().format(),
+      createdOn: moment().toDate(),
     };
 
     if (values.adminType === "Global Admin") {
@@ -37,13 +45,16 @@ class NewUser extends Component {
     }
     userService
       .createUser(values.password, newUser)
-      .then(() => window.location.href = "/users")
+      .then(() => (window.location.href = "/users"))
       .catch((error) => {
-        console.error(error);
+        error.message ? 
+        this.setState({ error: error.message }) : this.setState({ error: 'An expected error occurred!' }) 
       });
   };
 
   render() {
+    const { error } = this.state;
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
@@ -152,6 +163,16 @@ class NewUser extends Component {
             )}
           />
         </div>
+        {error && (
+          <div className="flex-row justify-between standard-view">
+            <div className="flex-row justify-between err-msg">
+              <div>{error}</div>
+              <Icon className="pointer" onClick={this.removeErrMsg}>
+                close
+              </Icon>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
