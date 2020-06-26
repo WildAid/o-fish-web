@@ -26,10 +26,6 @@ export default class UserService {
     ]);
   }
 
-  searchUsers(emailSearch) {
-    return stitchService.client.callFunction("searchUsers", [emailSearch]);
-  }
-
   createUser(password, data) {
     // TODO: Need to handle errors
     return stitchService.client.auth

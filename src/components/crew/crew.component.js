@@ -269,7 +269,7 @@ class Crew extends Component {
             <div className="table-wrapper">
               <table className="custom-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Name</td>
                     <td>Lisence number</td>
                     <td>Vessel</td>

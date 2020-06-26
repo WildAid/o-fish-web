@@ -184,7 +184,7 @@ class Vessels extends Component {
             <div className="table-wrapper">
               <table className="custom-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Vessel Name</td>
                     <td>Permit number</td>
                     <td>Nationality</td>

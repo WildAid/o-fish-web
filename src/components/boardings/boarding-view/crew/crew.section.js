@@ -33,7 +33,7 @@ export default class CrewSection extends Component {
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
-              <tr className="table-row row-head">
+              <tr className="table-row row-head border-bottom">
                 <td>Name</td>
                 <td>License Number</td>
                 <td>Photos</td>

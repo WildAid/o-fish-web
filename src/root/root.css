@@ -235,7 +235,7 @@ main {
     width: 80%;
     margin-left: 15px;
     background: white;
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     margin-bottom: 20px;
     -webkit-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
     -moz-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
@@ -261,8 +261,15 @@ thead td {
 
 .table-row {
     height: 50px;
-    border-bottom: 1px solid #e2e2e2;
     cursor: pointer;
+}
+
+.table-row:nth-child(even) {
+    background: #f3f5f8;
+}
+
+.table-row:last-child {
+    border-bottom: 1px solid #efeded;
 }
 
 .row-head {
@@ -331,4 +338,9 @@ thead td {
 
 .pointer {
     cursor: pointer;
+}
+
+/* Colors */
+.blue-color {
+    color: #0a4074;
 }

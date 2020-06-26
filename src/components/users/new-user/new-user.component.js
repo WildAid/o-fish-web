@@ -31,6 +31,7 @@ class NewUser extends Component {
       active: true,
       createdOn: moment().toDate(),
     };
+console.log(newUser);
 
     if (values.adminType === "Global Admin") {
       newUser = {

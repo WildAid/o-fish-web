@@ -289,7 +289,7 @@ class Boardings extends Component {
             <div className="table-wrapper">
               <table className="custom-table boardings-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Date</td>
                     <td>Time</td>
                     <td>Vessel</td>
