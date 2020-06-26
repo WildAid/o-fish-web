@@ -46,15 +46,6 @@ class Home extends Component {
           searchWords={highlighted}
           isAutofill={true}
         />
-        {/* {!!searchQuery && (
-          <Autofill
-            vessels={vessels}
-            boardings={boardings}
-            crew={crew}
-            searchQuery={searchQuery}
-            searchWords={highlighted}
-          />
-        )} */}
         <h1>Overview for April 01, 2020 - April 25, 2020</h1>
         <ComplianceRateSection />
         <BoardingsSection />
