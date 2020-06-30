@@ -6,7 +6,11 @@ import moment from "moment";
 import TextViewer from "../../partials/text-viewer/text-viewer";
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
-import { getViolations, getCatches } from "./../../../helpers/get-data";
+import {
+  getViolations,
+  getCatches,
+  goBoarding,
+} from "./../../../helpers/get-data";
 
 import { BOARDINGS_PAGE } from "../../../root/root.constants.js";
 
@@ -30,7 +34,10 @@ class FoundBoardings extends Component {
             )}
           </div>
           <div className="items-list">
-            <div className="flex-row align-center border-bottom padding">
+            <div
+              className="flex-row align-center border-bottom padding pointer"
+              onClick={() => goBoarding(boardingsList[0]._id)}
+            >
               <div className="icon-img">
                 <img
                   className="full-view"
