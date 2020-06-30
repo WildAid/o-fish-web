@@ -21,7 +21,6 @@ export default class VersionControlPanel extends Component {
 
   render() {
     const {changes} = this.state;
-    console.log(changes);
     return (
         <div className='version-control-panel' onClick={this.props.onHide}>
           <h3>Revision History</h3>
