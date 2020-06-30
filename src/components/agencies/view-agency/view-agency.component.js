@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-import { agenciesMockedData } from "../agencies.component";
-
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
 import "./view-agency.css";
@@ -17,23 +15,20 @@ class ViewAgency extends Component {
     activeTab: 1,
   };
 
-  handleChangeTab = (newTab) => {    
+  handleChangeTab = (newTab) => {
     this.setState({
       activeTab: newTab,
     });
   };
 
   componentDidMount() {
-    const currentId = this.props.match.params.id;
-
-    this.setState({
-      agencyInfo: agenciesMockedData.find((el) => el.id === currentId),
-    });
+    //TODO get real agency with corresponded data
+    // const { id } = this.props.match.params;
   }
 
   render() {
     const { agencyInfo, activeTab } = this.state;
-    
+
     return (
       <div className="padding-bottom flex-column align-center">
         <div className="flex-row justify-between standard-view border-bottom agency-header">
@@ -69,13 +64,17 @@ class ViewAgency extends Component {
         <div className="flex-column justify-between standard-view">
           <div className="flex-row">
             <div
-              className={`agency-tab ${1 === activeTab ? "active-agency-tab" : ""}`}
+              className={`agency-tab ${
+                1 === activeTab ? "active-agency-tab" : ""
+              }`}
               onClick={() => this.handleChangeTab(1)}
             >
               Officers
             </div>
             <div
-              className={`agency-tab ${2 === activeTab ? "active-agency-tab" : ""}`}
+              className={`agency-tab ${
+                2 === activeTab ? "active-agency-tab" : ""
+              }`}
               onClick={() => this.handleChangeTab(2)}
             >
               Form Data
@@ -84,9 +83,9 @@ class ViewAgency extends Component {
           <div className="flex-row">
             {1 === activeTab ? (
               <div className="full-view white-bg box-shadow agency-tab-content">
-                <table>
+                <table className="custom-table">
                   <thead>
-                    <tr>
+                    <tr className="border-bottom">
                       <td>
                         <div className="flex-row align-center justify-between agency-info-box">
                           <div className="table-name">
@@ -101,7 +100,7 @@ class ViewAgency extends Component {
                   </thead>
                   <tbody>
                     {agencyInfo.officers.map((officer, ind) => (
-                      <tr key={ind}>
+                      <tr className="table-row" key={ind}>
                         <td>
                           <div className="flex-row align-center agency-info-box">
                             <div className="officer-container-img">
@@ -144,11 +143,11 @@ class ViewAgency extends Component {
                     </div>
                     <div className="box-shadow form-checkbox-list">
                       {agencyInfo.catches.map((item, ind) => (
-                        <div className="flex-row align-center form-info-box" key={ind}>
-                          <input
-                            className="check-item"
-                            type="checkbox"
-                          />
+                        <div
+                          className="flex-row align-center form-info-box"
+                          key={ind}
+                        >
+                          <input className="check-item" type="checkbox" />
                           {item.name}
                         </div>
                       ))}

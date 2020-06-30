@@ -191,6 +191,19 @@ main {
     outline-color: transparent;
 }
 
+.grey-btn {
+    color: white;
+    background-color: #797979;
+    margin: 18px 20px 20px 0;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline-color: rgba(95, 95, 95, 0.6);
+    font-weight: 600;
+    outline-color: transparent;
+}
+
 .status-icon {
     width: max-content;
     background-color: #dedddd;
@@ -222,7 +235,7 @@ main {
     width: 80%;
     margin-left: 15px;
     background: white;
-    padding: 0 20px;
+    padding: 0 20px 20px 20px;
     margin-bottom: 20px;
     -webkit-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
     -moz-box-shadow: 0px 2px 7px -1px rgba(179, 179, 179, 1);
@@ -248,8 +261,15 @@ thead td {
 
 .table-row {
     height: 50px;
-    border-bottom: 1px solid #e2e2e2;
     cursor: pointer;
+}
+
+.table-row:nth-child(even) {
+    background: #f3f5f8;
+}
+
+.table-row:last-child {
+    border-bottom: 1px solid #efeded;
 }
 
 .row-head {
@@ -318,4 +338,9 @@ thead td {
 
 .pointer {
     cursor: pointer;
+}
+
+/* Colors */
+.blue-color {
+    color: #0a4074;
 }

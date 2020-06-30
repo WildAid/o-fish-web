@@ -77,7 +77,7 @@ class UsersMain extends React.Component {
   };
 
   loadData(newState) {
-    newState = newState ? newState : {};
+    newState = newState || {};
     newState.loading = true;
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
@@ -118,12 +118,16 @@ class UsersMain extends React.Component {
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <SearchPanel handler={this.search} value={searchQuery} />
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
         <div className="flex-row standard-view">
           <div className="items-amount">
             {loading
               ? "Loading..."
-              : !!users.length
+              : total
               ? `${total} Users`
               : "No Users found"}
           </div>
@@ -143,7 +147,7 @@ class UsersMain extends React.Component {
           <div className="table-wrapper">
             <table className="custom-table">
               <thead>
-                <tr className="table-row row-head">
+                <tr className="table-row row-head border-bottom">
                   <td>
                     <div className="flex-row align-center">
                       <input className="check-item" type="checkbox" />

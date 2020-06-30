@@ -240,16 +240,20 @@ class Boardings extends Component {
 
     return (
       <div className="flex-column justify-center align-center padding-bottom">
-        <SearchPanel handler={this.search} value={searchQuery} />
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
         <div className="flex-row justify-between standard-view align-center">
-            {loading ? (
-              <div className="items-amount">Loading...</div> 
-            ) : (
-              <SearchResultsFor
-                query={searchQuery}
-                total={`${total} Boarding `}
-              />
-            )}
+          {loading ? (
+            <div className="items-amount">Loading...</div>
+          ) : (
+            <SearchResultsFor
+              query={searchQuery}
+              total={`${total} Boarding `}
+            />
+          )}
           <button className="white-btn" onClick={this.goNewBoarding}>
             + New boarding
           </button>
@@ -285,7 +289,7 @@ class Boardings extends Component {
             <div className="table-wrapper">
               <table className="custom-table boardings-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Date</td>
                     <td>Time</td>
                     <td>Vessel</td>

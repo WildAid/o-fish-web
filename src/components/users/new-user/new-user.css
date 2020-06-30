@@ -56,3 +56,12 @@
 .new-user-box .form-input:first-child {
     margin-top: 0;
 }
+
+.err-msg {
+    width: 100%;
+    background: #f6d4d4;
+    color: #8d1621;
+    border: 1px solid #8d1621;
+    border-radius: 5px;
+    padding: 10px;
+}
