@@ -28,13 +28,8 @@ const boardingService = BoardingService.getInstance();
 
 const sampleRevisionHistory = [
   {
-    date: "3/10/2019",
-    author: "Mike Waltzer",
-    changes: [],
-  },
-  {
-    date: "2/11/2019",
-    author: "Officer Bob",
+    date: "6/23/2020",
+    author: "Global Admin",
     changes: [],
   },
 ];
@@ -69,7 +64,7 @@ class BoardingViewPage extends Component {
 
     return (
       <div className="flex-column justify-start align-center padding-top boarding-view">
-        <div className="flex-row justify-between standard-view">
+        <div className="flex-row justify-between standard-view title-row">
           <div className="flex-column margin-top margin-left">
             <div className="item-label">Boarding</div>
             <div className="flex-row align-center">
@@ -96,7 +91,7 @@ class BoardingViewPage extends Component {
           </div>
           {versionsVisible && (
             <VersionControlPanel
-              dataObject={sampleRevisionHistory}
+              boardingId={boarding._id}
               onHide={() => this.setState({ versionsVisible: false })}
             />
           )}

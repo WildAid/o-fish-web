@@ -15,3 +15,7 @@
   width: inherit;
   margin-left: 0;
 }
+
+.boarding-view .title-row{
+  position: relative;
+}

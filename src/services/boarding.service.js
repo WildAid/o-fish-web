@@ -105,7 +105,7 @@ export default class BoardingService {
     if (id.length !== 24){
       throw new Error("Incorrect ID");
     }
-    
+
     const objectId = new BSON.ObjectId(id);
 
     return stitchService.database.collection("BoardingReports").findOne({_id: objectId});
@@ -128,5 +128,11 @@ export default class BoardingService {
 
   getBoardingsWithFacet(limit, offset, search, filter) {
     return stitchService.client.callFunction("searchFacetByBoardings", [limit, offset, search, filter]);
+  }
+
+  getChangeHistory(boardingId){
+    const objectId = new BSON.ObjectId(boardingId);
+    const result = stitchService.database.collection("ChangeHistory").find({"originalDocument._id": objectId}).toArray();
+    return result;
   }
 }
