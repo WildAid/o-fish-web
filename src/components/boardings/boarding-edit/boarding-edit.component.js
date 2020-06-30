@@ -47,7 +47,7 @@ class BoardingEditPage extends Component {
       if (!item.weight) item.weight = 0;
       if (!item.count) item.count = 0;
       item.weight = new BSON.Double(item.weight);
-      item.count = new BSON.Long(item.count);
+      item.number = new BSON.Long(item.number);
       return item;
     });
   };
