@@ -5,7 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getHighlightedText, goBoarding } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -18,7 +18,7 @@ import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
 
-import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
+import { NEW_BOARDING_PAGE, VIEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
 
@@ -298,7 +298,7 @@ class Boardings extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goBoarding(item._id)}
+                      onClick={() => goToPage(VIEW_BOARDING_PAGE, item._id)}
                     >
                       <td> {moment(item.date).format("L")}</td>
                       <td> {moment(item.date).format("LT")}</td>

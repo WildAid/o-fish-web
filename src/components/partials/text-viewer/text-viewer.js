@@ -12,7 +12,7 @@ const TextViewer = ({ mainText, subText, searchWords }) => (
         highlightClassName="highlighted"
         searchWords={searchWords || []}
         autoEscape={true}
-        textToHighlight={typeof mainText == "object" ? (mainText ? "Incorrect value" : "") : mainText}
+        textToHighlight={(typeof mainText == "object" ? (mainText ? "Incorrect value" : "") : mainText) || []}
       />
     </div>
   </div>

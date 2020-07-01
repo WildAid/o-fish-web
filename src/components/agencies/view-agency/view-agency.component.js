@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
+import AgencyService from "./../../../services/agency.service";
+
 import "./view-agency.css";
+
+const agencyService = AgencyService.getInstance();
 
 class ViewAgency extends Component {
   state = {
@@ -13,6 +17,7 @@ class ViewAgency extends Component {
       violations: [],
     },
     activeTab: 1,
+    loading: false,
   };
 
   handleChangeTab = (newTab) => {
@@ -22,40 +27,63 @@ class ViewAgency extends Component {
   };
 
   componentDidMount() {
-    //TODO get real agency with corresponded data
-    // const { id } = this.props.match.params;
+    const { id } = this.props.match.params;
+
+    this.setState({ loading: true }, () => {
+      const { limit, offset, searchQuery, currentFilter } = this.state;
+
+      agencyService
+        .getAgency(id)
+        .then((data) => {
+          const agencyInfo = { ...data, ...this.state.agencyInfo };
+
+          this.setState({
+            agencyInfo,
+            loading: false
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   }
 
   render() {
-    const { agencyInfo, activeTab } = this.state;
+    const { agencyInfo, activeTab, loading } = this.state;
 
     return (
       <div className="padding-bottom flex-column align-center">
         <div className="flex-row justify-between standard-view border-bottom agency-header">
           <div className="flex-column">
-            <div className="item-label">Agency</div>
-            <div className="item-name">{agencyInfo.agency}</div>
-            <div className="font-16">{agencyInfo.description}</div>
-            <div className="flex-row agency-box">
-              <div className="agency-box-img">
-                <img
-                  className="icon"
-                  src={require("../../../assets/site-icon.png")}
-                  alt="no logo"
-                />
-              </div>
-              {agencyInfo.site}
-            </div>
-            <div className="flex-row agency-box">
-              <div className="agency-box-img">
-                <img
-                  className="icon"
-                  src={require("../../../assets/email-icon.png")}
-                  alt="no logo"
-                />
-              </div>
-              {agencyInfo.email}
-            </div>
+            {loading ? (
+              "Loading..."
+            ) : (
+              <Fragment>
+                <div className="item-label">Agency</div>
+                <div className="item-name">{agencyInfo.agency}</div>
+                <div className="font-16">{agencyInfo.description}</div>
+                <div className="flex-row agency-box">
+                  <div className="agency-box-img">
+                    <img
+                      className="icon"
+                      src={require("../../../assets/site-icon.png")}
+                      alt="no logo"
+                    />
+                  </div>
+                  {agencyInfo.site}
+                </div>
+                <div className="flex-row agency-box">
+                  <div className="agency-box-img">
+                    <img
+                      className="icon"
+                      src={require("../../../assets/email-icon.png")}
+                      alt="no logo"
+                    />
+                  </div>
+                  {agencyInfo.email}
+                </div>
+              </Fragment>
+            )}
           </div>
           <NavLink to={EDIT_AGENCIES_PAGE}>
             <button className="blue-btn">Edit Agency Information</button>
@@ -99,22 +127,24 @@ class ViewAgency extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {agencyInfo.officers.map((officer, ind) => (
-                      <tr className="table-row" key={ind}>
-                        <td>
-                          <div className="flex-row align-center agency-info-box">
-                            <div className="officer-container-img">
-                              <img
-                                className="icon"
-                                src={require("../../../assets/crew-icon.png")}
-                                alt="no logo"
-                              />
-                            </div>
-                            {officer.name}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                    {agencyInfo.officers
+                      ? agencyInfo.officers.map((officer, ind) => (
+                          <tr className="table-row" key={ind}>
+                            <td>
+                              <div className="flex-row align-center agency-info-box">
+                                <div className="officer-container-img">
+                                  <img
+                                    className="icon"
+                                    src={require("../../../assets/crew-icon.png")}
+                                    alt="no logo"
+                                  />
+                                </div>
+                                {officer.name}
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      : "No officers found"}
                   </tbody>
                 </table>
               </div>
@@ -123,13 +153,22 @@ class ViewAgency extends Component {
                 <div className="flex-row form-content">
                   <div className="flex-column box-shadow justify-between form-content-menu">
                     <div className="form-menu-item active-form-menu-item">
-                      Catch {`(${agencyInfo.catches.length})`}
+                      Catch
+                      {agencyInfo.catches
+                        ? `(${agencyInfo.catches.length})`
+                        : ""}
                     </div>
                     <div className="form-menu-item">
-                      Violations {`(${agencyInfo.violations.length})`}
+                      Violations
+                      {agencyInfo.violations
+                        ? `(${agencyInfo.violations.length})`
+                        : ""}
                     </div>
                     <div className="form-menu-item">
-                      Prefered Nationatities {`(${agencyInfo.officers.length})`}
+                      Prefered Nationatities
+                      {agencyInfo.officers
+                        ? `(${agencyInfo.officers.length})`
+                        : ""}
                     </div>
                   </div>
                   <div className="flex-column form-search">
@@ -142,15 +181,17 @@ class ViewAgency extends Component {
                       <button className="blue-btn">+ Add species</button>
                     </div>
                     <div className="box-shadow form-checkbox-list">
-                      {agencyInfo.catches.map((item, ind) => (
-                        <div
-                          className="flex-row align-center form-info-box"
-                          key={ind}
-                        >
-                          <input className="check-item" type="checkbox" />
-                          {item.name}
-                        </div>
-                      ))}
+                      {agencyInfo.catches
+                        ? agencyInfo.catches.map((item, ind) => (
+                            <div
+                              className="flex-row align-center form-info-box"
+                              key={ind}
+                            >
+                              <input className="check-item" type="checkbox" />
+                              {item.name}
+                            </div>
+                          ))
+                        : "No catches found"}
                     </div>
                   </div>
                 </div>

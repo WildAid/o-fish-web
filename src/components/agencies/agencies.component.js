@@ -6,12 +6,12 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import history from "../../root/root.history";
 
-import { getHighlightedText } from "../../helpers/get-data";
+import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
 
-import { EDIT_AGENCIES_PAGE } from "./../../root/root.constants";
+import { VIEW_AGENCIES_PAGE, EDIT_AGENCIES_PAGE } from "./../../root/root.constants";
 
 import "./agencies.css";
 
@@ -132,7 +132,7 @@ class AgenciesMain extends React.Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      //TODO get data for view mode
+                      onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
                     >
                       <td className="blue-color">{item.name}</td>
                       <td>{item.description}</td>

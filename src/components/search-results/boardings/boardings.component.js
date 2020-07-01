@@ -9,10 +9,10 @@ import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 import {
   getViolations,
   getCatches,
-  goBoarding,
-} from "./../../../helpers/get-data";
+  goToPage,
+} from "./../../../helpers/get-data.js";
 
-import { BOARDINGS_PAGE } from "../../../root/root.constants.js";
+import { VIEW_BOARDING_PAGE, BOARDINGS_PAGE } from "../../../root/root.constants.js";
 
 import "../search-results.css";
 
@@ -36,7 +36,7 @@ class FoundBoardings extends Component {
           <div className="items-list">
             <div
               className="flex-row align-center border-bottom padding pointer"
-              onClick={() => goBoarding(boardingsList[0]._id)}
+              onClick={() => goToPage(VIEW_BOARDING_PAGE, boardingsList[0]._id)}
             >
               <div className="icon-img">
                 <img
