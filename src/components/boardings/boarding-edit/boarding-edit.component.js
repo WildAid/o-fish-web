@@ -8,12 +8,12 @@ import VesselSection from "./vessel/vessel.section";
 import CrewSection from "./crew/crew.section";
 import ActivitySection from "./activity/activity.section";
 import CatchSection from "./catch/catch.section";
+import RisksSection from './risks/risks.section';
 
 //TODO: Add sections when refactored
 /*
 import ViolationsSection from './violations/violations.section';
 import SeizuresSection from './seizures/seizures.section';
-import RisksSection from './risks/risks.section';
 import NotesSection from './notes/notes.section';
 */
 
@@ -149,6 +149,10 @@ class BoardingEditPage extends Component {
               dataObject={dataObject}
               onChange={this.handleDataChange}
             />
+            <RisksSection
+              dataObject={dataObject}
+              onChange={this.handleDataChange}>
+            </RisksSection>
           </div>
         ) : (
           "No object found"
@@ -161,6 +165,5 @@ class BoardingEditPage extends Component {
 //TODO: Add sections when refactored
 //<SeizuresSection dataObject={this.state.dataObject}></SeizuresSection>
 //<ViolationsSection dataObject={this.state.dataObject}></ViolationsSection>
-//<RisksSection dataObject={this.state.dataObject}></RisksSection>
 //<NotesSection dataObject={this.state.dataObject}></NotesSection>
 export default withRouter(BoardingEditPage);

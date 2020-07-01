@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import ChartBox from "../../../charts/chart-box.component";
 import DateFnsUtils from "@date-io/moment";
+import { BSON } from "mongodb-stitch-browser-sdk";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -40,7 +41,10 @@ export default class BasicInfoSection extends Component {
     });
     if (this.props.onChange) {
       const { dataObject } = this.props;
-      dataObject.location = location;
+      dataObject.location =  {
+        longitude: new BSON.Double(parseFloat(long)),
+        latitude: new BSON.Double(parseFloat(lat)),
+      };;
       this.props.onChange(dataObject);
     }
   };

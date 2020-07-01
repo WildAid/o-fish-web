@@ -26,3 +26,7 @@ section .white-btn {
 .buttons-container {
   width: 80px;
 }
+
+.risk-section button{
+  width: 27%;
+}
