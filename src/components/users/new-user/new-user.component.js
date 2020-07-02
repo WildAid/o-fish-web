@@ -45,10 +45,10 @@ class NewUser extends Component {
     }
     userService
       .createUser(values.password, newUser)
-      .then(() => (window.location.href = "/users"))
+      .then((data) => window.location.href = "/users")
       .catch((error) => {
         error.message ? 
-        this.setState({ error: error.message }) : this.setState({ error: 'An expected error occurred!' }) 
+        this.setState({ error: `${error.name}: ${error.message}` }) : this.setState({ error: 'An expected error occurred!' }) 
       });
   };
 
