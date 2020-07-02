@@ -8,6 +8,8 @@ import { getColor, getHighlightedText } from "./../../helpers/get-data";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
+import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
+import RiskIcon from "../partials/risk-icon/risk-icon.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
@@ -82,21 +84,23 @@ class Vessels extends Component {
     activePage: 10,
     limit: 50,
     offset: 0,
-    searchQuery: searchService.searchResults && searchService.searchResults.query
-                  ? searchService.searchResults.query : "",
+    searchQuery:
+      searchService.searchResults && searchService.searchResults.query
+        ? searchService.searchResults.query
+        : "",
     highlighted: [],
     currentFilter: null,
     loading: false,
-    page: 1
+    page: 1,
   };
 
   search = (value) => {
-    if (searchService.searchResults && searchService.searchResults.query){
+    if (searchService.searchResults && searchService.searchResults.query) {
       searchService.searchResults.query = value;
     }
     this.loadData({
       offset: 0,
-      searchQuery: value
+      searchQuery: value,
     });
   };
 
@@ -105,7 +109,7 @@ class Vessels extends Component {
     const newOffset = (page - 1) * limit;
     this.loadData({
       offset: newOffset,
-      page: page
+      page: page,
     });
   };
 
@@ -115,10 +119,10 @@ class Vessels extends Component {
     });
   };
 
-  loadData(newState){
+  loadData(newState) {
     newState = newState ? newState : {};
     newState.loading = true;
-    this.setState(newState, ()=>{
+    this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
       stitchService
         .getVesselsWithFacet(limit, offset, searchQuery, currentFilter)
@@ -127,7 +131,9 @@ class Vessels extends Component {
             loading: false,
             vessels: !!data.vessels ? data.vessels : [],
             total: !!data.amount ? data.amount : 0,
-            highlighted: data.highlighted ? getHighlightedText(data.highlighted): [],
+            highlighted: data.highlighted
+              ? getHighlightedText(data.highlighted)
+              : [],
           });
         })
         .catch((error) => {
@@ -141,25 +147,44 @@ class Vessels extends Component {
   }
 
   render() {
-    const { vessels, total, limit, loading, highlighted, searchQuery, page } = this.state;
+    const {
+      vessels,
+      total,
+      limit,
+      loading,
+      highlighted,
+      searchQuery,
+      page,
+    } = this.state;
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <SearchPanel handler={this.search} value={searchQuery} />
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
         <div className="flex-row justify-between standard-view">
-          <div className="items-amount">{loading ? "Loading..." :`${total} Records of Vessels`}</div>
+          {loading ? (
+            <div className="items-amount">Loading...</div>
+          ) : (
+            <SearchResultsFor
+              query={searchQuery}
+              total={`${total} of Vessels `}
+            />
+          )}
           <FilterPanel
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
-          ></FilterPanel>
+          />
         </div>
         {vessels && vessels.length && !loading ? (
           <Fragment>
             <div className="table-wrapper">
               <table className="custom-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Vessel Name</td>
                     <td>Permit number</td>
                     <td>Nationality</td>
@@ -178,7 +203,7 @@ class Vessels extends Component {
                           textToHighlight={item.vessel}
                         />
                       </td>
-                      <td>{item.permitNumber || "No number"}</td>
+                      <td>{item.permitNumber || "N/A"}</td>
                       <td>
                         <div className="flex-row align-center">
                           <div className="nationality-img">
@@ -188,10 +213,10 @@ class Vessels extends Component {
                               alt="no icon"
                             />
                           </div>
-                          {item.nationality}
+                          {item.nationality || "N/A"}
                         </div>
                       </td>
-                      <td>{item.homePort}</td>
+                      <td>{item.homePort || "N/A"}</td>
                       <td>
                         <div className="flex-row">
                           <div className="delivery-date">
@@ -208,6 +233,13 @@ class Vessels extends Component {
                               )}`,
                             }}
                           ></div>
+                          <RiskIcon
+                            safetyLevel={
+                              item.safetyLevel && item.safetyLevel.level
+                                ? item.safetyLevel.level
+                                : item.safetyLevel
+                            }
+                          />
                         </div>
                       </td>
                     </tr>
@@ -224,8 +256,10 @@ class Vessels extends Component {
               />
             )}
           </Fragment>
-        ) :  (
-          loading ? <LoadingPanel></LoadingPanel> : "No vessels found"
+        ) : loading ? (
+          <LoadingPanel></LoadingPanel>
+        ) : (
+          "No vessels found"
         )}
       </div>
     );

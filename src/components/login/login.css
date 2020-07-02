@@ -10,18 +10,20 @@
 }
 
 .login-logo-img {
-  width: 150px;
+  width: 300px;
   margin-bottom: 40px;
 }
 
 .login-form {
-  width: 260px;
+  width: 300px;
   height: 200px;
 }
 
 .login-box .blue-btn {
   width: 100%;
   margin: 0;
+  margin-top: 10px;
+  padding: 15px;
 }
 
 .forgot-password-link {

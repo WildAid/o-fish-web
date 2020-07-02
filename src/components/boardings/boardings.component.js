@@ -5,7 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getColor, getHighlightedText } from "./../../helpers/get-data";
+import { getHighlightedText, goBoarding } from "./../../helpers/get-data";
 
 import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -16,10 +16,7 @@ import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
 
-import {
-  NEW_BOARDING_PAGE,
-  VIEW_BOARDING_PAGE,
-} from "../../root/root.constants.js";
+import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
 
@@ -187,10 +184,6 @@ class Boardings extends Component {
     history.push(NEW_BOARDING_PAGE);
   };
 
-  goBoarding = (boarding) => {
-    history.push(VIEW_BOARDING_PAGE.replace(":id", boarding._id));
-  };
-
   loadData(newState) {
     newState = newState ? newState : {};
     newState.loading = true;
@@ -236,11 +229,20 @@ class Boardings extends Component {
 
     return (
       <div className="flex-column justify-center align-center padding-bottom">
-        <SearchPanel handler={this.search} value={searchQuery} />
-        <div className="flex-row justify-between standard-view">
-          <div className="items-amount">
-            {loading ? "Loading..." : `${total} Boardings`}
-          </div>
+        <SearchPanel
+          handler={this.search}
+          value={searchQuery}
+          isAutofill={false}
+        />
+        <div className="flex-row justify-between standard-view align-center">
+          {loading ? (
+            <div className="items-amount">Loading...</div>
+          ) : (
+            <SearchResultsFor
+              query={searchQuery}
+              total={`${total} Boarding `}
+            />
+          )}
           <button className="white-btn" onClick={this.goNewBoarding}>
             + New boarding
           </button>
@@ -276,7 +278,7 @@ class Boardings extends Component {
             <div className="table-wrapper">
               <table className="custom-table boardings-table">
                 <thead>
-                  <tr className="table-row row-head">
+                  <tr className="table-row row-head border-bottom">
                     <td>Date</td>
                     <td>Time</td>
                     <td>Vessel Name</td>
@@ -291,7 +293,7 @@ class Boardings extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={this.goBoarding.bind(this, item)}
+                      onClick={() => goBoarding(item._id)}
                     >
                       <td> {moment(item.date).format("L")}</td>
                       <td> {moment(item.date).format("LT")}</td>

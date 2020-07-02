@@ -124,4 +124,10 @@ export default class BoardingService {
   getBoardingsWithFacet(limit, offset, search, filter) {
     return stitchService.client.callFunction("searchFacetByBoardings", [limit, offset, search, filter]);
   }
+
+  getChangeHistory(boardingId){
+    const objectId = new BSON.ObjectId(boardingId);
+    const result = stitchService.database.collection("ChangeHistory").find({"originalDocument._id": objectId}).toArray();
+    return result;
+  }
 }
