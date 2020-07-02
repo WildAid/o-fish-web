@@ -25,7 +25,7 @@ export default class CatchSection extends Component {
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
-              <tr className="table-row row-head">
+              <tr className="table-row row-head border-bottom">
                 <td>Species</td>
                 <td>Count</td>
                 <td>Weight</td>

@@ -85,7 +85,7 @@ export default class FilterPartForRisk extends Component {
                   ></input>
               )}
             </div><br/>
-            <div className="flex-row buttons-row">
+            <div className="flex-row">
               <button className="apply-btn material-btn primary" onClick={this.applyFilter}>Apply</button>
               <button className="cancel-btn material-btn" onClick={this.cancelFilter}>Close</button>
             </div>

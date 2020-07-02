@@ -13,7 +13,7 @@ class Autofill extends Component {
     const { vessels, crew, boardings, searchQuery, searchWords } = this.props;
 
     return (
-      <div className="standard-view white-bg border box-shadow absolute standard-view autofill">
+      <div className="standard-view white-bg border absolute standard-view autofill">
         <PreviewItem
           item={vessels[0]}
           itemName="VESSELS"
@@ -39,7 +39,7 @@ class Autofill extends Component {
           searchWords={searchWords}
         />
         <div className="flex-row preview-search">
-          <SearchIcon />
+          <SearchIcon htmlColor='#0a4074'/>
           <NavLink className="custom-link" to={SEARCH_RESULTS_PAGE}>
             <div className="preview-search-text">
               See all results for "{searchQuery}"

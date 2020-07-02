@@ -35,7 +35,7 @@ export default class CatchSection extends Component {
 
   setCountValue = (value, index) => {
     const { data } = this.state;
-    data[index].count = parseInt(value);
+    data[index].number = parseInt(value);
     this.setData(data);
   };
 
@@ -59,7 +59,7 @@ export default class CatchSection extends Component {
 
   deleteItem(itemNo) {
     const newData = [...this.state.data];
-    newData.splice(itemNo - 1);
+    newData.splice(itemNo);
     this.setData(newData);
   }
 
@@ -102,7 +102,7 @@ export default class CatchSection extends Component {
                 label="Count:"
                 style={{ width: "19%" }}
                 name="number"
-                value={item.count}
+                value={item.number}
                 onChange={(e) => this.setCountValue(e.target.value, index)}
               />
               <TextField

@@ -1,15 +1,7 @@
 .filter-panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
   width: 250px;
-  position: absolute;
-  background: white;
   padding: 0.5em 0.2em;
-  margin-bottom: 20px;
   border-radius: 3px;
-  box-shadow: 0px 2px 2px 2px #aaa;
   text-align: left;
   z-index: 10;
   max-height: 500px;
@@ -20,7 +12,7 @@
   transition-timing-function: ease-in-out;
 }
 
-.filter-panel.invisible{
+.filter-panel.invisible {
   height: 0;
   overflow-y: hidden;
   padding-top: 0;
@@ -28,20 +20,11 @@
   box-shadow: none;
 }
 
-.filter-panel-area {
-  display: flex;
-}
-
-.filter-panel-area .filter-btn-box{
-    position: relative;
-}
-
 .filter-panel .search-icon {
   margin-left: 10px;
 }
 
-
-.filter-panel .search{
+.filter-panel .search {
   margin: 0px;
   box-shadow: none;
   border: solid 1px #aaa;
@@ -52,7 +35,7 @@
   align-items: center;
 }
 
-.filter-panel .search .search-field{
+.filter-panel .search .search-field {
   padding: 10px;
   width: 100%;
   border: none;
@@ -61,76 +44,69 @@
   outline: none;
 }
 
-.filter-panel section{
-    padding: 7px 20px 7px 20px;
+.filter-panel section {
+  padding: 7px 20px 7px 20px;
 }
 
-.filter-panel section h3{
+.filter-panel section h3 {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
 }
 
-
-.filter-parts {
-  display: flex;
-  align-items: center;
+.filter-part .MuiIcon-root {
+  font-size: 1em;
 }
 
-.filter-part{
-  position: relative;
-}
-
-.filter-part .MuiIcon-root{
-  font-size:1em;
-}
-
-.filter-part .filter-part-tag{
+.filter-part .filter-part-tag {
   padding: 2px 1em;
   display: flex;
   align-items: center;
 }
 
-.filter-search-panel .MuiFormControl-root{
-    width: 80%;
+.filter-part .icon {
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  width: 1em;
+  height: 1em;
+  border-radius: 10px;
+}
+
+.filter-part .white-btn {
+  padding: 5px 15px;
+  border-radius: 25px;
+  margin: 20px 20px 20px 0;
+}
+
+.filter-search-panel .MuiFormControl-root {
+  width: 80%;
 }
 
 .filter-part .filter-part-tag .filter-part-name,
 .filter-part .filter-part-tag .filter-part-value,
 .filter-part .filter-part-tag .show-panel-btn,
-.filter-part .filter-part-tag .remove-filter-btn{
+.filter-part .filter-part-tag .remove-filter-btn {
   padding-right: 0.2em;
 }
 
-.filter-part .filter-part-tag .show-panel-btn:hover,
-.filter-part .filter-part-tag .remove-filter-btn:hover{
-  cursor: pointer;
+.show-panel-btn:hover,
+.remove-filter-btn:hover {
   color: #666;
 }
-
-.filter-search-panel{
-  position: absolute;
+/* -------------------------- */
+.filter-search-panel {
   width: 250px;
   z-index: 10;
   top: 30px;
-  padding: 1em;
-  background: white;
-  box-shadow: 0px 2px 2px 2px #aaa;
+  padding: 20px;
+  border-radius: 3px;
 }
 
-.filter-search-panel .search-panel{
+.filter-search-panel .search-panel {
   margin: 0;
 }
 
-.filter-panel .filter-line{
+.filter-panel .filter-line {
   padding-left: 0.5em;
   margin-top: 0.5em;
-}
-
-.filter-part .icon{
-      display: inline-block;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      width: 1em;
-      height: 1em;
-      border-radius: 10px;
 }

@@ -54,7 +54,7 @@ class SearchResults extends Component {
 
     return (
       <div className="flex-column align-center padding-bottom">
-        <SearchPanel handler={this.search} value={query} />
+        <SearchPanel handler={this.search} value={query} isAutofill={false} />
         <div className="standard-view ">
           <SearchResultsFor
             query={query}

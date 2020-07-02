@@ -1,4 +1,9 @@
 import SearchService from "./../services/search.service";
+import history from "../root/root.history";
+
+import {
+  VIEW_BOARDING_PAGE,
+} from "../root/root.constants.js";
 
 export const getViolations = (arr) => {
   if (!Array.isArray(arr) || !arr.length) return "No violations";
@@ -154,4 +159,8 @@ export const checkUserType = (user) => {
   }
 
   return userRole;
+};
+
+export const goBoarding = (id) => {
+  history.push(VIEW_BOARDING_PAGE.replace(":id", id));
 };
