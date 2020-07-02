@@ -54,14 +54,9 @@ const sampleData = {
           disposition:"Warning"
         }
       ],
-      seizures: [
-        {
-          name: "Norby Beauman",
-          id: "429-76-9929",
-          photoID:"5e578afce916a14463379bfe",
-          license:"Norby Beauman"
-        }
-      ],
+      seizures: {
+        text: ""
+      },
     },
     actualCatch: [
       {
