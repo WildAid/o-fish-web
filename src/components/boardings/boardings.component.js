@@ -243,7 +243,8 @@ class Boardings extends Component {
         <SearchPanel handler={this.search} value={searchQuery} />
         <div className="flex-row justify-between standard-view align-center">
             {loading ? (
-              <div className="items-amount">Loading...</div> 
+              <div className="
+                t">Loading...</div>
             ) : (
               <SearchResultsFor
                 query={searchQuery}

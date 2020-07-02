@@ -19,6 +19,7 @@ import NotesSection from './notes/notes.section';
 
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
+import AuthService from "./../../../services/auth.service";
 import BoardingService from "./../../../services/boarding.service";
 
 import history from "../../../root/root.history";
@@ -28,6 +29,7 @@ import { VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
 import "./boardings-edit.css";
 
 const boardingService = BoardingService.getInstance();
+const authService = AuthService.getInstance();
 
 const initialState = BoardingService.sampleData;
 
@@ -45,11 +47,14 @@ class BoardingEditPage extends Component {
       if (!item.fish) item.fish = "";
       if (!item.unit) item.unit = "";
       if (!item.weight) item.weight = 0;
-      if (!item.count) item.count = 0;
+      if (!item.number) item.number = 0;
       item.weight = new BSON.Double(item.weight);
-      item.count = new BSON.Long(item.count);
+      item.number = new BSON.Long(item.number);
       return item;
     });
+    if (!this.dataObject.inspection.summary.seizures){
+      this.dataObject.inspection.summary.seizures = { text: "" };
+    }
   };
 
   saveBoarding = () => {
@@ -71,11 +76,14 @@ class BoardingEditPage extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-
     if (!id) {
+      const obj = {
+        ... initialState,
+      }
+      obj.reportingOfficer.email = authService.user.customData.email;
       this.setState({
         isNew: true,
-        dataObject: initialState,
+        dataObject: obj,
       });
       this.dataObject = initialState;
     } else {

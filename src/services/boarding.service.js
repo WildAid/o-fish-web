@@ -54,14 +54,9 @@ const sampleData = {
           disposition:"Warning"
         }
       ],
-      seizures: [
-        {
-          name: "Norby Beauman",
-          id: "429-76-9929",
-          photoID:"5e578afce916a14463379bfe",
-          license:"Norby Beauman"
-        }
-      ],
+      seizures: {
+        text: ""
+      },
     },
     actualCatch: [
       {
@@ -105,7 +100,7 @@ export default class BoardingService {
     if (id.length !== 24){
       throw new Error("Incorrect ID");
     }
-    
+
     const objectId = new BSON.ObjectId(id);
 
     return stitchService.database.collection("BoardingReports").findOne({_id: objectId});

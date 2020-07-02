@@ -35,7 +35,7 @@ export default class CatchSection extends Component {
 
   setCountValue = (value, index) => {
     const { data } = this.state;
-    data[index].count = parseInt(value);
+    data[index].number = parseInt(value);
     this.setData(data);
   };
 
