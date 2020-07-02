@@ -10,7 +10,7 @@ export default class RisksSection extends Component {
       level: data,
     });
     if (typeof dataObject.inspection.summary.safetyLevel !== "object"){
-      dataObject.inspection.summary.safetyLevel = {level: 'Green'};
+      dataObject.inspection.summary.safetyLevel = {level: 'Green', amberReason: ""};
     }
     if (this.props.onChange) {
       dataObject.inspection.summary.safetyLevel.level = data;
@@ -21,13 +21,7 @@ export default class RisksSection extends Component {
   componentDidMount(){
     const {dataObject} = this.props;
     if (typeof dataObject.inspection.summary.safetyLevel !== "object"){
-      dataObject.inspection.summary.safetyLevel = {level: 'Green'};
-      if (this.props.onChange) {
-        this.props.onChange(dataObject);
-      }
-    }
-    if (!dataObject.inspection.summary.safetyLevel.level){
-      dataObject.inspection.summary.safetyLevel.level = 'Green'
+      dataObject.inspection.summary.safetyLevel = {level: 'Green', amberReason: ""};
       if (this.props.onChange) {
         this.props.onChange(dataObject);
       }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { BSON } from "mongodb-stitch-browser-sdk";
 
 export default class VesselSection extends Component {
   state = {
@@ -16,9 +17,9 @@ export default class VesselSection extends Component {
       },
       ems: [
         {
-          type: "",
-          registry: "",
-          description: "",
+          emsType: "",
+          RegistryNumber: "",
+          emsDescription: "",
         },
       ],
     },
@@ -74,6 +75,7 @@ export default class VesselSection extends Component {
         business: "",
         location: "",
       };
+    if (name == "date") value = new Date(value);
     vessel.lastDelivery[name] = value;
     this.setState({
       vessel: vessel,
@@ -198,16 +200,16 @@ export default class VesselSection extends Component {
               label="Type:"
               className="half-row-view"
               name="ems-type"
-              value={ems.type || ''}
-              onChange={(e) => this.setEmsFieldValue("type", e.target.value)}
+              value={ems.emsType || ''}
+              onChange={(e) => this.setEmsFieldValue("emsType", e.target.value)}
             />
             <TextField
               label="Registry Number:"
               className="half-row-view"
               name="ems-registry"
-              value={ems.registry || ''}
+              value={ems.registryNumber || ''}
               onChange={(e) =>
-                this.setEmsFieldValue("registry", e.target.value)
+                this.setEmsFieldValue("registryNumber", e.target.value)
               }
             />
           </div>
@@ -216,9 +218,9 @@ export default class VesselSection extends Component {
               label="Description:"
               className="half-row-view"
               name="ems-description"
-              value={ems.description || ''}
+              value={ems.emsDescription || ''}
               onChange={(e) =>
-                this.setEmsFieldValue("description", e.target.value)
+                this.setEmsFieldValue("emsDescription", e.target.value)
               }
             />
           </div>
