@@ -11,6 +11,8 @@ import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
+import RiskIcon from "./../partials/risk-icon/risk-icon.component";
+import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
