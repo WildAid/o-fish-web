@@ -145,13 +145,11 @@ class AgenciesMain extends React.Component {
                           {status}
                         </div>
                       </td>
-                      <td className="blue-color">
-                        <div
-                          className="flex-row justify-center"
-                          onClick={(e) => this.goTo(e, EDIT_AGENCIES_PAGE)}
-                        >
-                          Edit
-                        </div>
+                      <td
+                        className="blue-color"
+                        onClick={(e) => this.goTo(e, EDIT_AGENCIES_PAGE)}
+                      >
+                        Edit
                       </td>
                     </tr>
                   );

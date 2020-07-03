@@ -43,14 +43,15 @@ class NewUser extends Component {
     } else {
       newUser = { ...newUser, agency: { name: values.agency } };
     }
-    userService
-      .createUser(values.password, newUser)
-      .then(() => history.push("/users"))
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An expected error occurred!" });
-      });
+
+    // userService
+    //   .createUser(values.firstName + values.lastName, newUser)
+    //   .then(() => history.push("/users"))
+    //   .catch((error) => {
+    //     error.message
+    //       ? this.setState({ error: `${error.name}: ${error.message}` })
+    //       : this.setState({ error: "An expected error occurred!" });
+    //   });
   };
 
   render() {
@@ -64,7 +65,7 @@ class NewUser extends Component {
             <div className="item-name">New User</div>
           </div>
         </div>
-        <div className="flex-row standard-view white-bg box-shadow relative new-user-form">
+        <div className="flex-row justify-center standard-view white-bg box-shadow relative new-user-form">
           <Formik
             initialValues={{
               firstName: "",
@@ -72,7 +73,6 @@ class NewUser extends Component {
               agency: "",
               adminType: "",
               email: "",
-              password: "",
             }}
             onSubmit={this.saveUser}
             render={({
@@ -83,8 +83,11 @@ class NewUser extends Component {
               handleSubmit,
               setFieldValue,
             }) => (
-              <Form onSubmit={handleSubmit} className="flex-row relative">
-                <div className="flex-column new-user-box">
+              <Form
+                onSubmit={handleSubmit}
+                className="flex-column justify-center"
+              >
+                <div className="flex-row justify-center">
                   <div className="add-img">
                     <img
                       className="icon"
@@ -93,7 +96,7 @@ class NewUser extends Component {
                     />
                   </div>
                 </div>
-                <div className="flex-column new-user-box">
+                <div className="flex-row justify-between">
                   <TextField
                     label="First Name"
                     name="firstName"
@@ -112,26 +115,8 @@ class NewUser extends Component {
                     type="text"
                     value={values.lastName}
                   />
-                  <TextField
-                    label="Agency"
-                    name="agency"
-                    type="text"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("agency", e.target.value)}
-                    value={values.agency}
-                  />
                 </div>
-                <div className="flex-column new-user-box">
-                  <TextField
-                    label="Admin Type"
-                    name="adminType"
-                    type="text"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("adminType", e.target.value)}
-                    value={values.adminType}
-                  />
+                <div className="flex-column">
                   <TextField
                     label="Email"
                     name="email"
@@ -142,24 +127,35 @@ class NewUser extends Component {
                     value={values.email}
                   />
                   <TextField
-                    label="Password"
-                    name="password"
+                    label="Role"
+                    name="adminType"
                     type="text"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("password", e.target.value)}
-                    value={values.password}
+                    onChange={(e) => setFieldValue("adminType", e.target.value)}
+                    value={values.adminType}
+                  />
+                  <TextField
+                    label="Agency"
+                    name="agency"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("agency", e.target.value)}
+                    value={values.agency}
                   />
                 </div>
-                <button className="blue-btn absolute" type="submit">
-                  Save
-                </button>
-                <button
-                  className="white-btn absolute"
-                  // onClick={this.clearForm}
-                >
-                  Cancel
-                </button>
+                <div className="flex-row justify-around align-center margin-top">
+                  <button className="blue-btn" type="submit">
+                    Create User
+                  </button>
+                  <div
+                    className="blue-color pointer"
+                    // onClick={this.clearForm}
+                  >
+                    Cancel
+                  </div>
+                </div>
               </Form>
             )}
           />
