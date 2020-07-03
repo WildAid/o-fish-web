@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 
+import history from "../../../root/root.history";
+
 import AgencyService from "./../../../services/agency.service";
 
 import "./new-agency.css";
@@ -27,10 +29,11 @@ class NewAgency extends Component {
 
     agencyService
       .createAgency(newAgency)
-      .then(() => window.location.href = "/agencies")
+      .then(() => history.push("/agencies"))
       .catch((error) => {
-        error.message ?
-        this.setState({ error: `${error.name}: ${error.message}` }) : this.setState({ error: 'An expected error occurred!' })
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An expected error occurred!" });
       });
   };
 
@@ -83,9 +86,7 @@ class NewAgency extends Component {
                     type="text"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) =>
-                      setFieldValue("email", e.target.value)
-                    }
+                    onChange={(e) => setFieldValue("email", e.target.value)}
                     value={values.email}
                   />
                   <TextField
@@ -94,9 +95,7 @@ class NewAgency extends Component {
                     type="text"
                     className="form-input"
                     onBlur={handleBlur}
-                    onChange={(e) =>
-                      setFieldValue("site", e.target.value)
-                    }
+                    onChange={(e) => setFieldValue("site", e.target.value)}
                     value={values.site}
                   />
                 </div>
