@@ -19,8 +19,9 @@
 
 .new-agency-box .form-input {
     width: 350px;
+    margin-top: 10px;
 }
 
-.new-agency-box .form-input:last-child {
-    margin-top: 10px;
+.new-agency-box .form-input:first-child {
+    margin-top: 0;
 }

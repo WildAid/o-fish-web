@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 
+import AgencyService from "./../../../services/agency.service";
+
 import "./new-agency.css";
+
+const agencyService = AgencyService.getInstance();
 
 class NewAgency extends Component {
   state = {
@@ -13,7 +17,21 @@ class NewAgency extends Component {
   };
 
   saveAgency = (values) => {
-    //TO DO - add request and get data to render
+    let newAgency = {
+      email: values.email,
+      site: values.site,
+      name: values.name,
+      description: values.description,
+      active: true,
+    };
+
+    agencyService
+      .createAgency(newAgency)
+      .then(() => window.location.href = "/agencies")
+      .catch((error) => {
+        error.message ?
+        this.setState({ error: `${error.name}: ${error.message}` }) : this.setState({ error: 'An expected error occurred!' })
+      });
   };
 
   render() {
@@ -27,7 +45,7 @@ class NewAgency extends Component {
         </div>
         <div className="flex-row standard-view white-bg box-shadow relative new-agency-form">
           <Formik
-            initialValues={{ name: "", description: "" }}
+            initialValues={{ name: "", description: "", site: "", email: "" }}
             onSubmit={this.saveAgency}
             render={({
               errors,
@@ -58,6 +76,28 @@ class NewAgency extends Component {
                       setFieldValue("description", e.target.value)
                     }
                     value={values.description}
+                  />
+                  <TextField
+                    label="E-mail"
+                    name="email"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) =>
+                      setFieldValue("email", e.target.value)
+                    }
+                    value={values.email}
+                  />
+                  <TextField
+                    label="Site"
+                    name="site"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) =>
+                      setFieldValue("site", e.target.value)
+                    }
+                    value={values.site}
                   />
                 </div>
                 <button

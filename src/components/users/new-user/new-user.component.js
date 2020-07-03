@@ -22,7 +22,6 @@ class NewUser extends Component {
   
   saveUser = (values) => {
     let newUser = {
-      realmUserID: "",
       email: values.email,
       name: {
         first: values.firstName,
@@ -45,7 +44,7 @@ class NewUser extends Component {
     }
     userService
       .createUser(values.password, newUser)
-      .then((data) => window.location.href = "/users")
+      .then(() => window.location.href = "/users")
       .catch((error) => {
         error.message ? 
         this.setState({ error: `${error.name}: ${error.message}` }) : this.setState({ error: 'An expected error occurred!' }) 
