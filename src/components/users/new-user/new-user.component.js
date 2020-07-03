@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-
 import moment from "moment";
+
+import history from "../../../root/root.history";
 
 import UserService from "./../../../services/user.service";
 
@@ -19,10 +20,9 @@ class NewUser extends Component {
   removeErrMsg = () => {
     this.setState({ error: null });
   };
-  
+
   saveUser = (values) => {
     let newUser = {
-      realmUserID: "",
       email: values.email,
       name: {
         first: values.firstName,
@@ -45,10 +45,11 @@ class NewUser extends Component {
     }
     userService
       .createUser(values.password, newUser)
-      .then(() => (window.location.href = "/users"))
+      .then(() => history.push("/users"))
       .catch((error) => {
-        error.message ? 
-        this.setState({ error: error.message }) : this.setState({ error: 'An expected error occurred!' }) 
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An expected error occurred!" });
       });
   };
 

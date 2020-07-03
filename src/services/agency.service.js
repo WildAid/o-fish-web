@@ -1,3 +1,5 @@
+import { BSON } from "mongodb-stitch-browser-sdk";
+
 import StitchService from "./stitch.service";
 
 const stitchService = StitchService.getInstance();
@@ -12,8 +14,10 @@ export default class AgencyService {
     return AgencyService.serviceInstance;
   }
 
-  getAgency(critheria) {
-    return stitchService.database.collection("Agency").findOne(critheria);
+  getAgency(id) {
+    const objectId = new BSON.ObjectId(id);
+
+    return stitchService.database.collection("Agency").findOne({_id: objectId});
   }
 
   getAgencies(limit, offset, searchQuery, currentFilter) {
