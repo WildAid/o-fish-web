@@ -11,7 +11,10 @@ import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
 
-import { VIEW_AGENCIES_PAGE, EDIT_AGENCIES_PAGE } from "./../../root/root.constants";
+import {
+  VIEW_AGENCIES_PAGE,
+  EDIT_AGENCIES_PAGE,
+} from "./../../root/root.constants";
 
 import "./agencies.css";
 

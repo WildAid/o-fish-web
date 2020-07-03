@@ -30,8 +30,6 @@ class ViewAgency extends Component {
     const { id } = this.props.match.params;
 
     this.setState({ loading: true }, () => {
-      const { limit, offset, searchQuery, currentFilter } = this.state;
-
       agencyService
         .getAgency(id)
         .then((data) => {
