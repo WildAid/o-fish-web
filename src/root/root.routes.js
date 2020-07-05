@@ -1,5 +1,4 @@
-//@flow
-
+import React from "react";
 import Root from "./root.component";
 
 import Login from "../components/login/login.component";
@@ -29,8 +28,6 @@ import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
 import EditAgency from "../components/agencies/edit-agency/edit-agency.component";
 
-import mapRouting from "../helpers/map-routing";
-
 import {
   LOGIN_PAGE,
   HOME_PAGE,
@@ -56,6 +53,11 @@ import {
   VIEW_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
 } from "./root.constants";
+import { requireAuth } from "../components/auth/auth.component";
+import { Redirect } from "react-router-dom";
+
+const RedirectToHome = () => <Redirect to={HOME_PAGE} />;
+const RedirectToLogin = () => <Redirect to={LOGIN_PAGE} />;
 
 const routes = [
   {
@@ -66,13 +68,11 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
-    auth: false,
     exact: false,
   },
   {
     path: BOARDINGS_PAGE,
-    component: Boardings,
-    auth: true,
+    component: requireAuth(Boardings),
     exact: false,
     routes: [
       {
@@ -89,7 +89,7 @@ const routes = [
         path: EDIT_BOARDING_PAGE,
         component: BoardingEditPage,
         exact: true,
-      }, 
+      },
       {
         path: NEW_BOARDING_PAGE,
         component: BoardingEditPage,
@@ -99,20 +99,17 @@ const routes = [
   },
   {
     path: VESSELS_PAGE,
-    component: Vessels,
-    auth: true,
+    component: requireAuth(Vessels),
     exact: false,
   },
   {
     path: CREW_PAGE,
-    component: Crew,
-    auth: true,
+    component: requireAuth(Crew),
     exact: false,
   },
   {
     path: USERS_PAGE,
-    component: UsersMain,
-    auth: true,
+    component: requireAuth(UsersMain),
     exact: false,
     routes: [
       {
@@ -144,8 +141,7 @@ const routes = [
   },
   {
     path: AGENCIES_PAGE,
-    component: AgenciesMain,
-    auth: true,
+    component: requireAuth(AgenciesMain),
     exact: false,
     routes: [
       {
@@ -172,14 +168,12 @@ const routes = [
   },
   {
     path: FORMS_PAGE,
-    component: Forms,
-    auth: true,
+    component: requireAuth(Forms),
     exact: false,
   },
   {
     path: SEARCH_RESULTS_PAGE,
-    component: SearchResults,
-    auth: true,
+    component: requireAuth(SearchResults),
     exact: false,
   },
   {
@@ -189,23 +183,20 @@ const routes = [
   },
   {
     path: "/",
-    redirectTo: LOGIN_PAGE,
     exact: true,
-    component: Login,
+    component: RedirectToLogin,
   },
   {
     path: "*",
-    redirectTo: HOME_PAGE,
+    component: RedirectToHome,
   },
 ];
 
 const withRoot = [
   {
-    path: "/",
-    exact: false,
     component: Root,
     routes,
   },
 ];
 
-export default mapRouting(withRoot);
+export default withRoot;
