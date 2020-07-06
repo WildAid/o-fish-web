@@ -30,8 +30,6 @@ class NewUser extends Component {
   };
 
   saveUser = (values) => {
-    console.log(values);
-
     let newUser = {
       email: values.email,
       name: {
