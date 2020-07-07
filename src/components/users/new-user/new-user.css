@@ -24,37 +24,25 @@
 }
 
 .new-user-form form {
-    display: flex;
-    width: 100%;
+    width: 37%;
+    padding: 40px 0;
 }
 
 .add-img {
     width: 130px;
     height: 130px;
-    padding-right: 5px;
 }
 
 .new-user-form .blue-btn {
-    top: -75px;
-    right: 65px;
+    padding: 10px 30px;
 }
 
 .new-user-form .white-btn {
-    top: -75px;
-    right: 0px;
     padding: 9px;
 }
 
-.new-user-box .form-input {
-    width: 350px;
-}
-
-.new-user-box .form-input {
+.new-user-form .form-input {
     margin-top: 30px;
-}
-
-.new-user-box .form-input:first-child {
-    margin-top: 0;
 }
 
 .err-msg {
