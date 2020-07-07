@@ -13,9 +13,7 @@ export default class PhotoUploader extends Component {
   }
 
   fileSelected = (data)=>{
-    console.log(data);
     const input = document.querySelector("#" + this.id + " .hidden-uploader");
-    console.log(input);
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
