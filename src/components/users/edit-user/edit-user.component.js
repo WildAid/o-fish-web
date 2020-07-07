@@ -23,8 +23,8 @@ class EditUser extends Component {
           if (pic.pictureURL){
             this.setState({isLoaded: true, src: pic.pictureURL});
           } else {
-            if (pic && (pic.picture || pic.photo)){
-              pic = pic.picture ? pic.picture : pic.photo;
+            if (pic && (pic.picture || pic.photo || pic.thumbNail)){
+              pic = pic.thumbNail ? pic.thumbNail : (pic.picture ? pic.picture : pic.photo);
               this.setState({isLoaded: true, src: "data:image/jpeg;base64," + bufferToBase64(pic.buffer)});
             } else {
               this.setState({isLoaded: true});
