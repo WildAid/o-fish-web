@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
+import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
-import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
@@ -42,6 +42,7 @@ class Login extends Component {
 
   render() {
     const { error, loading } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-row justify-center align-center login-box">
@@ -71,7 +72,7 @@ class Login extends Component {
                   onSubmit={handleSubmit}
                 >
                   <TextField
-                    label="Email/Username:"
+                    label={t("LOGIN_PAGE.EMAIL_USERNAME")}
                     name="login"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
@@ -79,7 +80,7 @@ class Login extends Component {
                     value={values.login}
                   />
                   <TextField
-                    label="Password:"
+                    label={t("LOGIN_PAGE.PASSWORD")}
                     name="password"
                     type="password"
                     onBlur={handleBlur}
@@ -88,7 +89,7 @@ class Login extends Component {
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
-                      <div>Logging in...</div>
+                      <div>{t("LOGIN_PAGE.LOGGIN_IN")}</div>
                     ) : (
                       <button className="blue-btn" type="submit">
                         Log in
@@ -102,7 +103,7 @@ class Login extends Component {
               className="forgot-password-link"
               to={RESTORE_PASSWORD_PAGE}
             >
-              Forgot password?
+              {t("LOGIN_PAGE.FORGOT_PASSWORD")}
             </NavLink>
             {error && <div className="error-messages">{error}</div>}
           </div>
@@ -112,4 +113,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default withTranslation("translation")(Login);

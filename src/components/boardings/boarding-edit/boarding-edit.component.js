@@ -8,7 +8,7 @@ import VesselSection from "./vessel/vessel.section";
 import CrewSection from "./crew/crew.section";
 import ActivitySection from "./activity/activity.section";
 import CatchSection from "./catch/catch.section";
-import RisksSection from './risks/risks.section';
+import RisksSection from "./risks/risks.section";
 
 //TODO: Add sections when refactored
 /*
@@ -52,7 +52,7 @@ class BoardingEditPage extends Component {
       item.number = new BSON.Long(item.number);
       return item;
     });
-    if (!this.dataObject.inspection.summary.seizures){
+    if (!this.dataObject.inspection.summary.seizures) {
       this.dataObject.inspection.summary.seizures = { text: "" };
     }
   };
@@ -78,8 +78,8 @@ class BoardingEditPage extends Component {
     const { id } = this.props.match.params;
     if (!id) {
       const obj = {
-        ... initialState,
-      }
+        ...initialState,
+      };
       obj.reportingOfficer.email = authService.user.customData.email;
       this.setState({
         isNew: true,
@@ -159,8 +159,8 @@ class BoardingEditPage extends Component {
             />
             <RisksSection
               dataObject={dataObject}
-              onChange={this.handleDataChange}>
-            </RisksSection>
+              onChange={this.handleDataChange}
+            ></RisksSection>
           </div>
         ) : (
           "No object found"

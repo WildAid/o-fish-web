@@ -1,0 +1,114 @@
+{
+  "LOGIN_PAGE": {
+    "LOGIN": "Log in",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "EMAIL_USERNAME": "Email/Username:",
+    "PASSWORD": "Password:"
+  },
+  "NAVIGATION": {
+    "DASHBOARD": "Dashboard",
+    "BOARDING_RECORDS": "Boarding records",
+    "USERS": "Users",
+    "AGENCIES": "Agencies",
+    "GLOBAL_DASHBOARD": "Global Dashboard",
+    "BOARDINGS": "Boardings",
+    "VESSELS": "Vessels",
+    "CREW": "Crew",
+    "ALL_USERS": "All Users",
+    "CREATE_NEW_USER": "Create New User",
+    "ALL AGENCIES": "All Agencies",
+    "CREATE_NEW_AGENCY": "create New Agency",
+    "LOGOUT": "Log out"
+  },
+  "HOME_PAGE": {
+    "OVERVIEW": "Overview for",
+    "COMPLIANCE_RATE": "Compliance Rate",
+    "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
+  },
+  "BOARDING_PAGE": {
+    "RECORDS_FOUND": "Records Found",
+    "MAP": "Map",
+    "ALL_DATES": "All dates",
+    "EDIT_BOARDING": {
+      "BOARDING": "Boarding",
+      "LATTITUDE": "Lattitude",
+      "LONGTITUDE": "Longtitude"
+    }
+  },
+  "SEARCH": {
+    "FILTER_SEARCH": "Search",
+    "SEARCH_O_FISH": "Search O-FISH",
+    "ALL": "All",
+    "REPORTS": "Reports",
+    "CREW_MEMBERS": "Crew Members",
+    "SEE_RESULTS": "See all results for",
+    "SEARCH_RESULTS": "Search Results for",
+    "RECORDS_OF_VESSELS": "Records of Vessels",
+    "CAPTAINS_AND_CREW": "Captains & Crew",
+    "CATCHES": "Catches"
+  },
+  "LOADING": {
+    "LOGGIN_IN": "Logging in...",
+    "LOADING": "Loading..."
+  },
+  "BUTTONS": {
+    "APPLY": "Apply",
+    "CLOSE": "Close",
+    "NEW_BOARDING": "New Boarding",
+    "SEE_ACTIVITY": "See Activity",
+    "SEE_ALL": "See all",
+    "EDIT_BOARDING": "Edit Boarding"
+  },
+  "TABLE": {
+    "DATE": "Date",
+    "TIME": "Time",
+    "VESSEL": "Vessel",
+    "PERMIT_NUMBER": "Permit Number",
+    "CAPTAIN": "Captain",
+    "VIOLATIONS": "Violation",
+    "BOADED_BY": "Boarded By",
+    "HOME_PORT": "Home Port",
+    "LAST_BOARDED": "Last Boarded",
+    "RISK": "Risk",
+    "LICENSE_NUMBER": "Lisence number",
+    "AGENCY": "Agency",
+    "NAME": "Name",
+    "USER_TYPE": "User Type",
+    "CREATED_ON": "Created On",
+    "STATUS": "Status",
+    "DESCRIPTION": "Description",
+    "OFFICERS": "Officers"
+  },
+  "FILTER": {
+    "MAIN": {
+      "RISK": {
+        "RED": "Red",
+        "GREEN": "Green",
+        "AMBER": "Amber"
+      },
+      "BOARDING_INFO": {
+        "NAME": "Boarding Information",
+        "DATE_FROM": "Date from",
+        "DATE_TO": "Date to",
+        "LOCATION": "Location"
+      },
+      "VESSEL_INFO": {
+        "NAME": "Vessel Information",
+        "NATIONALITY": "Nationality"
+      },
+      "LAST_DELIVERY": {
+        "NAME": "Last Delivery",
+        "BUSINESS": "Business"
+      },
+      "CATCH": {
+        "NAME": "Catch",
+        "SPECIES": "Species",
+        "WEIGHT": "Weight",
+        "COUNT": "Count"
+      }
+    },
+    "HOME_PAGE": {
+      "DATE_TIME": "Date & Time"
+    }
+  }
+}
