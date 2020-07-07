@@ -7,14 +7,17 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
 
 import history from "../../../root/root.history";
 
+import StitchService from "./../../../services/stitch.service";
 import UserService from "./../../../services/user.service";
 import AgencyService from "./../../../services/agency.service";
 
 import "./new-user.css";
 
+const stitchService = StitchService.getInstance();
 const userService = UserService.getInstance();
 const agencyService = AgencyService.getInstance();
 
@@ -23,11 +26,23 @@ class NewUser extends Component {
     error: null,
     agencyIsShown: false,
     agencies: [],
+    imgData: null,
+    imageId: null
   };
 
   removeErrMsg = () => {
     this.setState({ error: null });
   };
+
+  imageUploaded = (data) => {
+    this.setState({imgData: data});
+    stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result)=>{
+      //TODO: Remove this log after test real data
+      console.log(result.insertedId.toString());
+      
+      this.setState({imageId: result.insertedId.toString()});
+    });
+  }
 
   saveUser = (values) => {
     let newUser = {
@@ -38,9 +53,10 @@ class NewUser extends Component {
       },
       active: true,
       createdOn: moment().toDate(),
+      profilePic: this.state.imageId ? this.state.imageId : ""
     };
 
-    if (values.adminType === "alobal") {
+    if (values.adminType === "global") {
       newUser = {
         ...newUser,
         global: { admin: true },
@@ -110,13 +126,7 @@ class NewUser extends Component {
                 className="flex-column justify-center"
               >
                 <div className="flex-row justify-center">
-                  <div className="add-img">
-                    <img
-                      className="icon"
-                      src={require("../../../assets/download-img-icon.jpg")}
-                      alt="no logo"
-                    />
-                  </div>
+                  <PhotoUploader onData={this.imageUploaded}></PhotoUploader>
                 </div>
                 <div className="flex-row justify-between">
                   <TextField
