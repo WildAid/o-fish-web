@@ -1,6 +1,7 @@
 import StitchService from "./stitch.service";
 import { UserPasswordAuthProviderClient } from "mongodb-stitch-browser-sdk";
 
+import { BSON } from "mongodb-stitch-browser-sdk";
 const stitchService = StitchService.getInstance();
 
 export default class UserService {
@@ -11,6 +12,10 @@ export default class UserService {
       UserService.serviceInstance = new UserService();
     }
     return UserService.serviceInstance;
+  }
+
+  getUserById(id) {
+    return stitchService.database.collection("User").findOne({_id: new BSON.ObjectId(id)});
   }
 
   getUser(critheria) {
