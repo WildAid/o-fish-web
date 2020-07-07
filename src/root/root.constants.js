@@ -19,7 +19,7 @@ export const VIEW_BOARDING_PAGE = "/boardings/view/:id";
 //Users subroutes
 export const NEW_USER_PAGE = "/users/new_user";
 export const USERS_ACTIVITIES_PAGE = "/users/activities";
-export const EDIT_USER_PAGE = "/users/edit_user";
+export const EDIT_USER_PAGE = "/users/edit/:id";
 export const VIEW_USER_PAGE = "/users/view_user";
 
 //Agencies subroutes
