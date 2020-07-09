@@ -37,9 +37,6 @@ class NewUser extends Component {
   imageUploaded = (data) => {
     this.setState({imgData: data});
     stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result)=>{
-      //TODO: Remove this log after test real data
-      console.log(result.insertedId.toString());
-      
       this.setState({imageId: result.insertedId.toString()});
     });
   }
