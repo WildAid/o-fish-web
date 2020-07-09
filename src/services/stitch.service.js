@@ -4,6 +4,8 @@ import {
   UserPasswordCredential,
   RemoteMongoClient
 } from "mongodb-stitch-browser-sdk";
+import { BSON } from "mongodb-stitch-browser-sdk";
+
 
 import config from "../config";
 
@@ -83,5 +85,21 @@ export default class StitchService {
 
   getData(limit, offset, funcName) {
     return this._localStitchClient.callFunction(funcName, [limit, offset]);
+  }
+
+  getPhoto(id) {
+      return this.database.collection("Photo").findOne({_id: new BSON.ObjectId(id)});
+  }
+
+  uploadImage(data, agency, recordId){
+    const img =  new BSON.Binary(new Uint8Array(data));
+    return this.database.collection("Photo").insertOne({
+      date: new Date(),
+      agency: agency,
+      picture: img,
+      referencingReportID: recordId ? recordId: "",
+      pictureURL : "",
+      thumbNail: img
+    });
   }
 }

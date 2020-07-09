@@ -1,0 +1,12 @@
+.photo-uploader {
+
+}
+
+.photo-uploader .hidden-uploader{
+  display: none;
+}
+
+.photo-uploader .add-img{
+  border-radius: 65px;
+  overflow: hidden;
+}
