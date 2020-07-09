@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
+
 import ChartBox from "./../../charts/chart-box.component";
 import FilterPanel from "./../../partials/filter-panel/filter-panel.component";
 import StitchService from "./../../../services/stitch.service";
@@ -10,7 +12,7 @@ const chartOptions = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["patrol-hours"]
+  ...stitchService.chartsConfig["patrol-hours"],
 };
 
 const filterConfiguration = {
@@ -30,7 +32,7 @@ const filterConfiguration = {
   ],
 };
 
-export default class PatrolHoursSection extends Component {
+class PatrolHoursSection extends Component {
   state = { filter: "" };
 
   filterChanged = (value) => {
@@ -39,15 +41,17 @@ export default class PatrolHoursSection extends Component {
   };
 
   render() {
+    const { t } = this.props;
+
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section patrol-hours-section">
         <div className="flex-row justify-between align-center full-view">
-          <h2 className="chart-name">Officer Patrol Hours</h2>
+          <h2 className="chart-name">{t("HOME_PAGE.OFFICER_PATROL_HOURS")}</h2>
           <FilterPanel
             options={{ useChartsSyntax: true }}
             configuration={filterConfiguration}
             onFilterChanged={(value) => this.filterChanged(value)}
-          ></FilterPanel>
+          />
         </div>
         <div className="flex-row justify-between align-stretch full-view lg-chart">
           <ChartBox options={chartOptions}></ChartBox>
@@ -56,3 +60,5 @@ export default class PatrolHoursSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(PatrolHoursSection);

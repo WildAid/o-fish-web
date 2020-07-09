@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
 import ComplianceRateSection from "./compliance-rate-section/compliance-rate.section";
 import BoardingsSection from "./boardings-section/boardings.section";
@@ -34,6 +35,7 @@ class Home extends Component {
 
   render() {
     const { vessels, boardings, crew, searchQuery, highlighted } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column full-view align-center home">
@@ -46,7 +48,7 @@ class Home extends Component {
           searchWords={highlighted}
           isAutofill={true}
         />
-        <h1>Overview for April 01, 2020 - April 25, 2020</h1>
+        <h1>{`${t("HOME_PAGE.OVERVIEW")} April 01, 2020 - April 25, 2020`}</h1>
         <ComplianceRateSection />
         <BoardingsSection />
         <PatrolHoursSection />
@@ -55,4 +57,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withTranslation("translation")(Home);

@@ -8,6 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
+import { withTranslation } from "react-i18next";
 
 import history from "../../../root/root.history";
 
@@ -27,7 +28,7 @@ class NewUser extends Component {
     agencyIsShown: false,
     agencies: [],
     imgData: null,
-    imageId: null
+    imageId: null,
   };
 
   removeErrMsg = () => {
@@ -35,14 +36,14 @@ class NewUser extends Component {
   };
 
   imageUploaded = (data) => {
-    this.setState({imgData: data});
-    stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result)=>{
+    this.setState({ imgData: data });
+    stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result) => {
       //TODO: Remove this log after test real data
       console.log(result.insertedId.toString());
-      
-      this.setState({imageId: result.insertedId.toString()});
+
+      this.setState({ imageId: result.insertedId.toString() });
     });
-  }
+  };
 
   saveUser = (values) => {
     let newUser = {
@@ -53,7 +54,7 @@ class NewUser extends Component {
       },
       active: true,
       createdOn: moment().toDate(),
-      profilePic: this.state.imageId ? this.state.imageId : ""
+      profilePic: this.state.imageId ? this.state.imageId : "",
     };
 
     if (values.adminType === "global") {
@@ -93,13 +94,14 @@ class NewUser extends Component {
 
   render() {
     const { error, agencyIsShown, agencies } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
-            <div className="item-label">User</div>
-            <div className="item-name">New User</div>
+            <div className="item-label">{t("CREATE_USER_PAGE.USER")}</div>
+            <div className="item-name">{t("CREATE_USER_PAGE.NEW_USER")}</div>
           </div>
         </div>
         <div className="flex-row justify-center standard-view white-bg box-shadow relative new-user-form">
@@ -130,7 +132,7 @@ class NewUser extends Component {
                 </div>
                 <div className="flex-row justify-between">
                   <TextField
-                    label="First Name"
+                    label={t("CREATE_USER_PAGE.FIRST_NAME")}
                     name="firstName"
                     className="form-input"
                     onBlur={handleBlur}
@@ -139,7 +141,7 @@ class NewUser extends Component {
                     value={values.firstName}
                   />
                   <TextField
-                    label="Last Name"
+                    label={t("CREATE_USER_PAGE.LAST_NAME")}
                     name="lastName"
                     className="form-input"
                     onBlur={handleBlur}
@@ -147,19 +149,10 @@ class NewUser extends Component {
                     type="text"
                     value={values.lastName}
                   />
-                  <div
-                    label="Last Name"
-                    name="lastName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("lastName", e.target.value)}
-                    type="text"
-                    value={values.lastName}
-                  ></div>
                 </div>
                 <div className="flex-column">
                   <TextField
-                    label="Email"
+                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
                     name="email"
                     type="text"
                     className="form-input"
@@ -168,7 +161,9 @@ class NewUser extends Component {
                     value={values.email}
                   />
                   <FormControl className="form-input">
-                    <InputLabel id="role-label">Role</InputLabel>
+                    <InputLabel id="role-label">
+                      {t("CREATE_USER_PAGE.ROLE")}
+                    </InputLabel>
                     <Select
                       labelId="role-label"
                       onChange={(e) =>
@@ -194,7 +189,9 @@ class NewUser extends Component {
                   {agencyIsShown && (
                     <Fragment>
                       <FormControl className="form-input">
-                        <InputLabel id="agency-label">Agency</InputLabel>
+                        <InputLabel id="agency-label">
+                          {t("TABLE.AGENCY")}
+                        </InputLabel>
                         <Select
                           labelId="agency-label"
                           onChange={(e) =>
@@ -211,7 +208,9 @@ class NewUser extends Component {
                         </Select>
                       </FormControl>
                       <FormControl className="form-input">
-                        <InputLabel id="group-label">User Group</InputLabel>
+                        <InputLabel id="group-label">
+                          {t("CREATE_USER_PAGE.USER_GROUP")}
+                        </InputLabel>
                         <Select
                           labelId="group-label"
                           onChange={(e) =>
@@ -221,7 +220,7 @@ class NewUser extends Component {
                           value={values.userGrop}
                         >
                           <MenuItem value="User Group">
-                            <em>User Group</em>
+                            <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
                           </MenuItem>
                         </Select>
                       </FormControl>
@@ -230,13 +229,13 @@ class NewUser extends Component {
                 </div>
                 <div className="flex-row justify-around align-center margin-top">
                   <button className="blue-btn" type="submit">
-                    Create User
+                    {t("BUTTONS.CREATE_USER")}
                   </button>
                   <div
                     className="blue-color pointer"
                     // onClick={this.clearForm}
                   >
-                    Cancel
+                    {t("BUTTONS.CANCEL")}
                   </div>
                 </div>
               </Form>
@@ -258,4 +257,4 @@ class NewUser extends Component {
   }
 }
 
-export default NewUser;
+export default withTranslation("translation")(NewUser);

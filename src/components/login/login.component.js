@@ -89,7 +89,7 @@ class Login extends Component {
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
-                      <div>{t("LOGIN_PAGE.LOGGIN_IN")}</div>
+                      <div>{t("LOADING.LOGGIN_IN")}</div>
                     ) : (
                       <button className="blue-btn" type="submit">
                         Log in

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { withTranslation } from "react-i18next";
 
-export default class CatchSection extends Component {
+class CatchSection extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,13 +66,14 @@ export default class CatchSection extends Component {
 
   render() {
     const { data } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column margin-bottom">
         <div className="flex-row justify-between align-baseline">
           <div className="item-name margin-left margin-top">Catch</div>
           <div className="font-16 pointer margin-right" onClick={this.addNew}>
-            + Add catch
+            {`+ ${t("SEARCH.CATCHES")}`}
           </div>
         </div>
         {data.map((item, index) => (
@@ -80,9 +82,12 @@ export default class CatchSection extends Component {
             key={index}
           >
             <div className="flex-row justify-between align-baseline">
-              <h3>Catch {index + 1}</h3>
+              <h3>{` ${t("FILTER.MAIN.CATCH.NAME")} ${index + 1}`}</h3>
               <div className="flex-row justify-between buttons-container">
-                <button className="white-btn" onClick={() => this.deleteItem(index)}>
+                <button
+                  className="white-btn"
+                  onClick={() => this.deleteItem(index)}
+                >
                   <Icon>delete_outlined</Icon>
                 </button>
                 <button className="white-btn">
@@ -92,28 +97,28 @@ export default class CatchSection extends Component {
             </div>
             <div className="flex-row justify-between">
               <TextField
-                label="Species:"
+                label={t("FILTER.MAIN.CATCH.SPECIES")}
                 style={{ width: "49%" }}
                 name="species"
                 value={item.fish}
                 onChange={(e) => this.setSpeciesdValue(e.target.value, index)}
               />
               <TextField
-                label="Count:"
+                label={t("FILTER.MAIN.CATCH.COUNT")}
                 style={{ width: "19%" }}
                 name="number"
                 value={item.number}
                 onChange={(e) => this.setCountValue(e.target.value, index)}
               />
               <TextField
-                label="Weight:"
+                label={t("FILTER.MAIN.CATCH.WEIGHT")}
                 style={{ width: "19%" }}
                 name="weight"
                 value={item.weight}
                 onChange={(e) => this.setWeightValue(e.target.value, index)}
               />
               <TextField
-                label="Units:"
+                label={t("FILTER.MAIN.CATCH.UNITS")}
                 style={{ width: "9%" }}
                 name="units"
                 value={item.unit}
@@ -126,3 +131,5 @@ export default class CatchSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(CatchSection);

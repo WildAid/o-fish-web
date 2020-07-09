@@ -16,23 +16,38 @@
     "CREW": "Crew",
     "ALL_USERS": "All Users",
     "CREATE_NEW_USER": "Create New User",
-    "ALL AGENCIES": "All Agencies",
-    "CREATE_NEW_AGENCY": "create New Agency",
-    "LOGOUT": "Log out"
+    "ALL_AGENCIES": "All Agencies",
+    "CREATE_NEW_AGENCY": "Create New Agency",
+    "LOG_OUT": "Log out"
   },
   "HOME_PAGE": {
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",
     "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
   },
+  "CREATE_AGENCY_PAGE": {
+    "NEW_AGENCY": "New Agency",
+    "EMAIL": "E-mail",
+    "SITE": "Site"
+  },
+  "CREATE_USER_PAGE": {
+    "USER": "User",
+    "NEW_USER": "New User",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "ROLE": "Role",
+    "USER_GROUP": "User Group"
+  },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Records Found",
     "MAP": "Map",
     "ALL_DATES": "All dates",
-    "EDIT_BOARDING": {
+    "VIEW_BOARDING": {
       "BOARDING": "Boarding",
+      "LAST_MODIFIED": "Last Modified on",
       "LATTITUDE": "Lattitude",
       "LONGTITUDE": "Longtitude",
+      "VESSEL_NAME": "Vessel Name",
       "DELIVERY_DATE": "Last Date of delivery",
       "LICENSE_NUMBER": "License Number",
       "PHOTOS": "Photos",
@@ -41,11 +56,23 @@
       "FISHERY": "Fishery",
       "GEAR": "Gear"
     },
-    "VIEW_BOARDING": {
-      "BOARDING": "Boarding",
-      "LATTITUDE": "Lattitude",
-      "LONGTITUDE": "Longtitude"
+    "EDIT_BOARDING": {
+      "BASIC_INFO": "Basic Information",
+      "INLINE_DATE_PICKER": "Date picker inline",
+      "TIME_PICKER": "Time picker",
+      "ELECTRONIC_INFO": "Electronic Monitoring Information",
+      "TYPE": "Type",
+      "REGISTRY_NUMBER": "Registry Number",
+      "SEIZURES": "Seizures"
+    },
+    "VERSION_CONTROL": {
+      "REVISION_HISTORY": "Revision History",
+      "AMOUNT": "Amount"
     }
+  },
+  "AGENCY_PAGE": {
+    "FORM_DATA": "Form Data",
+    "PREFERED_NATIONALITIES": "Prefered Nationatities"
   },
   "SEARCH": {
     "FILTER_SEARCH": "Search",
@@ -66,10 +93,20 @@
   "BUTTONS": {
     "APPLY": "Apply",
     "CLOSE": "Close",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "SAVE": "Save",
     "NEW_BOARDING": "New Boarding",
     "SEE_ACTIVITY": "See Activity",
     "SEE_ALL": "See all",
-    "EDIT_BOARDING": "Edit Boarding"
+    "EDIT_BOARDING": "Edit Boarding",
+    "SAVE_BOARDING": "Save Boarding",
+    "EDIT_AGENCY": "Edit Agency Information",
+    "ADD_SPECIES": "Add species",
+    "ADD_CREW": "Add crew member",
+    "ADD_CUTCH": "Add catch",
+    "CREATE_REPORT": "Create Activity Report",
+    "CREATE_USER": "Create User"
   },
   "TABLE": {
     "DATE": "Date",
@@ -78,7 +115,7 @@
     "PERMIT_NUMBER": "Permit Number",
     "CAPTAIN": "Captain",
     "VIOLATIONS": "Violation",
-    "BOADED_BY": "Boarded By",
+    "BOARDED_BY": "Boarded By",
     "HOME_PORT": "Home Port",
     "LAST_BOARDED": "Last Boarded",
     "RISK": "Risk",
@@ -92,6 +129,7 @@
     "OFFICERS": "Officers"
   },
   "FILTER": {
+    "FILTER": "Filter",
     "MAIN": {
       "RISK": {
         "RED": "Red",
@@ -116,11 +154,22 @@
         "NAME": "Catch",
         "SPECIES": "Species",
         "WEIGHT": "Weight",
-        "COUNT": "Count"
+        "COUNT": "Count",
+        "UNITS": "Units"
+      },
+      "RISKS": {
+        "NAME": "Risks"
       }
     },
     "HOME_PAGE": {
       "DATE_TIME": "Date & Time"
     }
+  },
+  "WARNINGS": {
+    "NOT_AUTHENTICATED": "Not authenticated",
+    "NO_BOARDINGS": "No boardings found",
+    "NO_AGENCIES": "No Agencies found",
+    "NO_OFFICERS":"No officers found",
+    "NO_CATCHES": "No catches found"
   }
 }

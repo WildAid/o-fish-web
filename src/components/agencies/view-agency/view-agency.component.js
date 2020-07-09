@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
@@ -37,7 +38,7 @@ class ViewAgency extends Component {
 
           this.setState({
             agencyInfo,
-            loading: false
+            loading: false,
           });
         })
         .catch((error) => {
@@ -48,16 +49,17 @@ class ViewAgency extends Component {
 
   render() {
     const { agencyInfo, activeTab, loading } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="padding-bottom flex-column align-center">
         <div className="flex-row justify-between standard-view border-bottom agency-header">
           <div className="flex-column">
             {loading ? (
-              "Loading..."
+              t("LOADING.LOADING")
             ) : (
               <Fragment>
-                <div className="item-label">Agency</div>
+                <div className="item-label">{t("TABLE.AGENCY")}</div>
                 <div className="item-name">{agencyInfo.agency}</div>
                 <div className="font-16">{agencyInfo.description}</div>
                 <div className="flex-row agency-box">
@@ -84,7 +86,7 @@ class ViewAgency extends Component {
             )}
           </div>
           <NavLink to={EDIT_AGENCIES_PAGE}>
-            <button className="blue-btn">Edit Agency Information</button>
+            <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>
         <div className="flex-column justify-between standard-view">
@@ -95,7 +97,7 @@ class ViewAgency extends Component {
               }`}
               onClick={() => this.handleChangeTab(1)}
             >
-              Officers
+              {t("TABLE.OFFICERS")}
             </div>
             <div
               className={`agency-tab ${
@@ -103,7 +105,7 @@ class ViewAgency extends Component {
               }`}
               onClick={() => this.handleChangeTab(2)}
             >
-              Form Data
+              {t("AGENCY_PAGE.FORM_DATA")}
             </div>
           </div>
           <div className="flex-row">
@@ -115,10 +117,12 @@ class ViewAgency extends Component {
                       <td>
                         <div className="flex-row align-center justify-between agency-info-box">
                           <div className="table-name">
-                            Officers {`(${agencyInfo.officers.length})`}
+                            {`${t("TABLE.OFFICERS")} (${
+                              agencyInfo.officers.length
+                            })`}
                           </div>
                           <button className="white-btn">
-                            Create Activity Report
+                            {t("BUTTONS.CREATE_REPORT")}
                           </button>
                         </div>
                       </td>
@@ -142,7 +146,7 @@ class ViewAgency extends Component {
                             </td>
                           </tr>
                         ))
-                      : "No officers found"}
+                      : t("WARNINGS.NO_OFFICERS")}
                   </tbody>
                 </table>
               </div>
@@ -151,22 +155,25 @@ class ViewAgency extends Component {
                 <div className="flex-row form-content">
                   <div className="flex-column box-shadow justify-between form-content-menu">
                     <div className="form-menu-item active-form-menu-item">
-                      Catch
-                      {agencyInfo.catches
-                        ? `(${agencyInfo.catches.length})`
-                        : ""}
+                      {`${t("FILTER.MAIN.CATCH.NAME")} ${
+                        agencyInfo.catches
+                          ? `(${agencyInfo.catches.length})`
+                          : ""
+                      }`}
                     </div>
                     <div className="form-menu-item">
-                      Violations
-                      {agencyInfo.violations
-                        ? `(${agencyInfo.violations.length})`
-                        : ""}
+                      {`${t("TABLE.VIOLATIONS")} ${
+                        agencyInfo.violations
+                          ? `(${agencyInfo.violations.length})`
+                          : ""
+                      }`}
                     </div>
                     <div className="form-menu-item">
-                      Prefered Nationatities
-                      {agencyInfo.officers
-                        ? `(${agencyInfo.officers.length})`
-                        : ""}
+                      {`${t("AGENCY_PAGE.PREFERED_NATIONALITIES")} ${
+                        agencyInfo.officers
+                          ? `(${agencyInfo.officers.length})`
+                          : ""
+                      }`}
                     </div>
                   </div>
                   <div className="flex-column form-search">
@@ -176,7 +183,7 @@ class ViewAgency extends Component {
                         type="search"
                         placeholder="Search Species"
                       ></input>
-                      <button className="blue-btn">+ Add species</button>
+                      <button className="blue-btn">{`+ ${t("BUTTONS.ADD_SPECIES")}`}</button>
                     </div>
                     <div className="box-shadow form-checkbox-list">
                       {agencyInfo.catches
@@ -189,7 +196,7 @@ class ViewAgency extends Component {
                               {item.name}
                             </div>
                           ))
-                        : "No catches found"}
+                        : t("WARNINGS.NO_CATCHES")}
                     </div>
                   </div>
                 </div>
@@ -202,4 +209,4 @@ class ViewAgency extends Component {
   }
 }
 
-export default ViewAgency;
+export default withTranslation("translation")(ViewAgency);
