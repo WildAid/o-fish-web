@@ -289,7 +289,7 @@ class Boardings extends Component {
                     <td>Permit Number</td>
                     <td>Captain</td>
                     <td>Violations</td>
-                    <td>Bordered by</td>
+                    <td>Boarded by</td>
                     <td>Risk</td>
                   </tr>
                 </thead>

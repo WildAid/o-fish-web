@@ -32,6 +32,18 @@
     "EDIT_BOARDING": {
       "BOARDING": "Boarding",
       "LATTITUDE": "Lattitude",
+      "LONGTITUDE": "Longtitude",
+      "DELIVERY_DATE": "Last Date of delivery",
+      "LICENSE_NUMBER": "License Number",
+      "PHOTOS": "Photos",
+      "NOTES": "Notes",
+      "ACTIVITY": "Activity",
+      "FISHERY": "Fishery",
+      "GEAR": "Gear"
+    },
+    "VIEW_BOARDING": {
+      "BOARDING": "Boarding",
+      "LATTITUDE": "Lattitude",
       "LONGTITUDE": "Longtitude"
     }
   },
