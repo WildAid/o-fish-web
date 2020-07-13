@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { Formik, Form } from "formik";
-import moment from "moment";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Select from "@material-ui/core/Select";
@@ -31,7 +30,6 @@ class EditUser extends Component {
     user: null,
     isLoaded: false,
     error: null,
-    agencyIsShown: false,
     agencies: [],
     imgData: null,
     imageId: null
@@ -43,17 +41,60 @@ class EditUser extends Component {
 
   imageUploaded = (data) => {
     this.setState({imgData: data});
-    stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result)=>{
-      this.setState({imageId: result.insertedId.toString()});
-    });
   };
 
-  saveUser = () =>{
+  saveUser = (values) => {
+    const {imgData, user} = this.state;
+    let newUser = {
+      _id: user._id,
+      email: values.email,
+      name: {
+        first: values.firstName,
+        last: values.lastName,
+      },
+      active: true,
+      createdOn: user.createdOn,
+      userGroup: values.userGroup
+    };
 
+    if (values.adminType === "global") {
+      newUser = {
+        ...newUser,
+        global: { admin: true },
+        agency: { name: values.agency },
+      };
+    } else if (values.adminType === "agency") {
+      newUser = { ...newUser, agency: { name: values.agency, admin: true } };
+    } else {
+      newUser = { ...newUser, agency: { name: values.agency } };
+    }
+
+    const saveUserFunc = () => {userService
+      .updateUser(newUser)
+      .then(() => history.push("/users"))
+      .catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
+    }
+
+    if (imgData){
+      stitchService.uploadImage(imgData, newUser.agency.name).then((result)=>{
+        newUser.profilePic = result.insertedId.toString();
+        saveUserFunc();
+      }).catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
+    } else {
+      saveUserFunc();
+    }
   }
 
   componentDidMount(){
-    const id = this.props.match.params.id;
+    const id = this.props.userId ? this.props.userId : this.props.match.params.id;
     agencyService
       .getAgencies(50, 0, "", null)
       .then((data) => {
@@ -66,6 +107,7 @@ class EditUser extends Component {
         console.error(error);
       });
     userService.getUserById(id).then((user)=>{
+      console.log(user);
       this.setState({isLoaded: true, user: user});
     }).catch((error) => {
       this.setState({error: error});
@@ -73,23 +115,29 @@ class EditUser extends Component {
     });
   }
 
+  clearForm = ()=>{
+    history.push("/users")
+  }
+
   render() {
-    const {user, isLoaded, error, agencyIsShown, agencies} = this.state;
+    const {user, isLoaded, error, agencies} = this.state;
     const initialValues = user ? {
       profilePic: user.profilePic,
       firstName: user.name.first,
       lastName:  user.name.last,
+      password: "",
       agency: user.agency,
       adminType: checkUserType(user),
       email: user.email,
-      userGroup: "",
+      userGroup: user.userGroup,
     } : {
       firstName: "",
       lastName: "",
+      password: "",
       agency: "",
       adminType: "",
       email: "",
-      userGrop: "",
+      userGroup: "",
     };
     return (
       <div className="flex-column align-center padding-top">
@@ -158,6 +206,15 @@ class EditUser extends Component {
                     onChange={(e) => setFieldValue("email", e.target.value)}
                     value={values.email}
                   />
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("password", e.target.value)}
+                    value=""
+                  />
                   <FormControl className="form-input">
                     <InputLabel id="role-label">Role</InputLabel>
                     <Select
@@ -165,7 +222,6 @@ class EditUser extends Component {
                       onChange={(e) =>
                         setFieldValue("adminType", e.target.value)
                       }
-                      onClick={() => this.setState({ agencyIsShown: true })}
                       value={values.adminType}
                     >
                       <MenuItem value="global">
@@ -182,50 +238,44 @@ class EditUser extends Component {
                       </MenuItem>
                     </Select>
                   </FormControl>
-                  {agencyIsShown && (
-                    <Fragment>
-                      <FormControl className="form-input">
-                        <InputLabel id="agency-label">Agency</InputLabel>
-                        <Select
-                          labelId="agency-label"
-                          onChange={(e) =>
-                            setFieldValue("agency", e.target.value)
-                          }
-                          onClick={() => this.setState({ agencyIsShown: true })}
-                          value={values.agency}
-                        >
-                          {agencies.map((agency, ind) => (
-                            <MenuItem value={agency} key={ind}>
-                              <em>{agency}</em>
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl className="form-input">
-                        <InputLabel id="group-label">User Group</InputLabel>
-                        <Select
-                          labelId="group-label"
-                          onChange={(e) =>
-                            setFieldValue("userGrop", e.target.value)
-                          }
-                          onClick={() => this.setState({ agencyIsShown: true })}
-                          value={values.userGrop}
-                        >
-                          <MenuItem value="User Group">
-                            <em>User Group</em>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Fragment>
-                  )}
+                  <FormControl className="form-input">
+                    <InputLabel id="agency-label">Agency</InputLabel>
+                    <Select
+                      labelId="agency-label"
+                      onChange={(e) =>
+                        setFieldValue("agency", e.target.value)
+                      }
+                      value={values.agency}
+                    >
+                      {agencies.map((agency, ind) => (
+                        <MenuItem value={agency} key={ind}>
+                          <em>{agency}</em>
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl className="form-input">
+                    <InputLabel id="group-label">User Group</InputLabel>
+                    <Select
+                      labelId="group-label"
+                      onChange={(e) =>
+                        setFieldValue("userGroup", e.target.value)
+                      }
+                      value={values.userGroup}
+                    >
+                      <MenuItem value="User Group">
+                        <em>User Group</em>
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
                 <div className="flex-row justify-around align-center margin-top">
                   <button className="blue-btn" type="submit">
-                    Create User
+                    Update User
                   </button>
                   <div
                     className="blue-color pointer"
-                    // onClick={this.clearForm}
+                    onClick={this.clearForm}
                   >
                     Cancel
                   </div>

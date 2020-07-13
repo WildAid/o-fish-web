@@ -39,9 +39,9 @@ export default class RisksSection extends Component {
             <div className="item-name margin-left margin-top">Risk</div>
           </div>
           <section className="flex-row justify-between box-shadow padding white-bg margin-top">
-              <Button variant="outlined" style={level == "Green" ? {background: "green"}: {}} onClick={()=>this.setData("Green")}>Green</Button>
-              <Button variant="outlined" style={level == "Amber" ? {background: "olive"}: {}}  onClick={()=>this.setData("Amber")}>Amber</Button>
-              <Button variant="outlined" style={level == "Red" ? {background: "red"}: {}}  onClick={()=>this.setData("Red")}>Red</Button>
+              <Button variant="outlined" style={level === "Green" ? {background: "green"}: {}} onClick={()=>this.setData("Green")}>Green</Button>
+              <Button variant="outlined" style={level === "Amber" ? {background: "olive"}: {}}  onClick={()=>this.setData("Amber")}>Amber</Button>
+              <Button variant="outlined" style={level === "Red" ? {background: "red"}: {}}  onClick={()=>this.setData("Red")}>Red</Button>
           </section>
         </div>
     )

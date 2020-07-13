@@ -39,4 +39,12 @@ export default class UserService {
         return stitchService.database.collection("User").insertOne(data);
       })
   }
+
+  updateUser(data) {
+    return stitchService.database.collection("User").updateOne(data);
+  }
+
+  resetPassword(id, newPassword) {
+
+  }
 }

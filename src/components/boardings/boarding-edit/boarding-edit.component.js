@@ -78,7 +78,7 @@ class BoardingEditPage extends Component {
     const { id } = this.props.match.params;
     if (!id) {
       const obj = {
-        ... initialState,
+        ...initialState,
       }
       obj.reportingOfficer.email = authService.user.customData.email;
       this.setState({

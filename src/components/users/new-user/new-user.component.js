@@ -36,12 +36,10 @@ class NewUser extends Component {
 
   imageUploaded = (data) => {
     this.setState({imgData: data});
-    stitchService.uploadImage(data, "Ecuadorian Galapagos").then((result)=>{
-      this.setState({imageId: result.insertedId.toString()});
-    });
   }
 
   saveUser = (values) => {
+    const {imgData} = this.state;
     let newUser = {
       email: values.email,
       name: {
@@ -49,8 +47,7 @@ class NewUser extends Component {
         last: values.lastName,
       },
       active: true,
-      createdOn: moment().toDate(),
-      profilePic: this.state.imageId ? this.state.imageId : ""
+      createdOn: moment().toDate()
     };
 
     if (values.adminType === "global") {
@@ -65,14 +62,28 @@ class NewUser extends Component {
       newUser = { ...newUser, agency: { name: values.agency } };
     }
 
-    userService
+    const saveUserFunc = () => {userService
       .createUser(values.firstName + values.lastName, newUser)
       .then(() => history.push("/users"))
       .catch((error) => {
         error.message
           ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An expected error occurred!" });
+          : this.setState({ error: "An unexpected error occurred!" });
       });
+    }
+
+    if (imgData){
+      stitchService.uploadImage(imgData, newUser.agency.name).then((result)=>{
+        newUser.profilePic = result.insertedId.toString();
+        saveUserFunc();
+      }).catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
+    } else {
+      saveUserFunc();
+    }
   };
 
   componentDidMount() {
@@ -86,6 +97,10 @@ class NewUser extends Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  clearForm = ()=>{
+    history.push("/users")
   }
 
   render() {
@@ -164,6 +179,15 @@ class NewUser extends Component {
                     onChange={(e) => setFieldValue("email", e.target.value)}
                     value={values.email}
                   />
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("password", e.target.value)}
+                    value=""
+                  />
                   <FormControl className="form-input">
                     <InputLabel id="role-label">Role</InputLabel>
                     <Select
@@ -231,7 +255,7 @@ class NewUser extends Component {
                   </button>
                   <div
                     className="blue-color pointer"
-                    // onClick={this.clearForm}
+                    onClick={this.clearForm}
                   >
                     Cancel
                   </div>

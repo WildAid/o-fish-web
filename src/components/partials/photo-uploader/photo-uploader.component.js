@@ -7,8 +7,8 @@ import "./photo-uploader.css";
 
 const stitchService = StitchService.getInstance();
 export default class PhotoUploader extends Component {
-  id = ("uploader" + Math.random()).replace("0.", '');
   state = {src: null, imgData: null, loading: false};
+  id = ("uploader" + Math.random()).replace("0.", '');
 
   handleClick = ()=>{
     const input = document.querySelector("#" + this.id + " .hidden-uploader");
@@ -21,8 +21,9 @@ export default class PhotoUploader extends Component {
         var reader = new FileReader();
 
         reader.onload = (e)=>{
+            this.setState({imgData: e.target.result});
+            
             reader.onload = (e)=>{
-                this.setSate({imgData: e.target.result});
                 if (this.props.onData){
                   this.props.onData(e.target.result)
                 }
@@ -36,7 +37,7 @@ export default class PhotoUploader extends Component {
 
   componentDidMount(){
     const id = this.props.imageId;
-    if (id)
+    if (id){
       this.setState({loading: true});
       stitchService.getPhoto(id).then((pic)=>{
         if (pic){
@@ -54,17 +55,18 @@ export default class PhotoUploader extends Component {
           this.setState({loading: false});
         }
       });
+    }
   }
 
   render(){
     const {imgData, src, loading} = this.state;
     return (
       <div className='photo-uploader' id={this.id}>
-        <input type='file' className="hidden-uploader" onChange={this.fileSelected}/>
+        <input type='file' className="hidden-uploader" onChange={($event) => this.fileSelected($event)}/>
         <div className="add-img" onClick={this.handleClick}>
           <img
             className="icon"
-            src={src ? src : (imgData ? imgData : require("../../../assets/download-img-icon.jpg"))}
+            src={imgData ? imgData : ( src ? src : require("../../../assets/download-img-icon.jpg"))}
             alt="no logo"
           />
         </div>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
-import { BSON } from "mongodb-stitch-browser-sdk";
 
 export default class VesselSection extends Component {
   state = {
@@ -75,7 +74,7 @@ export default class VesselSection extends Component {
         business: "",
         location: "",
       };
-    if (name == "date") value = new Date(value);
+    if (name === "date") value = new Date(value);
     vessel.lastDelivery[name] = value;
     this.setState({
       vessel: vessel,
