@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
-import { withRouter, Redirect } from "react-router";
+import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
 
-import { RESTORE_PASSWORD_PAGE, HOME_PAGE } from "../../root/root.constants.js";
+import AuthService from "../../services/auth.service";
+
+import history from "../../root/root.history";
+
+import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
 import "./login.css";
-import { withAuth } from "../auth/auth.component";
-import history from "../../root/root.history.js";
+
+const authService = AuthService.getInstance();
 
 class Login extends Component {
   state = {
@@ -17,15 +21,16 @@ class Login extends Component {
   };
 
   handleLogin = (values) => {
-    const { authenticate } = this.props;
-    const { location } = this.props;
-    const { from } = location.state || { from: { pathname: HOME_PAGE } };
-
-    this.setState({ loading: true });
-    authenticate(values.login, values.password)
+    this.setState({
+      loading: true,
+    });
+    authService
+      .authenticate(values.login, values.password)
       .then(() => {
-        this.setState({ loading: false });
-        history.replace(from);
+        this.setState({
+          loading: false,
+        });
+        history.replace("/home");
       })
       .catch((error) => {
         this.setState({
@@ -36,12 +41,7 @@ class Login extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props;
     const { error, loading } = this.state;
-
-    if (isAuthenticated) {
-      return <Redirect to={HOME_PAGE} />;
-    }
 
     return (
       <div className="flex-row justify-center align-center login-box">
@@ -112,4 +112,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(withAuth(Login));
+export default withRouter(Login);

@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 
-import { withAuth } from "../../auth/auth.component";
+import storage from "../../../helpers/localStorageData";
+
+import AuthService from "../../../services/auth.service";
 
 import "./profile.css";
+
+const authService = AuthService.getInstance();
 
 class Profile extends Component {
   state = {
     isMenuOpen: false,
   };
 
+  logout = () => {
+    storage.clear();
+    window.location.href = "/";
+  };
+
   render() {
     const { isMenuOpen } = this.state;
-    const { logout, isAuthenticated, user } = this.props;
-
     return (
       <div
         className="profile flex-row profile-info pointer relative"
@@ -26,7 +33,9 @@ class Profile extends Component {
           />
         </div>
         <div className="flex-row align-center profile-name">
-          {isAuthenticated ? user.profile.data.email : "Not authenticated!"}
+          {authService.isAuthenticated
+            ? authService.user.profile.data.email
+            : "Not authenticated!"}
         </div>
         <img
           className="custom-down-arrow"
@@ -35,7 +44,7 @@ class Profile extends Component {
         />
         {isMenuOpen && (
           <div className="flex-column absolute box-shadow white-bg nav-menu">
-            <div onClick={logout} className="logout">
+            <div onClick={this.logout} className="logout">
               Log Out
             </div>
           </div>
@@ -45,4 +54,4 @@ class Profile extends Component {
   }
 }
 
-export default withAuth(Profile);
+export default Profile;
