@@ -42,6 +42,7 @@ import {
   FORMS_PAGE,
   SEARCH_RESULTS_PAGE,
   RESTORE_PASSWORD_PAGE,
+  PROFILE_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -66,6 +67,12 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
+    auth: false,
+    exact: false,
+  },
+  {
+    path: PROFILE_PAGE,
+    component: NewUser,
     auth: false,
     exact: false,
   },

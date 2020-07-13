@@ -13,6 +13,7 @@ import {
   NEW_USER_PAGE,
   NEW_AGENCIES_PAGE,
   LOGIN_PAGE,
+  PROFILE_PAGE,
 } from "../../root/root.constants.js";
 
 import AuthService from "../../services/auth.service";
@@ -211,11 +212,17 @@ class Header extends Component {
                 </div>
               </div>
               {activeMenu === "profile" && (
-                <div
-                  onClick={this.logout}
-                  className="flex-column absolute box-shadow white-bg nav-menu profile-menu"
-                >
-                  <div className="nav-link">{t("NAVIGATION.LOG_OUT")}</div>
+                <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">
+                  <NavLink
+                    onClick={this.navigate}
+                    className="nav-link"
+                    to={PROFILE_PAGE}
+                  >
+                    {t("NAVIGATION.PROFILE")}
+                  </NavLink>
+                  <div className="nav-link" onClick={this.logout}>
+                    {t("NAVIGATION.LOG_OUT")}
+                  </div>
                 </div>
               )}
             </div>
