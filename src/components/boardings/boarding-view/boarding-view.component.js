@@ -25,14 +25,6 @@ import "./boardings-view.css";
 
 const boardingService = BoardingService.getInstance();
 
-const sampleRevisionHistory = [
-  {
-    date: "6/23/2020",
-    author: "Global Admin",
-    changes: [],
-  },
-];
-
 class BoardingViewPage extends Component {
   state = { boarding: null, versionsVisible: false };
 

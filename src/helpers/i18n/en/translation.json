@@ -3,7 +3,7 @@
     "LOGIN": "Log in",
     "FORGOT_PASSWORD": "Forgot password?",
     "EMAIL_USERNAME": "Email/Username:",
-    "PASSWORD": "Password:"
+    "PASSWORD": "Password"
   },
   "NAVIGATION": {
     "DASHBOARD": "Dashboard",
@@ -78,6 +78,9 @@
   "USERS_PAGE": {
     "SEE_ACTIVITY": "See Activity"
   },
+  "PROFILE_PAGE": {
+    "EDIT_USER": "Edit User"
+  },
   "SEARCH": {
     "FILTER_SEARCH": "Search",
     "ALL": "All",
@@ -110,7 +113,8 @@
     "ADD_CREW": "Add crew member",
     "ADD_CUTCH": "Add catch",
     "CREATE_REPORT": "Create Activity Report",
-    "CREATE_USER": "Create User"
+    "CREATE_USER": "Create User",
+    "UPDATE_USER": "Update User"
   },
   "TABLE": {
     "DATE": "Date",

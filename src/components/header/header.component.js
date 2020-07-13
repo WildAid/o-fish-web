@@ -220,7 +220,7 @@ class Header extends Component {
                   >
                     {t("NAVIGATION.PROFILE")}
                   </NavLink>
-                  <div className="nav-link" onClick={this.logout}>
+                  <div className="nav-link pointer" onClick={this.logout}>
                     {t("NAVIGATION.LOG_OUT")}
                   </div>
                 </div>

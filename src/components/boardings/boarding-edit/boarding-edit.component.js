@@ -80,7 +80,7 @@ class BoardingEditPage extends Component {
     if (!id) {
       const obj = {
         ...initialState,
-      };
+      }
       obj.reportingOfficer.email = authService.user.customData.email;
       this.setState({
         isNew: true,

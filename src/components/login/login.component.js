@@ -80,7 +80,7 @@ class Login extends Component {
                     value={values.login}
                   />
                   <TextField
-                    label={t("LOGIN_PAGE.PASSWORD")}
+                    label={`${t("LOGIN_PAGE.PASSWORD")}:`}
                     name="password"
                     type="password"
                     onBlur={handleBlur}
@@ -92,7 +92,7 @@ class Login extends Component {
                       <div>{t("LOADING.LOGGIN_IN")}</div>
                     ) : (
                       <button className="blue-btn" type="submit">
-                        Log in
+                        {t("LOGIN_PAGE.LOGIN")}
                       </button>
                     )}
                   </div>

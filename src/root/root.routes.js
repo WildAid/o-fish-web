@@ -14,6 +14,7 @@ import AgenciesMain from "../components/agencies/agencies.routes-render";
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
+import Profile from "../components/profile/profile.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.component";
@@ -72,7 +73,7 @@ const routes = [
   },
   {
     path: PROFILE_PAGE,
-    component: NewUser,
+    component: Profile,
     auth: false,
     exact: false,
   },
