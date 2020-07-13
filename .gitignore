@@ -25,5 +25,4 @@ yarn-error.log*
 
 package-lock.json
 npm-debug.log*
-.gitignore
-src/config*.js
+**/config*.js
