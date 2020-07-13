@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import Highlighter from "react-highlight-words";
+import { withTranslation } from "react-i18next";
 
 import TextViewer from "../text-viewer/text-viewer";
 
@@ -14,6 +15,7 @@ const ItemInfo = ({
   nameIcon,
   searchWords,
   label,
+  t
 }) => {
   return (
     <div className="flex-row item-info">
@@ -35,7 +37,7 @@ const ItemInfo = ({
                 textToHighlight={name}
               />
             </div>
-            {nameIcon && <div className="captain-icon">CAPTAIN</div>}
+            {nameIcon && <div className="captain-icon">{t("TABLE.CAPTAIN").toUpperCase()}</div>}
           </div>
           <div className="item-label">{label || ""}</div>
         </div>
@@ -45,4 +47,4 @@ const ItemInfo = ({
   );
 };
 
-export default memo(ItemInfo);
+export default withTranslation("translation")(memo(ItemInfo));

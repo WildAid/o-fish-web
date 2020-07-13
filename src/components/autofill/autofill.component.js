@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 import PreviewItem from "./preview-item/preview-item.component";
 
@@ -10,39 +11,39 @@ import "./autofill.css";
 
 class Autofill extends Component {
   render() {
-    const { vessels, crew, boardings, searchQuery, searchWords } = this.props;
+    const { t, vessels, crew, boardings, searchQuery, searchWords } = this.props;
 
     return (
       <div className="standard-view white-bg border absolute standard-view autofill">
         <PreviewItem
           item={vessels[0]}
-          itemName="VESSELS"
+          itemName={t("NAVIGATION.VESSELS").toUpperCase()}
           icon="vessel"
           previewName="_id"
-          subText="Catches"
+          subText={t("SEARCH.CATCHES")}
           searchWords={searchWords}
         />
         <PreviewItem
           item={crew[0]}
-          itemName="CREW MEMBERS"
+          itemName={t("SEARCH.CREW_MEMBERS").toUpperCase()}
           icon="crew"
           previewName="name"
-          subText="Vessels"
+          subText={t("NAVIGATION.VESSELS")}
           searchWords={searchWords}
         />
         <PreviewItem
           item={boardings[0]}
-          itemName="BOARDINGS"
+          itemName={t("NAVIGATION.BOARDINGS").toUpperCase()}
           icon="boarding"
           previewName="date"
-          subText="Vessel"
+          subText={t("TABLE.VESSEL")}
           searchWords={searchWords}
         />
         <div className="flex-row preview-search">
           <SearchIcon htmlColor='#0a4074'/>
           <NavLink className="custom-link" to={SEARCH_RESULTS_PAGE}>
             <div className="preview-search-text">
-              See all results for "{searchQuery}"
+            {t('SEARCH.SEE_ALL_RESULTS', { searchQuery: searchQuery })}
             </div>
           </NavLink>
         </div>
@@ -51,4 +52,4 @@ class Autofill extends Component {
   }
 }
 
-export default Autofill;
+export default withTranslation("translation")(Autofill);

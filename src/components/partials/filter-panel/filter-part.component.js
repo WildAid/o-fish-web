@@ -6,11 +6,13 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/moment";
+import { withTranslation } from "react-i18next";
+
 import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
 import "./filter-panel.css";
 
-export default class FilterPart extends Component {
+class FilterPart extends Component {
   state = { searchPanelShown: false, filterValue: "", searchQuery: "" };
 
   setSearch = (value) => {
@@ -53,7 +55,7 @@ export default class FilterPart extends Component {
 
   render() {
     const { searchPanelShown, searchQuery, filterValue } = this.state;
-    const { title, partType, value } = this.props;
+    const { title, partType, value, t } = this.props;
 
     return (
       <div className="filter-part relative">
@@ -89,17 +91,17 @@ export default class FilterPart extends Component {
             </div>
             <div className="flex-row">
               <button className="grey-btn" onClick={this.applyFilter}>
-                Apply
+                {t("BUTTONS.APPLY")}
               </button>
               <button className="white-btn" onClick={this.cancelFilter}>
-                Close
+                {t("BUTTONS.CLOSE")}
               </button>
             </div>
           </div>
         )}
         {partType === "risk" ? (
           <div className="filter-part-tag">
-            <div className="filter-part-name">Risk:</div>
+            <div className="filter-part-name">{t("TABLE.RISK")}</div>
             <RiskIcon safetyLevel={value} />
             <Icon
               className="remove-filter-btn pointer"
@@ -132,3 +134,5 @@ export default class FilterPart extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(FilterPart);

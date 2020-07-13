@@ -65,4 +65,4 @@ const ComplianceRateSection = ({ t }) => {
   );
 };
 
-export default memo(withTranslation("translation")(ComplianceRateSection));
+export default withTranslation("translation")(memo(ComplianceRateSection));

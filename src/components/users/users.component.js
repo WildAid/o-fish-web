@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import moment from "moment";
+import { withTranslation } from "react-i18next";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
@@ -121,6 +122,8 @@ class UsersMain extends React.Component {
       loading,
     } = this.state;
 
+    const { t } = this.props;
+
     return (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
@@ -131,21 +134,21 @@ class UsersMain extends React.Component {
         <div className="flex-row standard-view">
           <div className="items-amount">
             {loading
-              ? "Loading..."
+              ? t("LOADING.LOADING")
               : total
-              ? `${total} Users`
-              : "No Users found"}
+              ? `${total} ${t("NAVIGATION.USERS")}`
+              : t("WARNINGS.NO_USERS")}
           </div>
         </div>
         {!!users.length && (
           <div className="flex-row standard-view">
             <NavLink to={USERS_ACTIVITIES_PAGE}>
               <button className="blue-btn">
-                See Activity
+                {t("USERS_PAGE.SEE_ACTIVITY")}
                 {activitiesAmount.length ? `(${activitiesAmount.length})` : ""}
               </button>
             </NavLink>
-            <button className="blue-btn">+ Filter</button>
+            <button className="blue-btn">{`+ ${t("FILTER.FILTER")}`}</button>
           </div>
         )}
         {!!users.length && (
@@ -156,13 +159,13 @@ class UsersMain extends React.Component {
                   <td>
                     <div className="flex-row align-center">
                       <input className="check-item" type="checkbox" />
-                      <p>Name</p>
+                      <p>{t("TABLE.NAME")}</p>
                     </div>
                   </td>
-                  <td>Agency</td>
-                  <td>User Type</td>
-                  <td>Created on</td>
-                  <td>Status</td>
+                  <td>{t("TABLE.AGENCY")}</td>
+                  <td>{t("TABLE.USER_TYPE")}</td>
+                  <td>{t("TABLE.CREATED_ON")}</td>
+                  <td>{t("TABLE.STATUS")}</td>
                   <td></td>
                 </tr>
               </thead>
@@ -242,4 +245,4 @@ class UsersMain extends React.Component {
   }
 }
 
-export default withRouter(UsersMain);
+export default withRouter(withTranslation("translation")(UsersMain));

@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import moment from "moment";
 import Highlighter from "react-highlight-words";
+import { withTranslation } from "react-i18next";
 
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
@@ -15,6 +16,7 @@ const PreviewItem = ({
   previewName,
   subText,
   searchWords,
+  t
 }) => {
   if (!item) return;
 
@@ -70,7 +72,7 @@ const PreviewItem = ({
               item.violations[0].offence && (
                 <TextViewer
                   mainText={item.violations[0].offence.explanation}
-                  subText="Violations"
+                  subText={t("TABLE.VIOLATIONS")}
                 />
               )}
           </div>
@@ -80,4 +82,4 @@ const PreviewItem = ({
   );
 };
 
-export default memo(PreviewItem);
+export default withTranslation("translation")(memo(PreviewItem));
