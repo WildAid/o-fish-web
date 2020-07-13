@@ -1,6 +1,5 @@
 import StitchService from "./stitch.service";
 import EventEmitter from "events";
-import storage from '../helpers/localStorageData';
 
 const stitchService = StitchService.getInstance();
 
@@ -14,25 +13,24 @@ export default class AuthService extends EventEmitter {
     return AuthService.serviceInstance;
   }
 
-  get isStitchAuthenticated() {
-    return storage.getItem("__stitch.client." + stitchService.appId + ".auth_info");
+  get user() {
+    return stitchService.client.auth.isLoggedIn
+      ? stitchService.client.auth.user
+      : null;
   }
 
   get isAuthenticated() {
-    return this.user != null;
+    return stitchService.client.auth.isLoggedIn;
+  }
+
+  logout() {
+    return stitchService.client.auth.logout();
   }
 
   authenticate(login, pass) {
-    return stitchService.authenticateStitch(login, pass).then(user => {
-      this.user = user;
-      delete (user.auth);
-      storage.setAuthInfo(user);
+    return stitchService.authenticateStitch(login, pass).then((user) => {
       this.emit("authorized", user);
+      return user;
     });
-  }
-
-  getUserFromLocalStorage(user) {
-    stitchService.reinitializeClient();
-    return this.user = storage.getAuthInfo();
   }
 }

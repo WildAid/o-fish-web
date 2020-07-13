@@ -8,7 +8,7 @@ import VesselSection from "./vessel/vessel.section";
 import CrewSection from "./crew/crew.section";
 import ActivitySection from "./activity/activity.section";
 import CatchSection from "./catch/catch.section";
-import RisksSection from './risks/risks.section';
+import RisksSection from "./risks/risks.section";
 
 //TODO: Add sections when refactored
 /*
@@ -19,17 +19,16 @@ import NotesSection from './notes/notes.section';
 
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
-import AuthService from "./../../../services/auth.service";
 import BoardingService from "./../../../services/boarding.service";
 
 import history from "../../../root/root.history";
 
 import { VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
+import { withAuth } from "../../auth/auth.component";
 
 import "./boardings-edit.css";
 
 const boardingService = BoardingService.getInstance();
-const authService = AuthService.getInstance();
 
 const initialState = BoardingService.sampleData;
 
@@ -52,7 +51,7 @@ class BoardingEditPage extends Component {
       item.number = new BSON.Long(item.number);
       return item;
     });
-    if (!this.dataObject.inspection.summary.seizures){
+    if (!this.dataObject.inspection.summary.seizures) {
       this.dataObject.inspection.summary.seizures = { text: "" };
     }
   };
@@ -76,11 +75,12 @@ class BoardingEditPage extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { user } = this.props;
     if (!id) {
       const obj = {
-        ... initialState,
-      }
-      obj.reportingOfficer.email = authService.user.customData.email;
+        ...initialState,
+      };
+      obj.reportingOfficer.email = user.customData.email;
       this.setState({
         isNew: true,
         dataObject: obj,
@@ -159,8 +159,8 @@ class BoardingEditPage extends Component {
             />
             <RisksSection
               dataObject={dataObject}
-              onChange={this.handleDataChange}>
-            </RisksSection>
+              onChange={this.handleDataChange}
+            ></RisksSection>
           </div>
         ) : (
           "No object found"
@@ -174,4 +174,4 @@ class BoardingEditPage extends Component {
 //<SeizuresSection dataObject={this.state.dataObject}></SeizuresSection>
 //<ViolationsSection dataObject={this.state.dataObject}></ViolationsSection>
 //<NotesSection dataObject={this.state.dataObject}></NotesSection>
-export default withRouter(BoardingEditPage);
+export default withRouter(withAuth(BoardingEditPage));
