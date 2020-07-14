@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
 import history from "../../../root/root.history";
 
@@ -7,13 +8,13 @@ import { resetSearch } from "./../../../helpers/get-data";
 import "./custom-select.css";
 
 const SEARCH_OPTIONS = [
-  "All",
-  "Boardings",
-  "Vessels",
-  "Crew",
-  "Users",
-  "Agencies",
-  "Reports",
+  { name: "All", translateKey: "SEARCH.ALL" },
+  { name: "Boardings", translateKey: "NAVIGATION.BOARDINGS" },
+  { name: "Vessels", translateKey: "NAVIGATION.VESSELS" },
+  { name: "Crew", translateKey: "NAVIGATION.CREW" },
+  { name: "Users", translateKey: "NAVIGATION.USERS" },
+  { name: "Agencies", translateKey: "NAVIGATION.AGENCIES" },
+  { name: "Reports", translateKey: "SEARCH.REPORTS" },
 ];
 
 class CustomSelect extends Component {
@@ -43,6 +44,7 @@ class CustomSelect extends Component {
 
   render() {
     const { selected, showOptionsList } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-row relative select-menu">
@@ -59,9 +61,9 @@ class CustomSelect extends Component {
               <div
                 className="option"
                 key={key}
-                onClick={() => this.setSelected(option)}
+                onClick={() => this.setSelected(option.name)}
               >
-                {option}
+                {t(option.translateKey)}
               </div>
             ))}
           </div>
@@ -71,4 +73,4 @@ class CustomSelect extends Component {
   }
 }
 
-export default CustomSelect;
+export default withTranslation("translation")(CustomSelect);

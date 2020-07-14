@@ -14,6 +14,7 @@ import AgenciesMain from "../components/agencies/agencies.routes-render";
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
+import Profile from "../components/profile/profile.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.component";
@@ -42,6 +43,7 @@ import {
   FORMS_PAGE,
   SEARCH_RESULTS_PAGE,
   RESTORE_PASSWORD_PAGE,
+  PROFILE_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -66,6 +68,12 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
+    auth: false,
+    exact: false,
+  },
+  {
+    path: PROFILE_PAGE,
+    component: Profile,
     auth: false,
     exact: false,
   },

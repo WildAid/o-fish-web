@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import moment from "moment";
 import SearchIcon from "@material-ui/icons/Search";
+import { withTranslation } from "react-i18next";
 
 import FilterPart from "./filter-part.component";
 import FilterLine from "./filter-line.component";
 
 import "./filter-panel.css";
 
-export default class FilterPanel extends Component {
+class FilterPanel extends Component {
   state = { isFilterPanelShown: false, filterParts: [], searchQuery: "" };
 
   constructFilter(filterParts) {
@@ -106,7 +107,7 @@ export default class FilterPanel extends Component {
 
   render() {
     const { isFilterPanelShown, filterParts } = this.state;
-    const { options, configuration } = this.props;
+    const { options, configuration, t } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
 
     return (
@@ -128,7 +129,7 @@ export default class FilterPanel extends Component {
         </div>
         <div className="relative">
           <button className="filter-btn blue-btn" onClick={this.showFilter}>
-            {options && options.buttonTitle ? options.buttonTitle : "+ Filter"}
+            {options && options.buttonTitle ? options.buttonTitle : `+ ${t("FILTER.FILTER")}`}
           </button>
           <div
             className={
@@ -172,6 +173,8 @@ export default class FilterPanel extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(FilterPanel);
 
 /*
 <section>

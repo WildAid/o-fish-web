@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
+
 import ChartBox from "./../../charts/chart-box.component";
 import FilterPanel from "./../../partials/filter-panel/filter-panel.component";
 import StitchService from "./../../../services/stitch.service";
@@ -10,7 +12,7 @@ const chartOptions = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["boardings"]
+  ...stitchService.chartsConfig["boardings"],
 };
 
 const filterConfiguration = {
@@ -39,10 +41,12 @@ class BoardingsSection extends Component {
   };
 
   render() {
+    const { t } = this.props;
+
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
         <div className="flex-row justify-between align-center full-view">
-          <h2 className="chart-name">Boardings</h2>
+          <h2 className="chart-name">{t("NAVIGATION.BOARDINGS")}</h2>
           <FilterPanel
             options={{ useChartsSyntax: true }}
             configuration={filterConfiguration}
@@ -57,4 +61,4 @@ class BoardingsSection extends Component {
   }
 }
 
-export default BoardingsSection;
+export default withTranslation("translation")(BoardingsSection);

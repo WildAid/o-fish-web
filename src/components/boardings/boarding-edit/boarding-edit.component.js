@@ -2,13 +2,14 @@ import React from "react";
 import { Component } from "react";
 import { withRouter } from "react-router";
 import { BSON } from "mongodb-stitch-browser-sdk";
+import { withTranslation } from "react-i18next";
 
 import BasicInfoSection from "./basic-info/basic-info.section";
 import VesselSection from "./vessel/vessel.section";
 import CrewSection from "./crew/crew.section";
 import ActivitySection from "./activity/activity.section";
 import CatchSection from "./catch/catch.section";
-import RisksSection from './risks/risks.section';
+import RisksSection from "./risks/risks.section";
 
 //TODO: Add sections when refactored
 /*
@@ -52,7 +53,7 @@ class BoardingEditPage extends Component {
       item.number = new BSON.Long(item.number);
       return item;
     });
-    if (!this.dataObject.inspection.summary.seizures){
+    if (!this.dataObject.inspection.summary.seizures) {
       this.dataObject.inspection.summary.seizures = { text: "" };
     }
   };
@@ -98,34 +99,45 @@ class BoardingEditPage extends Component {
 
   render() {
     const { dataObject, isValid, validationErrors } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column justify-start align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div className="flex-column margin-top margin-left">
-            <div className="item-label">Boarding</div>
-            <div className="flex-row align-center">
-              <div className="item-name padding-right">
-                {new Date(dataObject ? dataObject.date : null).toLocaleString()}
-              </div>
-              <RiskIcon
-                safetyLevel={
-                  dataObject
-                    ? dataObject.inspection.summary.safetyLevel.level
-                    : ""
-                }
-              />
+            <div className="item-label">
+              {t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}
             </div>
+            {dataObject && (
+              <div className="flex-row align-center">
+                <div className="item-name padding-right">
+                  {new Date(
+                    dataObject ? dataObject.date : null
+                  ).toLocaleString()}
+                </div>
+                <RiskIcon
+                  safetyLevel={
+                    dataObject
+                      ? dataObject.inspection.summary.safetyLevel.level
+                      : ""
+                  }
+                />
+              </div>
+            )}
           </div>
           <div className="flex-column align-end edit-btn">
             <button className="blue-btn" onClick={this.saveBoarding}>
-              Save Boarding
+              {t("BUTTONS.SAVE_BOARDING")}
             </button>
-            <div className="item-label modified-info margin-bottom margin-right">{`Last Modified on
+            {dataObject && (
+              <div className="item-label modified-info margin-bottom margin-right">{`${t(
+                "BOARDING_PAGE.VIEW_BOARDING.LAST_MODIFIED"
+              )}
                 ${new Date(
                   dataObject ? dataObject.date : null
                 ).toLocaleString()}
                 by Officer Krupke`}</div>
+            )}
           </div>
         </div>
         {!isValid && (
@@ -159,11 +171,11 @@ class BoardingEditPage extends Component {
             />
             <RisksSection
               dataObject={dataObject}
-              onChange={this.handleDataChange}>
-            </RisksSection>
+              onChange={this.handleDataChange}
+            />
           </div>
         ) : (
-          "No object found"
+          <div className="items-amount">{t("LOADING.LOADING")}</div>
         )}
       </div>
     );
@@ -174,4 +186,4 @@ class BoardingEditPage extends Component {
 //<SeizuresSection dataObject={this.state.dataObject}></SeizuresSection>
 //<ViolationsSection dataObject={this.state.dataObject}></ViolationsSection>
 //<NotesSection dataObject={this.state.dataObject}></NotesSection>
-export default withRouter(BoardingEditPage);
+export default withRouter(withTranslation("translation")(BoardingEditPage));

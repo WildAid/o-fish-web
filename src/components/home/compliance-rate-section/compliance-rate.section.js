@@ -1,6 +1,8 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
+import { withTranslation } from "react-i18next";
 
-import ChartBox from './../../charts/chart-box.component';
+import ChartBox from "./../../charts/chart-box.component";
+
 import StitchService from "./../../../services/stitch.service";
 
 const stitchService = StitchService.getInstance();
@@ -10,7 +12,7 @@ const chartBoardingsCount = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["boardings-count-chart"]
+  ...stitchService.chartsConfig["boardings-count-chart"],
 };
 
 const chartCitationsAndWarnings = {
@@ -18,7 +20,7 @@ const chartCitationsAndWarnings = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["citations-and-warnings"]
+  ...stitchService.chartsConfig["citations-and-warnings"],
 };
 
 const chartBoardingsCompliance = {
@@ -26,7 +28,7 @@ const chartBoardingsCompliance = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["boarding-compliance"]
+  ...stitchService.chartsConfig["boarding-compliance"],
 };
 
 const chartComplianceRate = {
@@ -34,13 +36,13 @@ const chartComplianceRate = {
   height: "100%",
   refreshInterval: 1300,
   useAuthenticatedAccess: true,
-  ...stitchService.chartsConfig["compliance-rate"]
+  ...stitchService.chartsConfig["compliance-rate"],
 };
 
-const ComplianceRateSection = () => {
+const ComplianceRateSection = ({ t }) => {
   return (
     <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
-      <h2 className="chart-name">Compliance Rate</h2>
+      <h2 className="chart-name">{t("HOME_PAGE.COMPLIANCE_RATE")}</h2>
       <div className="flex-row justify-between align-stretch full-view lg-chart">
         <div className="half-row-view">
           <div className="align-stretch md-chart compliance-rate-value ">
@@ -63,4 +65,4 @@ const ComplianceRateSection = () => {
   );
 };
 
-export default memo(ComplianceRateSection);
+export default withTranslation("translation")(memo(ComplianceRateSection));

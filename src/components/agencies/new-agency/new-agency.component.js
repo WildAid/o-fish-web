@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
+import { withTranslation } from "react-i18next";
 
 import history from "../../../root/root.history";
 
@@ -38,12 +39,16 @@ class NewAgency extends Component {
   };
 
   render() {
+    const { t } = this.props;
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
-            <div className="item-label">Agency</div>
-            <div className="item-name">New Agency</div>
+            <div className="item-label">{t("TABLE.AGENCY")}</div>
+            <div className="item-name">
+              {t("CREATE_AGENCY_PAGE.NEW_AGENCY")}
+            </div>
           </div>
         </div>
         <div className="flex-row standard-view white-bg box-shadow relative new-agency-form">
@@ -61,7 +66,7 @@ class NewAgency extends Component {
               <Form onSubmit={handleSubmit}>
                 <div className="flex-column new-agency-box">
                   <TextField
-                    label="Name"
+                    label={t("TABLE.NAME")}
                     name="name"
                     className="form-input"
                     onBlur={handleBlur}
@@ -70,7 +75,7 @@ class NewAgency extends Component {
                     value={values.name}
                   />
                   <TextField
-                    label="Description"
+                    label={t("TABLE.DESCRIPTION")}
                     name="description"
                     type="text"
                     className="form-input"
@@ -81,7 +86,7 @@ class NewAgency extends Component {
                     value={values.description}
                   />
                   <TextField
-                    label="E-mail"
+                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
                     name="email"
                     type="text"
                     className="form-input"
@@ -90,7 +95,7 @@ class NewAgency extends Component {
                     value={values.email}
                   />
                   <TextField
-                    label="Site"
+                    label={t("CREATE_AGENCY_PAGE.SITE")}
                     name="site"
                     type="text"
                     className="form-input"
@@ -104,14 +109,14 @@ class NewAgency extends Component {
                   type="submit"
                   onClick={this.saveAgency}
                 >
-                  Save
+                  {t("BUTTONS.SAVE")}
                 </button>
                 <button
                   className="white-btn absolute"
                   type="submit"
                   // onClick={this.clearForm}
                 >
-                  Cancel
+                  {t("BUTTONS.CANCEL")}
                 </button>
               </Form>
             )}
@@ -122,4 +127,4 @@ class NewAgency extends Component {
   }
 }
 
-export default NewAgency;
+export default withTranslation("translation")(NewAgency);

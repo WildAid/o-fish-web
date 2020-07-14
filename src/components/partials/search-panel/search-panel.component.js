@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 import Autofill from "./../../autofill/autofill.component";
 
@@ -46,6 +47,8 @@ class SearchPanel extends Component {
       highlighted,
     } = this.props;
 
+    const { t } = this.props;
+
     return (
       <div
         className={`search-panel ${
@@ -63,7 +66,7 @@ class SearchPanel extends Component {
           <input
             className="search-field"
             type="search"
-            placeholder="Search O-FISH"
+            placeholder={`${t("SEARCH.FILTER_SEARCH")} O-FISH`}
             value={searchQuery || value || ""}
             onChange={this.setSearch}
             onFocus={() => this.setState({ isFocused: true })}
@@ -83,7 +86,7 @@ class SearchPanel extends Component {
           <SearchIcon htmlColor='#0a4074'/>
           <NavLink className="custom-link" to={SEARCH_RESULTS_PAGE}>
             <div className="preview-search-text">
-              See all results for "{searchQuery}"
+            {t('SEARCH.SEE_ALL_RESULTS', { searchQuery: searchQuery })}
             </div>
           </NavLink>
         </div>
@@ -92,4 +95,4 @@ class SearchPanel extends Component {
   }
 }
 
-export default SearchPanel;
+export default withTranslation("translation")(SearchPanel);

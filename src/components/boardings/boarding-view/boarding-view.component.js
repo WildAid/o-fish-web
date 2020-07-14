@@ -1,5 +1,5 @@
-import React from "react";
-import { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { withTranslation } from "react-i18next";
 
 import BasicInfoSection from "./basic-info/basic-info.section";
 import VesselSection from "./vessel/vessel.section";
@@ -17,7 +17,6 @@ import NotesSection from './notes/notes.section';*/
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
 import history from "../../../root/root.history";
-
 import { EDIT_BOARDING_PAGE } from "../../../root/root.constants.js";
 
 import BoardingService from "./../../../services/boarding.service";
@@ -53,33 +52,42 @@ class BoardingViewPage extends Component {
 
   render() {
     const { boarding, versionsVisible } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column justify-start align-center padding-top boarding-view">
         <div className="flex-row justify-between standard-view title-row">
           <div className="flex-column margin-top margin-left">
-            <div className="item-label">Boarding</div>
-            <div className="flex-row align-center">
-              <div className="item-name padding-right">
-                {new Date(boarding ? boarding.date : null).toLocaleString()}
-              </div>
-              <RiskIcon
-                safetyLevel={
-                  boarding ? boarding.inspection.summary.safetyLevel.level : ""
-                }
-              />
+            <div className="item-label">
+              {t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}
             </div>
+            {boarding && (
+              <div className="flex-row align-center">
+                <div className="item-name padding-right">
+                  {new Date(boarding ? boarding.date : null).toLocaleString()}
+                </div>
+                <RiskIcon
+                  safetyLevel={
+                    boarding
+                      ? boarding.inspection.summary.safetyLevel.level
+                      : ""
+                  }
+                />
+              </div>
+            )}
           </div>
           <div className="flex-column align-end edit-btn">
             <button className="blue-btn" onClick={this.goEdit}>
-              Edit Boarding
+              {t("BUTTONS.EDIT_BOARDING")}
             </button>
-            <div
-              className="item-label modified-info margin-bottom margin-right"
-              onClick={this.showVersions}
-            >{`Last Modified on
+            {boarding && (
+              <div
+                className="item-label modified-info margin-bottom margin-right"
+                onClick={this.showVersions}
+              >{`${t("BOARDING_PAGE.VIEW_BOARDING.LAST_MODIFIED")}
                 ${new Date(boarding ? boarding.date : null).toLocaleString()}
                 by Officer Krupke`}</div>
+            )}
           </div>
           {versionsVisible && (
             <VersionControlPanel
@@ -97,7 +105,7 @@ class BoardingViewPage extends Component {
             <CatchSection dataObject={boarding} />
           </div>
         ) : (
-          "No object found"
+          <div className="items-amount">{t("LOADING.LOADING")}</div>
         )}
       </div>
     );
@@ -109,4 +117,4 @@ class BoardingViewPage extends Component {
 //<ViolationsSection dataObject={this.state.dataObject}></ViolationsSection>
 //<RisksSection dataObject={this.state.dataObject}></RisksSection>
 //<NotesSection dataObject={this.state.dataObject}></NotesSection>
-export default BoardingViewPage;
+export default withTranslation("translation")(BoardingViewPage);

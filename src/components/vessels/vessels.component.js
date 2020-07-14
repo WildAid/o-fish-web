@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import moment from "moment";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
+import { withTranslation } from "react-i18next";
 
 import { getColor, getHighlightedText } from "./../../helpers/get-data";
 
@@ -157,6 +158,8 @@ class Vessels extends Component {
       page,
     } = this.state;
 
+    const { t } = this.props;
+
     return (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
@@ -166,11 +169,11 @@ class Vessels extends Component {
         />
         <div className="flex-row justify-between standard-view">
           {loading ? (
-            <div className="items-amount">Loading...</div>
+            <div className="items-amount">{t("LOADING.LOADING")}</div>
           ) : (
             <SearchResultsFor
               query={searchQuery}
-              total={`${total} of Vessels `}
+              total={`${total} ${t("NAVIGATION.VESSELS")}`}
             />
           )}
           <FilterPanel
@@ -185,11 +188,11 @@ class Vessels extends Component {
               <table className="custom-table">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>Vessel Name</td>
-                    <td>Permit number</td>
-                    <td>Nationality</td>
-                    <td>Home Port</td>
-                    <td>Last boarded</td>
+                    <td>{t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}</td>
+                    <td>{t("TABLE.PERMIT_NUMBER")}</td>
+                    <td>{t("FILTER.MAIN.VESSEL_INFO.NATIONALITY")}</td>
+                    <td>{t("TABLE.HOME_PORT")}</td>
+                    <td>{t("TABLE.LAST_BOARDED")}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -259,11 +262,11 @@ class Vessels extends Component {
         ) : loading ? (
           <LoadingPanel></LoadingPanel>
         ) : (
-          "No vessels found"
+          t("WARNINGS.NO_VESSELS")
         )}
       </div>
     );
   }
 }
 
-export default Vessels;
+export default withTranslation("translation")(Vessels);

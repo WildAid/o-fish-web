@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
-import ChartBox from "../../../charts/chart-box.component";
+import { withTranslation } from "react-i18next";
 import DateFnsUtils from "@date-io/moment";
 import { BSON } from "mongodb-stitch-browser-sdk";
+
+import ChartBox from "../../../charts/chart-box.component";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -17,7 +20,7 @@ const boardingChartOptions = {
   filter: { _id: "8121-121221" },
 };
 
-export default class BasicInfoSection extends Component {
+class BasicInfoSection extends Component {
   state = { dateTime: new Date(), location: { latitude: 0, longitude: 0 } };
 
   handleDateChange = (value) => {
@@ -61,7 +64,7 @@ export default class BasicInfoSection extends Component {
   }
 
   render() {
-    const { dataObject } = this.props;
+    const { dataObject, t } = this.props;
     const { dateTime } = this.state;
     const location = this.state.location;
 
@@ -72,11 +75,11 @@ export default class BasicInfoSection extends Component {
     return (
       <div className="flex-column basic-info">
         <div className="item-name margin-left margin-top">
-          Basic Information
+          {t("BOARDING_PAGE.EDIT_BOARDING.BASIC_INFO")}
         </div>
         <section className="box-shadow padding white-bg margin-top">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <h3>Date & Time</h3>
+            <h3>{t("FILTER.HOME_PAGE.DATE_TIME")}</h3>
             <div className="flex-row justify-between">
               <KeyboardDatePicker
                 className="half-row-view"
@@ -106,18 +109,18 @@ export default class BasicInfoSection extends Component {
           </MuiPickersUtilsProvider>
         </section>
         <section className="box-shadow padding white-bg margin-top">
-          <h3>Location</h3>
+          <h3>{t("FILTER.MAIN.BOARDING_INFO.LOCATION")}</h3>
           <div className="chart-container">
             <ChartBox
               options={boardingChartOptions}
               className="with-map"
-            ></ChartBox>
+            />
           </div>
           <br />
           <div className="flex-row justify-between">
             <TextField
               id="latitudeField"
-              label="Lattitude:"
+              label={t("BOARDING_PAGE.VIEW_BOARDING.LATTITUDE")}
               className="half-row-view"
               value={location.latitude}
               onChange={(event) => {
@@ -129,7 +132,7 @@ export default class BasicInfoSection extends Component {
             />
             <TextField
               id="longitudeField"
-              label="Longtitude:"
+              label={t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
               className="half-row-view"
               value={location.longitude}
               onChange={(event) => {
@@ -145,3 +148,5 @@ export default class BasicInfoSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(BasicInfoSection);

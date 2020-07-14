@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import moment from "moment";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
+import { withTranslation } from "react-i18next";
 
 import { getColor, getHighlightedText } from "./../../helpers/get-data";
 
@@ -242,6 +243,8 @@ class Crew extends Component {
       page,
     } = this.state;
 
+    const { t } = this.props;
+
     return (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
@@ -251,18 +254,18 @@ class Crew extends Component {
         />
         <div className="flex-row justify-between standard-view">
           {loading ? (
-            <div className="items-amount">Loading...</div>
+            <div className="items-amount">{t("LOADING.LOADING")}</div>
           ) : (
             <SearchResultsFor
               query={searchQuery}
-              total={`${total} Crew Members `}
+              total={`${total} ${t("SEARCH.CREW_MEMBERS")} `}
             />
           )}
           <FilterPanel
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
-          ></FilterPanel>
+          />
         </div>
         {crew && crew.length && !loading ? (
           <Fragment>
@@ -270,11 +273,11 @@ class Crew extends Component {
               <table className="custom-table">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>Name</td>
-                    <td>Lisence number</td>
-                    <td>Vessel</td>
-                    <td>Violations</td>
-                    <td>Last boarded</td>
+                    <td>{t("TABLE.NAME")}</td>
+                    <td>{t("TABLE.LICENSE_NUMBER")}</td>
+                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.VIOLATIONS")}</td>
+                    <td>{t("TABLE.LAST_BOARDED")}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -291,7 +294,7 @@ class Crew extends Component {
                             />
                           </div>
                           {item.rank === "captain" && (
-                            <div className="captain-icon">CAPTAIN</div>
+                            <div className="captain-icon">{t("TABLE.CAPTAIN").toUpperCase()}</div>
                           )}
                         </div>
                       </td>
@@ -337,11 +340,11 @@ class Crew extends Component {
         ) : loading ? (
           <LoadingPanel></LoadingPanel>
         ) : (
-          "No crew members found"
+          t("WARNINGS.NO_CREW")
         )}
       </div>
     );
   }
 }
 
-export default Crew;
+export default withTranslation("translation")(Crew);

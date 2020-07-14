@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { withTranslation } from "react-i18next";
 
-export default class VesselSection extends Component {
+class VesselSection extends Component {
   state = {
     vessel: {
       name: "",
@@ -88,51 +89,55 @@ export default class VesselSection extends Component {
 
   render() {
     const { vessel } = this.state;
+    const { t } = this.props;
+
     const lastDelivery =
       vessel && vessel.lastDelivery ? vessel.lastDelivery : {};
     const ems = vessel && vessel.ems && vessel.ems[0] ? vessel.ems[0] : {};
 
     return (
       <div className="flex-column">
-        <div className="item-name margin-left margin-top">Vessel</div>
+        <div className="item-name margin-left margin-top">
+          {t("TABLE.VESSEL")}
+        </div>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Vessel Information</h3>
+            <h3>{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row justify-between">
             <TextField
-              label="Vessel Name:"
+              label={t("BOARDING_PAGE.VIEW_BOARDING.VESSEL_NAME")}
               className="half-row-view"
               name="name"
-              value={vessel.name || ''}
+              value={vessel.name || ""}
               onChange={(e) => this.setFieldValue("name", e.target.value)}
             />
             <TextField
-              label="Home Port:"
+              label={t("TABLE.HOME_PORT")}
               className="half-row-view"
               name="homePort"
-              value={vessel.homePort || ''}
+              value={vessel.homePort || ""}
               onChange={(e) => this.setFieldValue("homePort", e.target.value)}
             />
           </div>
           <div className="flex-row justify-between margin-top">
             <TextField
-              label="Permit Number:"
+              label={t("TABLE.PERMIT_NUMBER")}
               className="half-row-view"
               name="permitNumber"
-              value={vessel.permitNumber || ''}
+              value={vessel.permitNumber || ""}
               onChange={(e) =>
                 this.setFieldValue("permitNumber", e.target.value)
               }
             />
             <TextField
-              label="Nationality:"
+              label={t("FILTER.MAIN.VESSEL_INFO.NATIONALITY")}
               className="half-row-view"
               name="nationality"
-              value={vessel.nationality || ''}
+              value={vessel.nationality || ""}
               onChange={(e) =>
                 this.setFieldValue("nationality", e.target.value)
               }
@@ -152,24 +157,24 @@ export default class VesselSection extends Component {
         </section>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Last Date of delivery</h3>
+            <h3>{t("BOARDING_PAGE.VIEW_BOARDING.DELIVERY_DATE")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row justify-between">
             <TextField
-              label="Date:"
+              label={t("TABLE.DATE")}
               className="half-row-view"
               name="ldod_date"
-              value={lastDelivery.date || ''}
+              value={lastDelivery.date || ""}
               onChange={(e) => this.setLdodFieldValue("date", e.target.value)}
             />
             <TextField
-              label="Location:"
+              label={t("FILTER.MAIN.BOARDING_INFO.LOCATION")}
               className="half-row-view"
               name="ldod_location"
-              value={lastDelivery.location || ''}
+              value={lastDelivery.location || ""}
               onChange={(e) =>
                 this.setLdodFieldValue("location", e.target.value)
               }
@@ -177,10 +182,10 @@ export default class VesselSection extends Component {
           </div>
           <div className="margin-top">
             <TextField
-              label="Business:"
+              label={t("FILTER.MAIN.LAST_DELIVERY.BUSINESS")}
               className="half-row-view"
               name="ldod_business"
-              value={lastDelivery.business || ''}
+              value={lastDelivery.business || ""}
               onChange={(e) =>
                 this.setLdodFieldValue("business", e.target.value)
               }
@@ -189,24 +194,24 @@ export default class VesselSection extends Component {
         </section>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Electronic Monitoring Information</h3>
+            <h3>{t("BOARDING_PAGE.EDIT_BOARDING.ELECTRONIC_INFO")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row justify-between">
             <TextField
-              label="Type:"
+              label={t("BOARDING_PAGE.EDIT_BOARDING.TYPE")}
               className="half-row-view"
               name="ems-type"
-              value={ems.emsType || ''}
+              value={ems.emsType || ""}
               onChange={(e) => this.setEmsFieldValue("emsType", e.target.value)}
             />
             <TextField
-              label="Registry Number:"
+              label={t("BOARDING_PAGE.EDIT_BOARDING.REGISTRY_NUMBER")}
               className="half-row-view"
               name="ems-registry"
-              value={ems.registryNumber || ''}
+              value={ems.registryNumber || ""}
               onChange={(e) =>
                 this.setEmsFieldValue("registryNumber", e.target.value)
               }
@@ -214,10 +219,10 @@ export default class VesselSection extends Component {
           </div>
           <div className="margin-top">
             <TextField
-              label="Description:"
+              label={t("TABLE.DESCRIPTION")}
               className="half-row-view"
               name="ems-description"
-              value={ems.emsDescription || ''}
+              value={ems.emsDescription || ""}
               onChange={(e) =>
                 this.setEmsFieldValue("emsDescription", e.target.value)
               }
@@ -228,3 +233,5 @@ export default class VesselSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(VesselSection);

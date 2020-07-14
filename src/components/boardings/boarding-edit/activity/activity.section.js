@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { withTranslation } from "react-i18next";
 
-export default class ActivitySection extends Component {
+class ActivitySection extends Component {
   state = {
     activity: { name: "" },
     fishery: { name: "" },
@@ -54,20 +55,21 @@ export default class ActivitySection extends Component {
 
   render() {
     const { activity, fishery, gearType } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column">
         <div className="item-name margin-left margin-top">Activity</div>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Activity</h3>
+            <h3>{t("BOARDING_PAGE.VIEW_BOARDING.ACTIVITY")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row">
             <TextField
-              label="Activity:"
+              label={t("BOARDING_PAGE.VIEW_BOARDING.ACTIVITY")}
               name="activity.name"
               value={activity.name}
               className="full-view"
@@ -77,14 +79,14 @@ export default class ActivitySection extends Component {
         </section>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Fishery</h3>
+            <h3>{t("BOARDING_PAGE.VIEW_BOARDING.FISHERY")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row">
             <TextField
-              label="Species:"
+              label={t("FILTER.MAIN.CATCH.SPECIES")}
               name="fishery.name"
               value={fishery.name}
               className="full-view"
@@ -94,14 +96,16 @@ export default class ActivitySection extends Component {
         </section>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Gear</h3>
+            <h3>{t("BOARDING_PAGE.VIEW_BOARDING.GEAR")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row">
             <TextField
-              label="Gear Type:"
+              label={`${t("BOARDING_PAGE.VIEW_BOARDING.GEAR")} ${t(
+                "BOARDING_PAGE.EDIT_BOARDING.TYPE"
+              )}`}
               name="gear.name"
               value={gearType.name}
               className="full-view"
@@ -113,3 +117,5 @@ export default class ActivitySection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(ActivitySection);
