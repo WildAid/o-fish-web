@@ -1,5 +1,10 @@
 import SearchService from "./../services/search.service";
+
 import history from "../root/root.history";
+
+//TODO Show pics in Users list
+// import StitchService from "./../services/stitch.service";
+// const stitchService = StitchService.getInstance();
 
 export const getViolations = (arr) => {
   if (!Array.isArray(arr) || !arr.length) return "No violations";
@@ -172,11 +177,11 @@ export const goToPage = (path, id) => {
 };
 
 export const bufferToBase64 = (buffer) => {
-    var binary = '';
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-}
+  var binary = "";
+  var bytes = new Uint8Array(buffer);
+  var len = bytes.byteLength;
+  for (var i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+};

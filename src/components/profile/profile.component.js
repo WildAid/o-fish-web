@@ -16,10 +16,10 @@ import PhotoUploader from "./../partials/photo-uploader/photo-uploader.component
 import history from "../../root/root.history";
 
 import UserService from "./../../services/user.service";
-import AgencyService from "./../../services/agency.service";
+import StitchService from "./../../services/stitch.service";
 
 const userService = UserService.getInstance();
-const agencyService = AgencyService.getInstance();
+const stitchService = StitchService.getInstance();
 
 class Profile extends Component {
   state = {
@@ -32,21 +32,13 @@ class Profile extends Component {
     history.push("/users");
   };
 
+  saveUser = () => {
+    //TODO Save user updates
+  };
+
   componentDidMount() {
-    const id = this.props.userId
-      ? this.props.userId
-      : this.props.match.params.id;
-    agencyService
-      .getAgencies(50, 0, "", null)
-      .then((data) => {
-        this.setState({
-          agencies: data.agencies.map((agency) => agency.name) || [],
-        });
-      })
-      .catch((error) => {
-        this.setState({ error: error });
-        console.error(error);
-      });
+    const id = stitchService._localStitchClient.auth.activeUserAuthInfo.userId;
+
     userService
       .getUserById(id)
       .then((user) => {
@@ -87,7 +79,7 @@ class Profile extends Component {
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
-            <div className="item-label">{t("CREATE_USER_PAGE.USER")}</div>
+            <div className="item-label">Global Admin</div>
             <div className="item-name">{t("NAVIGATION.ACCOUNT")}</div>
           </div>
         </div>
@@ -97,7 +89,7 @@ class Profile extends Component {
           ) : (
             <Formik
               initialValues={initialValues}
-              onSubmit={this.saveUser}
+              // onSubmit={this.saveUser}
               render={({
                 errors,
                 values,

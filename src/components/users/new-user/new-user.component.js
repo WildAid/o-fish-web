@@ -64,7 +64,7 @@ class NewUser extends Component {
     }
 
     const saveUserFunc = () => {userService
-      .createUser(values.firstName + values.lastName, newUser)
+      .createUser(values.email, newUser)
       .then(() => history.push("/users"))
       .catch((error) => {
         error.message
