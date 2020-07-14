@@ -6,6 +6,7 @@ import { bufferToBase64 } from "./../../../helpers/get-data";
 import "./photo-uploader.css";
 
 const stitchService = StitchService.getInstance();
+
 export default class PhotoUploader extends Component {
   state = {src: null, imgData: null, loading: false};
   id = ("uploader" + Math.random()).replace("0.", '');

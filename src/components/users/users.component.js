@@ -8,7 +8,11 @@ import { withTranslation } from "react-i18next";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
-import { checkUserType, getHighlightedText, goToPage } from "../../helpers/get-data";
+import {
+  checkUserType,
+  getHighlightedText,
+  goToPage,
+} from "../../helpers/get-data";
 
 import UserService from "./../../services/user.service";
 import SearchService from "./../../services/search.service";
@@ -43,7 +47,7 @@ class UsersMain extends React.Component {
   goEditUser = (id) => {
     //TODO: Use router!
     goToPage(EDIT_USER_PAGE, id);
-  }
+  };
 
   search = (value) => {
     if (searchService.searchResults && searchService.searchResults.query) {
@@ -217,13 +221,16 @@ class UsersMain extends React.Component {
                         </div>
                       </td>
                       <td>
-                          <div className="edit-img" onClick={() => this.goEditUser(item._id)}>
-                            <img
-                              className="full-view"
-                              src={require("../../assets/edit-icon.png")}
-                              alt="no icon"
-                            />
-                          </div>
+                        <div
+                          className="edit-img"
+                          onClick={() => this.goEditUser(item._id)}
+                        >
+                          <img
+                            className="full-view"
+                            src={require("../../assets/edit-icon.png")}
+                            alt="no icon"
+                          />
+                        </div>
                       </td>
                     </tr>
                   );

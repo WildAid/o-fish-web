@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
 import BasicInfoSection from "./basic-info/basic-info.section";

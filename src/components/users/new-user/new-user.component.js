@@ -64,7 +64,7 @@ class NewUser extends Component {
     }
 
     const saveUserFunc = () => {userService
-      .createUser(values.firstName + values.lastName, newUser)
+      .createUser(values.email, newUser)
       .then(() => history.push("/users"))
       .catch((error) => {
         error.message
@@ -171,15 +171,6 @@ class NewUser extends Component {
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("email", e.target.value)}
                     value={values.email}
-                  />
-                  <TextField
-                    label={t("LOGIN_PAGE.PASSWORD")}
-                    name="password"
-                    type="password"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("password", e.target.value)}
-                    value=""
                   />
                   <FormControl className="form-input">
                     <InputLabel id="role-label">
