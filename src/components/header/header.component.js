@@ -12,7 +12,6 @@ import {
   AGENCIES_PAGE,
   NEW_USER_PAGE,
   NEW_AGENCIES_PAGE,
-  LOGIN_PAGE,
   PROFILE_PAGE,
 } from "../../root/root.constants.js";
 
@@ -218,7 +217,7 @@ class Header extends Component {
                     className="nav-link"
                     to={PROFILE_PAGE}
                   >
-                    {t("NAVIGATION.PROFILE")}
+                    {t("NAVIGATION.ACCOUNT")}
                   </NavLink>
                   <div className="nav-link pointer" onClick={this.logout}>
                     {t("NAVIGATION.LOG_OUT")}

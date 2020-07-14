@@ -144,8 +144,6 @@ export const getHighlightedText = (data) => {
 };
 
 export const checkUserRole = (user) => {
-  let userRole = "";
-
   if (user.global && user.global.admin) {
     return "global";
   } else if (user.agency.admin) {

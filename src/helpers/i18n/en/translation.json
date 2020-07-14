@@ -18,7 +18,7 @@
     "CREATE_NEW_USER": "Create New User",
     "ALL_AGENCIES": "All Agencies",
     "CREATE_NEW_AGENCY": "Create New Agency",
-    "PROFILE": "My Profile",
+    "ACCOUNT": "My Account",
     "LOG_OUT": "Log out"
   },
   "HOME_PAGE": {
@@ -103,6 +103,7 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "SAVE": "Save",
+    "CHANGE_PASSWORD": "Change Password",
     "NEW_BOARDING": "New Boarding",
     "SEE_ACTIVITY": "See Activity",
     "SEE_ALL": "See all",

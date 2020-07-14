@@ -45,7 +45,7 @@ class EditUser extends Component {
   };
 
   changePassword = (event) => {
-    userService.resetPasswordRequest(this.state.user, event.target.value)
+    userService.resetPasswordRequest(this.state.user, event.target.value);
   };
 
   saveUser = (values) => {
@@ -74,7 +74,7 @@ class EditUser extends Component {
 
     const saveUserFunc = () => {
       userService
-        .updateUser(user._id,newUser)
+        .updateUser(user._id, newUser)
         .then(() => history.push("/users"))
         .catch((error) => {
           error.message
@@ -118,7 +118,6 @@ class EditUser extends Component {
     userService
       .getUserById(id)
       .then((user) => {
-        console.log(user);
         this.setState({ isLoaded: true, user: user });
       })
       .catch((error) => {
@@ -187,7 +186,7 @@ class EditUser extends Component {
                     <PhotoUploader
                       imageId={values.profilePic}
                       onData={this.imageUploaded}
-                    ></PhotoUploader>
+                    />
                   </div>
                   <div className="flex-row justify-between">
                     <TextField
@@ -224,18 +223,23 @@ class EditUser extends Component {
                       value={values.email}
                     />
                     <div className="password-line flex-row justify-between">
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          type="password"
-                          className="form-input"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value=""
-                        />
-                      <button className="white-btn" onClick={this.changePassword}>change password</button>
+                      <TextField
+                        label={t("LOGIN_PAGE.PASSWORD")}
+                        name="password"
+                        type="password"
+                        className="form-input"
+                        onBlur={handleBlur}
+                        onChange={(e) =>
+                          setFieldValue("password", e.target.value)
+                        }
+                        value=""
+                      />
+                      <button
+                        className="white-btn"
+                        onClick={this.changePassword}
+                      >
+                        {t("BUTTONS.CHANGE_PASSWORD")}
+                      </button>
                     </div>
                     <FormControl className="form-input">
                       <InputLabel id="role-label">
@@ -263,7 +267,9 @@ class EditUser extends Component {
                       </Select>
                     </FormControl>
                     <FormControl className="form-input">
-                      <InputLabel id="agency-label">{t("TABLE.AGENCY")}</InputLabel>
+                      <InputLabel id="agency-label">
+                        {t("TABLE.AGENCY")}
+                      </InputLabel>
                       <Select
                         labelId="agency-label"
                         onChange={(e) =>
@@ -279,7 +285,9 @@ class EditUser extends Component {
                       </Select>
                     </FormControl>
                     <FormControl className="form-input">
-                      <InputLabel id="group-label">{t("CREATE_USER_PAGE.USER_GROUP")}</InputLabel>
+                      <InputLabel id="group-label">
+                        {t("CREATE_USER_PAGE.USER_GROUP")}
+                      </InputLabel>
                       <Select
                         labelId="group-label"
                         onChange={(e) =>

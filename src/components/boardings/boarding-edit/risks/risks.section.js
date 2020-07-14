@@ -75,21 +75,21 @@ class RisksSection extends Component {
         <section className="flex-row justify-between box-shadow padding white-bg margin-top">
           <Button
             variant="outlined"
-            style={level == "Green" ? { background: "green" } : {}}
+            style={level === "Green" ? { background: "green" } : {}}
             onClick={() => this.setData("Green")}
           >
             {t("FILTER.MAIN.RISK.GREEN")}
           </Button>
           <Button
             variant="outlined"
-            style={level == "Amber" ? { background: "olive" } : {}}
+            style={level === "Amber" ? { background: "olive" } : {}}
             onClick={() => this.setData("Amber")}
           >
             {t("FILTER.MAIN.RISK.AMBER")}
           </Button>
           <Button
             variant="outlined"
-            style={level == "Red" ? { background: "red" } : {}}
+            style={level === "Red" ? { background: "red" } : {}}
             onClick={() => this.setData("Red")}
           >
             {t("FILTER.MAIN.RISK.RED")}
