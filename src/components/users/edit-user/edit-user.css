@@ -1,12 +1,12 @@
-.new-user-form {
+.edit-user-form {
     margin: 20px 0;
 }
 
-.new-user-box {
+.edit-user-form .new-user-box {
     padding: 30px;
 }
 
-.user-type-select {
+.edit-user-form .user-type-select {
     height: 40px;
     margin-top: 30px;
     color: #6f6d6d;
@@ -15,41 +15,56 @@
     border-bottom: 1px solid #979797;
 }
 
-.user-type-menu {
+.edit-user-form .user-type-menu {
     margin-top: 72px;
 }
 
-.user-type-option {
+.edit-user-form .user-type-option {
     margin-top: 72px;
 }
 
-.new-user-form form {
+.edit-user-form form {
     width: 37%;
     padding: 40px 0;
 }
 
-.add-img {
+.edit-user-form .add-img {
     width: 130px;
     height: 130px;
 }
 
-.new-user-form .blue-btn {
+.edit-user-form .blue-btn {
     padding: 10px 30px;
 }
 
-.new-user-form .white-btn {
+.edit-user-form .white-btn {
     padding: 9px;
 }
 
-.new-user-form .form-input {
+.edit-user-form .form-input {
     margin-top: 30px;
 }
 
-.err-msg {
+.edit-user-form .err-msg {
     width: 100%;
     background: #f6d4d4;
     color: #8d1621;
     border: 1px solid #8d1621;
     border-radius: 5px;
     padding: 10px;
+}
+
+.edit-user-form .password-line{
+  position: relative;
+}
+
+.edit-user-form .password-line .form-input{
+  width: 100%;
+}
+
+.edit-user-form .password-line button{
+   position: absolute;
+   right: 0;
+   margin: 0;
+   margin-top: 30px;
 }
