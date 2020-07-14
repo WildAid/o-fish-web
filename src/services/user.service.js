@@ -40,11 +40,22 @@ export default class UserService {
       })
   }
 
-  updateUser(data) {
-    return stitchService.database.collection("User").updateOne(data);
+  updateUser(id, data) {
+    id = new BSON.ObjectId(id);
+    return stitchService.database.collection("User").updateOne({
+      _id : id
+    }, data);
   }
 
-  resetPassword(id, newPassword) {
+  resetPasswordRequest(user, password) {
+    return stitchService.client.auth
+      .getProviderClient(UserPasswordAuthProviderClient.factory)
+      .callResetPasswordFunction(user.email, password, []);
+  }
 
+  resetPassword(token, tokenId, newPassword) {
+    return stitchService.client.auth
+      .getProviderClient(UserPasswordAuthProviderClient.factory)
+      .resetPassword(token, tokenId, newPassword);
   }
 }

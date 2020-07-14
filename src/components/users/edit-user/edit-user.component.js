@@ -9,7 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withTranslation } from "react-i18next";
 
-import { checkUserType } from "./../../../helpers/get-data";
+import { checkUserRole } from "./../../../helpers/get-data";
 
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
@@ -44,17 +44,19 @@ class EditUser extends Component {
     this.setState({ imgData: data });
   };
 
+  changePassword = (event) => {
+    userService.resetPasswordRequest(this.state.user, event.target.value)
+  };
+
   saveUser = (values) => {
     const { imgData, user } = this.state;
     let newUser = {
-      _id: user._id,
       email: values.email,
       name: {
         first: values.firstName,
         last: values.lastName,
       },
       active: true,
-      createdOn: user.createdOn,
       userGroup: values.userGroup,
     };
 
@@ -72,7 +74,7 @@ class EditUser extends Component {
 
     const saveUserFunc = () => {
       userService
-        .updateUser(newUser)
+        .updateUser(user._id,newUser)
         .then(() => history.push("/users"))
         .catch((error) => {
           error.message
@@ -139,8 +141,8 @@ class EditUser extends Component {
           firstName: user.name.first,
           lastName: user.name.last,
           password: "",
-          agency: user.agency,
-          adminType: checkUserType(user),
+          agency: user.agency.name,
+          adminType: checkUserRole(user),
           email: user.email,
           userGroup: user.userGroup,
         }
@@ -162,7 +164,7 @@ class EditUser extends Component {
             <div className="item-name">{t("PROFILE_PAGE.EDIT_USER")}</div>
           </div>
         </div>
-        <div className="flex-row justify-center standard-view white-bg box-shadow relative new-user-form">
+        <div className="flex-row justify-center standard-view white-bg box-shadow relative edit-user-form">
           {!isLoaded ? (
             <LoadingPanel />
           ) : (
@@ -221,17 +223,20 @@ class EditUser extends Component {
                       onChange={(e) => setFieldValue("email", e.target.value)}
                       value={values.email}
                     />
-                    <TextField
-                      label={t("LOGIN_PAGE.PASSWORD")}
-                      name="password"
-                      type="password"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("password", e.target.value)
-                      }
-                      value=""
-                    />
+                    <div className="password-line flex-row justify-between">
+                        <TextField
+                          label={t("LOGIN_PAGE.PASSWORD")}
+                          name="password"
+                          type="password"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) =>
+                            setFieldValue("password", e.target.value)
+                          }
+                          value=""
+                        />
+                      <button className="white-btn" onClick={this.changePassword}>change password</button>
+                    </div>
                     <FormControl className="form-input">
                       <InputLabel id="role-label">
                         {t("CREATE_USER_PAGE.ROLE")}
