@@ -4,10 +4,16 @@ import { initReactI18next } from 'react-i18next';
 
 import en from './en/translation';
 
+let lang = navigator.language || navigator.userLanguage;
+
+if (!(lang.includes('en') || lang.includes('fr') || lang.includes('es'))) {
+  lang = 'en';
+}
+
 const i18nOptions = {
   interpolation: { escapeValue: false },
-  lng: 'en',
-  fallbackLng: 'en',
+  lng: lang,
+  fallbackLng: lang,
   resources: {
     en: {
       translation: en
