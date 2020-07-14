@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
-export default class CrewSection extends Component {
+class CrewSection extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,30 +15,37 @@ export default class CrewSection extends Component {
 
   render() {
     const { crew, captain } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column">
-        <div className="item-name margin-left margin-top">Captain</div>
+        <div className="item-name margin-left margin-top">{t("TABLE.CAPTAIN")}</div>
         <section className="flex-row justify-between box-shadow padding white-bg margin-top">
-          <TextViewer mainText={captain.name} subText="Name" />
-          <TextViewer mainText={captain.license} subText="License Number" />
-          <TextViewer mainText="No photos" subText="Photos" />
+          <TextViewer mainText={captain.name} subText={t("TABLE.NAME")} />
+          <TextViewer
+            mainText={captain.license}
+            subText={t("TABLE.LICENSE_NUMBER")}
+          />
+          <TextViewer
+            mainText="N/A"
+            subText={t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+          />
           <TextViewer
             mainText={captain.attachments.notes[0]}
-            subText="Notes"
+            subText={t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
           />
         </section>
         <div className="item-name margin-left margin-top margin-bottom">
-          Crew
+          {t("NAVIGATION.CREW")}
         </div>
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
               <tr className="table-row row-head border-bottom">
-                <td>Name</td>
-                <td>License Number</td>
-                <td>Photos</td>
-                <td>Notes</td>
+                <td>{t("TABLE.NAME")}</td>
+                <td>{t("TABLE.LICENSE_NUMBER")}</td>
+                <td>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</td>
+                <td>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</td>
               </tr>
             </thead>
             <tbody>
@@ -45,9 +53,9 @@ export default class CrewSection extends Component {
                 <tr className="table-row row-body" key={ind}>
                   <td>{item.name}</td>
                   <td>{item.license}</td>
-                  <td>No photos</td>
+                  <td>N/A</td>
                   <td>{item.attachments.notes[0]}</td>
-                  </tr>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -56,3 +64,5 @@ export default class CrewSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(CrewSection);

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import moment from "moment";
+import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
@@ -226,6 +227,7 @@ class Boardings extends Component {
       searchQuery,
       page,
     } = this.state;
+    const { t } = this.props;
 
     boardingsChartOptions.filter = {
       _id: { $in: boardings.map((item) => item._id) },
@@ -240,19 +242,19 @@ class Boardings extends Component {
         />
         <div className="flex-row justify-between standard-view align-center">
           {loading ? (
-            <div className="items-amount">Loading...</div>
+            <div className="items-amount">{t("LOADING.LOADING")}</div>
           ) : (
             <SearchResultsFor
               query={searchQuery}
-              total={`${total} Boarding `}
+              total={`${total} ${t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}`}
             />
           )}
           <button className="white-btn" onClick={this.goNewBoarding}>
-            + New boarding
+            {`+ ${t("BUTTONS.NEW_BOARDING")}`}
           </button>
         </div>
         <div className="flex-row align-center standard-view">
-          <div>All dates &#11206;</div>
+          <div>{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
           <div className="flex-row align-center show-map-handler">
             <input
               className="map-handler"
@@ -260,7 +262,7 @@ class Boardings extends Component {
               defaultChecked
               onChange={this.showMap}
             />
-            <p>Map</p>
+            <p>{t("BOARDING_PAGE.MAP")}</p>
           </div>
           <FilterPanel
             options={{ searchByFilter: true }}
@@ -283,14 +285,14 @@ class Boardings extends Component {
               <table className="custom-table boardings-table">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>Date</td>
-                    <td>Time</td>
-                    <td>Vessel</td>
-                    <td>Permit Number</td>
-                    <td>Captain</td>
-                    <td>Violations</td>
-                    <td>Bordered by</td>
-                    <td>Risk</td>
+                    <td>{t("TABLE.DATE")}</td>
+                    <td>{t("TABLE.TIME")}</td>
+                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.PERMIT_NUMBER")}</td>
+                    <td>{t("TABLE.CAPTAIN")}</td>
+                    <td>{t("TABLE.VIOLATIONS")}</td>
+                    <td>{t("TABLE.BOARDED_BY")}</td>
+                    <td>{t("TABLE.RISK")}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -310,12 +312,12 @@ class Boardings extends Component {
                           textToHighlight={item.vessel.name}
                         />
                       </td>
-                      <td>{item.vessel.permitNumber || "No number"}</td>
+                      <td>{item.vessel.permitNumber || "N/A"}</td>
                       <td>{item.captain.name}</td>
                       <td>
                         {!!item.inspection.summary.violations
                           ? item.inspection.summary.violations.length
-                          : "No violations"}
+                          : "N/A"}
                       </td>
                       <td>{`${item.reportingOfficer.name.first} ${item.reportingOfficer.name.last}`}</td>
                       <td>
@@ -345,11 +347,11 @@ class Boardings extends Component {
         ) : loading ? (
           <LoadingPanel></LoadingPanel>
         ) : (
-          "No boardings found"
+          t("WARNINGS.NO_BOARDINGS")
         )}
       </div>
     );
   }
 }
 
-export default withRouter(Boardings);
+export default withRouter(withTranslation("translation")(Boardings));

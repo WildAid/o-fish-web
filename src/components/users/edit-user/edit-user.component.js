@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import { withTranslation } from "react-i18next";
 
 import { checkUserType } from "./../../../helpers/get-data";
 
@@ -32,7 +33,7 @@ class EditUser extends Component {
     error: null,
     agencies: [],
     imgData: null,
-    imageId: null
+    imageId: null,
   };
 
   removeErrMsg = () => {
@@ -40,11 +41,11 @@ class EditUser extends Component {
   };
 
   imageUploaded = (data) => {
-    this.setState({imgData: data});
+    this.setState({ imgData: data });
   };
 
   saveUser = (values) => {
-    const {imgData, user} = this.state;
+    const { imgData, user } = this.state;
     let newUser = {
       _id: user._id,
       email: values.email,
@@ -54,7 +55,7 @@ class EditUser extends Component {
       },
       active: true,
       createdOn: user.createdOn,
-      userGroup: values.userGroup
+      userGroup: values.userGroup,
     };
 
     if (values.adminType === "global") {
@@ -69,32 +70,38 @@ class EditUser extends Component {
       newUser = { ...newUser, agency: { name: values.agency } };
     }
 
-    const saveUserFunc = () => {userService
-      .updateUser(newUser)
-      .then(() => history.push("/users"))
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
-    }
+    const saveUserFunc = () => {
+      userService
+        .updateUser(newUser)
+        .then(() => history.push("/users"))
+        .catch((error) => {
+          error.message
+            ? this.setState({ error: `${error.name}: ${error.message}` })
+            : this.setState({ error: "An unexpected error occurred!" });
+        });
+    };
 
-    if (imgData){
-      stitchService.uploadImage(imgData, newUser.agency.name).then((result)=>{
-        newUser.profilePic = result.insertedId.toString();
-        saveUserFunc();
-      }).catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
+    if (imgData) {
+      stitchService
+        .uploadImage(imgData, newUser.agency.name)
+        .then((result) => {
+          newUser.profilePic = result.insertedId.toString();
+          saveUserFunc();
+        })
+        .catch((error) => {
+          error.message
+            ? this.setState({ error: `${error.name}: ${error.message}` })
+            : this.setState({ error: "An unexpected error occurred!" });
+        });
     } else {
       saveUserFunc();
     }
-  }
+  };
 
-  componentDidMount(){
-    const id = this.props.userId ? this.props.userId : this.props.match.params.id;
+  componentDidMount() {
+    const id = this.props.userId
+      ? this.props.userId
+      : this.props.match.params.id;
     agencyService
       .getAgencies(50, 0, "", null)
       .then((data) => {
@@ -103,186 +110,199 @@ class EditUser extends Component {
         });
       })
       .catch((error) => {
-        this.setState({error: error});
+        this.setState({ error: error });
         console.error(error);
       });
-    userService.getUserById(id).then((user)=>{
-      console.log(user);
-      this.setState({isLoaded: true, user: user});
-    }).catch((error) => {
-      this.setState({error: error});
-      console.error(error);
-    });
+    userService
+      .getUserById(id)
+      .then((user) => {
+        console.log(user);
+        this.setState({ isLoaded: true, user: user });
+      })
+      .catch((error) => {
+        this.setState({ error: error });
+        console.error(error);
+      });
   }
 
-  clearForm = ()=>{
-    history.push("/users")
-  }
+  clearForm = () => {
+    history.push("/users");
+  };
 
   render() {
-    const {user, isLoaded, error, agencies} = this.state;
-    const initialValues = user ? {
-      profilePic: user.profilePic,
-      firstName: user.name.first,
-      lastName:  user.name.last,
-      password: "",
-      agency: user.agency,
-      adminType: checkUserType(user),
-      email: user.email,
-      userGroup: user.userGroup,
-    } : {
-      firstName: "",
-      lastName: "",
-      password: "",
-      agency: "",
-      adminType: "",
-      email: "",
-      userGroup: "",
-    };
+    const { user, isLoaded, error, agencies } = this.state;
+    const { t } = this.props;
+
+    const initialValues = user
+      ? {
+          profilePic: user.profilePic,
+          firstName: user.name.first,
+          lastName: user.name.last,
+          password: "",
+          agency: user.agency,
+          adminType: checkUserType(user),
+          email: user.email,
+          userGroup: user.userGroup,
+        }
+      : {
+          firstName: "",
+          lastName: "",
+          password: "",
+          agency: "",
+          adminType: "",
+          email: "",
+          userGroup: "",
+        };
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
-            <div className="item-label">User</div>
-            <div className="item-name">Edit User</div>
+            <div className="item-label">{t("CREATE_USER_PAGE.USER")}</div>
+            <div className="item-name">{t("PROFILE_PAGE.EDIT_USER")}</div>
           </div>
         </div>
         <div className="flex-row justify-center standard-view white-bg box-shadow relative new-user-form">
-          { !isLoaded ? <LoadingPanel></LoadingPanel> :
-          <Formik
-            initialValues={initialValues}
-            onSubmit={this.saveUser}
-            render={({
-              errors,
-              values,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              setFieldValue,
-            }) => (
-              <Form
-                onSubmit={handleSubmit}
-                className="flex-column justify-center"
-              >
-                <div className="flex-row justify-center">
-                  <PhotoUploader imageId={values.profilePic} onData={this.imageUploaded}></PhotoUploader>
-                </div>
-                <div className="flex-row justify-between">
-                  <TextField
-                    label="First Name"
-                    name="firstName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("firstName", e.target.value)}
-                    type="text"
-                    value={values.firstName}
-                  />
-                  <TextField
-                    label="Last Name"
-                    name="lastName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("lastName", e.target.value)}
-                    type="text"
-                    value={values.lastName}
-                  />
-                  <div
-                    label="Last Name"
-                    name="lastName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("lastName", e.target.value)}
-                    type="text"
-                    value={values.lastName}
-                  ></div>
-                </div>
-                <div className="flex-column">
-                  <TextField
-                    label="Email"
-                    name="email"
-                    type="text"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("email", e.target.value)}
-                    value={values.email}
-                  />
-                  <TextField
-                    label="Password"
-                    name="password"
-                    type="password"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("password", e.target.value)}
-                    value=""
-                  />
-                  <FormControl className="form-input">
-                    <InputLabel id="role-label">Role</InputLabel>
-                    <Select
-                      labelId="role-label"
-                      onChange={(e) =>
-                        setFieldValue("adminType", e.target.value)
-                      }
-                      value={values.adminType}
-                    >
-                      <MenuItem value="global">
-                        <em>Global Admin</em>
-                      </MenuItem>
-                      <MenuItem value="agency">
-                        <em>Agency Admin</em>
-                      </MenuItem>
-                      <MenuItem value="group">
-                        <em>Group Admin</em>
-                      </MenuItem>
-                      <MenuItem value="field">
-                        <em>Field Officer</em>
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl className="form-input">
-                    <InputLabel id="agency-label">Agency</InputLabel>
-                    <Select
-                      labelId="agency-label"
-                      onChange={(e) =>
-                        setFieldValue("agency", e.target.value)
-                      }
-                      value={values.agency}
-                    >
-                      {agencies.map((agency, ind) => (
-                        <MenuItem value={agency} key={ind}>
-                          <em>{agency}</em>
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl className="form-input">
-                    <InputLabel id="group-label">User Group</InputLabel>
-                    <Select
-                      labelId="group-label"
-                      onChange={(e) =>
-                        setFieldValue("userGroup", e.target.value)
-                      }
-                      value={values.userGroup}
-                    >
-                      <MenuItem value="User Group">
-                        <em>User Group</em>
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className="flex-row justify-around align-center margin-top">
-                  <button className="blue-btn" type="submit">
-                    Update User
-                  </button>
-                  <div
-                    className="blue-color pointer"
-                    onClick={this.clearForm}
-                  >
-                    Cancel
+          {!isLoaded ? (
+            <LoadingPanel />
+          ) : (
+            <Formik
+              initialValues={initialValues}
+              onSubmit={this.saveUser}
+              render={({
+                errors,
+                values,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                setFieldValue,
+              }) => (
+                <Form
+                  onSubmit={handleSubmit}
+                  className="flex-column justify-center"
+                >
+                  <div className="flex-row justify-center">
+                    <PhotoUploader
+                      imageId={values.profilePic}
+                      onData={this.imageUploaded}
+                    ></PhotoUploader>
                   </div>
-                </div>
-              </Form>
-            )}
-          />}
+                  <div className="flex-row justify-between">
+                    <TextField
+                      label={t("CREATE_USER_PAGE.FIRST_NAME")}
+                      name="firstName"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("firstName", e.target.value)
+                      }
+                      type="text"
+                      value={values.firstName}
+                    />
+                    <TextField
+                      label={t("CREATE_USER_PAGE.LAST_NAME")}
+                      name="lastName"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("lastName", e.target.value)
+                      }
+                      type="text"
+                      value={values.lastName}
+                    />
+                  </div>
+                  <div className="flex-column">
+                    <TextField
+                      label={t("CREATE_AGENCY_PAGE.EMAIL")}
+                      name="email"
+                      type="text"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue("email", e.target.value)}
+                      value={values.email}
+                    />
+                    <TextField
+                      label={t("LOGIN_PAGE.PASSWORD")}
+                      name="password"
+                      type="password"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("password", e.target.value)
+                      }
+                      value=""
+                    />
+                    <FormControl className="form-input">
+                      <InputLabel id="role-label">
+                        {t("CREATE_USER_PAGE.ROLE")}
+                      </InputLabel>
+                      <Select
+                        labelId="role-label"
+                        onChange={(e) =>
+                          setFieldValue("adminType", e.target.value)
+                        }
+                        value={values.adminType}
+                      >
+                        <MenuItem value="global">
+                          <em>Global Admin</em>
+                        </MenuItem>
+                        <MenuItem value="agency">
+                          <em>Agency Admin</em>
+                        </MenuItem>
+                        <MenuItem value="group">
+                          <em>Group Admin</em>
+                        </MenuItem>
+                        <MenuItem value="field">
+                          <em>Field Officer</em>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl className="form-input">
+                      <InputLabel id="agency-label">{t("TABLE.AGENCY")}</InputLabel>
+                      <Select
+                        labelId="agency-label"
+                        onChange={(e) =>
+                          setFieldValue("agency", e.target.value)
+                        }
+                        value={values.agency}
+                      >
+                        {agencies.map((agency, ind) => (
+                          <MenuItem value={agency} key={ind}>
+                            <em>{agency}</em>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl className="form-input">
+                      <InputLabel id="group-label">{t("CREATE_USER_PAGE.USER_GROUP")}</InputLabel>
+                      <Select
+                        labelId="group-label"
+                        onChange={(e) =>
+                          setFieldValue("userGroup", e.target.value)
+                        }
+                        value={values.userGroup}
+                      >
+                        <MenuItem value="User Group">
+                          <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className="flex-row justify-around align-center margin-top">
+                    <button className="blue-btn" type="submit">
+                      {t("BUTTONS.UPDATE_USER")}
+                    </button>
+                    <div
+                      className="blue-color pointer"
+                      onClick={this.clearForm}
+                    >
+                      {t("BUTTONS.CANCEL")}
+                    </div>
+                  </div>
+                </Form>
+              )}
+            />
+          )}
         </div>
         {error && (
           <div className="flex-row justify-between standard-view">
@@ -299,4 +319,4 @@ class EditUser extends Component {
   }
 }
 
-export default withRouter(EditUser);
+export default withRouter(withTranslation("translation")(EditUser));

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
+import { withTranslation } from "react-i18next";
 
-export default class CrewSection extends Component {
+class CrewSection extends Component {
   state = { count: 0, crew: [], captain: { name: "", license: "" } };
 
   componentDidMount() {
@@ -63,32 +64,35 @@ export default class CrewSection extends Component {
 
   render() {
     const { crew, captain } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="flex-column">
         <div className="flex-row justify-between align-baseline">
-          <div className="item-name margin-left margin-top">Crew</div>
+          <div className="item-name margin-left margin-top">
+            {t("NAVIGATION.CREW")}
+          </div>
           <div className="font-16 pointer margin-right" onClick={this.addNew}>
-            + Add crew member
+            {`+ ${t("BUTTONS.ADD_CREW")}`}
           </div>
         </div>
         <section className="box-shadow padding white-bg margin-top">
           <div className="flex-row justify-between align-baseline">
-            <h3>Captain</h3>
+            <h3>{t("TABLE.CAPTAIN")}</h3>
             <div className="white-btn">
               <Icon>attachment</Icon>
             </div>
           </div>
           <div className="flex-row justify-between">
             <TextField
-              label="Name:"
+              label={t("TABLE.NAME")}
               name="name"
               value={captain.name}
               className="half-row-view"
               onChange={(e) => this.setCaptain("name", e.target.value)}
             />
             <TextField
-              label="License number:"
+              label={t("TABLE.LICENSE_NUMBER")}
               name="license"
               className="half-row-view"
               value={captain.license}
@@ -102,9 +106,12 @@ export default class CrewSection extends Component {
             key={index}
           >
             <div className="flex-row justify-between align-baseline">
-              <h3>Crew member {index + 1}</h3>
+              <h3>{` ${t("SEARCH.CREW_MEMBERS")} ${index + 1}`}</h3>
               <div className="flex-row justify-between buttons-container">
-                <button className="white-btn" onClick={() => this.deleteItem(index)}>
+                <button
+                  className="white-btn"
+                  onClick={() => this.deleteItem(index)}
+                >
                   <Icon>delete_outlined</Icon>
                 </button>
                 <button className="white-btn">
@@ -114,7 +121,7 @@ export default class CrewSection extends Component {
             </div>
             <div className="flex-row justify-between">
               <TextField
-                label="Name:"
+                label={t("TABLE.NAME")}
                 name="name"
                 value={item.name}
                 className="half-row-view"
@@ -123,7 +130,7 @@ export default class CrewSection extends Component {
                 }
               />
               <TextField
-                label="License number:"
+                label={t("TABLE.LICENSE_NUMBER")}
                 name="license"
                 className="half-row-view"
                 value={item.license}
@@ -138,3 +145,5 @@ export default class CrewSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(CrewSection);

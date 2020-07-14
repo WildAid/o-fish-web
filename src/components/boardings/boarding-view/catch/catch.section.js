@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
-export default class CatchSection extends Component {
+class CatchSection extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,20 +16,21 @@ export default class CatchSection extends Component {
   }
 
   render() {
+    const { t } = this.props;
     const { data } = this.state;
 
     return (
       <div className="flex-column">
         <div className="item-name margin-left margin-top margin-bottom">
-          Catches
+          {t("SEARCH.CATCHES")}
         </div>
         <div className="table-wrapper">
           <table className="custom-table">
             <thead>
               <tr className="table-row row-head border-bottom">
-                <td>Species</td>
-                <td>Count</td>
-                <td>Weight</td>
+                <td>{t("FILTER.MAIN.CATCH.SPECIES")}</td>
+                <td>{t("FILTER.MAIN.CATCH.COUNT")}</td>
+                <td>{t("FILTER.MAIN.CATCH.WEIGHT")}</td>
               </tr>
             </thead>
             <tbody>
@@ -46,3 +48,5 @@ export default class CatchSection extends Component {
     );
   }
 }
+
+export default withTranslation("translation")(CatchSection);

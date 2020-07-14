@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
+import { withTranslation } from "react-i18next";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
@@ -93,6 +94,7 @@ class AgenciesMain extends React.Component {
 
   render() {
     const { agencies, total, limit, page, searchQuery, loading } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="padding-bottom flex-column align-center">
@@ -104,15 +106,15 @@ class AgenciesMain extends React.Component {
         <div className="flex-row justify-between standard-view">
           <div className="items-amount">
             {loading
-              ? "Loading..."
+              ? t("LOADING.LOADING")
               : total
-              ? `${total} Agencies`
-              : "No Agencies found"}
+              ? `${total} ${t("NAVIGATION.AGENCIES")}`
+              : t("WARNINGS.NO_AGENCIES")}
           </div>
         </div>
         {!!agencies.length && (
           <div className="standard-view">
-            <button className="blue-btn">+ Filter</button>
+            <button className="blue-btn">{`+ ${t("FILTER.FILTER")}`}</button>
           </div>
         )}
         {!!agencies.length && (
@@ -120,10 +122,10 @@ class AgenciesMain extends React.Component {
             <table className="agencies-table custom-table">
               <thead>
                 <tr className="table-row row-head border-bottom">
-                  <td>Agency</td>
-                  <td>Description</td>
-                  <td>Officers</td>
-                  <td>Status</td>
+                  <td>{t("TABLE.AGENCY")}</td>
+                  <td>{t("TABLE.DESCRIPTION")}</td>
+                  <td>{t("TABLE.OFFICERS")}</td>
+                  <td>{t("TABLE.STATUS")}</td>
                   <td></td>
                 </tr>
               </thead>
@@ -149,7 +151,7 @@ class AgenciesMain extends React.Component {
                         className="blue-color"
                         onClick={(e) => this.goTo(e, EDIT_AGENCIES_PAGE)}
                       >
-                        Edit
+                        {t("BUTTONS.EDIT")}
                       </td>
                     </tr>
                   );
@@ -171,4 +173,4 @@ class AgenciesMain extends React.Component {
   }
 }
 
-export default withRouter(AgenciesMain);
+export default withRouter(withTranslation("translation")(AgenciesMain));
