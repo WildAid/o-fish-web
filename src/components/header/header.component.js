@@ -206,7 +206,7 @@ class Header extends Component {
                 </div>
                 <div className="flex-row align-center profile-name">
                   {authService.isAuthenticated
-                    ? authService.user.profile.data.email
+                    ? authService.user.email
                     : t("WARNINGS.NOT_AUTHENTICATED")}
                 </div>
               </div>

@@ -45,7 +45,7 @@
     margin-top: 30px;
 }
 
-.edit-user-form .err-msg {
+.user-editor-error-message-box{
     width: 100%;
     background: #f6d4d4;
     color: #8d1621;

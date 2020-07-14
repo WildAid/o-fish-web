@@ -154,7 +154,6 @@ export const checkUserRole = (user) => {
   } else if (user.agency.admin) {
     return "agency";
   }
-
   return "field";
 };
 
