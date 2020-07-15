@@ -9,10 +9,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withTranslation } from "react-i18next";
+
 import { checkUserRole } from "./../../../helpers/get-data";
+
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
-import history from "../../../root/root.history";
+
 import StitchService from "./../../../services/stitch.service";
 import UserService from "./../../../services/user.service";
 import AgencyService from "./../../../services/agency.service";
@@ -113,7 +115,17 @@ class UserEditor extends Component {
     }
   };
 
-  componentDidMount() {
+  goRedirect(){
+    if (this.props.onRedirect){
+      this.props.onRedirect();
+    }
+  }
+
+  clearForm = () => {
+    this.goRedirect();
+  };
+
+   componentDidMount() {
     const {userId} = this.props;
     agencyService
       .getAgencies(50, 0, "", null)
@@ -140,16 +152,6 @@ class UserEditor extends Component {
       this.setState({ isLoaded: true, user: null });
     }
   }
-
-  goRedirect(){
-    if (this.props.onRedirect){
-      this.props.onRedirect();
-    }
-  }
-
-  clearForm = () => {
-    this.goRedirect();
-  };
 
   render() {
     const { user, isLoaded, error, agencies } = this.state;

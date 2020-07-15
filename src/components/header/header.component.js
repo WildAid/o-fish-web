@@ -16,17 +16,20 @@ import {
 } from "../../root/root.constants.js";
 
 import AuthService from "../../services/auth.service";
+import StitchService from "../../services/stitch.service";
 
-import { resetSearch } from "./../../helpers/get-data";
+import { resetSearch, bufferToBase64 } from "./../../helpers/get-data";
 import storage from "./../../helpers/localStorageData";
 
 import "./header.css";
 
 const authService = AuthService.getInstance();
+const stitchService = StitchService.getInstance();
 
 class Header extends Component {
   state = {
     activeMenu: "",
+    userPhoto: "",
   };
 
   showActiveMenu = (value) => {
@@ -47,8 +50,33 @@ class Header extends Component {
     window.location.href = "/";
   };
 
+  componentDidMount() {
+    if (authService.user.profilePic) {
+      stitchService.getPhoto(authService.user.profilePic).then((pic) => {
+        this.setState({ userPhoto: pic.pictureURL });
+        if (pic) {
+          if (pic.pictureURL) {
+            this.setState({ userPhoto: pic.pictureURL });
+          } else {
+            if (pic && (pic.picture || pic.photo || pic.thumbNail)) {
+              pic = pic.thumbNail
+                ? pic.thumbNail
+                : pic.picture
+                ? pic.picture
+                : pic.photo;
+              this.setState({
+                userPhoto:
+                  "data:image/jpeg;base64," + bufferToBase64(pic.buffer),
+              });
+            }
+          }
+        }
+      });
+    }
+  }
+
   render() {
-    const { activeMenu } = this.state;
+    const { activeMenu, userPhoto } = this.state;
     const { t } = this.props;
 
     return (
@@ -74,7 +102,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "dashboard" && (
@@ -100,7 +128,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no errow img"
                   />
                 </div>
                 {activeMenu === "boarding" && (
@@ -138,7 +166,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "users" && (
@@ -169,7 +197,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "agencies" && (
@@ -199,16 +227,23 @@ class Header extends Component {
               >
                 <div className="flex-row align-center profile-img">
                   <img
-                    className="icon"
-                    src={require("../../assets/user-header-icon.png")}
-                    alt="no logo"
+                    className="icon profile-pic"
+                    src={
+                      userPhoto || require("../../assets/user-header-icon.png")
+                    }
+                    alt="no user photo"
                   />
                 </div>
                 <div className="flex-row align-center profile-name">
                   {authService.isAuthenticated
-                    ? authService.user.email
+                    ? `${authService.user.name.first} ${authService.user.name.last}`
                     : t("WARNINGS.NOT_AUTHENTICATED")}
                 </div>
+                <img
+                  className="custom-down-arrow"
+                  src={require("../../assets/angle-arrow-down.svg")}
+                  alt="no arrow img"
+                />
               </div>
               {activeMenu === "profile" && (
                 <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">

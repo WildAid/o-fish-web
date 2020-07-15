@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import history from "../../root/root.history";
 import { withTranslation } from "react-i18next";
 import UserEditor from "../partials/user-editor/user-editor.component"

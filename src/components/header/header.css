@@ -71,8 +71,11 @@
   width: 45px;
 }
 
+.profile-img .profile-pic {
+  border-radius: 30px;
+}
+
 .profile-name {
-  font-size: 12px;
   padding-right: 7px;
 }
 
