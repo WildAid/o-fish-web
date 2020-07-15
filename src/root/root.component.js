@@ -16,8 +16,6 @@ class Root extends Component {
   render() {
     const { route } = this.props;
     if (!authService.isStitchAuthenticated){
-      return <Redirect to="/login" />;
-    } else {
       if (!authService.isAuthenticated){
         authService.getUserFromLocalStorage();
       }
