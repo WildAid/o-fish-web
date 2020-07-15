@@ -32,7 +32,6 @@ export default class UserService {
   }
 
   createUser(password, data) {
-    debugger;
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
       .registerWithEmail(data.email, password)
