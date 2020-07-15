@@ -102,7 +102,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no errow img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "boarding" && (
