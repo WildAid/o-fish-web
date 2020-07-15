@@ -1,8 +1,5 @@
-//@flow
-
 import React, { Component } from "react";
 import { renderRoutes } from "react-router-config";
-import { Redirect } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
 
@@ -15,8 +12,8 @@ const authService = AuthService.getInstance();
 class Root extends Component {
   render() {
     const { route } = this.props;
-    if (!authService.isStitchAuthenticated){
-      if (!authService.isAuthenticated){
+    if (!authService.isStitchAuthenticated) {
+      if (!authService.isAuthenticated) {
         authService.getUserFromLocalStorage();
       }
     }

@@ -15,6 +15,8 @@ import {
   PROFILE_PAGE,
 } from "../../root/root.constants.js";
 
+import UserPhoto from "./../partials/user-photo/user-photo.component";
+
 import AuthService from "../../services/auth.service";
 
 import { resetSearch } from "./../../helpers/get-data";
@@ -74,7 +76,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "dashboard" && (
@@ -100,7 +102,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "boarding" && (
@@ -138,7 +140,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "users" && (
@@ -169,7 +171,7 @@ class Header extends Component {
                   <img
                     className="custom-down-arrow"
                     src={require("../../assets/angle-arrow-down.svg")}
-                    alt="no location img"
+                    alt="no arrow img"
                   />
                 </div>
                 {activeMenu === "agencies" && (
@@ -197,18 +199,19 @@ class Header extends Component {
                 className="flex-row pointer"
                 onClick={() => this.showActiveMenu("profile")}
               >
-                <div className="flex-row align-center profile-img">
-                  <img
-                    className="icon"
-                    src={require("../../assets/user-header-icon.png")}
-                    alt="no logo"
-                  />
+                <div className="flex-row align-center">
+                  <UserPhoto imageId={authService.user.profilePic} />
                 </div>
                 <div className="flex-row align-center profile-name">
                   {authService.isAuthenticated
-                    ? authService.user.email
+                    ? `${authService.user.name.first} ${authService.user.name.last}`
                     : t("WARNINGS.NOT_AUTHENTICATED")}
                 </div>
+                <img
+                  className="custom-down-arrow"
+                  src={require("../../assets/angle-arrow-down.svg")}
+                  alt="no arrow img"
+                />
               </div>
               {activeMenu === "profile" && (
                 <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">
