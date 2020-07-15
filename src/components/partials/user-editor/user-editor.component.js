@@ -57,10 +57,10 @@ class UserEditor extends Component {
         last: values.lastName,
       },
       active: true,
-      userGroup: values.userGroup
+      userGroup: values.userGroup,
     };
 
-    if (!userId){
+    if (!userId) {
       newUser.createdOn = moment().toDate();
     }
 
@@ -77,7 +77,7 @@ class UserEditor extends Component {
     }
 
     const saveUserFunc = () => {
-      if (userId){
+      if (userId) {
         userService
           .updateUser(user._id, newUser)
           .then(() => this.goRedirect())
@@ -115,8 +115,8 @@ class UserEditor extends Component {
     }
   };
 
-  goRedirect(){
-    if (this.props.onRedirect){
+  goRedirect() {
+    if (this.props.onRedirect) {
       this.props.onRedirect();
     }
   }
@@ -125,8 +125,8 @@ class UserEditor extends Component {
     this.goRedirect();
   };
 
-   componentDidMount() {
-    const {userId} = this.props;
+  componentDidMount() {
+    const { userId } = this.props;
     agencyService
       .getAgencies(50, 0, "", null)
       .then((data) => {
@@ -138,16 +138,16 @@ class UserEditor extends Component {
         this.setState({ error: error });
         console.error(error);
       });
-    if (userId){
-    userService
-      .getUserById(userId)
-      .then((user) => {
-        this.setState({ isLoaded: true, user: user });
-      })
-      .catch((error) => {
-        this.setState({ error: error });
-        console.error(error);
-      });
+    if (userId) {
+      userService
+        .getUserById(userId)
+        .then((user) => {
+          this.setState({ isLoaded: true, user: user });
+        })
+        .catch((error) => {
+          this.setState({ error: error });
+          console.error(error);
+        });
     } else {
       this.setState({ isLoaded: true, user: null });
     }
@@ -239,7 +239,7 @@ class UserEditor extends Component {
                       onChange={(e) => setFieldValue("email", e.target.value)}
                       value={values.email}
                     />
-                    {changePassword &&
+                    {changePassword && (
                       <div className="password-line flex-row justify-between">
                         <TextField
                           label={t("LOGIN_PAGE.PASSWORD")}
@@ -259,8 +259,8 @@ class UserEditor extends Component {
                           {t("BUTTONS.CHANGE_PASSWORD")}
                         </button>
                       </div>
-                    }
-                    {newPassword &&
+                    )}
+                    {newPassword && (
                       <TextField
                         label={t("LOGIN_PAGE.PASSWORD")}
                         name="password"
@@ -272,7 +272,7 @@ class UserEditor extends Component {
                         }
                         value={values.password}
                       />
-                    }
+                    )}
                     <FormControl className="form-input">
                       <InputLabel id="role-label">
                         {t("CREATE_USER_PAGE.ROLE")}
@@ -335,7 +335,9 @@ class UserEditor extends Component {
                   </div>
                   <div className="flex-row justify-around align-center margin-top">
                     <button className="blue-btn" type="submit">
-                      {user ? t("BUTTONS.UPDATE_USER") : t("BUTTONS.CREATE_USER")}
+                      {user
+                        ? t("BUTTONS.UPDATE_USER")
+                        : t("BUTTONS.CREATE_USER")}
                     </button>
                     <div
                       className="blue-color pointer"
@@ -359,7 +361,7 @@ class UserEditor extends Component {
             </div>
           </div>
         )}
-        </Fragment>
+      </Fragment>
     );
   }
 }

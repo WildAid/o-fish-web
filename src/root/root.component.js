@@ -12,8 +12,8 @@ const authService = AuthService.getInstance();
 class Root extends Component {
   render() {
     const { route } = this.props;
-    if (!authService.isStitchAuthenticated){
-      if (!authService.isAuthenticated){
+    if (!authService.isStitchAuthenticated) {
+      if (!authService.isAuthenticated) {
         authService.getUserFromLocalStorage();
       }
     }
