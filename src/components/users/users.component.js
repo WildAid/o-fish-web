@@ -6,6 +6,8 @@ import Highlighter from "react-highlight-words";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
+import UserPhoto from "./../partials/user-photo/user-photo.component";
+
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import {
@@ -186,13 +188,7 @@ class UsersMain extends React.Component {
                             type="checkbox"
                             onChange={(e) => this.checkUsers(e, item)}
                           />
-                          <div className="user-img">
-                            <img
-                              className="full-view"
-                              src={require("../../assets/user-icon.png")}
-                              alt="no logo"
-                            />
-                          </div>
+                          <UserPhoto imageId={item.profilePic || ""} defaultIcon={false}/>
                           <Highlighter
                             highlightClassName="highlighted"
                             searchWords={highlighted}

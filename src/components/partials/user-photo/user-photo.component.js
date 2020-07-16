@@ -45,6 +45,7 @@ class UserPhoto extends Component {
 
   render() {
     const { userPhoto, loading } = this.state;
+    const { defaultIcon } = this.props;
 
     return (
       <div className="user-photo">
@@ -53,7 +54,12 @@ class UserPhoto extends Component {
         ) : (
           <img
             className="icon profile-pic"
-            src={userPhoto || require("../../../assets/user-header-icon.png")}
+            src={
+              userPhoto ||
+              require(`../../../assets/user${
+                defaultIcon ? "-header" : ""
+              }-icon.png`)
+            }
             alt="no user"
           />
         )}

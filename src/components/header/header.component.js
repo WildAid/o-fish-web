@@ -200,7 +200,7 @@ class Header extends Component {
                 onClick={() => this.showActiveMenu("profile")}
               >
                 <div className="flex-row align-center">
-                  <UserPhoto imageId={authService.user.profilePic} />
+                  <UserPhoto imageId={authService.user.profilePic} defaultIcon={true}/>
                 </div>
                 <div className="flex-row align-center profile-name">
                   {authService.isAuthenticated
