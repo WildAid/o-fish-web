@@ -153,7 +153,9 @@ class UserEditor extends Component {
 
   render() {
     const { user, isLoaded, error, agencies } = this.state;
-    const { t, changePassword, newPassword } = this.props;
+    const { t, changePassword, newPassword, saveText, allowRoleEditing } = this.props;
+
+    if (!saveText) saveText = t("BUTTONS.SAVE")
 
     const initialValues = user
       ? {
@@ -271,69 +273,73 @@ class UserEditor extends Component {
                         value={values.password}
                       />
                     }
-                    <FormControl className="form-input">
-                      <InputLabel id="role-label">
-                        {t("CREATE_USER_PAGE.ROLE")}
-                      </InputLabel>
-                      <Select
-                        labelId="role-label"
-                        onChange={(e) =>
-                          setFieldValue("adminType", e.target.value)
-                        }
-                        value={values.adminType}
-                      >
-                        <MenuItem value="global">
-                          <em>Global Admin</em>
-                        </MenuItem>
-                        <MenuItem value="agency">
-                          <em>Agency Admin</em>
-                        </MenuItem>
-                        <MenuItem value="group">
-                          <em>Group Admin</em>
-                        </MenuItem>
-                        <MenuItem value="field">
-                          <em>Field Officer</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl className="form-input">
-                      <InputLabel id="agency-label">
-                        {t("TABLE.AGENCY")}
-                      </InputLabel>
-                      <Select
-                        labelId="agency-label"
-                        onChange={(e) =>
-                          setFieldValue("agency", e.target.value)
-                        }
-                        value={values.agency}
-                      >
-                        {agencies.map((agency, ind) => (
-                          <MenuItem value={agency} key={ind}>
-                            <em>{agency}</em>
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <FormControl className="form-input">
-                      <InputLabel id="group-label">
-                        {t("CREATE_USER_PAGE.USER_GROUP")}
-                      </InputLabel>
-                      <Select
-                        labelId="group-label"
-                        onChange={(e) =>
-                          setFieldValue("userGroup", e.target.value)
-                        }
-                        value={values.userGroup}
-                      >
-                        <MenuItem value="User Group">
-                          <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                    {allowRoleEditing && (
+                      <Fragment>
+                        <FormControl className="form-input">
+                          <InputLabel id="role-label">
+                            {t("CREATE_USER_PAGE.ROLE")}
+                          </InputLabel>
+                          <Select
+                            labelId="role-label"
+                            onChange={(e) =>
+                              setFieldValue("adminType", e.target.value)
+                            }
+                            value={values.adminType}
+                          >
+                            <MenuItem value="global">
+                              <em>Global Admin</em>
+                            </MenuItem>
+                            <MenuItem value="agency">
+                              <em>Agency Admin</em>
+                            </MenuItem>
+                            <MenuItem value="group">
+                              <em>Group Admin</em>
+                            </MenuItem>
+                            <MenuItem value="field">
+                              <em>Field Officer</em>
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                        <FormControl className="form-input">
+                          <InputLabel id="agency-label">
+                            {t("TABLE.AGENCY")}
+                          </InputLabel>
+                          <Select
+                            labelId="agency-label"
+                            onChange={(e) =>
+                              setFieldValue("agency", e.target.value)
+                            }
+                            value={values.agency}
+                          >
+                            {agencies.map((agency, ind) => (
+                              <MenuItem value={agency} key={ind}>
+                                <em>{agency}</em>
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <FormControl className="form-input">
+                          <InputLabel id="group-label">
+                            {t("CREATE_USER_PAGE.USER_GROUP")}
+                          </InputLabel>
+                          <Select
+                            labelId="group-label"
+                            onChange={(e) =>
+                              setFieldValue("userGroup", e.target.value)
+                            }
+                            value={values.userGroup}
+                          >
+                            <MenuItem value="User Group">
+                              <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Fragment>
+                    )}
                   </div>
                   <div className="flex-row justify-around align-center margin-top">
                     <button className="blue-btn" type="submit">
-                      {user ? t("BUTTONS.UPDATE_USER") : t("BUTTONS.CREATE_USER")}
+                      {saveText}
                     </button>
                     <div
                       className="blue-color pointer"

@@ -24,6 +24,8 @@ export default withTranslation("translation")(function Profile(props){
         </div>
         <UserEditor
           userId={authService.user._id}
+          saveText={t("BUTTONS.SAVE")}
+          allowRoleEditing={false}
           onRedirect={() => history.push("/home")}>
         </UserEditor>
       </div>

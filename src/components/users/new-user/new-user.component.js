@@ -21,6 +21,8 @@ class NewUser extends Component {
         </div>
         <UserEditor
           newPassword={authService.userRole == "global" || authService.userRole == "agency"}
+          saveText={t("BUTTONS.CREATE_USER")}
+          allowRoleEditing={true}
           onRedirect={() => history.push("/users")}>
         </UserEditor>
       </div>
