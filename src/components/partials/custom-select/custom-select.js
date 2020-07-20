@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-
+import { withRouter } from "react-router";
 import history from "../../../root/root.history";
 
 import { resetSearch } from "./../../../helpers/get-data";
@@ -24,21 +24,21 @@ class CustomSelect extends Component {
   };
 
   setSelected = (option) => {
-    const currentPath = history.location.pathname;
+    const {currentPath} = this.props;
     const newPath = option === "All" ? "home" : option.toLowerCase();
 
     if (`/${newPath}` !== currentPath) {
-      history.replace(`/${newPath}`);
+      history.push(`#/${newPath}`);
     }
     resetSearch();
 
     this.setState({ selected: option });
   };
 
-  componentDidMount() {
-    const currentLocation = history.location.pathname.match(/[a-zA-Z]+/g)[0];
+  componentDidMount(){
+    const {currentPath} = this.props;
     this.setState({
-      selected: currentLocation === "home" ? "All" : currentLocation,
+      selected: currentPath === "home" ? "All" : currentPath,
     });
   }
 
@@ -73,4 +73,4 @@ class CustomSelect extends Component {
   }
 }
 
-export default withTranslation("translation")(CustomSelect);
+export default withTranslation("translation")(withRouter(CustomSelect));
