@@ -71,7 +71,7 @@ class SearchPanel extends Component {
             onChange={this.setSearch}
             onFocus={() => this.setState({ isFocused: true })}
           ></input>
-          <CustomSelect />
+          <CustomSelect currentPath="home" />
         </div>
         {isAutofill && !!value && (
           <Autofill

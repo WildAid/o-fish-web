@@ -97,7 +97,7 @@ const routes = [
         path: EDIT_BOARDING_PAGE,
         component: BoardingEditPage,
         exact: true,
-      }, 
+      },
       {
         path: NEW_BOARDING_PAGE,
         component: BoardingEditPage,
