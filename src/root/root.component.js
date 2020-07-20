@@ -1,5 +1,3 @@
-//@flow
-
 import React, { Component } from "react";
 import { renderRoutes } from "react-router-config";
 
@@ -14,8 +12,8 @@ const authService = AuthService.getInstance();
 class Root extends Component {
   render() {
     const { route } = this.props;
-    if (!authService.isStitchAuthenticated){
-      if (!authService.isAuthenticated){
+    if (!authService.isStitchAuthenticated) {
+      if (!authService.isAuthenticated) {
         authService.getUserFromLocalStorage();
       }
     }

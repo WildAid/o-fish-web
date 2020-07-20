@@ -9,10 +9,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withTranslation } from "react-i18next";
+
 import { checkUserRole } from "./../../../helpers/get-data";
+
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
-import history from "../../../root/root.history";
+
 import StitchService from "./../../../services/stitch.service";
 import UserService from "./../../../services/user.service";
 import AgencyService from "./../../../services/agency.service";
@@ -55,10 +57,10 @@ class UserEditor extends Component {
         last: values.lastName,
       },
       active: true,
-      userGroup: values.userGroup
+      userGroup: values.userGroup,
     };
 
-    if (!userId){
+    if (!userId) {
       newUser.createdOn = moment().toDate();
     }
 
@@ -75,7 +77,7 @@ class UserEditor extends Component {
     }
 
     const saveUserFunc = () => {
-      if (userId){
+      if (userId) {
         userService
           .updateUser(user._id, newUser)
           .then(() => this.goRedirect())
@@ -113,8 +115,18 @@ class UserEditor extends Component {
     }
   };
 
+  goRedirect() {
+    if (this.props.onRedirect) {
+      this.props.onRedirect();
+    }
+  }
+
+  clearForm = () => {
+    this.goRedirect();
+  };
+
   componentDidMount() {
-    const {userId} = this.props;
+    const { userId } = this.props;
     agencyService
       .getAgencies(50, 0, "", null)
       .then((data) => {
@@ -126,30 +138,20 @@ class UserEditor extends Component {
         this.setState({ error: error });
         console.error(error);
       });
-    if (userId){
-    userService
-      .getUserById(userId)
-      .then((user) => {
-        this.setState({ isLoaded: true, user: user });
-      })
-      .catch((error) => {
-        this.setState({ error: error });
-        console.error(error);
-      });
+    if (userId) {
+      userService
+        .getUserById(userId)
+        .then((user) => {
+          this.setState({ isLoaded: true, user: user });
+        })
+        .catch((error) => {
+          this.setState({ error: error });
+          console.error(error);
+        });
     } else {
       this.setState({ isLoaded: true, user: null });
     }
   }
-
-  goRedirect(){
-    if (this.props.onRedirect){
-      this.props.onRedirect();
-    }
-  }
-
-  clearForm = () => {
-    this.goRedirect();
-  };
 
   render() {
     const { user, isLoaded, error, agencies } = this.state;
@@ -239,7 +241,7 @@ class UserEditor extends Component {
                       onChange={(e) => setFieldValue("email", e.target.value)}
                       value={values.email}
                     />
-                    {changePassword &&
+                    {changePassword && (
                       <div className="password-line flex-row justify-between">
                         <TextField
                           label={t("LOGIN_PAGE.PASSWORD")}
@@ -259,8 +261,8 @@ class UserEditor extends Component {
                           {t("BUTTONS.CHANGE_PASSWORD")}
                         </button>
                       </div>
-                    }
-                    {newPassword &&
+                    )}
+                    {newPassword && (
                       <TextField
                         label={t("LOGIN_PAGE.PASSWORD")}
                         name="password"
@@ -363,7 +365,7 @@ class UserEditor extends Component {
             </div>
           </div>
         )}
-        </Fragment>
+      </Fragment>
     );
   }
 }

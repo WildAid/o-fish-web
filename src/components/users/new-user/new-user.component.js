@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import history from "../../../root/root.history";
 import UserEditor from "../../partials/user-editor/user-editor.component"
@@ -7,7 +7,6 @@ import AuthService from "./../../../services/auth.service";
 const authService = AuthService.getInstance();
 
 class NewUser extends Component {
-
   render() {
     const { t } = this.props;
 
