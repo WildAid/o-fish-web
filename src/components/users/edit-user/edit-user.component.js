@@ -13,7 +13,7 @@ const authService = AuthService.getInstance();
 export default withRouter(withTranslation("translation")(function EditUser(props){
     const { t } = props;
     const id = props.match.params.id;
-    
+    const isAdminUser = authService.userRole == "global" || authService.userRole == "agency";
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
@@ -24,7 +24,9 @@ export default withRouter(withTranslation("translation")(function EditUser(props
         </div>
         <UserEditor
           userId={id}
-          changePassword={authService.userRole === "global" || authService.userRole === "agency"}
+          changePassword={isAdminUser}          
+          allowRoleEditing={isAdminUser}
+          saveText={t("BUTTONS.UPDATE_USER")}
           onRedirect={() => history.push("/users")}>
         </UserEditor>
       </div>
