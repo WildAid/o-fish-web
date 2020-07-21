@@ -70,7 +70,7 @@ export default class StitchService {
 
   //After stitch authenticated, you could connect to database
   reinitializeClient() {
-    this._database = this._localStitchClient
+    return this._database = this._localStitchClient
       .getServiceClient(RemoteMongoClient.factory, config.realmServiceName)
       .db(config.database);
   }

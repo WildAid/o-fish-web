@@ -37,7 +37,12 @@
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "ROLE": "Role",
-    "USER_GROUP": "User Group"
+    "USER_GROUP": "User Group",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "PERMISSIONS": "Permissions",
+    "PROFILE_INFO": "Profile information",
+    "SETTINGS": "Settings"
   },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Records Found",

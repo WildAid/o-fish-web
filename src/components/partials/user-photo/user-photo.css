@@ -1,8 +1,9 @@
 .user-photo {
   padding: 5px;
-  width: 45px;
 }
 
 .user-photo .profile-pic {
   border-radius: 30px;
+  width: 45px;
+  height: 45px;
 }

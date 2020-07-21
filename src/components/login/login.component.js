@@ -34,7 +34,7 @@ class Login extends Component {
         this.setState({
           loading: false,
         });
-        history.replace(HOME_PAGE);
+        history.push(HOME_PAGE);
       })
       .catch((error) => {
         this.setState({

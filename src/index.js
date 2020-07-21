@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { I18nextProvider } from "react-i18next";
 import i18next from "./helpers/i18n/index";

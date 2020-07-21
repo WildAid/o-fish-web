@@ -105,6 +105,10 @@ main {
     width: 100%;
 }
 
+.form-view{
+  width: 37%;
+}
+
 .standard-view {
     width: 78%;
 }
