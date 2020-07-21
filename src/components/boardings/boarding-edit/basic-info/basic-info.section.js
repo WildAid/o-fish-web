@@ -21,7 +21,7 @@ const boardingChartOptions = {
 };
 
 class BasicInfoSection extends Component {
-  state = { dateTime: new Date(), location: { latitude: 0, longitude: 0 } };
+  state = { dateTime: new Date(), location: [0, 0] };
 
   handleDateChange = (value) => {
     this.setState({
@@ -35,19 +35,13 @@ class BasicInfoSection extends Component {
   };
 
   handleLocationChange = (long, lat) => {
-    const location = {
-      longitude: parseFloat(long),
-      latitude: parseFloat(lat),
-    };
+    const location = [parseFloat(long), parseFloat(lat)];
     this.setState({
       location: location,
     });
     if (this.props.onChange) {
       const { dataObject } = this.props;
-      dataObject.location =  {
-        longitude: new BSON.Double(parseFloat(long)),
-        latitude: new BSON.Double(parseFloat(lat)),
-      };;
+      dataObject.location =  [new BSON.Double(parseFloat(long)), new BSON.Double(parseFloat(lat))];
       this.props.onChange(dataObject);
     }
   };
@@ -122,10 +116,10 @@ class BasicInfoSection extends Component {
               id="latitudeField"
               label={t("BOARDING_PAGE.VIEW_BOARDING.LATTITUDE")}
               className="half-row-view"
-              value={location.latitude}
+              value={location[1]}
               onChange={(event) => {
                 this.handleLocationChange(
-                  location.longitude,
+                  location[0],
                   event.target.value
                 );
               }}
@@ -134,11 +128,11 @@ class BasicInfoSection extends Component {
               id="longitudeField"
               label={t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
               className="half-row-view"
-              value={location.longitude}
+              value={location[0]}
               onChange={(event) => {
                 this.handleLocationChange(
                   event.target.value,
-                  location.latitude
+                  location[1]
                 );
               }}
             />

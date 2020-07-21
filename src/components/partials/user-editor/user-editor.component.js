@@ -274,7 +274,7 @@ class UserEditor extends Component {
                         }
                         value={values.password}
                       />
-                    }
+                    )}
                     {allowRoleEditing && (
                       <Fragment>
                         <FormControl className="form-input">
