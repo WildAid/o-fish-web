@@ -38,13 +38,13 @@ class BasicInfoSection extends Component {
               label={t("BOARDING_PAGE.VIEW_BOARDING.LATTITUDE")}
               className="half-row-view"
               name="lattitude"
-              value={location.latitude}
+              value={location[1]}
             />
             <TextField
               label={t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
               className="half-row-view"
               name="time"
-              value={location.longitude}
+              value={location[0]}
             />
           </div>
         </section>
