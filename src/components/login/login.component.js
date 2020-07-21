@@ -12,6 +12,10 @@ import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
 import "./login.css";
 
+import {
+  HOME_PAGE
+} from "../../root/root.constants";
+
 const authService = AuthService.getInstance();
 
 class Login extends Component {
@@ -30,7 +34,7 @@ class Login extends Component {
         this.setState({
           loading: false,
         });
-        history.replace("/home");
+        history.replace(HOME_PAGE);
       })
       .catch((error) => {
         this.setState({
