@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, Component } from "react";
 import { withTranslation } from "react-i18next";
 
 import ChartBox from "./../../charts/chart-box.component";
@@ -39,30 +39,34 @@ const chartComplianceRate = {
   ...stitchService.chartsConfig["compliance-rate"],
 };
 
-const ComplianceRateSection = ({ t }) => {
-  return (
-    <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
-      <h2 className="chart-name">{t("HOME_PAGE.COMPLIANCE_RATE")}</h2>
-      <div className="flex-row justify-between align-stretch full-view lg-chart">
-        <div className="half-row-view">
-          <div className="align-stretch md-chart compliance-rate-value ">
-            <ChartBox options={chartComplianceRate}></ChartBox>
-          </div>
-          <div className="flex-row align-stretch md-chart">
-            <div className="half-row-view">
-              <ChartBox options={chartBoardingsCount}></ChartBox>
-            </div>
-            <div className="half-row-view">
-              <ChartBox options={chartCitationsAndWarnings}></ChartBox>
-            </div>
-          </div>
-        </div>
-        <div className="half-row-view">
-          <ChartBox options={chartBoardingsCompliance}></ChartBox>
-        </div>
-      </div>
-    </section>
-  );
-};
+class ComplianceRateSection extends Component{
 
+  render(){
+    const { t } = this.props;
+    return (
+      <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
+        <h2 className="chart-name">{t("HOME_PAGE.COMPLIANCE_RATE")}</h2>
+        <div className="flex-row justify-between align-stretch full-view lg-chart">
+          <div className="half-row-view">
+            <div className="align-stretch md-chart compliance-rate-value ">
+              <ChartBox options={chartComplianceRate}></ChartBox>
+            </div>
+            <div className="flex-row align-stretch md-chart">
+              <div className="half-row-view">
+                <ChartBox options={chartBoardingsCount}></ChartBox>
+              </div>
+              <div className="half-row-view">
+                <ChartBox options={chartCitationsAndWarnings}></ChartBox>
+              </div>
+            </div>
+          </div>
+          <div className="half-row-view">
+            <ChartBox options={chartBoardingsCompliance}></ChartBox>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+}
 export default withTranslation("translation")(memo(ComplianceRateSection));

@@ -133,14 +133,14 @@ This method checks if the user is already authenticated and redirects the user t
 
 ```js
 const auth = authService.isStitchAuthenticated;
-
 if (route.auth){
   if (!auth){
     return <Redirect to="/login" />;
   } else {
     if (!authService.isAuthenticated){
-      authService.getUserFromLocalStorage();
-      return <Redirect to={route.path} />
+      return authService.reauthenticateUser().then(()=>{
+        return <Redirect to={route.path} />
+      });
     }
   }
 }
@@ -152,6 +152,7 @@ if (route.routes){
 } else {
   return <route.component isLoggedIn={auth} {...props} />;
 }
+};
 ```
 
 #### MongoDB Charts
@@ -166,12 +167,12 @@ Example chart options:
 
 ```js
 const chartOptions = {
-  width: "100%", 
+  width: "100%",
   height: "100%",
   refreshInterval: 1300, // in seconds.
-  useAuthenticatedAccess: true, 
+  useAuthenticatedAccess: true,
   chartId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  filter: {exampleField: "someValue"} 
+  filter: {exampleField: "someValue"}
 };
 ```
 

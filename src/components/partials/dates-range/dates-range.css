@@ -1,0 +1,80 @@
+.dates-range .dates-range-plate{
+  border: solid 1px #DADADA;
+  background: white;
+  border-radius: 2em;
+  padding: 1em 1.5em;
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.dates-range .dates-range-plate .icon{
+  margin-left: 1em;
+}
+
+.dates-range .dates-range-panel{
+  position: absolute;
+  border-radius: 0.5em;
+  background: white;
+  border: solid 1px #DADADA;
+  z-index: 10;
+  padding: 2em 1.5em 0em 1.5em;
+  right: 0;
+  margin-top: 0.5em;
+  box-shadow: -1px -1px 2px #ccc;
+}
+
+.dates-range .dates-range-panel label{
+  margin-bottom: 0.5em;
+}
+
+.dates-range .range-select{
+  height: 2.3em;
+}
+
+.dates-range .date-time-row{
+  margin-bottom: 1em;
+  margin-top: 1em;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dates-range .date-picker{
+  width: 50%;
+  margin-bottom: -2px;
+}
+
+.dates-range .time-picker{
+  width: 30%;
+  margin-bottom: -2px;
+}
+
+.dates-range .date-time-row .flex-row{
+  width: 45%;
+  background: #eee;
+  border-radius: 0.5em 0.5em 0 0;
+  border-bottom: solid 2px #818181;
+  padding-top: 0.5em;
+  align-items: flex-end;
+  box-sizing: border-box;
+}
+.dates-range .date-time-row .MuiIconButton-root{
+  display: none;
+}
+
+.dates-range .calendar{
+
+    border: solid 1px #DADADA;
+    overflow: hidden;
+}
+
+.dates-range .calendar-from{
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.dates-range .calendar-to{
+  border-radius: 0 0.5em 0.5em 0;
+}
+
+.dates-range .buttons-row{
+  justify-content: flex-end;
+}

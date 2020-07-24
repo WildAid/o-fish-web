@@ -22,6 +22,7 @@
     "LOG_OUT": "Log out"
   },
   "HOME_PAGE": {
+    "DASHBOARD": "Dashboard",
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",
     "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
@@ -143,6 +144,8 @@
     "OFFICERS": "Officers"
   },
   "FILTER": {
+    "FROM": "From",
+    "TO": "to",
     "FILTER": "Filter",
     "MAIN": {
       "RISK": {
@@ -174,6 +177,13 @@
       "RISKS": {
         "NAME": "Risks"
       }
+    },
+    "DATES_RANGE":{
+      "RANGE": "Date Range",
+      "LAST7DAYS": "Last 7 days",
+      "TODAY": "Today",
+      "YESTERDAY": "Yesterday",
+      "CUSTOM": "Custom date range"
     },
     "HOME_PAGE": {
       "DATE_TIME": "Date & Time"

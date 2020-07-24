@@ -62,7 +62,6 @@ export default withRouter(withTranslation("translation")(
         },
         userGroup: values.userGroup,
         realmUserID: values.realmUserID,
-        profilePic: values.profilePic,
         active: values.active
       };
 
@@ -79,6 +78,9 @@ export default withRouter(withTranslation("translation")(
       }
 
       const saveUserFunc = () => {
+        if (values.profilePic && !newUser.profilePic){
+          newUser.profilePic = values.profilePic;
+        }
         userService
           .updateUser(user._id, newUser)
           .then(() => this.goRedirect())

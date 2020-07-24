@@ -32,15 +32,21 @@ export default class AuthService extends EventEmitter {
 
   authenticate(login, pass) {
     return stitchService.authenticateStitch(login, pass).then((authData) => {
-        return stitchService.database.collection("User").findOne({realmUserID: authData.id}).then((user)=>{
-          if (user || authData.customData){
-            this.reloadCurrentUser(user ? user: authData.customData);
+        if (authData && authData.customData && authData.customData._id){
+            this.reloadCurrentUser(authData.customData);
             this.emit("authorized", this._user);
-            return this._user
-          } else {
-            throw(new Error("No user in database found for " + authData.id));
-          }
-        });
+            return this._user;
+        } else {
+          return stitchService.database.collection("User").findOne({realmUserID: authData.id}).then((user)=>{
+            if (user || authData.customData){
+              this.reloadCurrentUser(user ? user: authData.customData);
+              this.emit("authorized", this._user);
+              return this._user
+            } else {
+              throw(new Error("No user in database found for " + authData.id));
+            }
+          });
+        }
     });
   }
 
