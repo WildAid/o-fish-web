@@ -58,7 +58,6 @@ class UserEditor extends Component {
         last: values.lastName,
       },
       active: true,
-      profilePic: values.profilePic,
       userGroup: values.userGroup,
     };
 
@@ -81,6 +80,9 @@ class UserEditor extends Component {
     const saveUserFunc = () => {
       if (userId) {
         newUser.realmUserID = values.realmUserID;
+        if (values.profilePic && !newUser.profilePic){
+          newUser.profilePic = values.profilePic;
+        }
         const userId = user._id;
         userService
         .updateUser(userId, newUser)
@@ -396,7 +398,7 @@ class UserEditor extends Component {
         {error && (
           <div className="flex-row justify-between standard-view">
             <div className="flex-row justify-between error-message-box">
-              <div>{error}</div>
+              <div>{error ? error.message : "unexpected undefined error!"}</div>
               <Icon className="pointer" onClick={this.removeErrMsg}>
                 close
               </Icon>

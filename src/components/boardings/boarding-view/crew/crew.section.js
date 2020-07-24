@@ -31,7 +31,7 @@ class CrewSection extends Component {
             subText={t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
           />
           <TextViewer
-            mainText={captain.attachments.notes[0]}
+            mainText={captain.attachments && captain.attachments.notes && captain.attachments.notes.length ? captain.attachments.notes[0] : ""}
             subText={t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
           />
         </section>

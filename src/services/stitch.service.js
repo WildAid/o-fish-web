@@ -61,10 +61,10 @@ export default class StitchService {
   authenticateStitch(login, pass) {
     return this._localStitchClient.auth
       .loginWithCredential(new UserPasswordCredential(login, pass))
-      .then((user) => {
+      .then((authData) => {
         //Connecting to database
         this.reinitializeClient();
-        return user;
+        return authData;
       });
   }
 
