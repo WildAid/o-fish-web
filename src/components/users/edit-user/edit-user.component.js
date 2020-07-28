@@ -153,7 +153,7 @@ export default withRouter(withTranslation("translation")(
     render() {
       const { t } = this.props;
       const { user, isLoaded, error, activeTab, agencies } = this.state;
-      const isAdminUser = authService.userRole == "global" || authService.userRole == "agency";
+      const isAdminUser = authService.userRole === "global" || authService.userRole === "agency";
 
       const initialValues = user
       ? {
@@ -335,7 +335,7 @@ export default withRouter(withTranslation("translation")(
                           <Select
                             labelId="active-label"
                             onChange={(e) =>
-                              setFieldValue("active", e.target.value == "active")
+                              setFieldValue("active", e.target.value === "active")
                             }
                             value={values.active ? "active" : "inactive"}
                             >

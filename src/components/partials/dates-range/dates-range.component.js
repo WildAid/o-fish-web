@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import SearchIcon from "@material-ui/icons/Search";
 import moment from "moment";
-import Icon from "@material-ui/core/Icon";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import {
   MuiPickersUtilsProvider,
   TimePicker,
-  KeyboardTimePicker,
   KeyboardDateTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
@@ -27,34 +24,33 @@ export default withTranslation("translation")(class DatesRange extends Component
   };
 
   dateChanged = (start, end, customRange) => {
-    if (customRange == "today"){
+    if (customRange === "today"){
       start = moment().startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
-    if (customRange == "yesterday"){
+    if (customRange === "yesterday"){
       start = moment().subtract(1, 'days').startOf('day').toDate();
       end =  moment().subtract(1, 'days').endOf('day').toDate();
     }
-    if (customRange == "week"){
+    if (customRange === "week"){
       start = moment().subtract(1, 'week').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
-    if (customRange == "last30"){
+    if (customRange === "last30"){
       start = moment().subtract(1, 'month').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
-    if (customRange == "last60"){
+    if (customRange === "last60"){
       start = moment().subtract(2, 'month').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
-    if (customRange == "last90"){
+    if (customRange === "last90"){
       start = moment().subtract(3, 'month').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
     if (new Date(end).valueOf() - new Date(start).valueOf() <= 1000){
       end = moment(start).add(1, 'minute').toDate();
     }
-    console.log(customRange)
     this.setState({
       dateStart: start,
       dateEnd: end,
@@ -67,7 +63,6 @@ export default withTranslation("translation")(class DatesRange extends Component
   }
 
   applyFilter = () => {
-    const { searchQuery } = this.state;
     this.setState({
       panelShown: false
     });
@@ -77,7 +72,6 @@ export default withTranslation("translation")(class DatesRange extends Component
   };
 
   cancelFilter = () => {
-    const { filterValue } = this.state;
     this.setState({
       dateStart: moment().subtract(1, "week").toDate(),
       dateEnd: new Date(),

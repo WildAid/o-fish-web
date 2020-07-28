@@ -43,7 +43,7 @@ class BoardingsSection extends Component {
   render() {
     const { t, filter} = this.props;
 
-    if (filter && this.state.filter == ""){
+    if (filter && this.state.filter === ""){
       chartOptions.filter = filter;
     }
     return (

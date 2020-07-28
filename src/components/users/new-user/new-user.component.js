@@ -26,7 +26,7 @@ class NewUser extends Component {
             showingOptions={{
               saveText: t("BUTTONS.CREATE_USER"),
               role: true,
-              newPassword: authService.userRole == "global" || authService.userRole == "agency"
+              newPassword: authService.userRole === "global" || authService.userRole === "agency"
             }}
             onRedirect={() => history.push(USERS_PAGE)}>
           </UserEditor>
