@@ -68,13 +68,13 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
-    auth: false,
+    auth: true,
     exact: false,
   },
   {
     path: PROFILE_PAGE,
     component: Profile,
-    auth: false,
+    auth: true,
     exact: false,
   },
   {

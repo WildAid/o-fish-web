@@ -22,6 +22,7 @@
     "LOG_OUT": "Log out"
   },
   "HOME_PAGE": {
+    "DASHBOARD": "Dashboard",
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",
     "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
@@ -37,7 +38,12 @@
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "ROLE": "Role",
-    "USER_GROUP": "User Group"
+    "USER_GROUP": "User Group",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "PERMISSIONS": "Permissions",
+    "PROFILE_INFO": "Profile information",
+    "SETTINGS": "Settings"
   },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Records Found",
@@ -138,6 +144,8 @@
     "OFFICERS": "Officers"
   },
   "FILTER": {
+    "FROM": "From",
+    "TO": "to",
     "FILTER": "Filter",
     "MAIN": {
       "RISK": {
@@ -169,6 +177,16 @@
       "RISKS": {
         "NAME": "Risks"
       }
+    },
+    "DATES_RANGE":{
+      "RANGE": "Date Range",
+      "LAST7DAYS": "Last 7 days",
+      "LAST30DAYS": "Last 30 days",
+      "LAST60DAYS": "Last 60 days",
+      "LAST90DAYS": "Last 90 days",
+      "TODAY": "Today",
+      "YESTERDAY": "Yesterday",
+      "CUSTOM": "Custom date range"
     },
     "HOME_PAGE": {
       "DATE_TIME": "Date & Time"

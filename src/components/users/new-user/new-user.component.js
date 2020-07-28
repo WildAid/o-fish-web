@@ -4,6 +4,10 @@ import history from "../../../root/root.history";
 import UserEditor from "../../partials/user-editor/user-editor.component"
 import AuthService from "./../../../services/auth.service";
 
+import {
+  USERS_PAGE
+} from "../../../root/root.constants.js";
+
 const authService = AuthService.getInstance();
 
 class NewUser extends Component {
@@ -19,11 +23,13 @@ class NewUser extends Component {
           </div>
         </div>
         <UserEditor
-          newPassword={authService.userRole == "global" || authService.userRole == "agency"}
-          saveText={t("BUTTONS.CREATE_USER")}
-          allowRoleEditing={true}
-          onRedirect={() => history.push("/users")}>
-        </UserEditor>
+            showingOptions={{
+              saveText: t("BUTTONS.CREATE_USER"),
+              role: true,
+              newPassword: authService.userRole === "global" || authService.userRole === "agency"
+            }}
+            onRedirect={() => history.push(USERS_PAGE)}>
+          </UserEditor>
       </div>
     );
   }

@@ -14,7 +14,7 @@ export default withTranslation("translation")(function Profile(props){
           <div>
             <div className="item-label">
               {
-                authService.user ?
+                authService.user && authService.user.name?
                 authService.user.name.first + " " + authService.user.name.last :
                 "Unauthenticated user"
               }
@@ -22,12 +22,15 @@ export default withTranslation("translation")(function Profile(props){
             <div className="item-name">{t("NAVIGATION.ACCOUNT")}</div>
           </div>
         </div>
-        <UserEditor
-          userId={authService.user._id}
-          saveText={t("BUTTONS.SAVE")}
-          allowRoleEditing={false}
-          onRedirect={() => history.push("/home")}>
-        </UserEditor>
+          <UserEditor
+            userId={authService.user._id}
+            showingOptions={{
+              saveText: t("BUTTONS.SAVE"),
+              role: false
+            }}
+            onSave={(user)=>authService.reloadCurrentUser(user)}
+            onRedirect={() => history.push("/home")}>
+          </UserEditor>
       </div>
     );
 })

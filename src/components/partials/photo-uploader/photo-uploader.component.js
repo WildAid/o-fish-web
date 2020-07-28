@@ -76,6 +76,7 @@ export default class PhotoUploader extends Component {
           className="hidden-uploader"
           onChange={($event) => this.fileSelected($event)}
         />
+        {loading ? <LoadingPanel /> :
         <div className="add-img" onClick={this.handleClick}>
           <img
             className="icon"
@@ -88,8 +89,7 @@ export default class PhotoUploader extends Component {
             }
             alt="no logo"
           />
-        </div>
-        {loading ? <LoadingPanel /> : ""}
+        </div>}
       </div>
     );
   }

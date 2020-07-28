@@ -1,0 +1,89 @@
+.edit-user-form{
+  padding: 2% 5%;
+  box-sizing: border-box;
+}
+
+/* Tabs */
+.edit-user-component .tab {
+    padding: 15px;
+    cursor: pointer;
+    font-size: 120%;
+}
+
+.edit-user-component .tab.active {
+    border-bottom: 2px solid #979797;
+}
+
+.edit-user-component .tab-content {
+    padding: 0 20px 20px 20px;
+    margin-top: 15px;
+}
+
+.edit-user-component .tab .tab-content table{
+    color: black;
+}
+
+/* Forms */
+
+.edit-user-form {
+    margin: 20px 0;
+}
+
+.edit-user-form .new-user-box {
+    padding: 30px;
+}
+
+.edit-user-form .user-type-select {
+    height: 40px;
+    margin-top: 30px;
+    color: #6f6d6d;
+    font-size: 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #979797;
+}
+
+.edit-user-form .user-type-menu {
+    margin-top: 72px;
+}
+
+.edit-user-form .user-type-option {
+    margin-top: 72px;
+}
+
+.edit-user-form form {
+    padding: 40px 0;
+}
+
+.edit-user-form .add-img {
+    width: 130px;
+    height: 130px;
+}
+
+.edit-user-form .blue-btn {
+    padding: 10px 30px;
+}
+
+.edit-user-form .white-btn {
+    padding: 9px;
+}
+
+.edit-user-form .form-input {
+    margin-top: 30px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.edit-user-form .password-line{
+  position: relative;
+}
+
+.edit-user-form .password-line .form-input{
+  width: 100%;
+}
+
+.edit-user-form .password-line button{
+   position: absolute;
+   right: 0;
+   margin: 0;
+   margin-top: 30px;
+}

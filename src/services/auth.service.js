@@ -1,8 +1,7 @@
 import StitchService from "./stitch.service";
-import EventEmitter from "events";
 import storage from '../helpers/localStorageData';
 import {checkUserRole} from '../helpers/get-data';
-
+import EventEmitter from "events";
 const stitchService = StitchService.getInstance();
 
 export default class AuthService extends EventEmitter {
@@ -28,20 +27,39 @@ export default class AuthService extends EventEmitter {
   }
 
   get user(){
-    return this._user ? this._user.customData : this._user;
+    return this._user ? this._user : null;
   }
 
   authenticate(login, pass) {
-    return stitchService.authenticateStitch(login, pass).then(user => {
-      this._user = user;
-      delete (user.auth);
-      storage.setAuthInfo(user);
-      this.emit("authorized", user);
+    return stitchService.authenticateStitch(login, pass).then((authData) => {
+        if (authData && authData.customData && authData.customData._id){
+            this.reloadCurrentUser(authData.customData);
+            this.emit("authorized", this._user);
+            return this._user;
+        } else {
+          return stitchService.database.collection("User").findOne({realmUserID: authData.id}).then((user)=>{
+            if (user || authData.customData){
+              this.reloadCurrentUser(user ? user: authData.customData);
+              this.emit("authorized", this._user);
+              return this._user
+            } else {
+              throw(new Error("No user in database found for " + authData.id));
+            }
+          });
+        }
     });
   }
 
-  getUserFromLocalStorage(user) {
+  reloadCurrentUser(user) {
+    this._user = user;
+    storage.setAuthInfo(this._user);
+    this.emit("user-object-changed", this._user);
+    return this._user;
+  }
+
+  reauthenticateUser(user) {
     stitchService.reinitializeClient();
-    return this._user = storage.getAuthInfo();
+    this._user = storage.getAuthInfo();
+    return this._user;
   }
 }

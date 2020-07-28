@@ -61,16 +61,16 @@ export default class StitchService {
   authenticateStitch(login, pass) {
     return this._localStitchClient.auth
       .loginWithCredential(new UserPasswordCredential(login, pass))
-      .then((user) => {
+      .then((authData) => {
         //Connecting to database
         this.reinitializeClient();
-        return user;
+        return authData;
       });
   }
 
   //After stitch authenticated, you could connect to database
   reinitializeClient() {
-    this._database = this._localStitchClient
+    return this._database = this._localStitchClient
       .getServiceClient(RemoteMongoClient.factory, config.realmServiceName)
       .db(config.database);
   }

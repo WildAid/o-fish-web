@@ -1,15 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-
+import moment from "moment";
 import ComplianceRateSection from "./compliance-rate-section/compliance-rate.section";
 import BoardingsSection from "./boardings-section/boardings.section";
 import PatrolHoursSection from "./patrol-hours-section/patrol-hours.section";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
+import DatesRange from "./../partials/dates-range/dates-range.component";
 
 import SearchService from "./../../services/search.service";
+import AuthService from "./../../services/auth.service";
 
 import "./home.css";
 
+const authService = AuthService.getInstance();
 const searchService = SearchService.getInstance();
 
 class Home extends Component {
@@ -19,6 +22,10 @@ class Home extends Component {
     crew: [],
     searchQuery: "",
     highlighted: [],
+    isLoaded: true,
+    datesFilter:{
+          date: { $gt: moment().subtract(1, "week").toDate() }
+      }
   };
 
   search = (value) => {
@@ -33,9 +40,21 @@ class Home extends Component {
     this.setState({ searchQuery: value });
   };
 
+  changeFilter = (filter) => {
+    let filterObject =
+    { $and : [{
+        date: { $gt: new Date(filter.start)}
+      }, {
+        date: { $lte: new Date(filter.end)}
+      }]
+    };
+    this.setState({datesFilter: filterObject});
+  }
+
   render() {
-    const { vessels, boardings, crew, searchQuery, highlighted } = this.state;
+    const { vessels, boardings, crew, searchQuery, highlighted, isLoaded, datesFilter } = this.state;
     const { t } = this.props;
+    const user = authService.user;
 
     return (
       <div className="flex-column full-view align-center home">
@@ -48,10 +67,18 @@ class Home extends Component {
           searchWords={highlighted}
           isAutofill={true}
         />
-        <h1>{`${t("HOME_PAGE.OVERVIEW")} April 01, 2020 - April 25, 2020`}</h1>
-        <ComplianceRateSection />
-        <BoardingsSection />
-        <PatrolHoursSection />
+      <div className="standard-view page-header">
+            <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
+            <div className="flex-row full-view justify-between align-center">
+              <div className="item-name">{isLoaded && user ? user.agency.name : t("LOADING.LOADING")}</div>
+              <DatesRange onFilterChange={this.changeFilter}></DatesRange>
+            </div>
+        </div>
+        {isLoaded && <Fragment>
+          <ComplianceRateSection filter={datesFilter}/>
+          <BoardingsSection filter={datesFilter} />
+          <PatrolHoursSection filter={datesFilter} />
+        </Fragment>}
       </div>
     );
   }

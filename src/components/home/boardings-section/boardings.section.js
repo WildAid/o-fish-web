@@ -41,8 +41,11 @@ class BoardingsSection extends Component {
   };
 
   render() {
-    const { t } = this.props;
+    const { t, filter} = this.props;
 
+    if (filter && this.state.filter === ""){
+      chartOptions.filter = filter;
+    }
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
         <div className="flex-row justify-between align-center full-view">
