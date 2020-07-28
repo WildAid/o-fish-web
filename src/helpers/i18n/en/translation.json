@@ -181,6 +181,9 @@
     "DATES_RANGE":{
       "RANGE": "Date Range",
       "LAST7DAYS": "Last 7 days",
+      "LAST30DAYS": "Last 30 days",
+      "LAST60DAYS": "Last 60 days",
+      "LAST90DAYS": "Last 90 days",
       "TODAY": "Today",
       "YESTERDAY": "Yesterday",
       "CUSTOM": "Custom date range"

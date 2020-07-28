@@ -20,13 +20,41 @@ import "./dates-range.css";
 export default withTranslation("translation")(class DatesRange extends Component {
   state = {
     dateStart: moment().subtract(1, "week").toDate(),
-    dateEnd: new Date(),
+    dateEnd: moment().endOf('day').toDate(),
     currentRange: "week",
     panelShown: false,
     filterValue: "",
   };
 
   dateChanged = (start, end, customRange) => {
+    if (customRange == "today"){
+      start = moment().startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange == "yesterday"){
+      start = moment().subtract(1, 'days').startOf('day').toDate();
+      end =  moment().subtract(1, 'days').endOf('day').toDate();
+    }
+    if (customRange == "week"){
+      start = moment().subtract(1, 'week').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange == "last30"){
+      start = moment().subtract(1, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange == "last60"){
+      start = moment().subtract(2, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange == "last90"){
+      start = moment().subtract(3, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (new Date(end).valueOf() - new Date(start).valueOf() <= 1000){
+      end = moment(start).add(1, 'minute').toDate();
+    }
+    console.log(customRange)
     this.setState({
       dateStart: start,
       dateEnd: end,
@@ -35,7 +63,7 @@ export default withTranslation("translation")(class DatesRange extends Component
   };
 
   getFilterValue = () => {
-    return { start: this.state.dateStart, end: this.state.dateEnd }
+    return { start: new Date(this.state.dateStart), end: new Date(this.state.dateEnd)}
   }
 
   applyFilter = () => {
@@ -83,9 +111,7 @@ export default withTranslation("translation")(class DatesRange extends Component
                 className="range-select"
                 variant="outlined"
                 labelId="range-label"
-                onChange={(e) =>
-                  this.setSearch("active", e.target.value)
-                }
+                onChange={(event) => this.dateChanged(dateStart, dateEnd, event.target.value)}
                 value={currentRange}
                 >
                 <MenuItem value="week">
@@ -96,6 +122,15 @@ export default withTranslation("translation")(class DatesRange extends Component
                 </MenuItem>
                 <MenuItem value="yesterday">
                   {t("FILTER.DATES_RANGE.YESTERDAY")}
+                </MenuItem>
+                <MenuItem value="last30">
+                  {t("FILTER.DATES_RANGE.LAST30DAYS")}
+                </MenuItem>
+                <MenuItem value="last60">
+                  {t("FILTER.DATES_RANGE.LAST60DAYS")}
+                </MenuItem>
+                <MenuItem value="last90">
+                  {t("FILTER.DATES_RANGE.LAST90DAYS")}
                 </MenuItem>
                 <MenuItem value="custom">
                   {t("FILTER.DATES_RANGE.CUSTOM")}

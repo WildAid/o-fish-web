@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-
+import moment from "moment";
 import ComplianceRateSection from "./compliance-rate-section/compliance-rate.section";
 import BoardingsSection from "./boardings-section/boardings.section";
 import PatrolHoursSection from "./patrol-hours-section/patrol-hours.section";
@@ -23,7 +23,9 @@ class Home extends Component {
     searchQuery: "",
     highlighted: [],
     isLoaded: true,
-    datesFilter: null
+    datesFilter:{
+          date: { $gt: moment().subtract(1, "week").toDate() }
+      }
   };
 
   search = (value) => {
@@ -39,13 +41,24 @@ class Home extends Component {
   };
 
   changeFilter = (filter) => {
-    let filterObject = { $and : [{
-        Date: { $gt: filter.start}
+    let filterObject =
+    {
+          date: { $gt: new Date(filter.start) }
+      }/*{ $and : [{
+        date: { $gt: filter.start}
       }, {
-        Date: { $lte: filter.end}
+        date: { $lte: filter.end}
+      }]
+    };*/
+    let filterObject2 = {          date: { $lte:  new Date(filter.end)}};
+    let filterObject3 =
+    { $and : [{
+        date: { $gt: new Date(filter.start)}
+      }, {
+        date: { $lte: new Date(filter.end)}
       }]
     };
-    this.setState({datesFilter: filter})
+    this.setState({datesFilter: filterObject3});
   }
 
   render() {
@@ -71,9 +84,11 @@ class Home extends Component {
               <DatesRange onFilterChange={this.changeFilter}></DatesRange>
             </div>
         </div>
-        <ComplianceRateSection filter={datesFilter}/>
-        <BoardingsSection filter={datesFilter} />
-        <PatrolHoursSection filter={datesFilter} />
+        {isLoaded && <Fragment>
+          <ComplianceRateSection filter={datesFilter}/>
+          <BoardingsSection filter={datesFilter} />
+          <PatrolHoursSection filter={datesFilter} />
+        </Fragment>}
       </div>
     );
   }

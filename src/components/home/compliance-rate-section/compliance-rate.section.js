@@ -42,7 +42,12 @@ const chartComplianceRate = {
 class ComplianceRateSection extends Component{
 
   render(){
-    const { t } = this.props;
+    const { t, filter } = this.props;
+    if (filter){
+      chartBoardingsCompliance.filter = filter;
+      chartCitationsAndWarnings.filter = filter;
+      chartBoardingsCount.filter = filter;
+    }
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
         <h2 className="chart-name">{t("HOME_PAGE.COMPLIANCE_RATE")}</h2>
