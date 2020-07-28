@@ -42,23 +42,13 @@ class Home extends Component {
 
   changeFilter = (filter) => {
     let filterObject =
-    {
-          date: { $gt: new Date(filter.start) }
-      }/*{ $and : [{
-        date: { $gt: filter.start}
-      }, {
-        date: { $lte: filter.end}
-      }]
-    };*/
-    let filterObject2 = {          date: { $lte:  new Date(filter.end)}};
-    let filterObject3 =
     { $and : [{
         date: { $gt: new Date(filter.start)}
       }, {
         date: { $lte: new Date(filter.end)}
       }]
     };
-    this.setState({datesFilter: filterObject3});
+    this.setState({datesFilter: filterObject});
   }
 
   render() {
