@@ -141,7 +141,11 @@
     "CREATED_ON": "Created On",
     "STATUS": "Status",
     "DESCRIPTION": "Description",
-    "OFFICERS": "Officers"
+    "OFFICERS": "Officers",
+    "CITATIONS": "Citations",
+    "WARNINGS": "Warnings",
+    "VIOLATION": "Violation",
+    "RESULT": "Result"
   },
   "FILTER": {
     "FROM": "From",

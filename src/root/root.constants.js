@@ -17,6 +17,9 @@ export const NEW_BOARDING_PAGE = "/boardings/new";
 export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
 export const VIEW_BOARDING_PAGE = "/boardings/view/:id";
 
+//Crew sub routes
+export const VIEW_CREW_PAGE = "/crew/view/:id";
+
 //Users subroutes
 export const NEW_USER_PAGE = "/users/new_user";
 export const USERS_ACTIVITIES_PAGE = "/users/activities";

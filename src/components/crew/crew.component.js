@@ -4,7 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText } from "./../../helpers/get-data";
+import { getColor, goToPage, getHighlightedText } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -13,6 +13,8 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
+
+import { VIEW_CREW_PAGE } from "../../root/root.constants.js";
 
 import "./crew.css";
 
@@ -282,7 +284,11 @@ class Crew extends Component {
                 </thead>
                 <tbody>
                   {crew.map((item, ind) => (
-                    <tr className="table-row row-body" key={ind}>
+                    <tr
+                      className="table-row row-body"
+                      key={ind}
+                      onClick={() => goToPage(VIEW_CREW_PAGE, item._id)}
+                    >
                       <td>
                         <div className="flex-row align-center">
                           <div className="crew-name">
@@ -294,16 +300,16 @@ class Crew extends Component {
                             />
                           </div>
                           {item.rank === "captain" && (
-                            <div className="captain-icon">{t("TABLE.CAPTAIN").toUpperCase()}</div>
+                            <div className="captain-icon">
+                              {t("TABLE.CAPTAIN").toUpperCase()}
+                            </div>
                           )}
                         </div>
                       </td>
                       <td>{item.license}</td>
                       <td>{item.vessel}</td>
                       <td>
-                        {item && item.violations
-                          ? item.violations
-                          : "N/A"}
+                        {item && item.violations ? item.violations : "N/A"}
                       </td>
                       <td>
                         <div className="flex-row">
