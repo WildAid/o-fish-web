@@ -4,7 +4,7 @@ import Root from "./root.component";
 
 import Login from "../components/login/login.component";
 import Home from "../components/home/home.component";
-import Boardings from "../components/boardings/boardings.routes-render";
+import Boardings from "../components/boardings/boardings.component";
 import Vessels from "../components/vessels/vessels.component";
 import Crew from "../components/crew/crew.component";
 import UsersMain from "../components/users/users.routes-render";
@@ -17,9 +17,15 @@ import RestorePassword from "../components/restore-password/restore-password.com
 import Profile from "../components/profile/profile.component";
 
 //Boardings sub components
-import BoardingsMain from "../components/boardings/boardings.component";
+import BoardingsMain from "../components/boardings/boardings.routes-render";
 import BoardingEditPage from "../components/boardings/boarding-edit/boarding-edit.component";
 import BoardingViewPage from "../components/boardings/boarding-view/boarding-view.component";
+//Crew sub components
+import CrewMain from "../components/crew/crew.routes-render";
+import CrewViewPage from "../components/crew/crew-view/crew-view.component";
+//Vessels sub components
+import VesselsMain from "../components/vessels/vessels.routes-render";
+import VesselViewPage from "../components/vessels/vessel-view/vessel-view.component";
 //Users sub components
 import UsersActivities from "../components/users/activities/activities.component";
 import NewUser from "../components/users/new-user/new-user.component";
@@ -48,6 +54,10 @@ import {
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
   VIEW_BOARDING_PAGE,
+  //Crew sub routes
+  VIEW_CREW_PAGE,
+  //Vessels sub routes
+  VIEW_VESSEL_PAGE,
   //Users sub routes
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
@@ -79,13 +89,13 @@ const routes = [
   },
   {
     path: BOARDINGS_PAGE,
-    component: Boardings,
+    component: BoardingsMain,
     auth: true,
     exact: false,
     routes: [
       {
         path: BOARDINGS_PAGE,
-        component: BoardingsMain,
+        component: Boardings,
         exact: true,
       },
       {
@@ -107,15 +117,39 @@ const routes = [
   },
   {
     path: VESSELS_PAGE,
-    component: Vessels,
+    component: VesselsMain,
     auth: true,
     exact: false,
+    routes: [
+      {
+        path: VESSELS_PAGE,
+        exact: true,
+        component: Vessels,
+      },
+      {
+        path: VIEW_VESSEL_PAGE,
+        exact: true,
+        component: VesselViewPage,
+      },
+    ],
   },
   {
     path: CREW_PAGE,
-    component: Crew,
+    component: CrewMain,
     auth: true,
     exact: false,
+    routes: [
+      {
+        path: CREW_PAGE,
+        exact: true,
+        component: Crew,
+      },
+      {
+        path: VIEW_CREW_PAGE,
+        exact: true,
+        component: CrewViewPage,
+      },
+    ],
   },
   {
     path: USERS_PAGE,

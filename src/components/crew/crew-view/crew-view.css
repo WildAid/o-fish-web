@@ -1,0 +1,51 @@
+.crew-view-page .crew-member-icon {
+    width: 55px;
+    height: 100%;
+    padding-right: 5px;
+}
+
+.crew-view-page .sm-photo-icon {
+    width: 35px;
+    height: max-content;
+    padding-right: 5px;
+}
+
+.crew-view-page .vessels-section {
+    width: 57%;
+}
+
+.crew-view-page .license-section {
+    width: 35%;
+}
+
+.crew-view-page .photos-section {
+    margin-right: 20px;
+}
+
+.crew-view-page .photos-list {
+    flex-wrap: wrap;
+}
+
+.crew-view-page .photo-container {
+    width: 23%;
+    margin-bottom: 20px;
+}
+
+.crew-view-page .photo-container .item-label {
+    margin-top: 20px;
+}
+
+.crew-view-page h3 {
+    margin: 0;
+}
+
+.crew-view-page .captain-icon {
+    height: 15px;
+    margin-left: 30px;
+}
+
+.crew-view-page table thead td {
+    font-weight: 500;
+    font-size: 12px;
+    color: #8b8b8b;
+}
