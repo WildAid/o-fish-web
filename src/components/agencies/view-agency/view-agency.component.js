@@ -5,7 +5,7 @@ import { withTranslation } from "react-i18next";
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
 import AgencyService from "./../../../services/agency.service";
-
+import AgencyFormData from "../form-data/form-data.js"
 import "./view-agency.css";
 
 const agencyService = AgencyService.getInstance();
@@ -18,7 +18,7 @@ class ViewAgency extends Component {
       violations: [],
     },
     activeTab: 1,
-    loading: false,
+    loading: false
   };
 
   handleChangeTab = (newTab) => {
@@ -152,54 +152,7 @@ class ViewAgency extends Component {
               </div>
             ) : (
               <div className="full-view white-bg box-shadow agency-tab-content">
-                <div className="flex-row form-content">
-                  <div className="flex-column box-shadow justify-between form-content-menu">
-                    <div className="form-menu-item active-form-menu-item">
-                      {`${t("FILTER.MAIN.CATCH.NAME")} ${
-                        agencyInfo.catches
-                          ? `(${agencyInfo.catches.length})`
-                          : ""
-                      }`}
-                    </div>
-                    <div className="form-menu-item">
-                      {`${t("TABLE.VIOLATIONS")} ${
-                        agencyInfo.violations
-                          ? `(${agencyInfo.violations.length})`
-                          : ""
-                      }`}
-                    </div>
-                    <div className="form-menu-item">
-                      {`${t("AGENCY_PAGE.PREFERED_NATIONALITIES")} ${
-                        agencyInfo.officers
-                          ? `(${agencyInfo.officers.length})`
-                          : ""
-                      }`}
-                    </div>
-                  </div>
-                  <div className="flex-column form-search">
-                    <div className="flex-row justify-between align-center form-search-panel">
-                      <input
-                        className="standard-view form-search-field"
-                        type="search"
-                        placeholder="Search Species"
-                      ></input>
-                      <button className="blue-btn">{`+ ${t("BUTTONS.ADD_SPECIES")}`}</button>
-                    </div>
-                    <div className="box-shadow form-checkbox-list">
-                      {agencyInfo.catches
-                        ? agencyInfo.catches.map((item, ind) => (
-                            <div
-                              className="flex-row align-center form-info-box"
-                              key={ind}
-                            >
-                              <input className="check-item" type="checkbox" />
-                              {item.name}
-                            </div>
-                          ))
-                        : t("WARNINGS.NO_CATCHES")}
-                    </div>
-                  </div>
-                </div>
+                    <AgencyFormData agency={agencyInfo}></AgencyFormData>
               </div>
             )}
           </div>
