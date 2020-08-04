@@ -23,6 +23,9 @@ import BoardingViewPage from "../components/boardings/boarding-view/boarding-vie
 //Crew sub components
 import CrewMain from "../components/crew/crew.routes-render";
 import CrewViewPage from "../components/crew/crew-view/crew-view.component";
+//Vessels sub components
+import VesselsMain from "../components/vessels/vessels.routes-render";
+import VesselViewPage from "../components/vessels/vessel-view/vessel-view.component";
 //Users sub components
 import UsersActivities from "../components/users/activities/activities.component";
 import NewUser from "../components/users/new-user/new-user.component";
@@ -53,6 +56,8 @@ import {
   VIEW_BOARDING_PAGE,
   //Crew sub routes
   VIEW_CREW_PAGE,
+  //Vessels sub routes
+  VIEW_VESSEL_PAGE,
   //Users sub routes
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
@@ -112,9 +117,21 @@ const routes = [
   },
   {
     path: VESSELS_PAGE,
-    component: Vessels,
+    component: VesselsMain,
     auth: true,
     exact: false,
+    routes: [
+      {
+        path: VESSELS_PAGE,
+        exact: true,
+        component: Vessels,
+      },
+      {
+        path: VIEW_VESSEL_PAGE,
+        exact: true,
+        component: VesselViewPage,
+      },
+    ],
   },
   {
     path: CREW_PAGE,

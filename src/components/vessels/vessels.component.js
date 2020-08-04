@@ -4,7 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText } from "./../../helpers/get-data";
+import { getColor, goToPage, getHighlightedText } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -14,6 +14,8 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
+
+import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
 
 import "./vessels.css";
 
@@ -197,7 +199,11 @@ class Vessels extends Component {
                 </thead>
                 <tbody>
                   {vessels.map((item, ind) => (
-                    <tr className="table-row row-body" key={ind}>
+                    <tr
+                      className="table-row row-body"
+                      key={ind}
+                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item._id)}
+                    >
                       <td>
                         <Highlighter
                           highlightClassName="highlighted"
