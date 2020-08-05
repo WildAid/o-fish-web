@@ -5,21 +5,24 @@ import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 import "./form-data.css";
 
-import AgencyService from "./../../../services/agency.service";
+import CustomMenuService from "./../../../services/custom-menu.service";
+
+const menuService = CustomMenuService.getInstance();
 
 class AgencyFormData extends Component {
   state = {
-    menuItems : {},
     dialogDisplayed : false,
-    activeItem: "activity",
+    menuId: null,
+    activeItem: "activities",
     menuItems: {
-      "activity": {title: "Activities", btn: "Add activity", data: []},
-      "fishery": {title: "Species", btn: "Add species", data:  ["tuna", "not tuna"]},
+      "activities": {title: "Activities", btn: "Add activity", data: []},
+      "species": {title: "Species", btn: "Add species", data:  []},
       "gear": {title: "Gear Types", btn: "Add gear type", data:  []},
-      "catch": {title: "Catches", btn: "Add catch", data:  []},
-      "ems": {title: "EMS", btn: "Add EMS", data:  []},
-      "flag-state": {title: "Vessel flags", btn: "Add vessel flag state", data:  []},
-      "violations": {title: "Violations", btn: "Add violation", data:  []}
+      "fisheries": {title: "Catches", btn: "Add catch", data:  []},
+      "emsTypes": {title: "EMS", btn: "Add EMS", data:  []},
+      "ports": {title: "Vessel flags", btn: "Add vessel flag state", data:  []},
+      "violationCodes": {title: "Violation Codes", btn: "Add code", data:  []},
+      "violationDescriptions": {title: "Violation Descriptions", btn: "Add description", data:  []}
     }
   }
 
@@ -27,6 +30,19 @@ class AgencyFormData extends Component {
     this.setState({
       dialogDisplayed: true
     })
+  }
+
+  saveData = () => {
+      const { menuItems, activeItem, menuId } = this.state;
+      const item = menuItems[activeItem];
+      const data = {_id: menuId, $set: { }}
+      data["$set"][activeItem] = item.data;
+      /*
+      menuService.updateMenus(data).then((result)=>{
+        console.log(result);
+      }).catch((err)=>{
+
+      });*/
   }
 
   dialogClosed = (items) => {
@@ -49,38 +65,58 @@ class AgencyFormData extends Component {
     this.setState({activeItem: tab});
   }
 
+  componentDidMount(){
+    const { menuItems } = this.state;
+    if (this.props.agency && this.props.agency.name){
+      menuService.getMenus(this.props.agency.name).then((menuData)=>{
+        for (const key in menuData){
+          if (menuItems[key]){
+            menuItems[key].data = menuData[key];
+          }
+        }
+        this.setState({
+          menuItems: menuItems,
+          menuId: menuData._id
+        })
+      })
+    }
+  }
+
   render() {
 
     const { menuItems, dialogDisplayed, activeItem } = this.state;
-    const { t, agencyInfo } = this.props;
+    const { t, agency } = this.props;
 
     const item = menuItems[activeItem];
 
     return <div className="agency-form-data flex-row full-view">
       <div className="flex-column justify-between form-content-menu">
-        <div onClick={()=>this.changeCurrentTab("activity")} className={"form-menu-item" + (activeItem == "activity" || activeItem ==  "gear" || activeItem ==  "fishery" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("activities")} className={"form-menu-item" + (activeItem == "activities" || activeItem ==  "gear" || activeItem ==  "fishery" ? " active-form-menu-item": "")}>
           Activity
         </div>
-        <div onClick={()=>this.changeCurrentTab("activity")} className={"form-menu-item sub-item" + (activeItem == "activity" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("activities")} className={"form-menu-item sub-item" + (activeItem == "activities" ? " active-form-menu-item": "")}>
           Activity
         </div>
-        <div onClick={()=>this.changeCurrentTab("fishery")} className={"form-menu-item sub-item" + (activeItem == "fishery" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("species")} className={"form-menu-item sub-item" + (activeItem == "species" ? " active-form-menu-item": "")}>
           Fishery
         </div>
         <div onClick={()=>this.changeCurrentTab("gear")} className={"form-menu-item sub-item" + (activeItem == "gear" ? " active-form-menu-item": "")}>
           Gear
         </div>
-        <div onClick={()=>this.changeCurrentTab("catch")} className={"form-menu-item" + (activeItem == "catch" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("fisheries")} className={"form-menu-item" + (activeItem == "fisheries" ? " active-form-menu-item": "")}>
           Catch
         </div>
-        <div onClick={()=>this.changeCurrentTab("ems")} className={"form-menu-item" + (activeItem == "ems" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("emsTypes")} className={"form-menu-item" + (activeItem == "emsTypes" ? " active-form-menu-item": "")}>
           EMS
         </div>
-        <div onClick={()=>this.changeCurrentTab("flag-state")} className={"form-menu-item" + (activeItem == "flag-state" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("ports")} className={"form-menu-item" + (activeItem == "ports" ? " active-form-menu-item": "")}>
           Vessel flag State
         </div>
-        <div onClick={()=>this.changeCurrentTab("violations")} className={"form-menu-item" + (activeItem == "violations" ? " active-form-menu-item": "")}>
-          Violations
+        <div onClick={()=>this.changeCurrentTab("violationCodes")} className={"form-menu-item" + (activeItem == "violationCodes" ? " active-form-menu-item": "")}>
+          Violation Codes
+        </div>
+        <div onClick={()=>this.changeCurrentTab("violationDescriptions")} className={"form-menu-item" + (activeItem == "violationDescriptions" ? " active-form-menu-item": "")}>
+          Violations Descriptions
         </div>
       </div>
       <div className="flex-column form-content form-search">

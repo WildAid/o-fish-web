@@ -104,6 +104,8 @@
     "LOADING": "Loading..."
   },
   "BUTTONS": {
+    "ADD": "Add",
+    "ADD_ITEMS": "Add items",
     "APPLY": "Apply",
     "CLOSE": "Close",
     "CANCEL": "Cancel",
@@ -193,7 +195,12 @@
     }
   },
   "CUSTOM_MENU": {
-    "ADD_SPECIES" : "Add species",
+    "SPECIES" : "Species",
+    "FISHERIES" : "Fisheries",
+    "CATCHES" : "Catches",
+    "ACTIVITIES" : "Activities",
+    "GEAR" : "Gear",
+    "SPECIES" : "Species",
     "ADD_SPECIE" : "Add specie",
     "ADD_ANOTHER" : "Add another"
   },
