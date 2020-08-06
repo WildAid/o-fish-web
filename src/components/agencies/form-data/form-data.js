@@ -164,8 +164,8 @@ class AgencyFormData extends Component {
               ))}
         </div>
       </div>
-    : <div className="flex-column form-content form-empty">
-        <div className="title">No {item.title}</div>
+    : <div className="flex-column full-view align-center form-content form-empty">
+        <div className="title flex-row align-center justify-center">No {item.title}</div>
         <button className="blue-btn" onClick={this.showDialog}>
           {item.btn}
         </button>
