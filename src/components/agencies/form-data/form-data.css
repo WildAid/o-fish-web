@@ -37,6 +37,27 @@
     font-weight: 700;
 }
 
+.form-empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.form-empty button {
+  margin-right: 0;
+}
+
+.form-empty .title {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: #dadada;
+  font-size: 2.5em;
+}
+
+
 .form-search {
     width: 100%;
 }

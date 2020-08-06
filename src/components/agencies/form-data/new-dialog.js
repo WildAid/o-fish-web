@@ -54,7 +54,7 @@ class NewDialog extends Component {
         </div>
 
         <div className="buttons-row flex-row full-view"  >
-          <button className="blue-btn" onClick={this.applyDialog}>{lineText}</button>
+          <button className="blue-btn" onClick={this.applyDialog}>{`${t("BUTTONS.ADD_ITEMS")}`}</button>
           <button className="simple-btn"onClick={this.cancelDialog}>{`${t("BUTTONS.CANCEL")}`}</button>
         </div>
       </div>
