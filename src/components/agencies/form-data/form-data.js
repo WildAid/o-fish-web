@@ -38,9 +38,9 @@ class AgencyFormData extends Component {
       const data = {}
       data[activeItem] = item.data;
       menuService.updateMenus(menuId, { $set: data }).then((result)=>{
-        console.log(result);
+
       }).catch((err)=>{
-        console.error(err);
+
       });
   }
 
@@ -85,7 +85,6 @@ class AgencyFormData extends Component {
             data[itemName] = menuItems[itemName].data;
           }
           menuService.createMenus(data).then((result)=>{
-            console.log(result);
             this.setState({
               menuId: result.insertedId
             })
