@@ -1,63 +1,36 @@
-.crew-view-page .crew-member-icon {
-    width: 55px;
-    height: 100%;
-    padding-right: 5px;
+.vessel-view-page h3 {
+    margin: 0;
 }
 
-.crew-view-page .sm-photo-icon {
+.vessel-view-page table thead td {
+    font-weight: 500;
+    font-size: 12px;
+    color: #8b8b8b;
+}
+
+.vessel-view-page .delivery-section {
+    width: 35%;
+}
+
+.vessel-view-page .sm-photo-icon {
     width: 35px;
     height: max-content;
     padding-right: 5px;
 }
 
-.crew-view-page .delivery-section {
+.vessel-view-page .delivery-name {
+    font-size: 18px;
+}
+
+.vessel-view-page .crew-section {
     width: 57%;
-    margin-right: 20px;
 }
 
-.crew-view-page .license-section {
-    width: 35%;
-}
-.vessel-view-item {
-    width: 23%;
-}
-
-.crew-view-page .delivery-name {
-    font-size: 20px;
-}
-
-.crew-view-page .crew-list {
+.vessel-view-page .crew-list {
     flex-wrap: wrap;
 }
 
-.crew-view-page .photos-section {
-    margin-right: 20px;
-}
-
-.crew-view-page .photos-list {
-    flex-wrap: wrap;
-}
-
-.crew-view-page .photo-container {
-    width: 23%;
-    margin-bottom: 20px;
-}
-
-.crew-view-page .photo-container .item-label {
-    margin-top: 20px;
-}
-
-.crew-view-page h3 {
-    margin: 0;
-}
-
-.crew-view-page .captain-icon {
+.vessel-view-page .captain-icon {
     height: 15px;
     margin-left: 30px;
-}
-
-.crew-view-page table thead td {
-    font-weight: 500;
-    font-size: 12px;
-    color: #8b8b8b;
 }

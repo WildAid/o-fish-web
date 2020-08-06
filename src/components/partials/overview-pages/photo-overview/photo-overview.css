@@ -1,0 +1,7 @@
+.photos-list {
+  flex-wrap: wrap;
+}
+
+.photo-container {
+  width: 23%;
+}

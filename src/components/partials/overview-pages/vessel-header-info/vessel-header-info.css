@@ -1,0 +1,14 @@
+.vessel-header-info .sm-photo-icon {
+  width: 35px;
+  height: max-content;
+  padding-right: 5px;
+}
+
+.vessel-header-info {
+  width: 23%;
+  margin-right: 20px;
+}
+
+.vessel-header-info:last-child {
+  margin-right: 0;
+}
