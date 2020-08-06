@@ -16,7 +16,11 @@ export default class CustomMenuService {
     return stitchService.database.collection("MenuData").findOne({agency: agencyName});
   }
 
-  updateMenus(data) {
-    return stitchService.database.collection("Agency").updateOne(data);
+  updateMenus(id, data) {
+    return stitchService.database.collection("MenuData").updateOne({_id: id}, data, true);
+  }
+
+  createMenus(data) {
+    return stitchService.database.collection("MenuData").insertOne(data);
   }
 }

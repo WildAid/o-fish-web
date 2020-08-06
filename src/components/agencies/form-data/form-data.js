@@ -35,14 +35,13 @@ class AgencyFormData extends Component {
   saveData = () => {
       const { menuItems, activeItem, menuId } = this.state;
       const item = menuItems[activeItem];
-      const data = {_id: menuId, $set: { }}
-      data["$set"][activeItem] = item.data;
-      /*
-      menuService.updateMenus(data).then((result)=>{
+      const data = {}
+      data[activeItem] = item.data;
+      menuService.updateMenus(menuId, { $set: data }).then((result)=>{
         console.log(result);
       }).catch((err)=>{
-
-      });*/
+        console.error(err);
+      });
   }
 
   dialogClosed = (items) => {
@@ -53,7 +52,8 @@ class AgencyFormData extends Component {
       this.setState({
         menuItems: menuItems,
         dialogDisplayed: false
-      })
+      });
+      this.saveData();
     } else {
       this.setState({
         dialogDisplayed: false
@@ -69,15 +69,28 @@ class AgencyFormData extends Component {
     const { menuItems } = this.state;
     if (this.props.agency && this.props.agency.name){
       menuService.getMenus(this.props.agency.name).then((menuData)=>{
-        for (const key in menuData){
-          if (menuItems[key]){
-            menuItems[key].data = menuData[key];
+        if (menuData){
+          for (const key in menuData){
+            if (menuItems[key]){
+              menuItems[key].data = menuData[key];
+            }
           }
+          this.setState({
+            menuItems: menuItems,
+            menuId: menuData._id
+          })
+        } else {
+          const data = { agency : this.props.agency.name }
+          for (var itemName in menuItems){
+            data[itemName] = menuItems[itemName].data;
+          }
+          menuService.createMenus(data).then((result)=>{
+            console.log(result);
+            this.setState({
+              menuId: result.insertedId
+            })
+          });
         }
-        this.setState({
-          menuItems: menuItems,
-          menuId: menuData._id
-        })
       })
     }
   }
@@ -119,6 +132,8 @@ class AgencyFormData extends Component {
           Violations Descriptions
         </div>
       </div>
+      {item && item.data && item.data.length
+        ?
       <div className="flex-column form-content form-search">
         <div className="flex-row justify-between align-center form-search-panel">
           <div>
@@ -139,8 +154,7 @@ class AgencyFormData extends Component {
           </button>
         </div>
         <div className="form-checkbox-list">
-          {item
-            ? item.data.map((item, ind) => (
+          {item.data.map((item, ind) => (
                 <div
                   className="flex-row align-center form-info-box"
                   key={ind}
@@ -148,10 +162,16 @@ class AgencyFormData extends Component {
                   <input className="check-item" type="checkbox" />
                   {item}
                 </div>
-              ))
-            : "NO " + item.title }
+              ))}
         </div>
       </div>
+    : <div className="flex-column form-content form-empty">
+        <div className="title">No {item.title}</div>
+        <button className="blue-btn" onClick={this.showDialog}>
+          {item.btn}
+        </button>
+      </div>
+    }
       {dialogDisplayed && <NewDialog onApply={this.dialogClosed} title={item.title} lineText={item.btn}></NewDialog>}
     </div>;
   }
