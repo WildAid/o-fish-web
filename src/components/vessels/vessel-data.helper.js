@@ -7,6 +7,14 @@ export default class VesselDataHelper {
       this.boardings = boardings;
   }
 
+  getVesselName(){
+    for (var boarding of this.boardings){
+      if (boarding.vessel && boarding.vessel.name){
+        return boarding.vessel.name;
+      }
+    };
+    return "";
+  }
 
   getBoardings() {
     return this.boardings.map((boarding) => {
@@ -16,7 +24,7 @@ export default class VesselDataHelper {
         time: moment(boarding.date).format("LT"),
         agency: boarding.agency && boarding.agency.name ? boarding.agency.name: boarding.agency,
         violations: violations.length,
-        citaions: violations.length,
+        citations: violations.length,
         warnings: violations.length,
         risk: boarding.inspection.summary.safetyLevel.levely,
         boardingBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
@@ -71,10 +79,34 @@ export default class VesselDataHelper {
   }
 
   getCrew() {
-    return [];
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.crew && boarding.crew.length){
+        boarding.crew.forEach((crewMember) => {
+          if (!collection.find(c=> c.license == crewMember.license)){
+            collection.push({
+              license : crewMember.license,
+              name :  crewMember.name,
+              attachements: []
+            });
+          }
+        });
+      }
+    });
+    return collection;
   }
 
   getDeliveries() {
-    return [];
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.lastDelivery)){
+        collection.push({
+            location:boarding.vessel.lastDelivery.location,
+            business: boarding.vessel.lastDelivery.business,
+            date: moment( boarding.vessel.lastDelivery.date).format("MM/DD/yyyy")
+        });
+      }
+    });
+    return collection;
   }
 }
