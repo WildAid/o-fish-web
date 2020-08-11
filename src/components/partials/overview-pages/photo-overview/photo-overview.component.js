@@ -31,7 +31,7 @@ const PhotosOverview = ({ mainText, subText, img }) => (
     </div>
     <div className="flex-row justify-between padding-top photos-list">
       {photos.map((photo, ind) => (
-        <div className="flex-column align-center margin-bottom photo-container">
+        <div key={ind} className="flex-column align-center margin-bottom photo-container">
           <div className="big-photo-icon">
             <img className="icon" src={require('../../../../assets/photo-big-icon.png')} alt="no logo" />
           </div>
