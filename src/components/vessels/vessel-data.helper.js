@@ -18,7 +18,8 @@ export default class VesselDataHelper {
         violations: violations.length,
         citaions: violations.length,
         warnings: violations.length,
-        risk: boarding.inspection.summary.safetyLevel.level
+        risk: boarding.inspection.summary.safetyLevel.levely,
+        boardingBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
       }
     });
   }

@@ -112,6 +112,8 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "SAVE": "Save",
+    "DELETE": "delete",
+    "SEARCH": "Search",
     "CHANGE_PASSWORD": "Change Password",
     "NEW_BOARDING": "New Boarding",
     "SEE_ACTIVITY": "See Activity",
