@@ -5,6 +5,8 @@ import moment from "moment";
 import SeeAll from "../../partials/see-all-link/see-all-link";
 import TextViewer from "../../partials/text-viewer/text-viewer";
 
+import history from "../../../root/root.history";
+
 import HeaderOverview from "./../../partials/overview-pages/header-overview-page/header-overview-page.component";
 import VesselHeaderInfo from "./../../partials/overview-pages/vessel-header-info/vessel-header-info.component";
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
@@ -29,21 +31,22 @@ class VesselViewPage extends Component {
     deliveries: [],
   };
 
-  // componentDidMount() {
-    //to test Stitch Functions
-  //   vesselService
-  //     .getBoardings()
-  //     .then((data) => {
-  //       console.log(data);
-        
-  //       this.setState({
-  //         boardings: data.boardings,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
+  componentDidMount() {
+    const permitNumber = this.props.match.params.id;
+
+    // vesselService
+    //   .getBoardings(permitNumber)
+    //   .then((data) => {
+    //     console.log(data);
+
+    //     this.setState({
+    //       boardings: data.boardings,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+  }
 
   render() {
     return (
@@ -53,7 +56,6 @@ class VesselViewPage extends Component {
           subText="Vessel"
           img="vessel-icon"
         />
-        {/* Block for vessel main info */}
         <div className="flex-row standard-view">
           <VesselHeaderInfo
             headerText="Permit Numbers"
