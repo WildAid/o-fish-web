@@ -63,8 +63,7 @@ const BoardingsOverview = ({ t, boardings }) => (
             <td>{boarding.violations}</td>
             <td>{boarding.citations}</td>
             <td>{boarding.warnings}</td>
-            <td>{boarding.warnings}</td>
-            {/* <td>{boarding.reportingOfficer}</td> */}
+            <td>{boarding.boardingBy}</td>
             <td>
               <RiskIcon safetyLevel={boarding.risk} />
             </td>

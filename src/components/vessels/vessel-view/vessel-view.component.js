@@ -61,6 +61,7 @@ class VesselViewPage extends Component {
     const { t } = this.props;
 
     const permitNumber = this.props.match.params.id;
+console.log(boardings);
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
@@ -228,17 +229,6 @@ class VesselViewPage extends Component {
                     ))}
                   </tbody>
                 </table>
-                {/* <div className="flex-row align-center justify-between border-bottom padding">
-                  <div>
-                    <div className="delivery-name">P. Sherman dentistry</div>
-                    <div className="delivery-address">
-                      42, wallaby way, Sydney
-                    </div>
-                  </div>
-                  <div className="item-label">
-                    {moment("2020-04-18T16:16:37.000+00:00").format("L")}
-                  </div>
-                </div> */}
                 <div className="flex-row justify-center padding-top">
                   <SeeAll />
                 </div>
