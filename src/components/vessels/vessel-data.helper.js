@@ -99,7 +99,7 @@ export default class VesselDataHelper {
   getDeliveries() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (boarding.vessel && boarding.vessel.lastDelivery)){
+      if (boarding.vessel && boarding.vessel.lastDelivery){
         collection.push({
             location:boarding.vessel.lastDelivery.location,
             business: boarding.vessel.lastDelivery.business,
