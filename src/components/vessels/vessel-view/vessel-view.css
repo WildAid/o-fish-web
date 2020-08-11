@@ -1,0 +1,36 @@
+.vessel-view-page h3 {
+    margin: 0;
+}
+
+.vessel-view-page table thead td {
+    font-weight: 500;
+    font-size: 12px;
+    color: #8b8b8b;
+}
+
+.vessel-view-page .delivery-section {
+    width: 35%;
+}
+
+.vessel-view-page .sm-photo-icon {
+    width: 35px;
+    height: max-content;
+    padding-right: 5px;
+}
+
+.vessel-view-page .delivery-name {
+    font-size: 18px;
+}
+
+.vessel-view-page .crew-section {
+    width: 57%;
+}
+
+.vessel-view-page .crew-list {
+    flex-wrap: wrap;
+}
+
+.vessel-view-page .captain-icon {
+    height: 15px;
+    margin-left: 30px;
+}

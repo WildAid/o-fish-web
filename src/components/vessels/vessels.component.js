@@ -15,6 +15,10 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 
+import history from "../../root/root.history";
+
+import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
+
 import "./vessels.css";
 
 const searchService = SearchService.getInstance();
@@ -197,7 +201,11 @@ class Vessels extends Component {
                 </thead>
                 <tbody>
                   {vessels.map((item, ind) => (
-                    <tr className="table-row row-body" key={ind}>
+                    <tr
+                      className="table-row row-body"
+                      key={ind}
+                      onClick={() => history.push(VIEW_VESSEL_PAGE)}
+                    >
                       <td>
                         <Highlighter
                           highlightClassName="highlighted"

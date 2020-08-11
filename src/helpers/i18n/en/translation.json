@@ -50,6 +50,7 @@
     "MAP": "Map",
     "ALL_DATES": "All dates",
     "VIEW_BOARDING": {
+      "VIEW_BOARDING": "View Boarding",
       "BOARDING": "Boarding",
       "LAST_MODIFIED": "Last Modified on",
       "LATTITUDE": "Lattitude",
@@ -143,7 +144,12 @@
     "CREATED_ON": "Created On",
     "STATUS": "Status",
     "DESCRIPTION": "Description",
-    "OFFICERS": "Officers"
+    "OFFICERS": "Officers",
+    "CITATIONS": "Citations",
+    "WARNINGS": "Warnings",
+    "VIOLATION": "Violation",
+    "RESULT": "Result",
+    "NOTE": "Note"
   },
   "FILTER": {
     "FROM": "From",

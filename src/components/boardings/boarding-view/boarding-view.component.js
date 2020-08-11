@@ -86,7 +86,7 @@ class BoardingViewPage extends Component {
                 onClick={this.showVersions}
               >{`${t("BOARDING_PAGE.VIEW_BOARDING.LAST_MODIFIED")}
                 ${new Date(boarding ? boarding.date : null).toLocaleString()}
-                by Officer Krupke`}</div>
+                by ${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`}</div>
             )}
           </div>
           {versionsVisible && (
