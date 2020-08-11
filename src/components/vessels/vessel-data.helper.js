@@ -7,8 +7,54 @@ export default class VesselDataHelper {
       this.boardings = boardings;
   }
 
-  getVessel() {
-    return [];
+
+  getBoardings() {
+    return this.boardings.map((boarding) => {
+      const violations = boarding.inspection.summary.violations ? boarding.inspection.summary.violations: [];
+      return {
+        date: moment(boarding.date).format("MM/DD/yyyy"),
+        time: moment(boarding.date).format("LT"),
+        agency: boarding.agency && boarding.agency.name ? boarding.agency.name: boarding.agency,
+        violations: violations.length,
+        citaions: violations.length,
+        warnings: violations.length,
+        risk: boarding.inspection.summary.safetyLevel.level
+      }
+    });
+  }
+
+  getNationalities() {
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel.nationality){
+        collection[boarding.vessel.nationality] = null
+      }
+    });
+    return Object.keys(collection);
+  }
+
+
+  getHomePorts() {
+      const collection = {};
+      this.boardings.forEach((boarding) => {
+        if (boarding.vessel.homePort){
+          collection[boarding.vessel.homePort] = null
+        }
+      });
+      return Object.keys(collection);
+  }
+
+  getCaptains() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (!collection.find(c=> c.license == boarding.captain.license)){
+        collection.push({
+          license : boarding.captain.license,
+          name :  boarding.captain.name
+        });
+      }
+    });
+    return collection;
   }
 
   getPhotos() {
@@ -16,24 +62,6 @@ export default class VesselDataHelper {
   }
 
   getNotes() {
-    return [];
-  }
-
-  getBoardings() {
-    return this.boardings.forEach((boarding) => {
-      return {
-        date: boarding.date,
-        time: boarding.date,
-        agency: boarding.agency.name,
-        violations: boarding.inspection.summary.violations.length,
-        citaions: boarding.inspection.summary.violations.length,
-        warnings: boarding.inspection.summary.violations.length,
-        risk: boarding.inspection.summary.safetyLevel.level
-      }
-    });
-  }
-
-  getNationalities() {
     return [];
   }
 

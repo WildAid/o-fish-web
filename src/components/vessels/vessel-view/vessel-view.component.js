@@ -30,6 +30,8 @@ class VesselViewPage extends Component {
     violations: [],
     crew: [],
     deliveries: [],
+    homePorts: [],
+    captains: []
   };
 
   componentDidMount() {
@@ -38,13 +40,17 @@ class VesselViewPage extends Component {
     vesselService
        .getBoardings(permitNumber)
        .then((data) => {
-         console.log(data)
          const dataHelper = new VesselDataHelper(permitNumber, data);
-
-         this.setState({
+         const newState = {
            boardings: dataHelper.getBoardings(),
-           nationalities: dataHelper.getNationalities()
-         });
+           nationalities: dataHelper.getNationalities(),
+           homePorts: dataHelper.getHomePorts(),
+           captains: dataHelper.getCaptains(),
+           crew: dataHelper.getCrew(),
+           deliveries: dataHelper.getDeliveries()
+         }
+        console.log(data, newState)
+         this.setState(newState);
        })
        .catch((error) => {
          console.error(error);
