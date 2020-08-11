@@ -57,11 +57,18 @@ class VesselViewPage extends Component {
   }
 
   render() {
-    const { nationalities, homePorts, captains, boardings, deliveries } = this.state;
+    const {
+      nationalities,
+      homePorts,
+      captains,
+      boardings,
+      deliveries,
+      crew,
+    } = this.state;
     const { t } = this.props;
 
     const permitNumber = this.props.match.params.id;
-console.log(boardings);
+    console.log(crew);
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
@@ -94,109 +101,58 @@ console.log(boardings);
                 itemsAmount={captains.length}
               />
             </div>
-            <div className="flex-row standard-view">
+            <div className="flex-row standard-view sub-section">
               <BoardingsOverview boardings={boardings} />
             </div>
-            <div className="flex-row standard-view">
-              <div className="flex-column justify-between box-shadow white-bg margin-top margin-right">
+            <div className="flex-row standard-view sub-section">
+              <div className="flex-column justify-between box-shadow white-bg margin-top margin-right crew-section">
                 <div className="flex-row justify-between padding border-bottom gray-bg">
                   <h3>Crew Members</h3>
                   <div className="item-label">16</div>
                 </div>
-                <div className="flex-row border-bottom padding-bottom padding-top justify-between margin-left margin-right crew-list">
-                  <div className="flex-row align-center padding-bottom margin-bottom border-bottom half-row-view">
-                    <div className="flex-row half-row-view">
-                      <TextViewer
-                        mainText="Marlin Nemo"
-                        subText="Permit #12984567"
-                        mainTextFirst={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center half-row-view">
-                      <div className="sm-photo-icon">
-                        <img
-                          className="icon"
-                          src={require("../../../assets/photo-icon.png")}
-                          alt="no logo"
-                        />
-                      </div>
-                      <div className="item-label">+6</div>
-                    </div>
-                  </div>
-                  <div className="flex-row align-center padding-bottom margin-bottom border-bottom half-row-view">
-                    <div className="flex-row half-row-view">
-                      <TextViewer
-                        mainText="Marlin Nemo"
-                        subText="Permit #12984567"
-                        mainTextFirst={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center half-row-view">
-                      <div className="sm-photo-icon">
-                        <img
-                          className="icon"
-                          src={require("../../../assets/photo-icon.png")}
-                          alt="no logo"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-row align-center padding-bottom margin-bottom border-bottom half-row-view">
-                    <div className="flex-row half-row-view">
-                      <TextViewer
-                        mainText="Marlin Nemo"
-                        subText="Permit #12984567"
-                        mainTextFirst={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center half-row-view">
-                      <div className="sm-photo-icon">
-                        <img
-                          className="icon"
-                          src={require("../../../assets/photo-icon.png")}
-                          alt="no logo"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-row align-center padding-bottom margin-bottom border-bottom half-row-view">
-                    <div className="flex-row half-row-view">
-                      <TextViewer
-                        mainText="Marlin Nemo"
-                        subText="Permit #12984567"
-                        mainTextFirst={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center half-row-view">
-                      <div className="sm-photo-icon">
-                        <img
-                          className="icon"
-                          src={require("../../../assets/photo-icon.png")}
-                          alt="no logo"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-row align-center half-row-view">
-                    <div className="flex-row half-row-view">
-                      <TextViewer
-                        mainText="Marlin Nemo"
-                        subText="Permit #12984567"
-                        mainTextFirst={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center half-row-view">
-                      <div className="sm-photo-icon">
-                        <img
-                          className="icon"
-                          src={require("../../../assets/photo-icon.png")}
-                          alt="no logo"
-                        />
-                      </div>
-                      <div className="item-label">+4</div>
-                    </div>
-                  </div>
-                </div>
+                <table className="margin-left margin-right">
+                  <thead className="border-bottom">
+                    <tr className="table-row row-head">
+                      <td>{t("TABLE.NAME")}</td>
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.LICENSE_NUMBER")}</td>
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</td>
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {crew.map((crewMember, ind) => (
+                      <tr key={ind} className="table-row row-body">
+                        <td>{crewMember.name}</td>
+                        <td>{crewMember.license}</td>
+                        <td>
+                          {crewMember.attachements &&
+                            !crewMember.attachements.photoIDs && (
+                              <div className="flex-column half-row-view">
+                                <div className="sm-photo-icon">
+                                  <img
+                                    className="icon"
+                                    src={require("../../../assets/photo-icon.png")}
+                                    alt="no logo"
+                                  />
+                                </div>
+                                <div className="see-link">See 6 more</div>
+                              </div>
+                            )}
+                        </td>
+                        <td>
+                          {crewMember.attachements &&
+                            !crewMember.attachements.notes && (
+                              <div className="flex-row half-row-view">
+                                <div className="note">{'crewMember.attachements.notes[0]'}</div>
+                                <div className="see-link">See full note</div>
+                              </div>
+                            )}
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
                 <div className="flex-row justify-center padding-top padding-bottom">
                   <SeeAll />
                 </div>
@@ -234,10 +190,10 @@ console.log(boardings);
                 </div>
               </div>
             </div>
-            <div className="flex-row standard-view">
+            <div className="flex-row standard-view sub-section">
               <ViolationsOverview />
             </div>
-            <div className="flex-row justify-between standard-view margin-bottom">
+            <div className="flex-row justify-between standard-view margin-bottom sub-section">
               <PhotosOverview />
               <NotesOverview />
             </div>
