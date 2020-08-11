@@ -14,6 +14,7 @@ import ViolationsOverview from "./../../partials/overview-pages/violations-overv
 import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo-overview.component";
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 
+import VesselDataHelper from "../vessel-data.helper";
 import VesselOverviewService from "./../../../services/vessel-overview.service";
 
 import "./vessel-view.css";
@@ -34,18 +35,20 @@ class VesselViewPage extends Component {
   componentDidMount() {
     const permitNumber = this.props.match.params.id;
 
-    // vesselService
-    //   .getBoardings(permitNumber)
-    //   .then((data) => {
-    //     console.log(data);
+    vesselService
+       .getBoardings(permitNumber)
+       .then((data) => {
+         console.log(data)
+         const dataHelper = new VesselDataHelper(permitNumber, data);
 
-    //     this.setState({
-    //       boardings: data.boardings,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+         this.setState({
+           boardings: dataHelper.getBoardings(),
+           nationalities: dataHelper.getNationalities()
+         });
+       })
+       .catch((error) => {
+         console.error(error);
+       });
   }
 
   render() {
