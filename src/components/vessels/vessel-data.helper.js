@@ -7,13 +7,24 @@ export default class VesselDataHelper {
       this.boardings = boardings;
   }
 
-  getVesselName(){
-    for (var boarding of this.boardings){
-      if (boarding.vessel && boarding.vessel.name){
-        return boarding.vessel.name;
+  getPermitNumbers(){
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.permitNumber){
+        collection[boarding.vessel.permitNumber] = null
       }
-    };
-    return "";
+    });
+    return Object.keys(collection);
+  }
+
+  getVesselNames(){
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.name){
+        collection[boarding.vessel.name] = null
+      }
+    });
+    return Object.keys(collection);
   }
 
   getBoardings() {
@@ -27,7 +38,7 @@ export default class VesselDataHelper {
         citations: violations.length,
         warnings: violations.length,
         risk: boarding.inspection.summary.safetyLevel.level,
-        boardingBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
+        boardedBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
       }
     });
   }
@@ -66,16 +77,20 @@ export default class VesselDataHelper {
     return collection;
   }
 
-  getPhotos() {
-    return [];
-  }
-
-  getNotes() {
-    return [];
-  }
-
   getViolations() {
-    return [];
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.inspection && boarding.inspection.summary && boarding.inspection.summary.violations){
+        const violation = boarding.inspection.summary.violations;
+        collection.push({
+            violation:violation.offence ? violation.offence.explanation : "",
+            vessel: boarding.vessel ? boarding.vessel.name : "",
+            result: violation.disposition,
+            boardingDate: moment( boarding.date).format("MM/DD/yyyy")
+        });
+      }
+    });
+    return collection;
   }
 
   getCrew() {
@@ -87,7 +102,8 @@ export default class VesselDataHelper {
             collection.push({
               license : crewMember.license,
               name :  crewMember.name,
-              attachements: []
+              photos: crewMember.attachments ? crewMember.attachments.photoIDs: [],
+              notes: crewMember.attachments ? crewMember.attachments.notes: [],
             });
           }
         });
@@ -109,4 +125,34 @@ export default class VesselDataHelper {
     });
     return collection;
   }
+
+  getPhotos() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.notes && boarding.notes.length){
+        boarding.notes.forEach((note) => {
+            collection.push({
+              photo: note.photoID,
+              date: moment( boarding.vessel.lastDelivery.date).format("MM/DD/yyyy")
+            });
+        });
+      }
+    });
+    return collection;
+  }
+
+    getNotes() {
+      const collection = [];
+      this.boardings.forEach((boarding) => {
+        if (boarding.notes && boarding.notes.length){
+          boarding.notes.forEach((note) => {
+              collection.push({
+                note: note.note,
+                date: moment( boarding.vessel.lastDelivery.date).format("MM/DD/yyyy")
+              });
+          });
+        }
+      });
+      return collection;
+    }
 }

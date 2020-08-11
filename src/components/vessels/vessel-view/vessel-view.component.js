@@ -3,7 +3,6 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 
 import SeeAll from "../../partials/see-all-link/see-all-link";
-import TextViewer from "../../partials/text-viewer/text-viewer";
 
 import VesselHeaderInfo from "./../../partials/overview-pages/vessel-header-info/vessel-header-info.component";
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
@@ -20,6 +19,8 @@ const vesselService = VesselOverviewService.getInstance();
 
 class VesselViewPage extends Component {
   state = {
+    permitNumbers: ["N/A"],
+    vesselNames: ["N/A"],
     notes: [],
     photos: [],
     vessel: null,
@@ -33,57 +34,84 @@ class VesselViewPage extends Component {
   };
 
   componentDidMount() {
-    const permitNumber = this.props.match.params.id;
-
-    vesselService
-      .getBoardings(permitNumber)
-      .then((data) => {
-        const dataHelper = new VesselDataHelper(permitNumber, data);
-        const newState = {
-          boardings: dataHelper.getBoardings(),
-          nationalities: dataHelper.getNationalities(),
-          homePorts: dataHelper.getHomePorts(),
-          captains: dataHelper.getCaptains(),
-          crew: dataHelper.getCrew(),
-          deliveries: dataHelper.getDeliveries(),
-        };
-        console.log(newState);
-
-        this.setState(newState);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const id = this.props.match.params.id;
+    if (id === "no_permit_number") return;
+    if (id.indexOf("pn") === 0) {
+      const permitNumber = id.substring(2);
+      vesselService
+        .getBoardingsByPermitNumber(permitNumber)
+        .then((data) => {
+          const dataHelper = new VesselDataHelper(permitNumber, data);
+          const newState = {
+            permitNumbers: dataHelper.getPermitNumbers(),
+            vesselNames: dataHelper.getVesselNames(),
+            boardings: dataHelper.getBoardings(),
+            nationalities: dataHelper.getNationalities(),
+            homePorts: dataHelper.getHomePorts(),
+            captains: dataHelper.getCaptains(),
+            crew: dataHelper.getCrew(),
+            deliveries: dataHelper.getDeliveries(),
+          };
+          console.log(data, newState);
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    if (id.indexOf("in") === 0) {
+      const itemName = id.substring(2);
+      vesselService
+        .getBoardingsByVesselName(itemName)
+        .then((data) => {
+          const dataHelper = new VesselDataHelper(itemName, data);
+          const newState = {
+            permitNumbers: dataHelper.getPermitNumbers(),
+            vesselNames: dataHelper.getVesselNames(),
+            boardings: dataHelper.getBoardings(),
+            nationalities: dataHelper.getNationalities(),
+            homePorts: dataHelper.getHomePorts(),
+            captains: dataHelper.getCaptains(),
+            crew: dataHelper.getCrew(),
+            deliveries: dataHelper.getDeliveries(),
+          };
+          console.log(data, newState);
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   render() {
     const {
       nationalities,
+      vesselNames,
       homePorts,
       captains,
       boardings,
       deliveries,
+      permitNumbers,
       crew,
     } = this.state;
     const { t } = this.props;
-
-    const permitNumber = this.props.match.params.id;
-    console.log(crew);
+    const id = this.props.match.params.id;
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
-        {permitNumber !== "no_permit_number" ? (
+        {id !== "no_permit_number" ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
                 <div className="item-label">{t("TABLE.VESSEL")}</div>
-                <div className="item-name">Predator</div>
+                <div className="item-name">{vesselNames[0]}</div>
               </div>
             </div>
             <div className="flex-row justify-between standard-view">
               <VesselHeaderInfo
                 headerText="Permit Number"
-                data={[permitNumber]}
+                data={permitNumbers}
               />
               <VesselHeaderInfo
                 headerText="Flag States"
@@ -126,27 +154,33 @@ class VesselViewPage extends Component {
                         <td>{crewMember.license}</td>
                         <td>
                           {crewMember.attachements &&
-                            !crewMember.attachements.photoIDs && (
-                              <div className="flex-column half-row-view">
-                                <div className="sm-photo-icon">
-                                  <img
-                                    className="icon"
-                                    src={require("../../../assets/photo-icon.png")}
-                                    alt="no logo"
-                                  />
-                                </div>
-                                <div className="see-link">See 6 more</div>
+                          crewMember.attachements.photoIDs ? (
+                            <div className="flex-column half-row-view">
+                              <div className="sm-photo-icon">
+                                <img
+                                  className="icon"
+                                  src={require("../../../assets/photo-icon.png")}
+                                  alt="no logo"
+                                />
                               </div>
-                            )}
+                              <div className="see-link">See 6 more</div>
+                            </div>
+                          ) : (
+                            "N/A"
+                          )}
                         </td>
                         <td>
                           {crewMember.attachements &&
-                            !crewMember.attachements.notes && (
-                              <div className="flex-row half-row-view">
-                                <div className="note">{'crewMember.attachements.notes[0]'}</div>
-                                <div className="see-link">See full note</div>
+                          crewMember.attachements.notes ? (
+                            <div className="flex-row half-row-view">
+                              <div className="note">
+                                {crewMember.attachements.notes[0]}
                               </div>
-                            )}
+                              <div className="see-link">See full note</div>
+                            </div>
+                          ) : (
+                            "N/A"
+                          )}
                         </td>
                         <td></td>
                       </tr>

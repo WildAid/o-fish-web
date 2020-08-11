@@ -12,7 +12,14 @@ export default class VesselOverviewService {
     return VesselOverviewService.serviceInstance;
   }
 
-  getBoardings(permitNumber) {
-    return stitchService.client.callFunction("getVesselBoardings", [permitNumber]);
+  getBoardingsByPermitNumber(permitNumber) {
+    const result = stitchService.database.collection("BoardingReports").find({"vessel.permitNumber": permitNumber}).toArray();
+    return result;
+  }
+
+
+  getBoardingsByVesselName(name) {
+    const result = stitchService.database.collection("BoardingReports").find({"vessel.name": name}).toArray();
+    return result;
   }
 }
