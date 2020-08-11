@@ -289,7 +289,7 @@ class Crew extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => history.push(VIEW_CREW_PAGE)}
+                      // onClick={() => history.push(VIEW_CREW_PAGE)}
                     >
                       <td>
                         <div className="flex-row align-center">

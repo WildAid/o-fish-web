@@ -24,21 +24,18 @@ class CustomSelect extends Component {
   };
 
   setSelected = (option) => {
-    const {currentPath} = this.props;
     const newPath = option === "All" ? "home" : option.toLowerCase();
+    history.push(`/${newPath}`);
 
-    if (`/${newPath}` !== currentPath) {
-      history.push(`#/${newPath}`);
-    }
     resetSearch();
 
     this.setState({ selected: option });
   };
 
-  componentDidMount(){
-    const {currentPath} = this.props;
+  componentDidMount() {
+    const currPath = this.props.match.path.match(/[a-zA-Z]+/g)[0];
     this.setState({
-      selected: currentPath === "home" ? "All" : currentPath,
+      selected: currPath === "home" ? "All" : currPath,
     });
   }
 

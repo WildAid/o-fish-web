@@ -3,11 +3,24 @@
 }
 
 .vessel-view-page table thead td {
+    width: 25%;
     font-weight: 500;
-    font-size: 12px;
-    color: #8b8b8b;
+    font-size: 14px;
 }
 
+.vessel-view-page .crew-section {
+    width: 65%;
+}
+
+.vessel-view-page .crew-section .see-link {
+    color: #2c5a87;
+}
+
+.vessel-view-page .crew-section .note {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .vessel-view-page .delivery-section {
     width: 35%;
 }
@@ -22,10 +35,6 @@
     font-size: 18px;
 }
 
-.vessel-view-page .crew-section {
-    width: 57%;
-}
-
 .vessel-view-page .crew-list {
     flex-wrap: wrap;
 }
@@ -33,4 +42,8 @@
 .vessel-view-page .captain-icon {
     height: 15px;
     margin-left: 30px;
+}
+
+.vessel-view-page .sub-section {
+    border-radius: 15px;
 }

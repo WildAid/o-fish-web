@@ -46,7 +46,7 @@ const ViolationsOverview = ({ t }) => (
       </thead>
       <tbody>
         {violations.map((violation, ind) => (
-          <tr className="table-row row-body">
+          <tr key={ind} className="table-row row-body">
             <td>
               <div className="flex-column">
                 <div>{violation.violation}</div>
