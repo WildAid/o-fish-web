@@ -20,6 +20,7 @@ const vesselService = VesselOverviewService.getInstance();
 
 class VesselViewPage extends Component {
   state = {
+    vesselName : "N/A",
     notes: [],
     photos: [],
     vessel: null,
@@ -29,35 +30,36 @@ class VesselViewPage extends Component {
     deliveries: [],
     homePorts: [],
     captains: [],
-    nationalities: [],
+    nationalities: []
   };
 
   componentDidMount() {
     const permitNumber = this.props.match.params.id;
-
-    vesselService
-      .getBoardings(permitNumber)
-      .then((data) => {
-        const dataHelper = new VesselDataHelper(permitNumber, data);
-        const newState = {
-          boardings: dataHelper.getBoardings(),
-          nationalities: dataHelper.getNationalities(),
-          homePorts: dataHelper.getHomePorts(),
-          captains: dataHelper.getCaptains(),
-          crew: dataHelper.getCrew(),
-          deliveries: dataHelper.getDeliveries(),
-        };
-        console.log(newState);
-
-        this.setState(newState);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (permitNumber){
+      vesselService
+        .getBoardings(permitNumber)
+        .then((data) => {
+          const dataHelper = new VesselDataHelper(permitNumber, data);
+          const newState = {
+            vesselName: dataHelper.getVesselName(),
+            boardings: dataHelper.getBoardings(),
+            nationalities: dataHelper.getNationalities(),
+            homePorts: dataHelper.getHomePorts(),
+            captains: dataHelper.getCaptains(),
+            crew: dataHelper.getCrew(),
+            deliveries: dataHelper.getDeliveries(),
+          };
+          console.log(data, newState);
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
   }
 
   render() {
-    const { nationalities, homePorts, captains, boardings, deliveries } = this.state;
+    const { nationalities, vesselName, homePorts, captains, boardings, deliveries } = this.state;
     const { t } = this.props;
 
     const permitNumber = this.props.match.params.id;
@@ -70,7 +72,7 @@ console.log(boardings);
             <div className="flex-row align-center standard-view">
               <div>
                 <div className="item-label">{t("TABLE.VESSEL")}</div>
-                <div className="item-name">Predator</div>
+                <div className="item-name">{vesselName}</div>
               </div>
             </div>
             <div className="flex-row justify-between standard-view">

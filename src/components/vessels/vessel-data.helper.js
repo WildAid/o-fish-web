@@ -27,7 +27,7 @@ export default class VesselDataHelper {
         citations: violations.length,
         warnings: violations.length,
         risk: boarding.inspection.summary.safetyLevel.level,
-        boardingBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
+        boardedBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
       }
     });
   }
@@ -75,7 +75,19 @@ export default class VesselDataHelper {
   }
 
   getViolations() {
-    return [];
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.inspection && boarding.inspection.summary && boarding.inspection.summary.violations){
+        const violation = boarding.inspection.summary.violations;
+        collection.push({
+            violation:violation.offence ? violation.offence.explanation : "",
+            vessel: boarding.vessel ? boarding.vessel.name : "",
+            result: violation.disposition,
+            boardingDate: moment( boarding.date).format("MM/DD/yyyy")
+        });
+      }
+    });
+    return collection;
   }
 
   getCrew() {
@@ -87,7 +99,8 @@ export default class VesselDataHelper {
             collection.push({
               license : crewMember.license,
               name :  crewMember.name,
-              attachements: []
+              photos: crewMember.attachments ? crewMember.attachments.photoIDs: [],
+              notes: crewMember.attachments ? crewMember.attachments.notes: [],
             });
           }
         });

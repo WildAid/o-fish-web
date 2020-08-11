@@ -202,7 +202,7 @@ class Vessels extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber || 'no_permit_number')}
+                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber ? item.permitNumber : (item.name ? item.name : item.permitNumber))}
                     >
                       <td>
                         <Highlighter
