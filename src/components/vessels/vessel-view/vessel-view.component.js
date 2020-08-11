@@ -20,7 +20,8 @@ const vesselService = VesselOverviewService.getInstance();
 
 class VesselViewPage extends Component {
   state = {
-    vesselName : "N/A",
+    permitNumbers: ["N/A"],
+    vesselNames : ["N/A"],
     notes: [],
     photos: [],
     vessel: null,
@@ -34,14 +35,17 @@ class VesselViewPage extends Component {
   };
 
   componentDidMount() {
-    const permitNumber = this.props.match.params.id;
-    if (permitNumber){
+    const id = this.props.match.params.id;
+    if (id == "no_permit_number") return;
+    if (id.indexOf("pn") === 0){
+      const permitNumber = id.substring(2);
       vesselService
-        .getBoardings(permitNumber)
+        .getBoardingsByPermitNumber(permitNumber)
         .then((data) => {
           const dataHelper = new VesselDataHelper(permitNumber, data);
           const newState = {
-            vesselName: dataHelper.getVesselName(),
+            permitNumbers: dataHelper.getPermitNumbers(),
+            vesselNames: dataHelper.getVesselNames(),
             boardings: dataHelper.getBoardings(),
             nationalities: dataHelper.getNationalities(),
             homePorts: dataHelper.getHomePorts(),
@@ -55,30 +59,51 @@ class VesselViewPage extends Component {
         .catch((error) => {
           console.error(error);
         });
-      }
+    }
+    if (id.indexOf("in") === 0){
+        const itemName = id.substring(2);
+        vesselService
+          .getBoardingsByVesselName(itemName)
+          .then((data) => {
+            const dataHelper = new VesselDataHelper(itemName, data);
+            const newState = {
+              permitNumbers: dataHelper.getPermitNumbers(),
+              vesselNames: dataHelper.getVesselNames(),
+              boardings: dataHelper.getBoardings(),
+              nationalities: dataHelper.getNationalities(),
+              homePorts: dataHelper.getHomePorts(),
+              captains: dataHelper.getCaptains(),
+              crew: dataHelper.getCrew(),
+              deliveries: dataHelper.getDeliveries(),
+            };
+            console.log(data, newState);
+            this.setState(newState);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    }
   }
 
   render() {
-    const { nationalities, vesselName, homePorts, captains, boardings, deliveries } = this.state;
+    const { nationalities, vesselNames, homePorts, captains, boardings, deliveries, permitNumbers } = this.state;
     const { t } = this.props;
-
-    const permitNumber = this.props.match.params.id;
-console.log(boardings);
-
+    const id = this.props.match.params.id;
+    
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
-        {permitNumber !== "no_permit_number" ? (
+        {id !== "no_permit_number" ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
                 <div className="item-label">{t("TABLE.VESSEL")}</div>
-                <div className="item-name">{vesselName}</div>
+                <div className="item-name">{vesselNames[0]}</div>
               </div>
             </div>
             <div className="flex-row justify-between standard-view">
               <VesselHeaderInfo
                 headerText="Permit Number"
-                data={[permitNumber]}
+                data={permitNumbers}
               />
               <VesselHeaderInfo
                 headerText="Flag States"

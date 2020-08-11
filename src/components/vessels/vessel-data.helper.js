@@ -7,13 +7,24 @@ export default class VesselDataHelper {
       this.boardings = boardings;
   }
 
-  getVesselName(){
-    for (var boarding of this.boardings){
-      if (boarding.vessel && boarding.vessel.name){
-        return boarding.vessel.name;
+  getPermitNumbers(){
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.permitNumber){
+        collection[boarding.vessel.permitNumber] = null
       }
-    };
-    return "";
+    });
+    return Object.keys(collection);
+  }
+
+  getVesselNames(){
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.name){
+        collection[boarding.vessel.name] = null
+      }
+    });
+    return Object.keys(collection);
   }
 
   getBoardings() {
@@ -66,14 +77,6 @@ export default class VesselDataHelper {
     return collection;
   }
 
-  getPhotos() {
-    return [];
-  }
-
-  getNotes() {
-    return [];
-  }
-
   getViolations() {
     const collection = [];
     this.boardings.forEach((boarding) => {
@@ -122,4 +125,34 @@ export default class VesselDataHelper {
     });
     return collection;
   }
+
+  getPhotos() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.notes && boarding.notes.length){
+        boarding.notes.forEach((note) => {
+            collection.push({
+              photo: note.photoID,
+              date: moment( boarding.vessel.lastDelivery.date).format("MM/DD/yyyy")
+            });
+        });
+      }
+    });
+    return collection;
+  }
+
+    getNotes() {
+      const collection = [];
+      this.boardings.forEach((boarding) => {
+        if (boarding.notes && boarding.notes.length){
+          boarding.notes.forEach((note) => {
+              collection.push({
+                note: note.note,
+                date: moment( boarding.vessel.lastDelivery.date).format("MM/DD/yyyy")
+              });
+          });
+        }
+      });
+      return collection;
+    }
 }
