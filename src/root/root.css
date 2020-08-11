@@ -4,6 +4,14 @@ main {
 
 /* Custom library */
 
+table {
+    border-collapse: collapse;
+}
+
+.gray-bg {
+    background: #fbfbfb;
+}
+
 /* Row-column */
 .flex-row {
     display: flex;
@@ -105,8 +113,8 @@ main {
     width: 100%;
 }
 
-.form-view{
-  width: 37%;
+.form-view {
+    width: 37%;
 }
 
 .standard-view {
@@ -200,8 +208,8 @@ img.icon {
     outline-color: transparent;
 }
 
-.blue-btn:hover{
-  box-shadow: 2px 2px 2px #ccc; 
+.blue-btn:hover {
+    box-shadow: 2px 2px 2px #ccc;
 }
 
 .simple-btn {
@@ -216,7 +224,7 @@ img.icon {
     outline-color: transparent;
 }
 
-.simple-btn:hover{
+.simple-btn:hover {
     background: white;
     border: 1px solid #0a4074;
 }

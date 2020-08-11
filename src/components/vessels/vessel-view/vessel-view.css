@@ -22,10 +22,6 @@
     font-size: 18px;
 }
 
-.vessel-view-page .crew-section {
-    width: 57%;
-}
-
 .vessel-view-page .crew-list {
     flex-wrap: wrap;
 }

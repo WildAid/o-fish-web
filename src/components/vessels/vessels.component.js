@@ -15,8 +15,6 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 
-import history from "../../root/root.history";
-
 import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
 
 import "./vessels.css";
@@ -204,7 +202,7 @@ class Vessels extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber)}
+                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber || 'no_permit_number')}
                     >
                       <td>
                         <Highlighter

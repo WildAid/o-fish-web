@@ -1,56 +1,31 @@
 import React, { memo } from "react";
 
-import TextViewer from "../../../partials/text-viewer/text-viewer";
-import SeeAll from "../../../partials/see-all-link/see-all-link";
-
 import "./vessel-header-info.css";
 
-const VesselHeaderInfo = ({
-  mainText,
-  subText,
-  headerText,
-  itemsAmount
-}) => (
-  <div className="flex-column vessel-view-item justify-between box-shadow padding white-bg margin-top vessel-header-info">
-    <div className="flex-row justify-between">
+const VesselHeaderInfo = ({ data, headerText, itemsAmount }) => (
+  <div className="flex-column vessel-view-item justify-between box-shadow white-bg margin-top padding-bottom vessel-header-info">
+    <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{headerText}</h3>
       <div className="item-label">{itemsAmount}</div>
     </div>
-    {headerText !== "Captains" && (
-      <div className="flex-row align-center padding-top">
-        {headerText === "Nationalities" && (
-          <div className="nationality-img">
-            <img
-              className="full-view"
-              src={require("../../../../assets/nationality.png")}
-              alt="no icon"
-            />
-          </div>
-        )}
-        {mainText}
-      </div>
-    )}
-    {headerText === "Captains" && (
-      <div className="flex-row justify-between padding-top">
-        <TextViewer
-          mainText={mainText}
-          subText={subText}
-          mainTextFirst={true}
-        />
-        <div className="sm-photo-icon">
-          <img
-            className="icon"
-            src={require("../../../../assets/photo-icon.png")}
-            alt="no logo"
-          />
+    {data.map((el, ind) => {
+      const member = headerText === "Captains" ? el.name : el;
+
+      return (
+        <div key={ind} className="flex-row align-center padding">
+          {headerText === "Flag States" && (
+            <div className="nationality-img">
+              <img
+                className="full-view"
+                src={require("../../../../assets/nationality.png")}
+                alt="no icon"
+              />
+            </div>
+          )}
+          {member || 'N/A'}
         </div>
-      </div>
-    )}
-    {headerText === "Permit Numbers" && (
-      <div className="flex-row justify-center">
-        <SeeAll />
-      </div>
-    )}
+      );
+    })}
   </div>
 );
 

@@ -26,7 +26,7 @@ export default class VesselDataHelper {
         violations: violations.length,
         citations: violations.length,
         warnings: violations.length,
-        risk: boarding.inspection.summary.safetyLevel.levely,
+        risk: boarding.inspection.summary.safetyLevel.level,
         boardingBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
       }
     });
@@ -56,7 +56,7 @@ export default class VesselDataHelper {
   getCaptains() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (!collection.find(c=> c.license == boarding.captain.license)){
+      if (!collection.find(c=> c.license === boarding.captain.license)){
         collection.push({
           license : boarding.captain.license,
           name :  boarding.captain.name

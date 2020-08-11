@@ -151,7 +151,8 @@
     "WARNINGS": "Warnings",
     "VIOLATION": "Violation",
     "RESULT": "Result",
-    "NOTE": "Note"
+    "NOTE": "Note",
+    "BUSINESS": "Business"
   },
   "FILTER": {
     "FROM": "From",
@@ -208,7 +209,6 @@
     "CATCHES" : "Catches",
     "ACTIVITIES" : "Activities",
     "GEAR" : "Gear",
-    "SPECIES" : "Species",
     "ADD_SPECIE" : "Add specie",
     "ADD_ANOTHER" : "Add another"
   },
@@ -220,6 +220,7 @@
     "NO_CATCHES": "No catches found",
     "NO_VESSELS": "No vessels found",
     "NO_CREW": "No crew members found",
-    "NO_USERS": "No users found"
+    "NO_USERS": "No users found",
+    "NO_PERMIT_NUMBER": "No permit number found!"
   }
 }

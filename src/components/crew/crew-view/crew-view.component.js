@@ -4,7 +4,6 @@ import { withTranslation } from "react-i18next";
 import SeeAll from "../../partials/see-all-link/see-all-link";
 import TextViewer from "../../partials/text-viewer/text-viewer";
 
-import HeaderOverview from "./../../partials/overview-pages/header-overview-page/header-overview-page.component";
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
 import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo-overview.component";
@@ -18,11 +17,12 @@ class CrewViewPage extends Component {
 
     return (
       <div className="flex-column align-center padding-top crew-view-page">
-        <HeaderOverview
-          mainText="Marlin Nemo"
-          subText="Crew Member"
-          img="user-icon"
-        />
+        <div className="flex-row align-center standard-view">
+          <div>
+            <div className="item-label">Crew Member</div>
+            <div className="item-name">Marlin Nemo</div>
+          </div>
+        </div>
         <div className="flex-row justify-between standard-view">
           <div className="flex-column box-shadow padding white-bg margin-top vessels-section">
             <div className="flex-row justify-between">
