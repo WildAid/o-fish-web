@@ -54,7 +54,7 @@ const NotesOverview = ({ t }) => (
       </thead>
       <tbody>
         {notes.map((note, ind) => (
-          <tr className="table-row row-body">
+          <tr key={ind} className="table-row row-body">
             <td>{note.boarding}</td>
             <td>{moment(note.date).format("L")}</td>
           </tr>

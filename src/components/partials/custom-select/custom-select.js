@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { withTranslation } from "react-i18next";
-import { withRouter } from "react-router";
+
 import history from "../../../root/root.history";
 
 import { resetSearch } from "./../../../helpers/get-data";
@@ -8,13 +7,13 @@ import { resetSearch } from "./../../../helpers/get-data";
 import "./custom-select.css";
 
 const SEARCH_OPTIONS = [
-  { name: "All", translateKey: "SEARCH.ALL" },
-  { name: "Boardings", translateKey: "NAVIGATION.BOARDINGS" },
-  { name: "Vessels", translateKey: "NAVIGATION.VESSELS" },
-  { name: "Crew", translateKey: "NAVIGATION.CREW" },
-  { name: "Users", translateKey: "NAVIGATION.USERS" },
-  { name: "Agencies", translateKey: "NAVIGATION.AGENCIES" },
-  { name: "Reports", translateKey: "SEARCH.REPORTS" },
+  "All",
+  "Boardings",
+  "Vessels",
+  "Crew",
+  "Users",
+  "Agencies",
+  "Reports",
 ];
 
 class CustomSelect extends Component {
@@ -24,27 +23,27 @@ class CustomSelect extends Component {
   };
 
   setSelected = (option) => {
-    const {currentPath} = this.props;
+    const currentPath = history.location.pathname;
     const newPath = option === "All" ? "home" : option.toLowerCase();
 
     if (`/${newPath}` !== currentPath) {
-      history.push(`#/${newPath}`);
+      history.replace(`/${newPath}`);
     }
     resetSearch();
 
     this.setState({ selected: option });
   };
 
-  componentDidMount(){
-    const {currentPath} = this.props;
+  componentDidMount() {
+    const currentLocation = history.location.pathname.match(/[a-zA-Z]+/g)[0];
+    
     this.setState({
-      selected: currentPath === "home" ? "All" : currentPath,
+      selected: currentLocation === "home" ? "All" : currentLocation,
     });
   }
 
   render() {
     const { selected, showOptionsList } = this.state;
-    const { t } = this.props;
 
     return (
       <div className="flex-row relative select-menu">
@@ -61,9 +60,9 @@ class CustomSelect extends Component {
               <div
                 className="option"
                 key={key}
-                onClick={() => this.setSelected(option.name)}
+                onClick={() => this.setSelected(option)}
               >
-                {t(option.translateKey)}
+                {option}
               </div>
             ))}
           </div>
@@ -73,4 +72,4 @@ class CustomSelect extends Component {
   }
 }
 
-export default withTranslation("translation")(withRouter(CustomSelect));
+export default CustomSelect;

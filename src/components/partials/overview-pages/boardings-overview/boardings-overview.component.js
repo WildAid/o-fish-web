@@ -57,7 +57,7 @@ const BoardingsOverview = ({ t }) => (
       </thead>
       <tbody>
         {boardings.map((boarding, ind) => (
-          <tr className="table-row row-body">
+          <tr key={ind} className="table-row row-body">
             <td>{moment(boarding.date).format("L")}</td>
             <td>{moment(boarding.time).format("LT")}</td>
             <td>{boarding.agency}</td>

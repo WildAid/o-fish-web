@@ -12,9 +12,39 @@ import ViolationsOverview from "./../../partials/overview-pages/violations-overv
 import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo-overview.component";
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 
+import VesselOverviewService from "./../../../services/vessel-overview.service";
+
 import "./vessel-view.css";
 
+const vesselService = VesselOverviewService.getInstance();
+
 class VesselViewPage extends Component {
+  state = {
+    notes: [],
+    photos: [],
+    vessel: null,
+    boardings: [],
+    violations: [],
+    crew: [],
+    deliveries: [],
+  };
+
+  // componentDidMount() {
+    //to test Stitch Functions
+  //   vesselService
+  //     .getBoardings()
+  //     .then((data) => {
+  //       console.log(data);
+        
+  //       this.setState({
+  //         boardings: data.boardings,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
   render() {
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
@@ -23,6 +53,7 @@ class VesselViewPage extends Component {
           subText="Vessel"
           img="vessel-icon"
         />
+        {/* Block for vessel main info */}
         <div className="flex-row standard-view">
           <VesselHeaderInfo
             headerText="Permit Numbers"
