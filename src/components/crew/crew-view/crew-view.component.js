@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
-import SeeAll from "../../partials/see-all-link/see-all-link";
+import SeeLink from "../../partials/see-all-link/see-all-link";
 import TextViewer from "../../partials/text-viewer/text-viewer";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
@@ -70,7 +70,7 @@ class CrewViewPage extends Component {
               </div>
             </div>
             <div className="flex-row justify-center padding-top">
-              <SeeAll />
+              <SeeLink linkText={t('BUTTONS.SEE_ALL')}/>
             </div>
           </div>
           <div className="flex-column box-shadow padding white-bg margin-top license-section">

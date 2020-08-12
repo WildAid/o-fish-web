@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
-import SeeAll from "../../partials/see-all-link/see-all-link";
+import SeeLink from "../../partials/see-all-link/see-all-link";
 
 import VesselHeaderInfo from "./../../partials/overview-pages/vessel-header-info/vessel-header-info.component";
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
@@ -35,7 +35,9 @@ class VesselViewPage extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
+
     if (id === "no_permit_number") return;
+
     if (id.indexOf("pn") === 0) {
       const permitNumber = id.substring(2);
       vesselService
@@ -51,15 +53,16 @@ class VesselViewPage extends Component {
             captains: dataHelper.getCaptains(),
             crew: dataHelper.getCrew(),
             deliveries: dataHelper.getDeliveries(),
+            photos: dataHelper.getPhotos(),
+            notes: dataHelper.getNotes(),
+            violations: dataHelper.getViolations(),
           };
-          console.log(data, newState);
           this.setState(newState);
         })
         .catch((error) => {
           console.error(error);
         });
-    }
-    if (id.indexOf("in") === 0) {
+    } else if (id.indexOf("in") === 0) {
       const itemName = id.substring(2);
       vesselService
         .getBoardingsByVesselName(itemName)
@@ -74,8 +77,10 @@ class VesselViewPage extends Component {
             captains: dataHelper.getCaptains(),
             crew: dataHelper.getCrew(),
             deliveries: dataHelper.getDeliveries(),
+            photos: dataHelper.getPhotos(),
+            notes: dataHelper.getNotes(),
+            violations: dataHelper.getViolations(),
           };
-          console.log(data, newState);
           this.setState(newState);
         })
         .catch((error) => {
@@ -94,6 +99,9 @@ class VesselViewPage extends Component {
       deliveries,
       permitNumbers,
       crew,
+      violations,
+      photos,
+      notes
     } = this.state;
     const { t } = this.props;
     const id = this.props.match.params.id;
@@ -136,7 +144,7 @@ class VesselViewPage extends Component {
               <div className="flex-column justify-between box-shadow white-bg margin-top margin-right crew-section">
                 <div className="flex-row justify-between padding border-bottom gray-bg">
                   <h3>Crew Members</h3>
-                  <div className="item-label">16</div>
+                  <div className="item-label">{crew.length}</div>
                 </div>
                 <table className="margin-left margin-right">
                   <thead className="border-bottom">
@@ -155,7 +163,7 @@ class VesselViewPage extends Component {
                         <td>
                           {crewMember.attachements &&
                           crewMember.attachements.photoIDs ? (
-                            <div className="flex-column half-row-view">
+                            <div className="flex-column">
                               <div className="sm-photo-icon">
                                 <img
                                   className="icon"
@@ -163,7 +171,11 @@ class VesselViewPage extends Component {
                                   alt="no logo"
                                 />
                               </div>
-                              <div className="see-link">See 6 more</div>
+                              <div className="see-link">
+                                {t("BUTTONS.SEE_ALL", {
+                                  item: crewMember.attachements.photoIDs.length,
+                                })}
+                              </div>
                             </div>
                           ) : (
                             "N/A"
@@ -171,29 +183,37 @@ class VesselViewPage extends Component {
                         </td>
                         <td>
                           {crewMember.attachements &&
-                          crewMember.attachements.notes ? (
-                            <div className="flex-row half-row-view">
-                              <div className="note">
-                                {crewMember.attachements.notes[0]}
+                          !crewMember.attachements.notes ? (
+                            <div className="flex-column">
+                              <div className="flex-row">
+                                <div className="note">
+                                  {crewMember.attachements.notes[0]}
+                                </div>
+                                <div className="see-link">
+                                  {t("BUTTONS.SEE_FULL_NOTE")}
+                                </div>
                               </div>
-                              <div className="see-link">See full note</div>
+                              <div className="see-link">
+                                {t("BUTTONS.SEE_MORE", {
+                                  item: crewMember.attachements.photoIDs.length,
+                                })}
+                              </div>
                             </div>
                           ) : (
                             "N/A"
                           )}
                         </td>
-                        <td></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
                 <div className="flex-row justify-center padding-top padding-bottom">
-                  <SeeAll />
+                  <SeeLink linkText={t('BUTTONS.SEE_ALL')}/>
                 </div>
               </div>
               <div className="flex-column box-shadow white-bg margin-top license-section delivery-section">
                 <div className="flex-row justify-between padding border-bottom gray-bg">
-                  <h3>Deliveries</h3>
+                  <h3>{t("TABLE.DELIVERIES")}</h3>
                   <div className="item-label">{deliveries.length}</div>
                 </div>
                 <table className="boardings-table margin-left margin-right">
@@ -220,16 +240,16 @@ class VesselViewPage extends Component {
                   </tbody>
                 </table>
                 <div className="flex-row justify-center padding-top">
-                  <SeeAll />
+                  <SeeLink linkText={t('BUTTONS.SEE_ALL')}/>
                 </div>
               </div>
             </div>
             <div className="flex-row standard-view sub-section">
-              <ViolationsOverview />
+              <ViolationsOverview violations={violations} />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom sub-section">
-              <PhotosOverview />
-              <NotesOverview />
+              <PhotosOverview photos={photos} />
+              <NotesOverview notes={notes}/>
             </div>
           </Fragment>
         ) : (

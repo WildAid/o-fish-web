@@ -2,67 +2,36 @@ import React, { memo } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
-import SeeAll from "../../../partials/see-all-link/see-all-link";
+import SeeLink from "../../../partials/see-all-link/see-all-link";
 
 import "./notes-overview.css";
 
-const notes = [
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-  {
-    date: "2020-04-18T16:16:37.000+00:00",
-    boarding:
-      "Something strange was coming from below deck. It was pretty stinky.",
-  },
-];
-
-const NotesOverview = ({ t }) => (
-  <div className="flex-column box-shadow padding white-bg margin-top half-row-view justify-between">
-    <div className="flex-row justify-between">
-      <h3>Notes</h3>
+const NotesOverview = ({ t, notes }) => (
+  <div className="flex-column box-shadow padding-bottom white-bg margin-top half-row-view">
+    <div className="flex-row justify-between padding border-bottom gray-bg">
+      <h3>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</h3>
       <div className="item-label">{notes.length}</div>
     </div>
-    <table className="custom-table boardings-table">
+    <table className="margin-left margin-right">
       <thead>
         <tr className="row-head">
           <td>{t("TABLE.NOTE")}</td>
-          <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
+          <td>
+            {`${t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")} ${t("TABLE.DATE")}`}
+          </td>
         </tr>
       </thead>
       <tbody>
         {notes.map((note, ind) => (
           <tr key={ind} className="table-row row-body">
-            <td>{note.boarding}</td>
+            <td>{note.note}</td>
             <td>{moment(note.date).format("L")}</td>
           </tr>
         ))}
       </tbody>
     </table>
     <div className="flex-row justify-center padding-top">
-      <SeeAll />
+      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
     </div>
   </div>
 );
