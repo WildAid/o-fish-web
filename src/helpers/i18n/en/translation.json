@@ -228,6 +228,10 @@
     "NO_VESSELS": "No vessels found",
     "NO_CREW": "No crew members found",
     "NO_USERS": "No users found",
-    "NO_PERMIT_NUMBER": "No permit number found!"
+    "NO_PERMIT_NUMBER": "No permit number found",
+    "NO_DELIVERIES": "No deliveries found",
+    "NO_VIOLATIONS": "No violations found",
+    "NO_PHOTOS": "No photos found",
+    "NO_NOTES": "No notes found"
   }
 }

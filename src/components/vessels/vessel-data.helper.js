@@ -146,10 +146,10 @@ export default class VesselDataHelper {
   getPhotos() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (boarding.notes && boarding.notes.length) {
-        boarding.notes.forEach((note) => {
+      if (boarding.vessel.attachments && boarding.vessel.attachments.photos) {
+        boarding.vessel.attachments.photos.forEach((photo) => {
           collection.push({
-            photo: note.photoID,
+            photo: photo,
             date: moment(boarding.vessel.lastDelivery.date).format(
               "MM/DD/yyyy"
             ),
@@ -163,10 +163,10 @@ export default class VesselDataHelper {
   getNotes() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (boarding.notes && boarding.notes.length) {
-        boarding.notes.forEach((note) => {
+      if (boarding.vessel.attachments && boarding.vessel.attachments.notes) {
+        boarding.vessel.attachments.notes.forEach((note) => {
           collection.push({
-            note: note.note,
+            note: note,
             date: moment(boarding.vessel.lastDelivery.date).format(
               "MM/DD/yyyy"
             ),

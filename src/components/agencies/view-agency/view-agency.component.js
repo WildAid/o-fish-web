@@ -6,6 +6,7 @@ import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
 import AgencyService from "./../../../services/agency.service";
 import AgencyFormData from "../form-data/form-data.js"
+
 import "./view-agency.css";
 
 const agencyService = AgencyService.getInstance();
