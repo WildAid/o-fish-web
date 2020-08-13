@@ -11,11 +11,11 @@ import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 
 import VesselDataHelper from "../vessel-data.helper";
-import VesselOverviewService from "./../../../services/vessel-overview.service";
+import OverviewService from "./../../../services/overview.service";
 
 import "./vessel-view.css";
 
-const vesselService = VesselOverviewService.getInstance();
+const vesselService = OverviewService.getInstance();
 
 class VesselViewPage extends Component {
   state = {
@@ -74,6 +74,8 @@ class VesselViewPage extends Component {
             captains: dataHelper.getCaptains(),
             crew: dataHelper.getCrew(),
             deliveries: dataHelper.getDeliveries(),
+            notes: dataHelper.getNotes(),
+            photos: dataHelper.getPhotos()
           };
           console.log(data, newState);
           this.setState(newState);

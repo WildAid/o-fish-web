@@ -9,10 +9,86 @@ import ViolationsOverview from "./../../partials/overview-pages/violations-overv
 import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo-overview.component";
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 
+import CrewDataHelper from "../crew-data.helper.js";
+import OverviewService from "./../../../services/overview.service";
 import "./crew-view.css";
 
+
+const overviewService = OverviewService.getInstance();
+
+
 class CrewViewPage extends Component {
+  state = {
+    licenseNumbers: ["N/A"],
+    vessels: [],
+    notes: [],
+    photos: [],
+    vessel: null,
+    boardings: [],
+    violations: [],
+    crewName: "N/A"
+  };
+
+  componentDidMount(){
+    const id = this.props.match.params.id;
+    if (!id || id === "no_license_number") return;
+    if (id.indexOf("ln") === 0) {
+      const licenseNumber = id.substring(2);
+      overviewService
+        .getBoardingsByCrewLicense(licenseNumber)
+        .then((data) => {
+          const dataHelper = new CrewDataHelper(licenseNumber, data);
+          const newState = {
+            licenseNumbers: [licenseNumber],
+            vessels: dataHelper.getVessels(),
+            crewName: dataHelper.getCrewName(licenseNumber),
+            boardings: dataHelper.getBoardings(),
+            violations: dataHelper.getViolations(),
+            notes: dataHelper.getNotes(),
+            photos: dataHelper.getPhotos()
+          };
+          console.log(data, newState);
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    if (id.indexOf("in") === 0) {
+      const itemName = id.substring(2);
+      overviewService
+        .getBoardingsByCrewName(itemName)
+        .then((data) => {
+          const dataHelper = new CrewDataHelper(itemName, data);
+          const newState = {
+            licenseNumbers: dataHelper.getLicenseNumbersByCrewName(itemName),
+            crewName: itemName,
+            vessels: dataHelper.getVessels(),
+            boardings: dataHelper.getBoardings(),
+            violations: dataHelper.getViolations(),
+            notes: dataHelper.getNotes(),
+            photos: dataHelper.getPhotos()
+          };
+          console.log(data, newState);
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
+
   render() {
+    const {
+      nationalities,
+      vesselNames,
+      homePorts,
+      captains,
+      boardings,
+      deliveries,
+      permitNumbers,
+      crew,
+    } = this.state;
     const { t } = this.props;
 
     return (
@@ -87,7 +163,7 @@ class CrewViewPage extends Component {
           </div>
         </div>
         <div className="flex-row justify-between standard-view">
-          <BoardingsOverview />
+          <BoardingsOverview boardings={boardings}/>
         </div>
         <div className="flex-row justify-between standard-view">
           <ViolationsOverview />

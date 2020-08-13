@@ -4,7 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText } from "./../../helpers/get-data";
+import { getColor, getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -289,7 +289,7 @@ class Crew extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      // onClick={() => history.push(VIEW_CREW_PAGE)}
+                      onClick={() => goToPage(VIEW_CREW_PAGE, item.license ? "ln" + item.license : (item.name ? "in" + item.name : "no_license_number"))}
                     >
                       <td>
                         <div className="flex-row align-center">
