@@ -11,7 +11,7 @@ const BoardingsOverview = ({ t, boardings }) => (
   <div className="flex-column justify-between full-view box-shadow padding-bottom white-bg margin-top border-radius">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t('NAVIGATION.BOARDINGS')}</h3>
-      <div className="item-label">{boardings.length}</div>
+      <div className="item-label">{!!boardings.length ? boardings.length : ""}</div>
     </div>
     <table className="boardings-table margin-left margin-right">
       <thead>

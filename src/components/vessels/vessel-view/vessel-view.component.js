@@ -118,7 +118,7 @@ class VesselViewPage extends Component {
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
-        {id !== "no_permit_number" ? (
+        {!loading ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
@@ -148,164 +148,144 @@ class VesselViewPage extends Component {
               />
             </div>
             <div className="flex-row standard-view sub-section">
-              {!loading ? (
-                <BoardingsOverview boardings={boardings} />
-              ) : (
-                <LoadingPanel />
-              )}
+              <BoardingsOverview boardings={boardings} />
             </div>
             <div className="flex-row standard-view sub-section">
-              {!loading ? (
-                <div className="flex-column box-shadow white-bg margin-top margin-right crew-section">
-                  <div className="flex-row justify-between padding border-bottom gray-bg">
-                    <h3>{t("SEARCH.CREW_MEMBERS")}</h3>
-                    <div className="item-label">{crew.length || ""}</div>
-                  </div>
-                  {!!crew.length ? (
-                    <Fragment>
-                      <table className="margin-left margin-right">
-                        <thead className="border-bottom">
-                          <tr className="table-row row-head">
-                            <td>{t("TABLE.NAME")}</td>
+              <div className="flex-column box-shadow white-bg margin-top margin-right crew-section">
+                <div className="flex-row justify-between padding border-bottom gray-bg">
+                  <h3>{t("SEARCH.CREW_MEMBERS")}</h3>
+                  <div className="item-label">{crew.length || ""}</div>
+                </div>
+                {!!crew.length ? (
+                  <Fragment>
+                    <table className="margin-left margin-right">
+                      <thead className="border-bottom">
+                        <tr className="table-row row-head">
+                          <td>{t("TABLE.NAME")}</td>
+                          <td>
+                            {t("BOARDING_PAGE.VIEW_BOARDING.LICENSE_NUMBER")}
+                          </td>
+                          <td>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</td>
+                          <td>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {crew.map((crewMember, ind) => (
+                          <tr key={ind} className="table-row row-body">
+                            <td>{crewMember.name}</td>
+                            <td>{crewMember.license}</td>
                             <td>
-                              {t("BOARDING_PAGE.VIEW_BOARDING.LICENSE_NUMBER")}
+                              {crewMember.attachements &&
+                              crewMember.attachements.photoIDs ? (
+                                <div className="flex-column">
+                                  <div className="sm-photo-icon">
+                                    <img
+                                      className="icon"
+                                      src={require("../../../assets/photo-icon.png")}
+                                      alt="no logo"
+                                    />
+                                  </div>
+                                  <div className="see-link">
+                                    {t("BUTTONS.SEE_ALL", {
+                                      item:
+                                        crewMember.attachements.photoIDs.length,
+                                    })}
+                                  </div>
+                                </div>
+                              ) : (
+                                "N/A"
+                              )}
                             </td>
-                            <td>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</td>
-                            <td>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {crew.map((crewMember, ind) => (
-                            <tr key={ind} className="table-row row-body">
-                              <td>{crewMember.name}</td>
-                              <td>{crewMember.license}</td>
-                              <td>
-                                {crewMember.attachements &&
-                                crewMember.attachements.photoIDs ? (
-                                  <div className="flex-column">
-                                    <div className="sm-photo-icon">
-                                      <img
-                                        className="icon"
-                                        src={require("../../../assets/photo-icon.png")}
-                                        alt="no logo"
-                                      />
+                            <td>
+                              {crewMember.attachements &&
+                              !crewMember.attachements.notes ? (
+                                <div className="flex-column">
+                                  <div className="flex-row">
+                                    <div className="note">
+                                      {crewMember.attachements.notes[0]}
                                     </div>
                                     <div className="see-link">
-                                      {t("BUTTONS.SEE_ALL", {
-                                        item:
-                                          crewMember.attachements.photoIDs
-                                            .length,
-                                      })}
+                                      {t("BUTTONS.SEE_FULL_NOTE")}
                                     </div>
                                   </div>
-                                ) : (
-                                  "N/A"
-                                )}
-                              </td>
-                              <td>
-                                {crewMember.attachements &&
-                                !crewMember.attachements.notes ? (
-                                  <div className="flex-column">
-                                    <div className="flex-row">
-                                      <div className="note">
-                                        {crewMember.attachements.notes[0]}
-                                      </div>
-                                      <div className="see-link">
-                                        {t("BUTTONS.SEE_FULL_NOTE")}
-                                      </div>
-                                    </div>
-                                    <div className="see-link">
-                                      {t("BUTTONS.SEE_MORE", {
-                                        item:
-                                          crewMember.attachements.photoIDs
-                                            .length,
-                                      })}
-                                    </div>
+                                  <div className="see-link">
+                                    {t("BUTTONS.SEE_MORE", {
+                                      item:
+                                        crewMember.attachements.photoIDs.length,
+                                    })}
                                   </div>
-                                ) : (
-                                  "N/A"
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <div className="flex-row justify-center padding-top padding-bottom">
-                        <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
-                      </div>
-                    </Fragment>
-                  ) : (
-                    <div className="padding">{t("WARNINGS.NO_CREW")}</div>
-                  )}
-                </div>
-              ) : (
-                <LoadingPanel />
-              )}
-              {!loading ? (
-                <div className="flex-column box-shadow white-bg margin-top license-section padding-bottom delivery-section">
-                  <div className="flex-row justify-between padding border-bottom gray-bg">
-                    <h3>{t("TABLE.DELIVERIES")}</h3>
-                    <div className="item-label">{deliveries.length || ""}</div>
-                  </div>
-                  {!!deliveries.length ? (
-                    <Fragment>
-                      <table className="boardings-table margin-left margin-right">
-                        <thead>
-                          <tr className="row-head border-bottom">
-                            <td>{t("TABLE.BUSINESS")}</td>
-                            <td>{t("TABLE.DATE")}</td>
+                                </div>
+                              ) : (
+                                "N/A"
+                              )}
+                            </td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {deliveries.map((delivery, ind) => (
-                            <tr key={ind} className="table-row row-body">
-                              <td>
-                                {!!delivery ? (
-                                  <div>
-                                    <div className="delivery-name">
-                                      {delivery.name}
-                                    </div>
-                                    <div className="delivery-address">
-                                      {delivery.location}
-                                    </div>
-                                  </div>
-                                ) : (
-                                  "N/A"
-                                )}
-                              </td>
-                              <td>{moment(delivery.date).format("L")}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <div className="flex-row justify-center padding-top">
-                        <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
-                      </div>
-                    </Fragment>
-                  ) : (
-                    <div className="padding">{t("WARNINGS.NO_DELIVERIES")}</div>
-                  )}
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="flex-row justify-center padding-top padding-bottom">
+                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+                    </div>
+                  </Fragment>
+                ) : (
+                  <div className="padding">{t("WARNINGS.NO_CREW")}</div>
+                )}
+              </div>
+              <div className="flex-column box-shadow white-bg margin-top license-section padding-bottom delivery-section">
+                <div className="flex-row justify-between padding border-bottom gray-bg">
+                  <h3>{t("TABLE.DELIVERIES")}</h3>
+                  <div className="item-label">{deliveries.length || ""}</div>
                 </div>
-              ) : (
-                <LoadingPanel />
-              )}
+                {!!deliveries.length ? (
+                  <Fragment>
+                    <table className="boardings-table margin-left margin-right">
+                      <thead>
+                        <tr className="row-head border-bottom">
+                          <td>{t("TABLE.BUSINESS")}</td>
+                          <td>{t("TABLE.DATE")}</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {deliveries.map((delivery, ind) => (
+                          <tr key={ind} className="table-row row-body">
+                            <td>
+                              {!!delivery ? (
+                                <div>
+                                  <div className="delivery-name">
+                                    {delivery.name}
+                                  </div>
+                                  <div className="delivery-address">
+                                    {delivery.location}
+                                  </div>
+                                </div>
+                              ) : (
+                                "N/A"
+                              )}
+                            </td>
+                            <td>{moment(delivery.date).format("L")}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="flex-row justify-center padding-top">
+                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+                    </div>
+                  </Fragment>
+                ) : (
+                  <div className="padding">{t("WARNINGS.NO_DELIVERIES")}</div>
+                )}
+              </div>
             </div>
             <div className="flex-row standard-view sub-section">
-              {!loading ? (
-                <ViolationsOverview violations={violations} />
-              ) : (
-                <LoadingPanel />
-              )}
+              <ViolationsOverview violations={violations} />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom sub-section">
-              {!loading ? <PhotosOverview photos={photos} /> : <LoadingPanel />}
-              {!loading ? <NotesOverview notes={notes} /> : <LoadingPanel />}
+              <PhotosOverview photos={photos} />
+              <NotesOverview notes={notes} />
             </div>
           </Fragment>
         ) : (
-          <div className="flex-row justify-center standard-view">
-            {t("WARNINGS.NO_PERMIT_NUMBER")}
-          </div>
+          <LoadingPanel />
         )}
       </div>
     );
