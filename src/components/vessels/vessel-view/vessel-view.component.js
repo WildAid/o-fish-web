@@ -12,11 +12,11 @@ import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 
 import VesselDataHelper from "../vessel-data.helper";
-import VesselOverviewService from "./../../../services/vessel-overview.service";
+import OverviewService from "./../../../services/overview.service";
 
 import "./vessel-view.css";
 
-const vesselService = VesselOverviewService.getInstance();
+const overviewService = OverviewService.getInstance();
 
 class VesselViewPage extends Component {
   state = {
@@ -38,15 +38,17 @@ class VesselViewPage extends Component {
   componentDidMount() {
     const id = this.props.match.params.id;
 
-    if (id === "no_permit_number") return;
+    if (!id || id === "no_permit_number") return;
 
     if (id.indexOf("pn") === 0) {
       this.setState({ loading: true }, () => {
         const permitNumber = id.substring(2);
-        vesselService
+
+        overviewService
           .getBoardingsByPermitNumber(permitNumber)
           .then((data) => {
             const dataHelper = new VesselDataHelper(permitNumber, data);
+            
             const newState = {
               permitNumbers: dataHelper.getPermitNumbers(),
               vesselNames: dataHelper.getVesselNames(),
@@ -61,7 +63,6 @@ class VesselViewPage extends Component {
               violations: dataHelper.getViolations(),
               loading: false,
             };
-            console.log(data, newState);
             this.setState(newState);
           })
           .catch((error) => {
@@ -71,7 +72,7 @@ class VesselViewPage extends Component {
     } else if (id.indexOf("in") === 0) {
       this.setState({ loading: true }, () => {
         const itemName = id.substring(2);
-        vesselService
+        overviewService
           .getBoardingsByVesselName(itemName)
           .then((data) => {
             const dataHelper = new VesselDataHelper(itemName, data);
@@ -114,7 +115,6 @@ class VesselViewPage extends Component {
       notes,
     } = this.state;
     const { t } = this.props;
-    const id = this.props.match.params.id;
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">

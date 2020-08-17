@@ -2,6 +2,8 @@ import React, { memo, Fragment } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
+import UserPhoto from "../../../partials/user-photo/user-photo.component";
+
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
 import "./photo-overview.css";
@@ -10,9 +12,7 @@ const PhotosOverview = ({ t, photos }) => (
   <div className="flex-column box-shadow padding-bottom white-bg margin-top margin-right photos-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</h3>
-      <div className="item-label">
-        {!!photos && !!photos.length ? photos.length : ""}
-      </div>
+      <div className="item-label">{!!photos.length ? photos.length : ""}</div>
     </div>
     {!!photos.length ? (
       <Fragment>
@@ -23,10 +23,14 @@ const PhotosOverview = ({ t, photos }) => (
               className="flex-column align-center margin-bottom photo-container"
             >
               <div className="big-photo-icon">
-                <img
+                {/* <img
                   className="icon"
                   src={require("../../../../assets/photo-big-icon.png")}
                   alt="no logo"
+                /> */}
+                <UserPhoto
+                  imageId={photo || ""}
+                  defaultIcon={false}
                 />
               </div>
               <div className="item-label margin-top date-text">

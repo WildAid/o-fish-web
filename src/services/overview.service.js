@@ -2,14 +2,14 @@ import StitchService from "./stitch.service";
 
 const stitchService = StitchService.getInstance();
 
-export default class VesselOverviewService {
+export default class OverviewService {
   static serviceInstance: VesselOverviewService = null;
 
   static getInstance() {
-    if (VesselOverviewService.serviceInstance == null) {
-      VesselOverviewService.serviceInstance = new VesselOverviewService();
+    if (OverviewService.serviceInstance == null) {
+      OverviewService.serviceInstance = new OverviewService();
     }
-    return VesselOverviewService.serviceInstance;
+    return OverviewService.serviceInstance;
   }
 
   getBoardingsByPermitNumber(permitNumber) {
@@ -20,6 +20,17 @@ export default class VesselOverviewService {
 
   getBoardingsByVesselName(name) {
     const result = stitchService.database.collection("BoardingReports").find({"vessel.name": name}).toArray();
+    return result;
+  }
+
+  getBoardingsByCrewLicense(permitNumber) {
+    const result = stitchService.database.collection("BoardingReports").find({"crew.license": permitNumber}).toArray();
+    return result;
+  }
+
+
+  getBoardingsByCrewName(name) {
+    const result = stitchService.database.collection("BoardingReports").find({"crew.name": name}).toArray();
     return result;
   }
 }
