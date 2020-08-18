@@ -30,14 +30,20 @@ export default class OverviewService {
       .collection("BoardingReports")
       .find({ "vessel.name": name })
       .toArray();
+    searchService.searchResults = {
+      query: name,
+    };
     return result;
   }
 
-  getBoardingsByCrewLicense(permitNumber) {
+  getBoardingsByCrewLicense(licenseNumber) {
     const result = stitchService.database
       .collection("BoardingReports")
-      .find({ "crew.license": permitNumber })
+      .find({ "crew.license": licenseNumber })
       .toArray();
+    searchService.searchResults = {
+      query: licenseNumber,
+    };
     return result;
   }
 
