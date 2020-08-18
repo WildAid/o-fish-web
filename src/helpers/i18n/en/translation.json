@@ -45,6 +45,9 @@
     "PROFILE_INFO": "Profile information",
     "SETTINGS": "Settings"
   },
+  "VESSEL_OVERVIEW_PAGE": {
+    
+  },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Records Found",
     "MAP": "Map",
@@ -118,6 +121,8 @@
     "NEW_BOARDING": "New Boarding",
     "SEE_ACTIVITY": "See Activity",
     "SEE_ALL": "See all",
+    "SEE_FULL_NOTE": "See full note",
+    "SEE_MORE": "See {{item}} more",
     "EDIT_BOARDING": "Edit Boarding",
     "SAVE_BOARDING": "Save Boarding",
     "EDIT_AGENCY": "Edit Agency Information",
@@ -152,7 +157,10 @@
     "VIOLATION": "Violation",
     "RESULT": "Result",
     "NOTE": "Note",
-    "BUSINESS": "Business"
+    "BUSINESS": "Business",
+    "DELIVERIES": "Deliveries",
+    "ISSUED_TO": "Issued To",
+    "CREW_MEMBER": "Crew Member"
   },
   "FILTER": {
     "FROM": "From",
@@ -221,6 +229,11 @@
     "NO_VESSELS": "No vessels found",
     "NO_CREW": "No crew members found",
     "NO_USERS": "No users found",
-    "NO_PERMIT_NUMBER": "No permit number found!"
+    "NO_PERMIT_NUMBER": "No permit number found",
+    "NO_DELIVERIES": "No deliveries found",
+    "NO_VIOLATIONS": "No violations found",
+    "NO_PHOTOS": "No photos found",
+    "NO_NOTES": "No notes found",
+    "NO_LICENSE": "No license number found"
   }
 }

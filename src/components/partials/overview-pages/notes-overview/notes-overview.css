@@ -1,7 +1,3 @@
-.photos-list {
-  flex-wrap: wrap;
-}
-
-.photo-container {
-  width: 23%;
+.notes-section {
+  width: 50%;
 }
