@@ -1,9 +1,12 @@
 import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 import SeeLink from "../../../partials/see-all-link/see-all-link";
+
+import { BOARDINGS_PAGE } from "../../../../root/root.constants.js";
 
 import "./boardings-overview.css";
 
@@ -46,7 +49,10 @@ const BoardingsOverview = ({ t, boardings }) => (
           </tbody>
         </table>
         <div className="flex-row justify-center padding-top">
-          <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+          {/* <SeeLink linkText={t("BUTTONS.SEE_ALL")} /> */}
+          <NavLink className="item-link" to={BOARDINGS_PAGE}>
+            {t("BUTTONS.SEE_ALL")}
+          </NavLink>
         </div>
       </Fragment>
     ) : (
