@@ -21,16 +21,17 @@ export default class CrewDataHelper {
   }
 
   getCrewName(license) {
+    let name;
     this.boardings.forEach((boarding) => {
       if (boarding.crew && boarding.crew.length) {
         for (let crew of boarding.crew) {
           if (crew.license === license) {
-            return crew.name;
+            name = crew.name;
           }
         }
       }
     });
-    return null;
+    return name;
   }
 
   getBoardings() {
@@ -39,8 +40,8 @@ export default class CrewDataHelper {
         ? boarding.inspection.summary.violations
         : [];
       return {
-        date: moment(boarding.date).format("MM/DD/yyyy"),
-        time: moment(boarding.date).format("LT"),
+        date: boarding.date,
+        time: boarding.date,
         vessel:
           boarding.vessel && boarding.vessel.name
             ? boarding.vessel.name
@@ -67,12 +68,16 @@ export default class CrewDataHelper {
         boarding.inspection.summary &&
         boarding.inspection.summary.violations
       ) {
-        const violation = boarding.inspection.summary.violations;
-        collection.push({
-          violation: violation.offence ? violation.offence.explanation : "",
-          vessel: boarding.vessel ? boarding.vessel.name : "",
-          result: violation.disposition,
-          boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
+        const { violations } = boarding.inspection.summary;
+        violations.map((violation) => {
+          collection.push({
+            violation: violation.offence ? violation.offence.explanation : "",
+            issuedBy: violation.crewMember.name,
+            license: violation.crewMember.license,
+            result: violation.disposition,
+            boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
+          });
+          return "";
         });
       }
     });
@@ -108,31 +113,42 @@ export default class CrewDataHelper {
         boarding.crew.forEach((crewMember) => {
           if (
             crewLicense === crewMember.license &&
-            crewMember.attachments &&
-            crewMember.attachments.photoIDs
+            !!crewMember.attachments &&
+            !!crewMember.attachments.photoIDs.length
           ) {
-            crewMember.attachments.photoIDs.slice(0, 12).map((photo) => {
-              photos.push({ photo });
+            crewMember.attachments.photoIDs.map((photo) => {
+              photos.push({ url: photo, date: boarding.date });
+              return "";
             });
+            return "";
           }
         });
       }
+      return "";
     });
-    console.log(photos);
-    // return photos;
+    return photos;
   }
 
-  getNotes() {
-    return this.boardings.map((boarding) => {
+  getNotes(crewLicense) {
+    let notes = [];
+    this.boardings.map((boarding) => {
       if (boarding.crew && boarding.crew.length) {
-        return boarding.crew.map((crewMember) => {
-          if (crewMember.attachments && crewMember.attachments.notes) {
-            return crewMember.attachments.notes.slice(0, 12).map((note) => {
-              return { note };
+        boarding.crew.forEach((crewMember) => {
+          if (
+            crewLicense === crewMember.license &&
+            !!crewMember.attachments &&
+            !!crewMember.attachments.notes.length
+          ) {
+            crewMember.attachments.notes.map((note) => {
+              notes.push({ note: note, date: boarding.date });
+              return "";
             });
+            return "";
           }
         });
       }
+      return "";
     });
+    return notes;
   }
 }

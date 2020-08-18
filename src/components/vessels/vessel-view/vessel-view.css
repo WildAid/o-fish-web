@@ -43,10 +43,6 @@
     padding-right: 5px;
 }
 
-.vessel-view-page .delivery-name {
-    font-size: 18px;
-}
-
 .vessel-view-page .crew-list {
     flex-wrap: wrap;
 }

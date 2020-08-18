@@ -9,7 +9,9 @@ const ViolationsOverview = ({ t, violations }) => {
     <div className="flex-column justify-between full-view box-shadow padding-bottom white-bg margin-top violations-section">
       <div className="flex-row justify-between padding border-bottom gray-bg">
         <h3>{t("TABLE.VIOLATIONS")}</h3>
-        <div className="item-label">{!!violations && !!violations.length ? violations.length : ""}</div>
+        <div className="item-label">
+          {!!violations && !!violations.length ? violations.length : ""}
+        </div>
       </div>
       {!!violations.length ? (
         <Fragment>
@@ -26,7 +28,7 @@ const ViolationsOverview = ({ t, violations }) => {
               </tr>
             </thead>
             <tbody>
-              {violations.map((violation, ind) => (
+              {violations.slice(0, 4).map((violation, ind) => (
                 <tr key={ind} className="table-row row-body">
                   <td>
                     <div className="flex-column">

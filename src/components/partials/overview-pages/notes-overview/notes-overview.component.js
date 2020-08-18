@@ -10,13 +10,15 @@ const NotesOverview = ({ t, notes }) => (
   <div className="flex-column box-shadow padding-bottom white-bg margin-top notes-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</h3>
-      {!!notes && !!notes.length ? notes.length : ""}
+      <div className="item-label">
+        {!!notes && !!notes.length ? notes.length : ""}
+      </div>
     </div>
     {!!notes.length ? (
       <Fragment>
         <table className="margin-left margin-right">
           <thead>
-            <tr className="row-head">
+            <tr className="row-head border-bottom">
               <td>{t("TABLE.NOTE")}</td>
               <td>
                 {`${t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")} ${t(
@@ -26,7 +28,7 @@ const NotesOverview = ({ t, notes }) => (
             </tr>
           </thead>
           <tbody>
-            {notes.map((note, ind) => (
+            {notes.slice(0, 10).map((note, ind) => (
               <tr key={ind} className="table-row row-body">
                 <td>{note.note}</td>
                 <td>{moment(note.date).format("L")}</td>

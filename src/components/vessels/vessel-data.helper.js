@@ -32,8 +32,8 @@ export default class VesselDataHelper {
         ? boarding.inspection.summary.violations
         : [];
       return {
-        date: moment(boarding.date).format("MM/DD/yyyy"),
-        time: moment(boarding.date).format("LT"),
+        date: boarding.date,
+        time: boarding.date,
         agency:
           boarding.agency && boarding.agency.name
             ? boarding.agency.name

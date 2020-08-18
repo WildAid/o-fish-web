@@ -249,10 +249,10 @@ class VesselViewPage extends Component {
                         {deliveries.map((delivery, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>
-                              {!!delivery ? (
+                              {!!delivery.business && !!delivery.location ? (
                                 <div>
                                   <div className="delivery-name">
-                                    {delivery.name}
+                                    {delivery.business}
                                   </div>
                                   <div className="delivery-address">
                                     {delivery.location}

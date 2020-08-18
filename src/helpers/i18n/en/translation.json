@@ -233,6 +233,7 @@
     "NO_DELIVERIES": "No deliveries found",
     "NO_VIOLATIONS": "No violations found",
     "NO_PHOTOS": "No photos found",
-    "NO_NOTES": "No notes found"
+    "NO_NOTES": "No notes found",
+    "NO_LICENSE": "No license number found"
   }
 }

@@ -19,7 +19,7 @@ const overviewService = OverviewService.getInstance();
 class CrewViewPage extends Component {
   state = {
     loading: false,
-    licenseNumbers: ["N/A"],
+    licenseNumbers: [],
     vessels: [],
     notes: [],
     photos: [],
@@ -30,9 +30,9 @@ class CrewViewPage extends Component {
   };
 
   componentDidMount() {
-    const id = this.props.match.params.id;
+    const { id } = this.props.match.params;
 
-    if (!id || id === "no_license_number") return;
+    if (!id) return;
 
     if (id.indexOf("ln") === 0) {
       this.setState({ loading: true }, () => {
@@ -50,11 +50,9 @@ class CrewViewPage extends Component {
               licenseNumbers: [licenseNumber],
               vessels: dataHelper.getVessels(),
               crewName: dataHelper.getCrewName(licenseNumber),
-              // notes: dataHelper.getNotes(),
+              notes: dataHelper.getNotes(licenseNumber),
               photos: dataHelper.getPhotos(licenseNumber),
             };
-                        console.error(newState);
-
             this.setState(newState);
           })
           .catch((error) => {
@@ -76,10 +74,9 @@ class CrewViewPage extends Component {
             violations: dataHelper.getViolations(),
             vessels: dataHelper.getVessels(),
             crewName: itemName,
-            notes: dataHelper.getNotes(),
-            photos: dataHelper.getPhotos(),
+            notes: dataHelper.getNotes(itemName),
+            photos: dataHelper.getPhotos(itemName),
           };
-          console.log(data, newState);
           this.setState(newState);
         })
         .catch((error) => {
@@ -97,7 +94,7 @@ class CrewViewPage extends Component {
       licenseNumbers,
       photos,
       notes,
-      crewName
+      crewName,
     } = this.state;
     const { t } = this.props;
 
@@ -108,11 +105,11 @@ class CrewViewPage extends Component {
             <div className="flex-row align-center standard-view">
               <div>
                 <div className="item-label">{t("TABLE.CREW_MEMBER")}</div>
-                <div className="item-name">{crewName || 'N/A'}</div>
+                <div className="item-name">{crewName || "N/A"}</div>
               </div>
             </div>
             <div className="flex-row justify-between standard-view">
-              <div className="flex-column box-shadow white-bg margin-top vessels-section">
+              <div className="flex-column box-shadow white-bg margin-top margin-right vessels-section">
                 <div className="flex-row justify-between padding border-bottom gray-bg">
                   <h3>{t("NAVIGATION.VESSELS")}</h3>
                   <div className="item-label">{vessels.length || ""}</div>
@@ -129,7 +126,7 @@ class CrewViewPage extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {vessels.map((vessel, ind) => (
+                        {vessels.slice(0, 4).map((vessel, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>{vessel.name}</td>
                             <td>{vessel.permitNumber}</td>
@@ -195,14 +192,18 @@ class CrewViewPage extends Component {
                     {licenseNumbers.length || ""}
                   </div>
                 </div>
-                {licenseNumbers.map((license, ind) => (
-                  <div
-                    key={ind}
-                    className="border-bottom padding-bottom padding-top margin-left margin-right"
-                  >
-                    {license}
-                  </div>
-                ))}
+                {!!licenseNumbers.length ? (
+                  licenseNumbers.map((license, ind) => (
+                    <div
+                      key={ind}
+                      className="border-bottom padding-bottom padding-top margin-left margin-right"
+                    >
+                      {license}
+                    </div>
+                  ))
+                ) : (
+                  <div className="padding">{t("WARNINGS.NO_LICENSE")}</div>
+                )}
               </div>
             </div>
             <div className="flex-row justify-between standard-view">
@@ -213,7 +214,7 @@ class CrewViewPage extends Component {
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
               <PhotosOverview photos={photos} />
-              {/* <NotesOverview notes={notes} /> */}
+              <NotesOverview notes={notes} />
             </div>
           </Fragment>
         ) : (

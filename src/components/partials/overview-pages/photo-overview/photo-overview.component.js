@@ -2,7 +2,7 @@ import React, { memo, Fragment } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
-import UserPhoto from "../../../partials/user-photo/user-photo.component";
+// import UserPhoto from "../../../partials/user-photo/user-photo.component";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
@@ -17,20 +17,17 @@ const PhotosOverview = ({ t, photos }) => (
     {!!photos.length ? (
       <Fragment>
         <div className="flex-row justify-between padding-top photos-list margin-left margin-right">
-          {photos.map((photo, ind) => (
+          {photos.slice(0, 12).map((photo, ind) => (
             <div
               key={ind}
               className="flex-column align-center margin-bottom photo-container"
             >
               <div className="big-photo-icon">
-                {/* <img
+                {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
+                <img
                   className="icon"
                   src={require("../../../../assets/photo-big-icon.png")}
                   alt="no logo"
-                /> */}
-                <UserPhoto
-                  imageId={photo || ""}
-                  defaultIcon={false}
                 />
               </div>
               <div className="item-label margin-top date-text">
