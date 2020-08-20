@@ -18,7 +18,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
-import OverviewService from "./../../services/overview.service";
 
 import {
   NEW_BOARDING_PAGE,
@@ -30,7 +29,6 @@ import "./boardings.css";
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
 const boardingService = BoardingService.getInstance();
-const overviewService = OverviewService.getInstance();
 
 const boardingsChartOptions = {
   width: "100%",

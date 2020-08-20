@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-
-import SeeLink from "../../partials/see-all-link/see-all-link";
+import { NavLink } from "react-router-dom";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -11,6 +10,8 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 
 import CrewDataHelper from "../crew-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
+
+import { VESSELS_PAGE } from "../../../root/root.constants.js";
 
 import "./crew-view.css";
 
@@ -178,7 +179,9 @@ class CrewViewPage extends Component {
                       </tbody>
                     </table>
                     <div className="flex-row justify-center padding-top padding-bottom">
-                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+                      <NavLink className="item-link" to={VESSELS_PAGE}>
+                        {t("BUTTONS.SEE_ALL")}
+                      </NavLink>
                     </div>
                   </Fragment>
                 ) : (

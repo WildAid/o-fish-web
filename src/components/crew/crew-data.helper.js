@@ -40,6 +40,7 @@ export default class CrewDataHelper {
         ? boarding.inspection.summary.violations
         : [];
       return {
+        id: boarding._id,
         date: boarding.date,
         time: boarding.date,
         vessel:
@@ -71,6 +72,7 @@ export default class CrewDataHelper {
         const { violations } = boarding.inspection.summary;
         violations.map((violation) => {
           collection.push({
+            boardingId: boarding._id,
             violation: violation.offence ? violation.offence.explanation : "",
             issuedBy: violation.crewMember.name,
             license: violation.crewMember.license,

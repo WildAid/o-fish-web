@@ -4,7 +4,11 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText, goToPage } from "./../../helpers/get-data";
+import {
+  getColor,
+  getHighlightedText,
+  goToPage,
+} from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -110,6 +114,7 @@ class Crew extends Component {
     if (searchService.searchResults && searchService.searchResults.query) {
       searchService.searchResults.query = value;
     }
+
     this.loadData({ searchQuery: value, offset: 0 });
   };
 
@@ -134,7 +139,6 @@ class Crew extends Component {
 
   prepareSearchResultData(data) {
     const allCrew = [];
-
     data.forEach((crewMember) => {
       crewMember.highlights.forEach((el) => {
         if (el.path.includes("captain")) {
@@ -170,14 +174,17 @@ class Crew extends Component {
                 item.safetyLevel === crewMember.safetyLevel
               );
             });
-            const foundCrewMember = el.texts.find((item) => {
+            const foundMatch = el.texts.find((item) => {
               if (item.type === "hit") {
                 return item.value;
               }
               return null;
             }).value;
-
-            if (member.name.includes(foundCrewMember)) {
+            if (
+              member.name.includes(foundMatch) ||
+              crewMember.vessel.includes(foundMatch) ||
+              member.license.includes(foundMatch)
+            ) {
               if (addedCrew) {
                 addedCrew.violations += crewMember.violations;
                 if (addedCrew.date < crewMember.date) {
@@ -287,7 +294,16 @@ class Crew extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_CREW_PAGE, item.license ? "ln" + item.license : (item.name ? "in" + item.name : "no_license_number"))}
+                      onClick={() =>
+                        goToPage(
+                          VIEW_CREW_PAGE,
+                          item.license
+                            ? "ln" + item.license
+                            : item.name
+                            ? "in" + item.name
+                            : "no_license_number"
+                        )
+                      }
                     >
                       <td>
                         <div className="flex-row align-center">
@@ -306,8 +322,22 @@ class Crew extends Component {
                           )}
                         </div>
                       </td>
-                      <td>{item.license}</td>
-                      <td>{item.vessel}</td>
+                      <td>
+                        <Highlighter
+                          highlightClassName="highlighted"
+                          searchWords={highlighted}
+                          autoEscape={true}
+                          textToHighlight={item.license}
+                        />
+                      </td>
+                      <td>
+                        <Highlighter
+                          highlightClassName="highlighted"
+                          searchWords={highlighted}
+                          autoEscape={true}
+                          textToHighlight={item.vessel}
+                        />
+                      </td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
                       </td>

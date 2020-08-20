@@ -3,10 +3,11 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 
-import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
-import SeeLink from "../../../partials/see-all-link/see-all-link";
+import { goToPage } from "./../../../../helpers/get-data";
 
-import { BOARDINGS_PAGE } from "../../../../root/root.constants.js";
+import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
+
+import { BOARDINGS_PAGE, VIEW_BOARDING_PAGE } from "../../../../root/root.constants.js";
 
 import "./boardings-overview.css";
 
@@ -33,8 +34,13 @@ const BoardingsOverview = ({ t, boardings }) => (
             </tr>
           </thead>
           <tbody>
-            {boardings.slice(0, 4).map((boarding, ind) => (
-              <tr key={ind} className="table-row row-body">
+            {boardings.slice(0, 4).map((boarding, ind) => {
+              return (
+              <tr
+                key={ind}
+                className="table-row row-body"
+                onClick={() => goToPage(VIEW_BOARDING_PAGE, boarding.id)}
+              >
                 <td>{moment(boarding.date).format("L")}</td>
                 <td>{moment(boarding.time).format("LT")}</td>
                 <td>{boarding.violations}</td>
@@ -45,11 +51,10 @@ const BoardingsOverview = ({ t, boardings }) => (
                   <RiskIcon safetyLevel={boarding.risk} />
                 </td>
               </tr>
-            ))}
+            )})}
           </tbody>
         </table>
         <div className="flex-row justify-center padding-top">
-          {/* <SeeLink linkText={t("BUTTONS.SEE_ALL")} /> */}
           <NavLink className="item-link" to={BOARDINGS_PAGE}>
             {t("BUTTONS.SEE_ALL")}
           </NavLink>

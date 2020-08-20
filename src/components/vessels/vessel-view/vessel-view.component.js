@@ -170,7 +170,7 @@ class VesselViewPage extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {crew.map((crewMember, ind) => (
+                        {crew.slice(0,4).map((crewMember, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>{crewMember.name}</td>
                             <td>{crewMember.license}</td>
@@ -246,7 +246,7 @@ class VesselViewPage extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {deliveries.map((delivery, ind) => (
+                        {deliveries.slice(0,4).map((delivery, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>
                               {!!delivery.business && !!delivery.location ? (
