@@ -1,14 +1,18 @@
 import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 import { goToPage } from "./../../../../helpers/get-data";
 
-import { VIEW_BOARDING_PAGE } from "../../../../root/root.constants.js";
+import {
+  VIEW_BOARDING_PAGE,
+  VIOLATIONS_PAGE,
+} from "../../../../root/root.constants.js";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
-const ViolationsOverview = ({ t, violations }) => (
+const ViolationsOverview = ({ t, violationsId, violations }) => (
   <div className="flex-column justify-between full-view box-shadow padding-bottom white-bg margin-top violations-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("TABLE.VIOLATIONS")}</h3>
@@ -42,7 +46,11 @@ const ViolationsOverview = ({ t, violations }) => (
                 <td>{violation.result}</td>
                 <td>{violation.issuedBy}</td>
                 <td>{moment(violation.boarding).format("L")}</td>
-                <td onClick={() => goToPage(VIEW_BOARDING_PAGE, violation.boardingId)}>
+                <td
+                  onClick={() =>
+                    goToPage(VIEW_BOARDING_PAGE, violation.boardingId)
+                  }
+                >
                   <SeeLink
                     linkText={t("BOARDING_PAGE.VIEW_BOARDING.VIEW_BOARDING")}
                   />
@@ -51,7 +59,10 @@ const ViolationsOverview = ({ t, violations }) => (
             ))}
           </tbody>
         </table>
-        <div className="flex-row justify-center padding-top">
+        <div
+          className="flex-row justify-center padding-top"
+          onClick={() => goToPage(VIOLATIONS_PAGE, violationsId)}
+        >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>
       </Fragment>

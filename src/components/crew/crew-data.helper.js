@@ -73,6 +73,11 @@ export default class CrewDataHelper {
         violations.map((violation) => {
           collection.push({
             boardingId: boarding._id,
+            risk: boarding.inspection.summary.safetyLevel.level,
+            vessel:
+              boarding.vessel && boarding.vessel.name
+                ? boarding.vessel.name
+                : boarding.vessel,
             violation: violation.offence ? violation.offence.explanation : "",
             issuedBy: violation.crewMember.name,
             license: violation.crewMember.license,

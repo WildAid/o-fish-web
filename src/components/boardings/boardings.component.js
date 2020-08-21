@@ -348,7 +348,7 @@ class Boardings extends Component {
             )}
           </Fragment>
         ) : loading ? (
-          <LoadingPanel></LoadingPanel>
+          <LoadingPanel/>
         ) : (
           t("WARNINGS.NO_BOARDINGS")
         )}
