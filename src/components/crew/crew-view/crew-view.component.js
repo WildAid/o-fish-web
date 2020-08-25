@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-
-import SeeLink from "../../partials/see-all-link/see-all-link";
+import { NavLink } from "react-router-dom";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -11,6 +10,13 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 
 import CrewDataHelper from "../crew-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
+
+import { goToPage } from "./../../../helpers/get-data";
+
+import {
+  VESSELS_PAGE,
+  VIEW_VESSEL_PAGE,
+} from "../../../root/root.constants.js";
 
 import "./crew-view.css";
 
@@ -96,6 +102,7 @@ class CrewViewPage extends Component {
       notes,
       crewName,
     } = this.state;
+    const { id } = this.props.match.params;
     const { t } = this.props;
 
     return (
@@ -127,7 +134,18 @@ class CrewViewPage extends Component {
                       </thead>
                       <tbody>
                         {vessels.slice(0, 4).map((vessel, ind) => (
-                          <tr key={ind} className="table-row row-body">
+                          <tr
+                            key={ind}
+                            className="table-row row-body"
+                            onClick={() =>
+                              goToPage(
+                                VIEW_VESSEL_PAGE,
+                                vessel.permitNumber
+                                  ? `pn${vessel.permitNumber}`
+                                  : `in${vessel.name}`
+                              )
+                            }
+                          >
                             <td>{vessel.name}</td>
                             <td>{vessel.permitNumber}</td>
                             <td>
@@ -178,7 +196,9 @@ class CrewViewPage extends Component {
                       </tbody>
                     </table>
                     <div className="flex-row justify-center padding-top padding-bottom">
-                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+                      <NavLink className="item-link" to={VESSELS_PAGE}>
+                        {t("BUTTONS.SEE_ALL")}
+                      </NavLink>
                     </div>
                   </Fragment>
                 ) : (
@@ -210,7 +230,7 @@ class CrewViewPage extends Component {
               <BoardingsOverview boardings={boardings} />
             </div>
             <div className="flex-row justify-between standard-view">
-              <ViolationsOverview violations={violations} />
+              <ViolationsOverview violations={violations} violationsId={id}/>
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
               <PhotosOverview photos={photos} />

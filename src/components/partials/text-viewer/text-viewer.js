@@ -24,7 +24,7 @@ const TextViewer = ({ mainText, subText, searchWords, mainTextFirst }) => (
             ? mainText
               ? "Incorrect value"
               : ""
-            : mainText) || []
+            : mainText) || ''
         }
       />
     </div>
