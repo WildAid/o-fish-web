@@ -123,13 +123,13 @@ class AgencyFormData extends Component {
         <div onClick={()=>this.changeCurrentTab("activities")} className={"form-menu-item sub-item" + (activeItem === "activities" ? " active-form-menu-item": "")}>
           Activity
         </div>
-        <div onClick={()=>this.changeCurrentTab("species")} className={"form-menu-item sub-item" + (activeItem === "species" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("fisheries")} className={"form-menu-item sub-item" + (activeItem === "fisheries" ? " active-form-menu-item": "")}>
           Fishery
         </div>
         <div onClick={()=>this.changeCurrentTab("gear")} className={"form-menu-item sub-item" + (activeItem === "gear" ? " active-form-menu-item": "")}>
           Gear
         </div>
-        <div onClick={()=>this.changeCurrentTab("fisheries")} className={"form-menu-item" + (activeItem === "fisheries" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("species")} className={"form-menu-item" + (activeItem === "species" ? " active-form-menu-item": "")}>
           Catch
         </div>
         <div onClick={()=>this.changeCurrentTab("emsTypes")} className={"form-menu-item" + (activeItem === "emsTypes" ? " active-form-menu-item": "")}>
