@@ -233,7 +233,7 @@ class CrewViewPage extends Component {
               <ViolationsOverview violations={violations} violationsId={id}/>
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
-              <PhotosOverview photos={photos} />
+              <PhotosOverview photos={photos} photosId={id}/>
               <NotesOverview notes={notes} />
             </div>
           </Fragment>

@@ -53,9 +53,7 @@ export default class CrewDataHelper {
         risk: boarding.inspection.summary.safetyLevel.level,
         boardedBy:
           boarding.reportingOfficer && boarding.reportingOfficer.name
-            ? boarding.reportingOfficer.name.first +
-              " " +
-              boarding.reportingOfficer.name.last
+            ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
             : "",
       };
     });
@@ -124,7 +122,19 @@ export default class CrewDataHelper {
             !!crewMember.attachments.photoIDs.length
           ) {
             crewMember.attachments.photoIDs.map((photo) => {
-              photos.push({ url: photo, date: boarding.date });
+              photos.push({
+                url: photo,
+                date: boarding.date,
+                risk: boarding.inspection.summary.safetyLevel.level,
+                vessel:
+                  boarding.vessel && boarding.vessel.name
+                    ? boarding.vessel.name
+                    : boarding.vessel,
+                boardedBy:
+                  boarding.reportingOfficer && boarding.reportingOfficer.name
+                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                    : "",
+              });
               return "";
             });
             return "";
