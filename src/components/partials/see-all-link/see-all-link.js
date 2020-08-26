@@ -2,10 +2,8 @@ import React, { memo } from "react";
 
 import "./see-all-link.css";
 
-const SeeAll = () => (
-  <div className="pointer see-all">
-    See All
-  </div>
+const SeeLink = ({ linkText }) => (
+  <div className="pointer see-all">{linkText}</div>
 );
 
-export default memo(SeeAll);
+export default memo(SeeLink);

@@ -19,7 +19,10 @@ import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
 
-import { NEW_BOARDING_PAGE, VIEW_BOARDING_PAGE } from "../../root/root.constants.js";
+import {
+  NEW_BOARDING_PAGE,
+  VIEW_BOARDING_PAGE,
+} from "../../root/root.constants.js";
 
 import "./boardings.css";
 
@@ -345,7 +348,7 @@ class Boardings extends Component {
             )}
           </Fragment>
         ) : loading ? (
-          <LoadingPanel></LoadingPanel>
+          <LoadingPanel/>
         ) : (
           t("WARNINGS.NO_BOARDINGS")
         )}

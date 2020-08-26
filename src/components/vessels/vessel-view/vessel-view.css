@@ -4,12 +4,23 @@
 
 .vessel-view-page table thead td {
     width: 25%;
-    font-weight: 500;
     font-size: 14px;
+}
+
+.vessel-view-page table tbody td {
+    width: 25%;
 }
 
 .vessel-view-page .crew-section {
     width: 65%;
+}
+
+.vessel-view-page .violations-section table thead td  {
+    width: 20%;
+}
+
+.vessel-view-page .violations-section table tbody td  {
+    width: 20%;
 }
 
 .vessel-view-page .crew-section .see-link {
@@ -17,6 +28,7 @@
 }
 
 .vessel-view-page .crew-section .note {
+    width: 30%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -29,10 +41,6 @@
     width: 35px;
     height: max-content;
     padding-right: 5px;
-}
-
-.vessel-view-page .delivery-name {
-    font-size: 18px;
 }
 
 .vessel-view-page .crew-list {

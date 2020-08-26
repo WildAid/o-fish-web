@@ -2,12 +2,6 @@
     margin: 0;
 }
 
-.crew-view-page table thead td {
-    font-weight: 500;
-    font-size: 12px;
-    color: #8b8b8b;
-}
-
 .crew-view-page .sm-photo-icon {
     width: 35px;
     height: max-content;
@@ -20,7 +14,7 @@
 }
 
 .crew-view-page .vessels-section {
-    width: 57%;
+    width: 65%;
 }
 
 .crew-view-page .license-section {

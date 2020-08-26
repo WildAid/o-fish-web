@@ -25,7 +25,7 @@ class VesselSection extends Component {
             <h3>{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
             <TextViewer
               mainText={vessel.name}
-              subText={t("BOARDING_PAGE.VIEW_BOARDING.VESSEL_NAME")}
+              subText={t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}
             />
             <TextViewer
               mainText={vessel.permitNumber}

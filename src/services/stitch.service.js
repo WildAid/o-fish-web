@@ -2,10 +2,9 @@ import {
   Stitch,
   StitchAppClientConfiguration,
   UserPasswordCredential,
-  RemoteMongoClient
+  RemoteMongoClient,
 } from "mongodb-stitch-browser-sdk";
 import { BSON } from "mongodb-stitch-browser-sdk";
-
 
 import config from "../config";
 
@@ -19,39 +18,42 @@ export default class StitchService {
     return StitchService.serviceInstance;
   }
 
-  get chartsConfig(){
+  get chartsConfig() {
     return config.chartsConfig || {};
   }
 
-  get appId(){
+  get appId() {
     return config.realmAppId;
   }
 
   get client() {
-    return this._localStitchClient;//For use the stitch client from another services
+    return this._localStitchClient; //For use the stitch client from another services
   }
 
   get database() {
     if (!this._database) {
       throw new Error("You are not logged in! Please, login first."); //Show correct error, if token expired, or something wrong with Auth.
     }
-    return this._database;//For use the database from another services
+    return this._database; //For use the database from another services
   }
 
   constructor() {
     //Basic stitch client initializing
     if ("realmBaseUrl" in config) {
       //Check if URL is correctly filled
-      const stitchConfig =
-        config.realmBaseUrl ? new StitchAppClientConfiguration({
-          baseUrl: config.realmBaseUrl,
-        }) : new StitchAppClientConfiguration();
+      const stitchConfig = config.realmBaseUrl
+        ? new StitchAppClientConfiguration({
+            baseUrl: config.realmBaseUrl,
+          })
+        : new StitchAppClientConfiguration();
       this._localStitchClient = Stitch.initializeDefaultAppClient(
         config.realmAppId,
         stitchConfig
       );
     } else {
-      this._localStitchClient = Stitch.initializeDefaultAppClient(config.realmAppId);
+      this._localStitchClient = Stitch.initializeDefaultAppClient(
+        config.realmAppId
+      );
     }
     //database object will be available only after stitch authenticated
     this._database = null;
@@ -70,17 +72,27 @@ export default class StitchService {
 
   //After stitch authenticated, you could connect to database
   reinitializeClient() {
-    return this._database = this._localStitchClient
+    return (this._database = this._localStitchClient
       .getServiceClient(RemoteMongoClient.factory, config.realmServiceName)
-      .db(config.database);
+      .db(config.database));
   }
 
   getVesselsWithFacet(limit, offset, search, filter) {
-    return this._localStitchClient.callFunction("searchFacetByVessels", [limit, offset, search, filter]);
+    return this._localStitchClient.callFunction("searchFacetByVessels", [
+      limit,
+      offset,
+      search,
+      filter,
+    ]);
   }
 
   getCrewsWithFacet(limit, offset, search, filter) {
-    return this._localStitchClient.callFunction("searchFacetByCrews", [limit, offset, search, filter]);
+    return this._localStitchClient.callFunction("searchFacetByCrews", [
+      limit,
+      offset,
+      search,
+      filter,
+    ]);
   }
 
   getData(limit, offset, funcName) {
@@ -88,18 +100,22 @@ export default class StitchService {
   }
 
   getPhoto(id) {
-      return this.database.collection("Photo").findOne({_id: new BSON.ObjectId(id)});
+    if (!id) return;
+    
+    return this.database
+      .collection("Photo")
+      .findOne({ _id: new BSON.ObjectId(id) });
   }
 
-  uploadImage(data, agency, recordId){
-    const img =  new BSON.Binary(new Uint8Array(data));
+  uploadImage(data, agency, recordId) {
+    const img = new BSON.Binary(new Uint8Array(data));
     return this.database.collection("Photo").insertOne({
       date: new Date(),
       agency: agency,
       picture: img,
-      referencingReportID: recordId ? recordId: "",
-      pictureURL : "",
-      thumbNail: img
+      referencingReportID: recordId ? recordId : "",
+      pictureURL: "",
+      thumbNail: img,
     });
   }
 }

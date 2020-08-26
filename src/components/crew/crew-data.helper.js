@@ -1,19 +1,18 @@
 import moment from "moment";
 
 export default class CrewDataHelper {
-
-  constructor(permitNumber, boardings){
-      this.permitNumber = permitNumber;
-      this.boardings = boardings;
+  constructor(permitNumber, boardings) {
+    this.permitNumber = permitNumber;
+    this.boardings = boardings;
   }
 
-  getLicenseNumbersByCrewName(crewName){
+  getLicenseNumbersByCrewName(crewName) {
     const collection = {};
     this.boardings.forEach((boarding) => {
-      if (boarding.crew && boarding.crew.length){
-        for (let crew of boarding.crew){
-          if (crew.name == crewName){
-              collection[crew.license] = null
+      if (boarding.crew && boarding.crew.length) {
+        for (let crew of boarding.crew) {
+          if (crew.name === crewName) {
+            collection[crew.license] = null;
           }
         }
       }
@@ -21,45 +20,71 @@ export default class CrewDataHelper {
     return Object.keys(collection);
   }
 
-  getCrewName(license){
+  getCrewName(license) {
+    let name;
     this.boardings.forEach((boarding) => {
-      if (boarding.crew && boarding.crew.length){
-        for (let crew of boarding.crew){
-          if (crew.license == license){
-            return crew.name;
+      if (boarding.crew && boarding.crew.length) {
+        for (let crew of boarding.crew) {
+          if (crew.license === license) {
+            name = crew.name;
           }
         }
       }
     });
-    return null;
+    return name;
   }
 
   getBoardings() {
     return this.boardings.map((boarding) => {
-      const violations = boarding.inspection.summary.violations ? boarding.inspection.summary.violations: [];
+      const violations = boarding.inspection.summary.violations
+        ? boarding.inspection.summary.violations
+        : [];
       return {
-        date: moment(boarding.date).format("MM/DD/yyyy"),
-        time: moment(boarding.date).format("LT"),
-        vessel: boarding.vessel && boarding.vessel.name ? boarding.vessel.name: boarding.vessel,
+        id: boarding._id,
+        date: boarding.date,
+        time: boarding.date,
+        vessel:
+          boarding.vessel && boarding.vessel.name
+            ? boarding.vessel.name
+            : boarding.vessel,
         violations: violations.length,
         citations: violations.length,
         warnings: violations.length,
         risk: boarding.inspection.summary.safetyLevel.level,
-        boardedBy: boarding.reportingOfficer && boarding.reportingOfficer.name ?  boarding.reportingOfficer.name.first + " " + boarding.reportingOfficer.name.last : ""
-      }
+        boardedBy:
+          boarding.reportingOfficer && boarding.reportingOfficer.name
+            ? boarding.reportingOfficer.name.first +
+              " " +
+              boarding.reportingOfficer.name.last
+            : "",
+      };
     });
   }
 
   getViolations() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (boarding.inspection && boarding.inspection.summary && boarding.inspection.summary.violations){
-        const violation = boarding.inspection.summary.violations;
-        collection.push({
-            violation:violation.offence ? violation.offence.explanation : "",
-            vessel: boarding.vessel ? boarding.vessel.name : "",
+      if (
+        boarding.inspection &&
+        boarding.inspection.summary &&
+        boarding.inspection.summary.violations
+      ) {
+        const { violations } = boarding.inspection.summary;
+        violations.map((violation) => {
+          collection.push({
+            boardingId: boarding._id,
+            risk: boarding.inspection.summary.safetyLevel.level,
+            vessel:
+              boarding.vessel && boarding.vessel.name
+                ? boarding.vessel.name
+                : boarding.vessel,
+            violation: violation.offence ? violation.offence.explanation : "",
+            issuedBy: violation.crewMember.name,
+            license: violation.crewMember.license,
             result: violation.disposition,
-            boardingDate: moment( boarding.date).format("MM/DD/yyyy")
+            boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
+          });
+          return "";
         });
       }
     });
@@ -69,47 +94,68 @@ export default class CrewDataHelper {
   getVessels() {
     const collection = [];
     this.boardings.forEach((boarding) => {
-      if (boarding.vessel && !collection.find(c=> c.permitNumber == boarding.vessel.permitNumber)){
-          collection.push({
-            permitNumber : boarding.vessel.permitNumber,
-            name :  boarding.vessel.name,
-            photos: boarding.vessel.attachments ? boarding.vessel.attachments.photoIDs: [],
-            notes: boarding.vessel.attachments ? boarding.vessel.attachments.notes: [],
-          });
+      if (
+        boarding.vessel &&
+        !collection.find((c) => c.permitNumber === boarding.vessel.permitNumber)
+      ) {
+        collection.push({
+          permitNumber: boarding.vessel.permitNumber,
+          name: boarding.vessel.name,
+          photos: boarding.vessel.attachments
+            ? boarding.vessel.attachments.photoIDs
+            : [],
+          notes: boarding.vessel.attachments
+            ? boarding.vessel.attachments.notes
+            : [],
+        });
       }
     });
     return collection;
   }
 
-  getPhotos() {
-      const collection = [];
-      this.boardings.forEach((boarding) => {
-        if (boarding.crew && boarding.crew.length){
-          boarding.crew.forEach((crewMember) => {
-            if (c.name == crewName && c.attachments && c.attachments.photoIDs){
-              collection = collection.concat(c.attachments.photoIDs.map(n => {
-                photo : n
-              }));
-            }
-          });
-        }
-      });
-      return collection;
-  }
-
-    getNotes(crewName) {
-        const collection = [];
-        this.boardings.forEach((boarding) => {
-          if (boarding.crew && boarding.crew.length){
-            boarding.crew.forEach((crewMember) => {
-              if (c.name == crewName && c.attachments && c.attachments.notes){
-                collection = collection.concat(c.attachments.notes.map(n => {
-                  note : n
-                }));
-              }
+  getPhotos(crewLicense) {
+    let photos = [];
+    this.boardings.map((boarding) => {
+      if (boarding.crew && boarding.crew.length) {
+        boarding.crew.forEach((crewMember) => {
+          if (
+            crewLicense === crewMember.license &&
+            !!crewMember.attachments &&
+            !!crewMember.attachments.photoIDs.length
+          ) {
+            crewMember.attachments.photoIDs.map((photo) => {
+              photos.push({ url: photo, date: boarding.date });
+              return "";
             });
+            return "";
           }
         });
-        return collection;
-    }
+      }
+      return "";
+    });
+    return photos;
+  }
+
+  getNotes(crewLicense) {
+    let notes = [];
+    this.boardings.map((boarding) => {
+      if (boarding.crew && boarding.crew.length) {
+        boarding.crew.forEach((crewMember) => {
+          if (
+            crewLicense === crewMember.license &&
+            !!crewMember.attachments &&
+            !!crewMember.attachments.notes.length
+          ) {
+            crewMember.attachments.notes.map((note) => {
+              notes.push({ note: note, date: boarding.date });
+              return "";
+            });
+            return "";
+          }
+        });
+      }
+      return "";
+    });
+    return notes;
+  }
 }
