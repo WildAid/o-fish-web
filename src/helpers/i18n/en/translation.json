@@ -160,7 +160,8 @@
     "BUSINESS": "Business",
     "DELIVERIES": "Deliveries",
     "ISSUED_TO": "Issued To",
-    "CREW_MEMBER": "Crew Member"
+    "CREW_MEMBER": "Crew Member",
+    "PHOTO": "Photo"
   },
   "FILTER": {
     "FROM": "From",
