@@ -225,7 +225,7 @@ class Vessels extends Component {
                           {item.nationality || "N/A"}
                         </div>
                       </td>
-                      <td>{item.homePort || "N/A"}</td>
+                      <td>{item.homePort ? item.homePort.slice(0, 4).join(", ") : "N/A"}</td>
                       <td>
                         <div className="flex-row">
                           <div className="delivery-date">
