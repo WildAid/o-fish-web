@@ -145,7 +145,6 @@ class Crew extends Component {
           const addedCrew = allCrew.find((item) => {
             return (
               item.license === crewMember.captain.license &&
-              item.vessel === crewMember.vessel &&
               item.safetyLevel === crewMember.safetyLevel
             );
           });
@@ -154,11 +153,14 @@ class Crew extends Component {
             if (addedCrew.date < crewMember.date) {
               addedCrew.date = crewMember.date;
             }
+            if (addedCrew.vessels.indexOf(crewMember.vessel) < 0){
+              addedCrew.vessels.push(crewMember.vessel)
+            }
           } else {
             allCrew.push({
               name: crewMember.captain.name,
               rank: "captain",
-              vessel: crewMember.vessel,
+              vessels: [crewMember.vessel],
               license: crewMember.captain.license,
               violations: crewMember.violations,
               date: crewMember.date,
@@ -170,7 +172,6 @@ class Crew extends Component {
             const addedCrew = allCrew.find((item) => {
               return (
                 item.license === member.license &&
-                item.vessel === crewMember.vessel &&
                 item.safetyLevel === crewMember.safetyLevel
               );
             });
@@ -182,7 +183,6 @@ class Crew extends Component {
             }).value;
             if (
               member.name.includes(foundMatch) ||
-              crewMember.vessel.includes(foundMatch) ||
               member.license.includes(foundMatch)
             ) {
               if (addedCrew) {
@@ -190,11 +190,14 @@ class Crew extends Component {
                 if (addedCrew.date < crewMember.date) {
                   addedCrew.date = crewMember.date;
                 }
+                if (addedCrew.vessels.indexOf(crewMember.vessel) < 0){
+                  addedCrew.vessels.push(crewMember.vessel)
+                }
               } else {
                 allCrew.push({
                   name: member.name,
                   rank: "crew",
-                  vessel: crewMember.vessel,
+                  vessels: [crewMember.vessel],
                   license: member.license,
                   violations: crewMember.violations,
                   date: crewMember.date,
@@ -207,9 +210,7 @@ class Crew extends Component {
       });
     });
     return allCrew.sort(
-      (a, b) =>
-        (a.name === b.name ? 0 : a.name < b.name ? -1 : 1) +
-        (a.vessel === b.vessel ? 0 : a.vessel < b.vessel ? -1 : 1) / 10
+      (a, b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1
     );
   }
 
@@ -331,12 +332,7 @@ class Crew extends Component {
                         />
                       </td>
                       <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.vessel}
-                        />
+                        {item.vessels.slice(0, 4).join(", ")}
                       </td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
