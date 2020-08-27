@@ -10,6 +10,7 @@ export const FORMS_PAGE = "/forms";
 export const PROFILE_PAGE = "/profile";
 export const VIOLATIONS_PAGE = "/violations/:id";
 export const PHOTOS_PAGE = "/photos/:id";
+export const NOTES_PAGE = "/notes/:id";
 export const SEARCH_RESULTS_PAGE = "/search_results";
 export const RESTORE_PASSWORD_PAGE = "/restore_password";
 

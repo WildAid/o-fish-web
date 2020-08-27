@@ -12,7 +12,7 @@ import OverviewService from "./../../services/overview.service";
 
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
-import './photos.css';
+import "./notes.css";
 
 const overviewService = OverviewService.getInstance();
 
@@ -84,9 +84,9 @@ const filterConfiguration = {
   ],
 };
 
-class PhotosPage extends Component {
+class NotesPage extends Component {
   state = {
-    photos: [],
+    notes: [],
     loading: false,
   };
 
@@ -106,7 +106,7 @@ class PhotosPage extends Component {
 
             const newState = {
               loading: false,
-              photos: dataHelper.getPhotos(licenseNumber),
+              notes: dataHelper.getNotes(licenseNumber),
             };
             this.setState(newState);
           })
@@ -125,7 +125,7 @@ class PhotosPage extends Component {
 
           const newState = {
             loading: false,
-            photos: dataHelper.getPhotos(),
+            notes: dataHelper.getNotes(),
           };
           this.setState(newState);
         })
@@ -136,21 +136,21 @@ class PhotosPage extends Component {
   }
 
   render() {
-    const { photos, loading } = this.state;
+    const { notes, loading } = this.state;
     const { t } = this.props;
 
     return (
-      <div className="flex-column justify-center align-center padding-bottom photos-overview">
+      <div className="flex-column justify-center align-center padding-bottom notes-overview">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
                 <div className="item-label margin-top">
-                  {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+                  {t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
                 </div>
-                <div className="item-name">{`${photos.length} ${t(
-                  "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
+                <div className="item-name">{`${notes.length} ${t(
+                  "BOARDING_PAGE.VIEW_BOARDING.NOTES"
                 )}`}</div>
               </div>
             </div>
@@ -167,7 +167,7 @@ class PhotosPage extends Component {
               <table className="full-view">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.PHOTO")}</td>
+                    <td>{t("TABLE.NOTE")}</td>
                     <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
                     <td></td>
                     <td>{t("TABLE.VESSEL")}</td>
@@ -175,24 +175,15 @@ class PhotosPage extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {photos.map((photo, ind) => (
+                  {notes.map((note, ind) => (
                     <tr key={ind} className="table-row row-body">
+                      <td>{note.note}</td>
+                      <td>{moment(note.date).format("L")}</td>
                       <td>
-                        {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
-                        <div className="photo-icon">
-                          <img
-                            className="icon"
-                            src={require("../../assets/photo-big-icon.png")}
-                            alt="no logo"
-                          />
-                        </div>
+                        <RiskIcon safetyLevel={note.risk} />
                       </td>
-                      <td>{moment(photo.date).format("LLL")}</td>
-                      <td>
-                        <RiskIcon safetyLevel={photo.risk} />
-                      </td>
-                      <td>{photo.vessel}</td>
-                      <td>{photo.boardedBy}</td>
+                      <td>{note.vessel}</td>
+                      <td>{note.boardedBy}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -207,4 +198,4 @@ class PhotosPage extends Component {
   }
 }
 
-export default withTranslation("translation")(PhotosPage);
+export default withTranslation("translation")(NotesPage);

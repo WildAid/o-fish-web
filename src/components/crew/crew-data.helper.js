@@ -34,6 +34,16 @@ export default class CrewDataHelper {
     return name;
   }
 
+  getCaptainName(item) {
+    let captainName;
+    this.boardings.forEach((boarding) => {
+      if (boarding.captain.license === item || boarding.captain.name === item) {
+        captainName = boarding.captain.name;
+      }
+    });
+    return captainName;
+  }
+
   getBoardings() {
     return this.boardings.map((boarding) => {
       const violations = boarding.inspection.summary.violations
@@ -157,7 +167,19 @@ export default class CrewDataHelper {
             !!crewMember.attachments.notes.length
           ) {
             crewMember.attachments.notes.map((note) => {
-              notes.push({ note: note, date: boarding.date });
+              notes.push({
+                note: note,
+                date: boarding.date,
+                risk: boarding.inspection.summary.safetyLevel.level,
+                vessel:
+                  boarding.vessel && boarding.vessel.name
+                    ? boarding.vessel.name
+                    : boarding.vessel,
+                boardedBy:
+                  boarding.reportingOfficer && boarding.reportingOfficer.name
+                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                    : "",
+              });
               return "";
             });
             return "";

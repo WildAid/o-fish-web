@@ -33,6 +33,7 @@ class CrewViewPage extends Component {
     boardings: [],
     violations: [],
     crewName: "N/A",
+    captainName: "",
   };
 
   componentDidMount() {
@@ -55,6 +56,7 @@ class CrewViewPage extends Component {
               violations: dataHelper.getViolations(),
               licenseNumbers: [licenseNumber],
               vessels: dataHelper.getVessels(),
+              captainName: dataHelper.getCaptainName(licenseNumber),
               crewName: dataHelper.getCrewName(licenseNumber),
               notes: dataHelper.getNotes(licenseNumber),
               photos: dataHelper.getPhotos(licenseNumber),
@@ -80,6 +82,7 @@ class CrewViewPage extends Component {
             violations: dataHelper.getViolations(),
             vessels: dataHelper.getVessels(),
             crewName: itemName,
+            captainName: dataHelper.getCaptainName(itemName),
             notes: dataHelper.getNotes(itemName),
             photos: dataHelper.getPhotos(itemName),
           };
@@ -101,6 +104,7 @@ class CrewViewPage extends Component {
       photos,
       notes,
       crewName,
+      captainName,
     } = this.state;
     const { id } = this.props.match.params;
     const { t } = this.props;
@@ -230,11 +234,29 @@ class CrewViewPage extends Component {
               <BoardingsOverview boardings={boardings} />
             </div>
             <div className="flex-row justify-between standard-view">
-              <ViolationsOverview violations={violations} violationsId={id}/>
+              <ViolationsOverview
+                violations={violations}
+                violationsId={id}
+                captainName={captainName}
+                crewName={crewName}
+                licenseNumber={licenseNumbers[0] || ''}
+              />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
-              <PhotosOverview photos={photos} photosId={id}/>
-              <NotesOverview notes={notes} />
+              <PhotosOverview
+                photos={photos}
+                photosId={id}
+                captainName={captainName}
+                crewName={crewName}
+                licenseNumber={licenseNumbers[0]}
+              />
+              <NotesOverview
+                notes={notes}
+                notesId={id}
+                captainName={captainName}
+                crewName={crewName}
+                licenseNumber={licenseNumbers[0] || ''}
+              />
             </div>
           </Fragment>
         ) : (
