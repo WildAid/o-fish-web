@@ -1,7 +1,6 @@
 import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
-import { NavLink } from "react-router-dom";
 
 import { goToPage } from "./../../../../helpers/get-data";
 
