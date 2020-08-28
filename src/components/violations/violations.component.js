@@ -86,12 +86,15 @@ class ViolationsPage extends Component {
   state = {
     violations: [],
     loading: false,
+    defaultFilter: null
   };
 
   componentDidMount() {
     const { id } = this.props.match.params;
 
     if (!id) return;
+
+    //this.setState({defaultFilter: filter});
 
     if (id.indexOf("ln") === 0) {
       this.setState({ loading: true }, () => {

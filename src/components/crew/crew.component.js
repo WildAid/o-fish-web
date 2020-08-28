@@ -107,6 +107,7 @@ class Crew extends Component {
     highlighted: [],
     loading: false,
     currentFilter: null,
+    defaultFilter: null,
     page: 1,
   };
 
@@ -114,7 +115,6 @@ class Crew extends Component {
     if (searchService.searchResults && searchService.searchResults.query) {
       searchService.searchResults.query = value;
     }
-
     this.loadData({ searchQuery: value, offset: 0 });
   };
 
@@ -134,7 +134,27 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    this.loadData();
+    let {filter} = this.props; //Or from other place
+    const start = moment().subtract(1, 'month').startOf('day').toDate();
+    const end =  moment().endOf('day').toDate();
+    filter = [{
+      name: "date-from",
+      title: "Date from",
+      type: "date",
+      value: start
+    },
+    {
+      name: "date-to",
+      title: "Date To",
+      type: "date",
+      value: end
+    }];
+    if (filter){
+      this.setState({defaultFilter: filter});
+      //The loadData will be called automatically from filter-panel
+    } else {
+      this.loadData();
+    }
   }
 
   prepareSearchResultData(data) {
@@ -250,6 +270,7 @@ class Crew extends Component {
       loading,
       highlighted,
       searchQuery,
+      defaultFilter,
       page,
     } = this.state;
 
@@ -273,6 +294,7 @@ class Crew extends Component {
           )}
           <FilterPanel
             options={{ searchByFilter: true }}
+            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />

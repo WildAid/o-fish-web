@@ -69,13 +69,39 @@ const filterConfiguration = {
   ],
   "Vessel Information": [
     {
-      name: "vessel.permitNumber",
+      name: "permitNumber",
+      field: "vessel.permitNumber",
       title: "Permit Number",
       type: "string-equal",
     },
     {
-      name: "vessel.nationality",
+      name: "nationality",
+      field: "vessel.nationality",
       title: "Nationality",
+    },
+  ],
+  "Crews": [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.lastName",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
     },
   ],
 };
@@ -94,6 +120,7 @@ class Vessels extends Component {
     highlighted: [],
     currentFilter: null,
     loading: false,
+    defaultFilter: null,
     page: 1,
   };
 
@@ -146,7 +173,14 @@ class Vessels extends Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    const {filter} = this.props; //Or from other place
+
+    if (filter){
+      this.setState({defaultFilter: filter});
+      //The loadData will be called automatically from filter-panel
+    } else {
+      this.loadData();
+    }
   }
 
   render() {
@@ -158,6 +192,7 @@ class Vessels extends Component {
       highlighted,
       searchQuery,
       page,
+      defaultFilter
     } = this.state;
 
     const { t } = this.props;
@@ -181,6 +216,7 @@ class Vessels extends Component {
           <FilterPanel
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
+            filter={defaultFilter}
             onFilterChanged={this.handleFilterChanged}
           />
         </div>
