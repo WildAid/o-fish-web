@@ -49,8 +49,9 @@ class UserEditor extends Component {
   };
 
   saveUser = (values) => {
-    const { userId, newPassword } = this.props;
+    const { userId } = this.props;
     const { imgData, user } = this.state;
+
     let newUser = {
       email: values.email,
       name: {
@@ -100,7 +101,7 @@ class UserEditor extends Component {
         });
       } else {
         userService
-        .createUser(newPassword ? values.password : values.email, newUser)
+        .createUser(values.password ? values.password : values.email, newUser)
         .then((user) => {
           if (this.props.onSave){
             this.props.onSave(user);
