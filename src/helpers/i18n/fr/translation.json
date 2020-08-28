@@ -6,234 +6,234 @@
     "PASSWORD": "Mot de passe"
   },
   "NAVIGATION": {
-    "DASHBOARD": "Tableau de bord",
-    "BOARDING_RECORDS": "Rapports d'inspection",
+    "DASHBOARD": "Tableau de Bord",
+    "BOARDING_RECORDS": "Rapports d'Inspection",
     "USERS": "Utilisateurs",
     "AGENCIES": "Agences",
-    "GLOBAL_DASHBOARD": "Tableau de bord mondial",
+    "GLOBAL_DASHBOARD": "Tableau de Bord Mondial",
     "BOARDINGS": "Inspections",
-    "VESSELS": "Vessels",
-    "CREW": "Crew",
-    "ALL_USERS": "All Users",
-    "CREATE_NEW_USER": "Create New User",
-    "ALL_AGENCIES": "All Agencies",
-    "CREATE_NEW_AGENCY": "Create New Agency",
-    "ACCOUNT": "My Account",
-    "LOG_OUT": "Log out"
+    "VESSELS": "Vaisseaux",
+    "CREW": "Equipage",
+    "ALL_USERS": "Tous Utilisateurs",
+    "CREATE_NEW_USER": "Créer Nouvel Utilisateur",
+    "ALL_AGENCIES": "Toutes Agences",
+    "CREATE_NEW_AGENCY": "Créer Nouvelle Agence",
+    "ACCOUNT": "Mon Compte",
+    "LOG_OUT": "Déconnexion"
   },
   "HOME_PAGE": {
-    "DASHBOARD": "Dashboard",
-    "OVERVIEW": "Overview for",
-    "COMPLIANCE_RATE": "Compliance Rate",
-    "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
+    "DASHBOARD": "Tableau de Bord",
+    "OVERVIEW": "Aperçu pour",
+    "COMPLIANCE_RATE": "Taux de Conformité",
+    "OFFICER_PATROL_HOURS": "Heures de Patrouille"
   },
   "CREATE_AGENCY_PAGE": {
-    "NEW_AGENCY": "New Agency",
+    "NEW_AGENCY": "Nouvelle Agence",
     "EMAIL": "E-mail",
     "SITE": "Site"
   },
   "CREATE_USER_PAGE": {
-    "USER": "User",
-    "NEW_USER": "New User",
-    "FIRST_NAME": "First Name",
-    "LAST_NAME": "Last Name",
-    "ROLE": "Role",
-    "USER_GROUP": "User Group",
-    "ACTIVE": "Active",
-    "INACTIVE": "Inactive",
+    "USER": "Utilisateur",
+    "NEW_USER": "Nouvel Utilisateur",
+    "FIRST_NAME": "Prénom",
+    "LAST_NAME": "Nom de Famille",
+    "ROLE": "Fonction",
+    "USER_GROUP": "Groupe",
+    "ACTIVE": "Actif",
+    "INACTIVE": "Inactif",
     "PERMISSIONS": "Permissions",
-    "PROFILE_INFO": "Profile information",
-    "SETTINGS": "Settings"
+    "PROFILE_INFO": "Information de Profil",
+    "SETTINGS": "Réglages"
   },
   "VESSEL_OVERVIEW_PAGE": {
     
   },
   "BOARDING_PAGE": {
-    "RECORDS_FOUND": "Records Found",
-    "MAP": "Map",
-    "ALL_DATES": "All dates",
+    "RECORDS_FOUND": "Rapports Trouvés",
+    "MAP": "Carte",
+    "ALL_DATES": "Toutes les dates",
     "VIEW_BOARDING": {
-      "VIEW_BOARDING": "View Boarding",
-      "BOARDING": "Boarding",
-      "LAST_MODIFIED": "Last Modified on",
-      "LATTITUDE": "Lattitude",
-      "LONGTITUDE": "Longtitude",
-      "STATUS": "Vessel Name",
-      "DELIVERY_DATE": "Last Date of delivery",
-      "LICENSE_NUMBER": "License Number",
+      "VIEW_BOARDING": "Voir Inspection",
+      "BOARDING": "Inspection",
+      "LAST_MODIFIED": "Dernière Modification le ",
+      "LATTITUDE": "Latitude",
+      "LONGTITUDE": "Longitude",
+      "STATUS": "Nom du Vaisseau",
+      "DELIVERY_DATE": "Dernière Date de Livraison",
+      "LICENSE_NUMBER": "Numéro de Brevet",
       "PHOTOS": "Photos",
-      "NOTES": "Notes",
-      "ACTIVITY": "Activity",
-      "FISHERY": "Fishery",
-      "GEAR": "Gear"
+      "NOTES": "Remarques",
+      "ACTIVITY": "Activité",
+      "FISHERY": "Pêcherie",
+      "GEAR": "Equipement"
     },
     "EDIT_BOARDING": {
-      "BASIC_INFO": "Basic Information",
-      "INLINE_DATE_PICKER": "Date picker inline",
-      "TIME_PICKER": "Time picker",
-      "ELECTRONIC_INFO": "Electronic Monitoring Information",
+      "BASIC_INFO": "Information de Base",
+      "INLINE_DATE_PICKER": "Saisir la date",
+      "TIME_PICKER": "Saisir l'heure",
+      "ELECTRONIC_INFO": "Surveillance Electronique",
       "TYPE": "Type",
-      "REGISTRY_NUMBER": "Registry Number",
-      "SEIZURES": "Seizures"
+      "REGISTRY_NUMBER": "Numéro de Registre",
+      "SEIZURES": "Saisies"
     },
     "VERSION_CONTROL": {
-      "REVISION_HISTORY": "Revision History",
-      "AMOUNT": "Amount"
+      "REVISION_HISTORY": "Historique des Révisions",
+      "AMOUNT": "Nombre"
     }
   },
   "AGENCY_PAGE": {
-    "FORM_DATA": "Form Data",
-    "PREFERED_NATIONALITIES": "Prefered Nationatities"
+    "FORM_DATA": "Informations",
+    "PREFERED_NATIONALITIES": "Nationatités préférées"
   },
   "USERS_PAGE": {
-    "SEE_ACTIVITY": "See Activity"
+    "SEE_ACTIVITY": "Voir Activité"
   },
   "PROFILE_PAGE": {
-    "EDIT_USER": "Edit User"
+    "EDIT_USER": "Modifier Utilisateur"
   },
   "SEARCH": {
-    "FILTER_SEARCH": "Search",
-    "ALL": "All",
-    "REPORTS": "Reports",
-    "CREW_MEMBERS": "Crew Members",
-    "SEE_RESULTS": "See all results for",
-    "SEARCH_RESULTS": "Search Results for",
-    "RECORDS_OF_VESSELS": "Records of Vessels",
-    "CAPTAINS_AND_CREW": "Captains & Crew",
-    "CATCHES": "Catches",
-    "SEE_ALL_RESULTS": "See all results for '{{searchQuery}}'"
+    "FILTER_SEARCH": "Recherche",
+    "ALL": "Tous",
+    "REPORTS": "Rapports",
+    "CREW_MEMBERS": "Membres d'équipage",
+    "SEE_RESULTS": "Voir tous les résultats pour",
+    "SEARCH_RESULTS": "Voir les résultats pour",
+    "RECORDS_OF_VESSELS": "Vaisseaux enregistrés",
+    "CAPTAINS_AND_CREW": "Capitaine & Equipage",
+    "CATCHES": "Prises",
+    "SEE_ALL_RESULTS": "Voir tous les résultats pour '{{searchQuery}}'"
   },
   "LOADING": {
-    "LOGGIN_IN": "Logging in...",
-    "LOADING": "Loading..."
+    "LOGGIN_IN": "Connexion en cours",
+    "LOADING": "Chargement en cours"
   },
   "BUTTONS": {
-    "ADD": "Add",
-    "ADD_ITEMS": "Add items",
-    "APPLY": "Apply",
-    "CLOSE": "Close",
-    "CANCEL": "Cancel",
-    "EDIT": "Edit",
-    "SAVE": "Save",
-    "DELETE": "delete",
-    "SEARCH": "Search",
-    "CHANGE_PASSWORD": "Change Password",
-    "NEW_BOARDING": "New Boarding",
-    "SEE_ACTIVITY": "See Activity",
-    "SEE_ALL": "See all",
-    "SEE_FULL_NOTE": "See full note",
-    "SEE_MORE": "See {{item}} more",
-    "EDIT_BOARDING": "Edit Boarding",
-    "SAVE_BOARDING": "Save Boarding",
-    "EDIT_AGENCY": "Edit Agency Information",
-    "ADD_SPECIES": "Add species",
-    "ADD_CREW": "Add crew member",
-    "ADD_CUTCH": "Add catch",
-    "CREATE_REPORT": "Create Activity Report",
-    "CREATE_USER": "Create User",
-    "UPDATE_USER": "Update User"
+    "ADD": "Ajouter",
+    "ADD_ITEMS": "Ajouter",
+    "APPLY": "Appliquer",
+    "CLOSE": "Fermer",
+    "CANCEL": "Annuler",
+    "EDIT": "Modifier",
+    "SAVE": "Sauvegarder",
+    "DELETE": "Effacer",
+    "SEARCH": "Recherche",
+    "CHANGE_PASSWORD": "Changer de Mot de Passe",
+    "NEW_BOARDING": "Nouvelle Inspection",
+    "SEE_ACTIVITY": "Voir Activité",
+    "SEE_ALL": "Tout Voir",
+    "SEE_FULL_NOTE": "Voir la Note complète",
+    "SEE_MORE": "Voir plus sur {{item}}",
+    "EDIT_BOARDING": "Modifier l'Inspection",
+    "SAVE_BOARDING": "Sauvegarder l'Inspection",
+    "EDIT_AGENCY": "Modifier Données sur l'Agence",
+    "ADD_SPECIES": "Ajouter une Espèce",
+    "ADD_CREW": "Ajouter un membre d'équipage",
+    "ADD_CUTCH": "Ajouter une Saisie",
+    "CREATE_REPORT": "Créer un Rapport d'Activité",
+    "CREATE_USER": "Créer un Utilisateur",
+    "UPDATE_USER": "Mise à Jour de l'Utilisateur"
   },
   "TABLE": {
     "DATE": "Date",
-    "TIME": "Time",
-    "VESSEL": "Vessel",
-    "PERMIT_NUMBER": "Permit Number",
-    "CAPTAIN": "Captain",
-    "VIOLATIONS": "Violations",
-    "BOARDED_BY": "Boarded By",
-    "HOME_PORT": "Home Port",
-    "LAST_BOARDED": "Last Boarded",
-    "RISK": "Risk",
-    "LICENSE_NUMBER": "License number",
-    "AGENCY": "Agency",
-    "NAME": "Name",
-    "USER_TYPE": "User Type",
-    "CREATED_ON": "Created On",
-    "STATUS": "Status",
+    "TIME": "Heure",
+    "VESSEL": "Vaisseau",
+    "PERMIT_NUMBER": "Numéro de Permis",
+    "CAPTAIN": "Capitaine",
+    "VIOLATIONS": "Infractions",
+    "BOARDED_BY": "Inspecté par",
+    "HOME_PORT": "Port de Rattachement",
+    "LAST_BOARDED": "Inspecté dernièrement par",
+    "RISK": "Risque",
+    "LICENSE_NUMBER": "Numéro de Brevet",
+    "AGENCY": "Agence",
+    "NAME": "Nom",
+    "USER_TYPE": "Type d'Utilisateur",
+    "CREATED_ON": "Créé le",
+    "STATUS": "Statut",
     "DESCRIPTION": "Description",
-    "OFFICERS": "Officers",
-    "CITATIONS": "Citations",
-    "WARNINGS": "Warnings",
-    "VIOLATION": "Violation",
-    "RESULT": "Result",
-    "NOTE": "Note",
-    "BUSINESS": "Business",
-    "DELIVERIES": "Deliveries",
-    "ISSUED_TO": "Issued To",
-    "CREW_MEMBER": "Crew Member"
+    "OFFICERS": "Agents",
+    "CITATIONS": "Procès-Verbaux",
+    "WARNINGS": "Avertissements",
+    "VIOLATION": "Infraction",
+    "RESULT": "Conséquence",
+    "NOTE": "Remarque",
+    "BUSINESS": "Entreprise",
+    "DELIVERIES": "Livraisons",
+    "ISSUED_TO": "Remis à",
+    "CREW_MEMBER": "Membre d'Equipage"
   },
   "FILTER": {
-    "FROM": "From",
-    "TO": "to",
-    "FILTER": "Filter",
+    "FROM": "A partir de",
+    "TO": "à",
+    "FILTER": "Filtre",
     "MAIN": {
       "RISK": {
-        "RED": "Red",
-        "GREEN": "Green",
-        "AMBER": "Amber"
+        "RED": "Rouge",
+        "GREEN": "Vert",
+        "AMBER": "Ambre"
       },
       "BOARDING_INFO": {
-        "NAME": "Boarding Information",
-        "DATE_FROM": "Date from",
-        "DATE_TO": "Date to",
-        "LOCATION": "Location"
+        "NAME": "Inspection",
+        "DATE_FROM": "A partir de (Date)",
+        "DATE_TO": "Jusqu'à (Date)",
+        "LOCATION": "Localisation"
       },
       "VESSEL_INFO": {
-        "NAME": "Vessel Information",
-        "NATIONALITY": "Nationality"
+        "NAME": "Vaisseau",
+        "NATIONALITY": "Nationalité"
       },
       "LAST_DELIVERY": {
-        "NAME": "Last Delivery",
-        "BUSINESS": "Business"
+        "NAME": "Dernière Livraison",
+        "BUSINESS": "Entreprise"
       },
       "CATCH": {
-        "NAME": "Catch",
-        "SPECIES": "Species",
-        "WEIGHT": "Weight",
-        "COUNT": "Count",
-        "UNITS": "Units"
+        "NAME": "Prise",
+        "SPECIES": "Espèce",
+        "WEIGHT": "Poids",
+        "COUNT": "Quantité",
+        "UNITS": "Unités"
       },
       "RISKS": {
-        "NAME": "Risks"
+        "NAME": "Risques"
       }
     },
     "DATES_RANGE":{
-      "RANGE": "Date Range",
-      "LAST7DAYS": "Last 7 days",
-      "LAST30DAYS": "Last 30 days",
-      "LAST60DAYS": "Last 60 days",
-      "LAST90DAYS": "Last 90 days",
-      "TODAY": "Today",
-      "YESTERDAY": "Yesterday",
-      "CUSTOM": "Custom date range"
+      "RANGE": "Plage de Dates",
+      "LAST7DAYS": "7 derniers jours",
+      "LAST30DAYS": "30 derniers jours",
+      "LAST60DAYS": "60 derniers jours",
+      "LAST90DAYS": "90 derniers jours",
+      "TODAY": "Aujourd'hui",
+      "YESTERDAY": "Hier",
+      "CUSTOM": "Plage de Dates"
     },
     "HOME_PAGE": {
-      "DATE_TIME": "Date & Time"
+      "DATE_TIME": "Date & Heure"
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Species",
-    "FISHERIES" : "Fisheries",
-    "CATCHES" : "Catches",
-    "ACTIVITIES" : "Activities",
-    "GEAR" : "Gear",
-    "ADD_SPECIE" : "Add specie",
-    "ADD_ANOTHER" : "Add another"
+    "SPECIES" : "Espèce",
+    "FISHERIES" : "Pêcheries",
+    "CATCHES" : "Prises",
+    "ACTIVITIES" : "Activités",
+    "GEAR" : "Equipement",
+    "ADD_SPECIE" : "Ajouter une espèce",
+    "ADD_ANOTHER" : "Ajouter unne autre"
   },
   "WARNINGS": {
-    "NOT_AUTHENTICATED": "Not authenticated",
-    "NO_BOARDINGS": "No boardings found",
-    "NO_AGENCIES": "No agencies found",
-    "NO_OFFICERS":"No officers found",
-    "NO_CATCHES": "No catches found",
-    "NO_VESSELS": "No vessels found",
-    "NO_CREW": "No crew members found",
-    "NO_USERS": "No users found",
-    "NO_PERMIT_NUMBER": "No permit number found",
-    "NO_DELIVERIES": "No deliveries found",
-    "NO_VIOLATIONS": "No violations found",
-    "NO_PHOTOS": "No photos found",
-    "NO_NOTES": "No notes found",
-    "NO_LICENSE": "No license number found"
+    "NOT_AUTHENTICATED": "Non-authentifié",
+    "NO_BOARDINGS": "Pas d'Inspections trouvées",
+    "NO_AGENCIES": "Pas d'Agences trouvées",
+    "NO_OFFICERS":"Pas d'Agents trouvée",
+    "NO_CATCHES": "Pas de Prises trouvées",
+    "NO_VESSELS": "Pas de Vaisseaux trouvés",
+    "NO_CREW": "Pas d'Equipage trouvé",
+    "NO_USERS": "Pas d'Utilisateurs trouvés",
+    "NO_PERMIT_NUMBER": "Pas de numéros de permis trouvés",
+    "NO_DELIVERIES": "Pas de Livraisons trouvées",
+    "NO_VIOLATIONS": "Pas d'Infractions trouvées",
+    "NO_PHOTOS": "Pas de Photos trouvées",
+    "NO_NOTES": "Pas de Remarques trouvées",
+    "NO_LICENSE": "Pas de numéros de brevet trouvés"
   }
 }
