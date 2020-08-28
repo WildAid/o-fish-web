@@ -101,7 +101,7 @@ class UserEditor extends Component {
         });
       } else {
         userService
-        .createUser(values.password ? values.password : values.email, newUser)
+        .createUser(values.password, newUser)
         .then((user) => {
           if (this.props.onSave){
             this.props.onSave(user);
