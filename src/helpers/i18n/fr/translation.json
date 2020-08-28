@@ -1,0 +1,239 @@
+{
+  "LOGIN_PAGE": {
+    "LOGIN": "Connexion",
+    "FORGOT_PASSWORD": "Mot de passe oublié?",
+    "EMAIL_USERNAME": "Email/Identifiant",
+    "PASSWORD": "Mot de passe"
+  },
+  "NAVIGATION": {
+    "DASHBOARD": "Tableau de bord",
+    "BOARDING_RECORDS": "Boarding records",
+    "USERS": "Users",
+    "AGENCIES": "Agencies",
+    "GLOBAL_DASHBOARD": "Global Dashboard",
+    "BOARDINGS": "Boardings",
+    "VESSELS": "Vessels",
+    "CREW": "Crew",
+    "ALL_USERS": "All Users",
+    "CREATE_NEW_USER": "Create New User",
+    "ALL_AGENCIES": "All Agencies",
+    "CREATE_NEW_AGENCY": "Create New Agency",
+    "ACCOUNT": "My Account",
+    "LOG_OUT": "Log out"
+  },
+  "HOME_PAGE": {
+    "DASHBOARD": "Dashboard",
+    "OVERVIEW": "Overview for",
+    "COMPLIANCE_RATE": "Compliance Rate",
+    "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
+  },
+  "CREATE_AGENCY_PAGE": {
+    "NEW_AGENCY": "New Agency",
+    "EMAIL": "E-mail",
+    "SITE": "Site"
+  },
+  "CREATE_USER_PAGE": {
+    "USER": "User",
+    "NEW_USER": "New User",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "ROLE": "Role",
+    "USER_GROUP": "User Group",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "PERMISSIONS": "Permissions",
+    "PROFILE_INFO": "Profile information",
+    "SETTINGS": "Settings"
+  },
+  "VESSEL_OVERVIEW_PAGE": {
+    
+  },
+  "BOARDING_PAGE": {
+    "RECORDS_FOUND": "Records Found",
+    "MAP": "Map",
+    "ALL_DATES": "All dates",
+    "VIEW_BOARDING": {
+      "VIEW_BOARDING": "View Boarding",
+      "BOARDING": "Boarding",
+      "LAST_MODIFIED": "Last Modified on",
+      "LATTITUDE": "Lattitude",
+      "LONGTITUDE": "Longtitude",
+      "STATUS": "Vessel Name",
+      "DELIVERY_DATE": "Last Date of delivery",
+      "LICENSE_NUMBER": "License Number",
+      "PHOTOS": "Photos",
+      "NOTES": "Notes",
+      "ACTIVITY": "Activity",
+      "FISHERY": "Fishery",
+      "GEAR": "Gear"
+    },
+    "EDIT_BOARDING": {
+      "BASIC_INFO": "Basic Information",
+      "INLINE_DATE_PICKER": "Date picker inline",
+      "TIME_PICKER": "Time picker",
+      "ELECTRONIC_INFO": "Electronic Monitoring Information",
+      "TYPE": "Type",
+      "REGISTRY_NUMBER": "Registry Number",
+      "SEIZURES": "Seizures"
+    },
+    "VERSION_CONTROL": {
+      "REVISION_HISTORY": "Revision History",
+      "AMOUNT": "Amount"
+    }
+  },
+  "AGENCY_PAGE": {
+    "FORM_DATA": "Form Data",
+    "PREFERED_NATIONALITIES": "Prefered Nationatities"
+  },
+  "USERS_PAGE": {
+    "SEE_ACTIVITY": "See Activity"
+  },
+  "PROFILE_PAGE": {
+    "EDIT_USER": "Edit User"
+  },
+  "SEARCH": {
+    "FILTER_SEARCH": "Search",
+    "ALL": "All",
+    "REPORTS": "Reports",
+    "CREW_MEMBERS": "Crew Members",
+    "SEE_RESULTS": "See all results for",
+    "SEARCH_RESULTS": "Search Results for",
+    "RECORDS_OF_VESSELS": "Records of Vessels",
+    "CAPTAINS_AND_CREW": "Captains & Crew",
+    "CATCHES": "Catches",
+    "SEE_ALL_RESULTS": "See all results for '{{searchQuery}}'"
+  },
+  "LOADING": {
+    "LOGGIN_IN": "Logging in...",
+    "LOADING": "Loading..."
+  },
+  "BUTTONS": {
+    "ADD": "Add",
+    "ADD_ITEMS": "Add items",
+    "APPLY": "Apply",
+    "CLOSE": "Close",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "DELETE": "delete",
+    "SEARCH": "Search",
+    "CHANGE_PASSWORD": "Change Password",
+    "NEW_BOARDING": "New Boarding",
+    "SEE_ACTIVITY": "See Activity",
+    "SEE_ALL": "See all",
+    "SEE_FULL_NOTE": "See full note",
+    "SEE_MORE": "See {{item}} more",
+    "EDIT_BOARDING": "Edit Boarding",
+    "SAVE_BOARDING": "Save Boarding",
+    "EDIT_AGENCY": "Edit Agency Information",
+    "ADD_SPECIES": "Add species",
+    "ADD_CREW": "Add crew member",
+    "ADD_CUTCH": "Add catch",
+    "CREATE_REPORT": "Create Activity Report",
+    "CREATE_USER": "Create User",
+    "UPDATE_USER": "Update User"
+  },
+  "TABLE": {
+    "DATE": "Date",
+    "TIME": "Time",
+    "VESSEL": "Vessel",
+    "PERMIT_NUMBER": "Permit Number",
+    "CAPTAIN": "Captain",
+    "VIOLATIONS": "Violations",
+    "BOARDED_BY": "Boarded By",
+    "HOME_PORT": "Home Port",
+    "LAST_BOARDED": "Last Boarded",
+    "RISK": "Risk",
+    "LICENSE_NUMBER": "License number",
+    "AGENCY": "Agency",
+    "NAME": "Name",
+    "USER_TYPE": "User Type",
+    "CREATED_ON": "Created On",
+    "STATUS": "Status",
+    "DESCRIPTION": "Description",
+    "OFFICERS": "Officers",
+    "CITATIONS": "Citations",
+    "WARNINGS": "Warnings",
+    "VIOLATION": "Violation",
+    "RESULT": "Result",
+    "NOTE": "Note",
+    "BUSINESS": "Business",
+    "DELIVERIES": "Deliveries",
+    "ISSUED_TO": "Issued To",
+    "CREW_MEMBER": "Crew Member"
+  },
+  "FILTER": {
+    "FROM": "From",
+    "TO": "to",
+    "FILTER": "Filter",
+    "MAIN": {
+      "RISK": {
+        "RED": "Red",
+        "GREEN": "Green",
+        "AMBER": "Amber"
+      },
+      "BOARDING_INFO": {
+        "NAME": "Boarding Information",
+        "DATE_FROM": "Date from",
+        "DATE_TO": "Date to",
+        "LOCATION": "Location"
+      },
+      "VESSEL_INFO": {
+        "NAME": "Vessel Information",
+        "NATIONALITY": "Nationality"
+      },
+      "LAST_DELIVERY": {
+        "NAME": "Last Delivery",
+        "BUSINESS": "Business"
+      },
+      "CATCH": {
+        "NAME": "Catch",
+        "SPECIES": "Species",
+        "WEIGHT": "Weight",
+        "COUNT": "Count",
+        "UNITS": "Units"
+      },
+      "RISKS": {
+        "NAME": "Risks"
+      }
+    },
+    "DATES_RANGE":{
+      "RANGE": "Date Range",
+      "LAST7DAYS": "Last 7 days",
+      "LAST30DAYS": "Last 30 days",
+      "LAST60DAYS": "Last 60 days",
+      "LAST90DAYS": "Last 90 days",
+      "TODAY": "Today",
+      "YESTERDAY": "Yesterday",
+      "CUSTOM": "Custom date range"
+    },
+    "HOME_PAGE": {
+      "DATE_TIME": "Date & Time"
+    }
+  },
+  "CUSTOM_MENU": {
+    "SPECIES" : "Species",
+    "FISHERIES" : "Fisheries",
+    "CATCHES" : "Catches",
+    "ACTIVITIES" : "Activities",
+    "GEAR" : "Gear",
+    "ADD_SPECIE" : "Add specie",
+    "ADD_ANOTHER" : "Add another"
+  },
+  "WARNINGS": {
+    "NOT_AUTHENTICATED": "Not authenticated",
+    "NO_BOARDINGS": "No boardings found",
+    "NO_AGENCIES": "No agencies found",
+    "NO_OFFICERS":"No officers found",
+    "NO_CATCHES": "No catches found",
+    "NO_VESSELS": "No vessels found",
+    "NO_CREW": "No crew members found",
+    "NO_USERS": "No users found",
+    "NO_PERMIT_NUMBER": "No permit number found",
+    "NO_DELIVERIES": "No deliveries found",
+    "NO_VIOLATIONS": "No violations found",
+    "NO_PHOTOS": "No photos found",
+    "NO_NOTES": "No notes found",
+    "NO_LICENSE": "No license number found"
+  }
+}
