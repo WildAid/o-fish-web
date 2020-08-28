@@ -51,7 +51,6 @@ class UserEditor extends Component {
   saveUser = (values) => {
     const { userId } = this.props;
     const { imgData, user } = this.state;
-
     let newUser = {
       email: values.email,
       name: {
