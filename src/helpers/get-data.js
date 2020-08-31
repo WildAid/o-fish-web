@@ -184,3 +184,15 @@ export const bufferToBase64 = (buffer) => {
   }
   return window.btoa(binary);
 };
+
+export const getVessels = (vessels) => {
+  if (!vessels) return;
+  
+  let vesselsNames = [];
+
+  vessels.map((vessel) => {
+    vesselsNames.push(vessel.name);
+  });
+
+  return vesselsNames.slice(0, 4).join(", ");
+};

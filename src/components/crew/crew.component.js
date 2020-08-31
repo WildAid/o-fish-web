@@ -18,6 +18,8 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 
+import { getVessels } from "./../../helpers/get-data";
+
 import { VIEW_CREW_PAGE } from "../../root/root.constants.js";
 
 import "./crew.css";
@@ -170,7 +172,6 @@ class Crew extends Component {
             const addedCrew = allCrew.find((item) => {
               return (
                 item.license === member.license &&
-                item.vessel === crewMember.vessel &&
                 item.safetyLevel === crewMember.safetyLevel
               );
             });
@@ -182,7 +183,7 @@ class Crew extends Component {
             }).value;
             if (
               member.name.includes(foundMatch) ||
-              crewMember.vessel.includes(foundMatch) ||
+              crewMember.vessel.permitNumber.includes(foundMatch) ||
               member.license.includes(foundMatch)
             ) {
               if (addedCrew) {
@@ -330,14 +331,7 @@ class Crew extends Component {
                           textToHighlight={item.license}
                         />
                       </td>
-                      <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.vessel}
-                        />
-                      </td>
+                      <td>{getVessels(item.vessel)}</td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
                       </td>

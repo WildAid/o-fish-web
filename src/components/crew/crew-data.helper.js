@@ -100,25 +100,26 @@ export default class CrewDataHelper {
   }
 
   getVessels() {
-    const collection = [];
+    const crewVessels = [];
+
     this.boardings.forEach((boarding) => {
-      if (
-        boarding.vessel &&
-        !collection.find((c) => c.permitNumber === boarding.vessel.permitNumber)
-      ) {
-        collection.push({
+      if (boarding.vessel) {
+        crewVessels.push({
           permitNumber: boarding.vessel.permitNumber,
           name: boarding.vessel.name,
-          photos: boarding.vessel.attachments
-            ? boarding.vessel.attachments.photoIDs
-            : [],
-          notes: boarding.vessel.attachments
-            ? boarding.vessel.attachments.notes
-            : [],
+          photos:
+            boarding.vessel.attachments && boarding.vessel.attachments.photoIDs
+              ? boarding.vessel.attachments.photoIDs
+              : [],
+          notes:
+            boarding.vessel.attachments && boarding.vessel.attachments.notes
+              ? boarding.vessel.attachments.notes
+              : [],
         });
       }
+      return "";
     });
-    return collection;
+    return crewVessels;
   }
 
   getPhotos(crewLicense) {

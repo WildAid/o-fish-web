@@ -4,7 +4,11 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText, goToPage } from "./../../helpers/get-data";
+import {
+  getColor,
+  getHighlightedText,
+  goToPage,
+} from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -202,7 +206,16 @@ class Vessels extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber ? "pn" + item.permitNumber : (item.vessel ? "in" + item.vessel : "no_permit_number"))}
+                      onClick={() =>
+                        goToPage(
+                          VIEW_VESSEL_PAGE,
+                          item.permitNumber
+                            ? "pn" + item.permitNumber
+                            : item.vessel
+                            ? "in" + item.vessel
+                            : "no_permit_number"
+                        )
+                      }
                     >
                       <td>
                         <Highlighter
@@ -225,7 +238,7 @@ class Vessels extends Component {
                           {item.nationality || "N/A"}
                         </div>
                       </td>
-                      <td>{item.homePort || "N/A"}</td>
+                      <td>{item.homePort.slice(0, 4).join(", ")}</td>
                       <td>
                         <div className="flex-row">
                           <div className="delivery-date">

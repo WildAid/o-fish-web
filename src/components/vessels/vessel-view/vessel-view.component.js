@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 import SeeLink from "../../partials/see-all-link/see-all-link";
 
@@ -13,6 +14,8 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 
 import VesselDataHelper from "../vessel-data.helper";
 import OverviewService from "./../../../services/overview.service";
+
+import { CREW_PAGE } from "../../../root/root.constants.js";
 
 import "./vessel-view.css";
 
@@ -36,9 +39,9 @@ class VesselViewPage extends Component {
   };
 
   componentDidMount() {
-    const id = this.props.match.params.id;
+    const { id } = this.props.match.params;
 
-    if (!id || id === "no_permit_number") return;
+    if (!id) return;
 
     if (id.indexOf("pn") === 0) {
       this.setState({ loading: true }, () => {
@@ -48,7 +51,6 @@ class VesselViewPage extends Component {
           .getBoardingsByPermitNumber(permitNumber)
           .then((data) => {
             const dataHelper = new VesselDataHelper(permitNumber, data);
-            
             const newState = {
               permitNumbers: dataHelper.getPermitNumbers(),
               vesselNames: dataHelper.getVesselNames(),
@@ -170,7 +172,7 @@ class VesselViewPage extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {crew.slice(0,4).map((crewMember, ind) => (
+                        {crew.slice(0, 4).map((crewMember, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>{crewMember.name}</td>
                             <td>{crewMember.license}</td>
@@ -224,7 +226,9 @@ class VesselViewPage extends Component {
                       </tbody>
                     </table>
                     <div className="flex-row justify-center padding-top padding-bottom">
-                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
+                      <NavLink className="item-link" to={CREW_PAGE}>
+                        {t("BUTTONS.SEE_ALL")}
+                      </NavLink>
                     </div>
                   </Fragment>
                 ) : (
@@ -246,7 +250,7 @@ class VesselViewPage extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {deliveries.slice(0,4).map((delivery, ind) => (
+                        {deliveries.slice(0, 4).map((delivery, ind) => (
                           <tr key={ind} className="table-row row-body">
                             <td>
                               {!!delivery.business && !!delivery.location ? (
