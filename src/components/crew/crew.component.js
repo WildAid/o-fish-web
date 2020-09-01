@@ -135,23 +135,9 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    let {filter} = this.props; //Or from other place
-    /*const start = moment().subtract(1, 'month').startOf('day').toDate();
-    const end =  moment().endOf('day').toDate();
-    filter = [{
-      name: "date-from",
-      title: "Date from",
-      type: "date",
-      value: start
-    },
-    {
-      name: "date-to",
-      title: "Date To",
-      type: "date",
-      value: end
-    }];*/
-    if (filter){
-      this.setState({defaultFilter: filter});
+    let { filter } = this.props; 
+    if (filter) {
+      this.setState({ defaultFilter: filter });
       //The loadData will be called automatically from filter-panel
     } else {
       this.loadData();
@@ -174,8 +160,8 @@ class Crew extends Component {
             if (addedCrew.date < crewMember.date) {
               addedCrew.date = crewMember.date;
             }
-            if (addedCrew.vessels.indexOf(crewMember.vessel) < 0){
-              addedCrew.vessels.push(crewMember.vessel)
+            if (addedCrew.vessels.indexOf(crewMember.vessel) < 0) {
+              addedCrew.vessels.push(crewMember.vessel);
             }
           } else {
             allCrew.push({
@@ -211,8 +197,8 @@ class Crew extends Component {
                 if (addedCrew.date < crewMember.date) {
                   addedCrew.date = crewMember.date;
                 }
-                if (addedCrew.vessels.indexOf(crewMember.vessel) < 0){
-                  addedCrew.vessels.push(crewMember.vessel)
+                if (addedCrew.vessels.indexOf(crewMember.vessel) < 0) {
+                  addedCrew.vessels.push(crewMember.vessel);
                 }
               } else {
                 allCrew.push({
@@ -230,8 +216,8 @@ class Crew extends Component {
         }
       });
     });
-    return allCrew.sort(
-      (a, b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1
+    return allCrew.sort((a, b) =>
+      a.name === b.name ? 0 : a.name < b.name ? -1 : 1
     );
   }
 
@@ -359,9 +345,7 @@ class Crew extends Component {
                           textToHighlight={item.license}
                         />
                       </td>
-                      <td>
-                        {item.vessels.slice(0, 4).join(", ")}
-                      </td>
+                      <td>{item.vessels.slice(0, 4).join(", ")}</td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
                       </td>

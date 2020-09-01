@@ -49,7 +49,7 @@ class CrewViewPage extends Component {
             loading: false,
             filter: filter,
             boardings: dataHelper.getBoardings(),
-            violations: dataHelper.getViolations(),
+            violations: dataHelper.getViolations(licenseNumber),
             licenseNumbers: [licenseNumber],
             vessels: dataHelper.getVessels(),
             captainName: dataHelper.getCaptainName(licenseNumber),

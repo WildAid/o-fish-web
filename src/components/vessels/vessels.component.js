@@ -4,7 +4,12 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
+import {
+  getColor,
+  getHighlightedText,
+  goToPage,
+  goToPageWithFilter
+} from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
