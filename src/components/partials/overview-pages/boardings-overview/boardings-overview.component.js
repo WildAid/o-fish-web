@@ -3,15 +3,15 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 
-import { goToPage } from "./../../../../helpers/get-data";
+import { goToPage,goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 
-import { BOARDINGS_PAGE, VIEW_BOARDING_PAGE } from "../../../../root/root.constants.js";
+import { BOARDINGS_PAGE, BOARDING_FILTERED_PAGE } from "../../../../root/root.constants.js";
 
 import "./boardings-overview.css";
 
-const BoardingsOverview = ({ t, boardings }) => (
+const BoardingsOverview = ({ t, boardings, filter }) => (
   <div className="flex-column justify-between full-view box-shadow padding-bottom white-bg margin-top border-radius">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("NAVIGATION.BOARDINGS")}</h3>
@@ -39,7 +39,7 @@ const BoardingsOverview = ({ t, boardings }) => (
               <tr
                 key={ind}
                 className="table-row row-body"
-                onClick={() => goToPage(VIEW_BOARDING_PAGE, boarding.id)}
+                onClick={() => goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}
               >
                 <td>{moment(boarding.date).format("L")}</td>
                 <td>{moment(boarding.time).format("LT")}</td>

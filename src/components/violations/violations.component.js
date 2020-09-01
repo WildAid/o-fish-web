@@ -7,8 +7,10 @@ import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
-import CrewDataHelper from "../crew/crew-data.helper.js";
+import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
+
+import { convertFilter } from "./../../helpers/get-data";
 
 const overviewService = OverviewService.getInstance();
 
@@ -60,12 +62,7 @@ const filterConfiguration = {
       field: "date",
       title: "Time",
       type: "time",
-    },
-    {
-      name: "location",
-      title: "Location",
-      type: "location",
-    },
+    }
   ],
   "Vessel Information": [
     {
@@ -78,67 +75,67 @@ const filterConfiguration = {
       title: "Nationality",
     },
   ],
+  "Crews": [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ],
 };
 
 class ViolationsPage extends Component {
   state = {
     violations: [],
     loading: false,
-    defaultFilter: null
+    defaultFilter: null,
+    mounted: false
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const filter = JSON.parse(this.props.match.params.filter);
 
-    if (!id) return;
-
-    //this.setState({defaultFilter: filter});
-
-    if (id.indexOf("ln") === 0) {
-      this.setState({ loading: true }, () => {
-        const licenseNumber = id.substring(2);
-
-        overviewService
-          .getBoardingsByCrewLicense(licenseNumber)
-          .then((data) => {
-            const dataHelper = new CrewDataHelper(licenseNumber, data);
-
-            const newState = {
-              loading: false,
-              violations: dataHelper.getViolations(),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    }
-    if (id.indexOf("in") === 0) {
-      const crewName = id.substring(2);
-
+    this.setState({ loading: true, mounted: true, filter: filter }, () => {
       overviewService
-        .getBoardingsByCrewName(crewName)
+        .getBoardingsByFilter(filter)
         .then((data) => {
-          const dataHelper = new CrewDataHelper(crewName, data);
+          const dataHelper = new BoardingDataHelper(data);
 
           const newState = {
+            defaultFilter : convertFilter(filter),
             loading: false,
-            violations: dataHelper.getViolations(),
+            violations: dataHelper.getViolations(filter["crew.license"]),
           };
           this.setState(newState);
         })
         .catch((error) => {
           console.error(error);
         });
-    }
+    });
   }
 
   render() {
-    const { violations, loading } = this.state;
+    const { violations, loading, defaultFilter, mounted } = this.state;
     const { t } = this.props;
 
-    return (
+    return mounted && (
       <div className="flex-column justify-center align-center padding-bottom">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
@@ -155,6 +152,7 @@ class ViolationsPage extends Component {
               <div className="margin-right">{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
               <FilterPanel
                 options={{ searchByFilter: true }}
+                filter={defaultFilter}
                 configuration={filterConfiguration}
               />
             </div>

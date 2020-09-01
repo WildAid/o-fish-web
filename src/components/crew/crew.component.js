@@ -8,6 +8,7 @@ import {
   getColor,
   getHighlightedText,
   goToPage,
+  goToPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -135,7 +136,7 @@ class Crew extends Component {
 
   componentDidMount() {
     let {filter} = this.props; //Or from other place
-    const start = moment().subtract(1, 'month').startOf('day').toDate();
+    /*const start = moment().subtract(1, 'month').startOf('day').toDate();
     const end =  moment().endOf('day').toDate();
     filter = [{
       name: "date-from",
@@ -148,7 +149,7 @@ class Crew extends Component {
       title: "Date To",
       type: "date",
       value: end
-    }];
+    }];*/
     if (filter){
       this.setState({defaultFilter: filter});
       //The loadData will be called automatically from filter-panel
@@ -262,6 +263,18 @@ class Crew extends Component {
     });
   }
 
+  goCrewViewPage(item){
+    const filter = {};
+    if (item.license){
+      filter["crew.license"] = item.license;
+    }
+    if (item.name){
+      filter["crew.name"] = item.name;
+    }
+    goToPageWithFilter(VIEW_CREW_PAGE, filter);
+  }
+
+
   render() {
     const {
       crew,
@@ -318,14 +331,7 @@ class Crew extends Component {
                       className="table-row row-body"
                       key={ind}
                       onClick={() =>
-                        goToPage(
-                          VIEW_CREW_PAGE,
-                          item.license
-                            ? "ln" + item.license
-                            : item.name
-                            ? "in" + item.name
-                            : "no_license_number"
-                        )
+                        this.goCrewViewPage(item)
                       }
                     >
                       <td>

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import withQueryParams from 'react-router-query-params';
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -8,7 +9,7 @@ import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 
-import CrewDataHelper from "../crew-data.helper.js";
+import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
 
 import { goToPage } from "./../../../helpers/get-data";
@@ -37,61 +38,32 @@ class CrewViewPage extends Component {
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-
-    if (!id) return;
-
-    if (id.indexOf("ln") === 0) {
-      this.setState({ loading: true }, () => {
-        const licenseNumber = id.substring(2);
-
-        overviewService
-          .getBoardingsByCrewLicense(licenseNumber)
-          .then((data) => {
-            const dataHelper = new CrewDataHelper(licenseNumber, data);
-
-            const newState = {
-              loading: false,
-              boardings: dataHelper.getBoardings(),
-              violations: dataHelper.getViolations(),
-              licenseNumbers: [licenseNumber],
-              vessels: dataHelper.getVessels(),
-              captainName: dataHelper.getCaptainName(licenseNumber),
-              crewName: dataHelper.getCrewName(licenseNumber),
-              notes: dataHelper.getNotes(licenseNumber),
-              photos: dataHelper.getPhotos(licenseNumber),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    }
-    if (id.indexOf("in") === 0) {
-      const itemName = id.substring(2);
-
+    const filter = JSON.parse(this.props.match.params.filter);
+    const licenseNumber = filter["crew.license"];
+    this.setState({ loading: true }, () => {
       overviewService
-        .getBoardingsByCrewName(itemName)
+        .getBoardingsByFilter(filter)
         .then((data) => {
-          const dataHelper = new CrewDataHelper(itemName, data);
-
+          const dataHelper = new BoardingDataHelper(data);
           const newState = {
             loading: false,
+            filter: filter,
             boardings: dataHelper.getBoardings(),
             violations: dataHelper.getViolations(),
+            licenseNumbers: [licenseNumber],
             vessels: dataHelper.getVessels(),
-            crewName: itemName,
-            captainName: dataHelper.getCaptainName(itemName),
-            notes: dataHelper.getNotes(itemName),
-            photos: dataHelper.getPhotos(itemName),
+            captainName: dataHelper.getCaptainName(licenseNumber),
+            crewName: dataHelper.getCrewName(licenseNumber),
+            notes: dataHelper.getNotes(licenseNumber),
+            photos: dataHelper.getPhotos(licenseNumber),
           };
+
           this.setState(newState);
         })
         .catch((error) => {
           console.error(error);
         });
-    }
+    });
   }
 
   render() {
@@ -108,6 +80,7 @@ class CrewViewPage extends Component {
     } = this.state;
     const { id } = this.props.match.params;
     const { t } = this.props;
+    const { filter } = this.state;
 
     return (
       <div className="flex-column align-center padding-top crew-view-page">
@@ -236,10 +209,7 @@ class CrewViewPage extends Component {
             <div className="flex-row justify-between standard-view">
               <ViolationsOverview
                 violations={violations}
-                violationsId={id}
-                captainName={captainName}
-                crewName={crewName}
-                licenseNumber={licenseNumbers[0] || ''}
+                filter={filter}
               />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
@@ -267,4 +237,6 @@ class CrewViewPage extends Component {
   }
 }
 
-export default withTranslation("translation")(CrewViewPage);
+export default withQueryParams({
+  stripUnknownKeys: true
+})(withTranslation("translation")(CrewViewPage));

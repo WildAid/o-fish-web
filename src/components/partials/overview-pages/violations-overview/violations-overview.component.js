@@ -2,7 +2,7 @@ import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
-import { goToPage } from "./../../../../helpers/get-data";
+import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import {
   VIEW_BOARDING_PAGE,
@@ -11,7 +11,7 @@ import {
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
-const ViolationsOverview = ({ t, violationsId, violations }) => (
+const ViolationsOverview = ({ t, filter, violations }) => (
   <div className="flex-column justify-between full-view box-shadow padding-bottom white-bg margin-top violations-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("TABLE.VIOLATIONS")}</h3>
@@ -60,7 +60,7 @@ const ViolationsOverview = ({ t, violationsId, violations }) => (
         </table>
         <div
           className="flex-row justify-center padding-top"
-          onClick={() => goToPage(VIOLATIONS_PAGE, violationsId)}
+          onClick={() => goToPageWithFilter(VIOLATIONS_PAGE, filter)}
         >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>

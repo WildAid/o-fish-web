@@ -4,7 +4,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
-import { getColor, getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getColor, getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -183,6 +183,17 @@ class Vessels extends Component {
     }
   }
 
+  goVesselsViewPage(item){
+    const filter = {};
+    if (item.permitNumber){
+      filter["vessel.permitNumber"] = item.permitNumber;
+    }
+    if (item.vessel){
+      filter["vessel.name"] = item.vessel;
+    }
+    goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
+  }
+
   render() {
     const {
       vessels,
@@ -238,7 +249,7 @@ class Vessels extends Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_VESSEL_PAGE, item.permitNumber ? "pn" + item.permitNumber : (item.vessel ? "in" + item.vessel : "no_permit_number"))}
+                      onClick={() => this.goVesselsViewPage(item)}
                     >
                       <td>
                         <Highlighter

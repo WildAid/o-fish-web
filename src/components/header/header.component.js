@@ -52,7 +52,7 @@ class Header extends Component {
 
   componentDidMount(){
     authService.on("user-object-changed", (user) => {
-      this.setState({user: {...user}})
+      this.setState({currentUser: {...user}})
     });
   }
 

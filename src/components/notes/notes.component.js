@@ -7,7 +7,7 @@ import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
-import CrewDataHelper from "../crew/crew-data.helper.js";
+import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
 
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
@@ -102,7 +102,7 @@ class NotesPage extends Component {
         overviewService
           .getBoardingsByCrewLicense(licenseNumber)
           .then((data) => {
-            const dataHelper = new CrewDataHelper(licenseNumber, data);
+            const dataHelper = new BoardingDataHelper(licenseNumber, data);
 
             const newState = {
               loading: false,
@@ -121,7 +121,7 @@ class NotesPage extends Component {
       overviewService
         .getBoardingsByCrewName(crewName)
         .then((data) => {
-          const dataHelper = new CrewDataHelper(crewName, data);
+          const dataHelper = new BoardingDataHelper(crewName, data);
 
           const newState = {
             loading: false,

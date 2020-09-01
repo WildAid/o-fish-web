@@ -1,8 +1,7 @@
 import moment from "moment";
 
-export default class CrewDataHelper {
-  constructor(permitNumber, boardings) {
-    this.permitNumber = permitNumber;
+export default class BoardingDataHelper {
+  constructor(boardings) {
     this.boardings = boardings;
   }
 
@@ -69,7 +68,7 @@ export default class CrewDataHelper {
     });
   }
 
-  getViolations() {
+  getViolations(crewLicense) {
     const collection = [];
     this.boardings.forEach((boarding) => {
       if (
@@ -79,6 +78,9 @@ export default class CrewDataHelper {
       ) {
         const { violations } = boarding.inspection.summary;
         violations.map((violation) => {
+          if (crewLicense){
+            if (violation.crewMember.license != crewLicense) return;
+          }
           collection.push({
             boardingId: boarding._id,
             risk: boarding.inspection.summary.safetyLevel.level,

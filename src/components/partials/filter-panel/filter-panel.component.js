@@ -17,7 +17,7 @@ class FilterPanel extends Component {
       const flatConfig = {};
       for (const section in configuration){
         configuration[section].forEach((item, i) => {
-          flatConfig[item.name] = item;
+          flatConfig[item.field ? item.field : item.name] = item;
         });
       };
       const defaultFilter = [];
