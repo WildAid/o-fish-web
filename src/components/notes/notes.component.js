@@ -9,7 +9,7 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-
+import { convertFilter } from "./../../helpers/get-data";
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
 import "./notes.css";
@@ -117,7 +117,7 @@ class NotesPage extends Component {
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
-    this.setState({ loading: true, mounted: true, filter }, () => {
+    this.setState({ loading: true, mounted: true, filter: convertFilter(filter) }, () => {
       const licenseNumber = filter["crew.license"];
 
       overviewService
