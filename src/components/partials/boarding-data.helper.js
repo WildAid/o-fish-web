@@ -78,8 +78,8 @@ export default class BoardingDataHelper {
       ) {
         const { violations } = boarding.inspection.summary;
         violations.map((violation) => {
-          if (crewLicense){
-            if (violation.crewMember.license != crewLicense) return;
+          if (crewLicense) {
+            if (violation.crewMember.license !== crewLicense) return "";
           }
           collection.push({
             boardingId: boarding._id,
@@ -97,6 +97,7 @@ export default class BoardingDataHelper {
           return "";
         });
       }
+      return "";
     });
     return collection;
   }

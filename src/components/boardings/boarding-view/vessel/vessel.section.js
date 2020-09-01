@@ -4,7 +4,7 @@ import { withTranslation } from "react-i18next";
 
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
-import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import { VIEW_VESSEL_PAGE } from "../../../../root/root.constants.js";
 

@@ -3,7 +3,7 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 
-import { goToPage,goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 

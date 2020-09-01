@@ -2,7 +2,7 @@ import React, { memo, Fragment } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
-import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
+import {  goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 

@@ -6,7 +6,7 @@ import { withTranslation } from "react-i18next";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
-import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import {
   PHOTOS_PAGE,

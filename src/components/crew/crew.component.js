@@ -7,7 +7,6 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPage,
   goToPageWithFilter
 } from "./../../helpers/get-data";
 
