@@ -4,6 +4,10 @@ import { withTranslation } from "react-i18next";
 
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
+import { goToPageWithFilter } from "./../../../../helpers/get-data";
+
+import { VIEW_VESSEL_PAGE } from "../../../../root/root.constants.js";
+
 class VesselSection extends Component {
   setFieldValue = (name, value) => {
     //TODO
@@ -23,10 +27,19 @@ class VesselSection extends Component {
         <section className="flex-row box-shadow padding white-bg margin-top">
           <div className="flex-column section-block">
             <h3>{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
-            <TextViewer
-              mainText={vessel.name}
-              subText={t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}
-            />
+            <div className="pointer"
+              onClick={() =>
+                goToPageWithFilter(
+                  VIEW_VESSEL_PAGE,
+                  {"vessel.permitNumber": vessel.permitNumber, "vessel.name": vessel.name}
+                )
+              }
+            >
+              <TextViewer
+                mainText={vessel.name}
+                subText={t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}
+              />
+            </div>
             <TextViewer
               mainText={vessel.permitNumber}
               subText={t("TABLE.PERMIT_NUMBER")}

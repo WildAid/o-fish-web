@@ -72,12 +72,14 @@ const filterConfiguration = {
       type: "date",
     },
     {
-      name: "date-from",
+      name: "dateFrom",
+      field:  "date-from",
       title: "Date from",
       type: "date",
     },
     {
-      name: "date-to",
+      name: "dateTo",
+      field:  "date-to",
       title: "Date To",
       type: "date",
     },
@@ -156,6 +158,8 @@ class Boardings extends Component {
         : "",
     highlighted: [],
     loading: true,
+    defaultFilter: null,
+    mounted : false,
     page: 1,
   };
 
@@ -194,6 +198,7 @@ class Boardings extends Component {
 
   loadData(newState) {
     newState = newState ? newState : {};
+    newState.mounted = true;
     newState.loading = true;
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
@@ -216,7 +221,24 @@ class Boardings extends Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    let filter = null;
+    //TODO:fill this structure with a correct data
+    /*
+    const start = moment().subtract(1, 'month').startOf('day');
+    const end =  moment().endOf('day');
+
+    filter = [{
+      name: "dateFrom",
+      value: start.format("L")
+    }];
+
+    */
+    if (filter){
+      this.setState({mounted: true, defaultFilter: filter});
+      //The loadData will be called automatically from filter-panel
+    } else {
+      this.loadData();
+    }
   }
 
   render() {
@@ -228,6 +250,8 @@ class Boardings extends Component {
       isMapShown,
       highlighted,
       searchQuery,
+      defaultFilter,
+      mounted,
       page,
     } = this.state;
     const { t } = this.props;
@@ -236,7 +260,7 @@ class Boardings extends Component {
       _id: { $in: boardings.map((item) => item._id) },
     };
 
-    return (
+    return mounted ? (
       <div className="flex-column justify-center align-center padding-bottom">
         <SearchPanel
           handler={this.search}
@@ -269,6 +293,7 @@ class Boardings extends Component {
           </div>
           <FilterPanel
             options={{ searchByFilter: true }}
+            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />
@@ -353,7 +378,7 @@ class Boardings extends Component {
           t("WARNINGS.NO_BOARDINGS")
         )}
       </div>
-    );
+    ) : "";
   }
 }
 

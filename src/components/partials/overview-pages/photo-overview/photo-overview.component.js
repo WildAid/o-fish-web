@@ -6,9 +6,15 @@ import { withTranslation } from "react-i18next";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 
+import { goToPageWithFilter } from "./../../../../helpers/get-data";
+
+import {
+  PHOTOS_PAGE,
+} from "../../../../root/root.constants.js";
+
 import "./photo-overview.css";
 
-const PhotosOverview = ({ t, photos }) => (
+const PhotosOverview = ({ t, photos, photosId, filter }) => (
   <div className="flex-column box-shadow padding-bottom white-bg margin-top margin-right photos-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</h3>
@@ -36,7 +42,10 @@ const PhotosOverview = ({ t, photos }) => (
             </div>
           ))}
         </div>
-        <div className="flex-row justify-center padding-top">
+        <div
+          className="flex-row justify-center padding-top"
+          onClick={() => goToPageWithFilter(PHOTOS_PAGE, filter)}
+        >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>
       </Fragment>

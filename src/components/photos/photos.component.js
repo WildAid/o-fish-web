@@ -9,8 +9,11 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-
 import { convertFilter } from "./../../helpers/get-data";
+
+// import UserPhoto from "../../components/partials/user-photo/user-photo.component";
+
+import './photos.css';
 
 const overviewService = OverviewService.getInstance();
 
@@ -62,7 +65,12 @@ const filterConfiguration = {
       field: "date",
       title: "Time",
       type: "time",
-    }
+    },
+    {
+      name: "location",
+      title: "Location",
+      type: "location",
+    },
   ],
   "Vessel Information": [
     {
@@ -101,89 +109,95 @@ const filterConfiguration = {
   ],
 };
 
-class ViolationsPage extends Component {
+class PhotosPage extends Component {
   state = {
-    violations: [],
+    photos: [],
     loading: false,
-    defaultFilter: null,
     mounted: false
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-    this.setState({ loading: true, mounted: true, filter: filter }, () => {
-      overviewService
-        .getBoardingsByFilter(filter)
-        .then((data) => {
-          const dataHelper = new BoardingDataHelper(data);
+      this.setState({ loading: true, mounted: true, filter: convertFilter(filter) }, () => {
+        const licenseNumber = filter["crew.license"];
 
-          const newState = {
-            defaultFilter : convertFilter(filter),
-            loading: false,
-            violations: dataHelper.getViolations(filter["crew.license"]),
-          };
-          this.setState(newState);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
+        overviewService
+          .getBoardingsByFilter(filter)
+          .then((data) => {
+            const dataHelper = new BoardingDataHelper(data);
+
+            const newState = {
+              loading: false,
+              photos: dataHelper.getPhotos(licenseNumber),
+            };
+            this.setState(newState);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
   }
 
   render() {
-    const { violations, loading, defaultFilter, mounted } = this.state;
+    const { photos, loading, filter, mounted } = this.state;
     const { t } = this.props;
 
     return mounted && (
-      <div className="flex-column justify-center align-center padding-bottom">
+      <div className="flex-column justify-center align-center padding-bottom photos-overview">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
-                <div className="item-label margin-top">{t("TABLE.VIOLATIONS")}</div>
-                <div className="item-name">{`${violations.length} ${t(
-                  "TABLE.VIOLATIONS"
+                <div className="item-label margin-top">
+                  {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+                </div>
+                <div className="item-name">{`${photos.length} ${t(
+                  "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
                 )}`}</div>
               </div>
             </div>
             <div className="flex-row align-center standard-view">
-              <div className="margin-right">{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
+              <div className="margin-right">
+                {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+              </div>
               <FilterPanel
+                filter={filter}
                 options={{ searchByFilter: true }}
-                filter={defaultFilter}
                 configuration={filterConfiguration}
               />
             </div>
             <div className="table-wrapper">
-              <table className="margin-left margin-right">
+              <table className="full-view">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.VIOLATION")}</td>
-                    <td>{t("TABLE.RESULT")}</td>
-                    <td>{t("TABLE.ISSUED_TO")}</td>
-                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.PHOTO")}</td>
                     <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
                     <td></td>
+                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.BOARDED_BY")}</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {violations.map((violation, ind) => (
+                  {photos.map((photo, ind) => (
                     <tr key={ind} className="table-row row-body">
                       <td>
-                        <div className="flex-column">
-                          <div>{violation.violation}</div>
-                          <div>{violation.license}</div>
+                        {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
+                        <div className="photo-icon">
+                          <img
+                            className="icon"
+                            src={require("../../assets/photo-big-icon.png")}
+                            alt="no logo"
+                          />
                         </div>
                       </td>
-                      <td>{violation.result}</td>
-                      <td>{violation.issuedBy}</td>
-                      <td>{violation.vessel}</td>
-                      <td>{moment(violation.boarding).format("L")}</td>
+                      <td>{moment(photo.date).format("LLL")}</td>
                       <td>
-                        <RiskIcon safetyLevel={violation.risk} />
+                        <RiskIcon safetyLevel={photo.risk} />
                       </td>
+                      <td>{photo.vessel}</td>
+                      <td>{photo.boardedBy}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -198,4 +212,4 @@ class ViolationsPage extends Component {
   }
 }
 
-export default withTranslation("translation")(ViolationsPage);
+export default withTranslation("translation")(PhotosPage);

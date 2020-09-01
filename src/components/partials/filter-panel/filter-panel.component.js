@@ -11,6 +11,33 @@ import "./filter-panel.css";
 class FilterPanel extends Component {
   state = { isFilterPanelShown: false, filterParts: [], searchQuery: "" };
 
+  componentDidMount(){
+    const { filter, configuration } = this.props;
+    if (configuration && filter && filter.length){
+      const flatConfig = {};
+      for (const section in configuration){
+        configuration[section].forEach((item, i) => {
+          flatConfig[item.field ? item.field : item.name] = item;
+        });
+      };
+      const defaultFilter = [];
+      filter.forEach((filterPart) => {
+        const config = flatConfig[filterPart.name];
+        if (config){
+          defaultFilter.push({
+            ...config,
+            value: filterPart.value
+          })
+        }
+      });
+
+      this.setState({filterParts: defaultFilter});
+      if (this.props.onFilterChanged) {
+        this.props.onFilterChanged(this.constructFilter(defaultFilter));
+      }
+    }
+  }
+
   constructFilter(filterParts) {
     let filterObject = {};
     const { options } = this.props;
@@ -175,89 +202,3 @@ class FilterPanel extends Component {
 }
 
 export default withTranslation("translation")(FilterPanel);
-
-/*
-<section>
-  <h3>Boarding Information</h3>
-  <FilterLine
-    parts={filterPartNames}
-    title="Date"
-    name="date"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Time"
-    name="time"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Location"
-    name="location"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-</section>
-<section>
-  <h3>Vessel Information</h3>
-  <FilterLine
-    parts={filterPartNames}
-    title="Vessel Name"
-    name="vessel-name"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Permit Number"
-    name="permitNumber"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Nationality"
-    name="nationality"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-</section>
-<section>
-  <h3>Last Delivery</h3>
-  <FilterLine
-    parts={filterPartNames}
-    title="Date"
-    name="lastDelivery.date"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Business"
-    name="lastDelivery.business"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Location"
-    name="lastDelivery.location"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-</section>
-<section>
-  <h3>Catch</h3>
-  <FilterLine
-    parts={filterPartNames}
-    title="Species"
-    name="catch.species"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Weight"
-    name="catch.weight"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-  <FilterLine
-    parts={filterPartNames}
-    title="Count"
-    name="catch.count"
-    onCheck={this.checkFilterPart}
-    ></FilterLine>
-</section>*/

@@ -1,0 +1,7 @@
+.notes-overview table td:first-child {
+    width: 25%;
+}
+
+.notes-overview table td {
+    width: 15%;
+}

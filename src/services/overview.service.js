@@ -14,6 +14,15 @@ export default class OverviewService {
     return OverviewService.serviceInstance;
   }
 
+
+  getBoardingsByFilter(filter) {
+    const result = stitchService.database
+      .collection("BoardingReports")
+      .find(filter)
+      .toArray();
+    return result;
+  }
+
   getBoardingsByPermitNumber(permitNumber) {
     const result = stitchService.database
       .collection("BoardingReports")
@@ -39,7 +48,7 @@ export default class OverviewService {
   getBoardingsByCrewLicense(licenseNumber) {
     const result = stitchService.database
       .collection("BoardingReports")
-      .find({ "crew.license": licenseNumber })
+      .find({"crew.license": licenseNumber })
       .toArray();
     searchService.searchResults = {
       query: licenseNumber,

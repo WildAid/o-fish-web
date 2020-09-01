@@ -9,8 +9,10 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-
 import { convertFilter } from "./../../helpers/get-data";
+// import UserPhoto from "../../components/partials/user-photo/user-photo.component";
+
+import "./notes.css";
 
 const overviewService = OverviewService.getInstance();
 
@@ -62,7 +64,12 @@ const filterConfiguration = {
       field: "date",
       title: "Time",
       type: "time",
-    }
+    },
+    {
+      name: "location",
+      title: "Location",
+      type: "location",
+    },
   ],
   "Vessel Information": [
     {
@@ -101,27 +108,26 @@ const filterConfiguration = {
   ],
 };
 
-class ViolationsPage extends Component {
+class NotesPage extends Component {
   state = {
-    violations: [],
+    notes: [],
     loading: false,
-    defaultFilter: null,
     mounted: false
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
+    this.setState({ loading: true, mounted: true, filter: convertFilter(filter) }, () => {
+      const licenseNumber = filter["crew.license"];
 
-    this.setState({ loading: true, mounted: true, filter: filter }, () => {
       overviewService
         .getBoardingsByFilter(filter)
         .then((data) => {
           const dataHelper = new BoardingDataHelper(data);
 
           const newState = {
-            defaultFilter : convertFilter(filter),
             loading: false,
-            violations: dataHelper.getViolations(filter["crew.license"]),
+            notes: dataHelper.getNotes(licenseNumber),
           };
           this.setState(newState);
         })
@@ -132,58 +138,55 @@ class ViolationsPage extends Component {
   }
 
   render() {
-    const { violations, loading, defaultFilter, mounted } = this.state;
+    const { notes, loading, filter, mounted } = this.state;
     const { t } = this.props;
 
     return mounted && (
-      <div className="flex-column justify-center align-center padding-bottom">
+      <div className="flex-column justify-center align-center padding-bottom notes-overview">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
           <Fragment>
             <div className="flex-row align-center standard-view">
               <div>
-                <div className="item-label margin-top">{t("TABLE.VIOLATIONS")}</div>
-                <div className="item-name">{`${violations.length} ${t(
-                  "TABLE.VIOLATIONS"
+                <div className="item-label margin-top">
+                  {t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
+                </div>
+                <div className="item-name">{`${notes.length} ${t(
+                  "BOARDING_PAGE.VIEW_BOARDING.NOTES"
                 )}`}</div>
               </div>
             </div>
             <div className="flex-row align-center standard-view">
-              <div className="margin-right">{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
+              <div className="margin-right">
+                {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+              </div>
               <FilterPanel
+                filter={filter}
                 options={{ searchByFilter: true }}
-                filter={defaultFilter}
                 configuration={filterConfiguration}
               />
             </div>
             <div className="table-wrapper">
-              <table className="margin-left margin-right">
+              <table className="full-view">
                 <thead>
                   <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.VIOLATION")}</td>
-                    <td>{t("TABLE.RESULT")}</td>
-                    <td>{t("TABLE.ISSUED_TO")}</td>
-                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.NOTE")}</td>
                     <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
                     <td></td>
+                    <td>{t("TABLE.VESSEL")}</td>
+                    <td>{t("TABLE.BOARDED_BY")}</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {violations.map((violation, ind) => (
+                  {notes.map((note, ind) => (
                     <tr key={ind} className="table-row row-body">
+                      <td>{note.note}</td>
+                      <td>{moment(note.date).format("L")}</td>
                       <td>
-                        <div className="flex-column">
-                          <div>{violation.violation}</div>
-                          <div>{violation.license}</div>
-                        </div>
+                        <RiskIcon safetyLevel={note.risk} />
                       </td>
-                      <td>{violation.result}</td>
-                      <td>{violation.issuedBy}</td>
-                      <td>{violation.vessel}</td>
-                      <td>{moment(violation.boarding).format("L")}</td>
-                      <td>
-                        <RiskIcon safetyLevel={violation.risk} />
-                      </td>
+                      <td>{note.vessel}</td>
+                      <td>{note.boardedBy}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -198,4 +201,4 @@ class ViolationsPage extends Component {
   }
 }
 
-export default withTranslation("translation")(ViolationsPage);
+export default withTranslation("translation")(NotesPage);

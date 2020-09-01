@@ -16,6 +16,8 @@ import SearchResults from "../components/search-results/search-results.component
 import RestorePassword from "../components/restore-password/restore-password.component";
 import Profile from "../components/profile/profile.component";
 import ViolationsPage from "../components/violations/violations.component";
+import PhotosPage from "../components/photos/photos.component";
+import NotesPage from "../components/notes/notes.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";
@@ -52,10 +54,13 @@ import {
   RESTORE_PASSWORD_PAGE,
   PROFILE_PAGE,
   VIOLATIONS_PAGE,
+  PHOTOS_PAGE,
+  NOTES_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
   VIEW_BOARDING_PAGE,
+  BOARDING_FILTERED_PAGE,
   //Crew sub routes
   VIEW_CREW_PAGE,
   //Vessels sub routes
@@ -96,6 +101,18 @@ const routes = [
     exact: false,
   },
   {
+    path: PHOTOS_PAGE,
+    component: PhotosPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: NOTES_PAGE,
+    component: NotesPage,
+    auth: true,
+    exact: false,
+  },
+  {
     path: BOARDINGS_PAGE,
     component: BoardingsMain,
     auth: true,
@@ -106,6 +123,11 @@ const routes = [
         component: Boardings,
         exact: true,
       },
+      {
+        path: BOARDING_FILTERED_PAGE,
+        component: Boardings,
+        exact: true,
+      },    
       {
         path: VIEW_BOARDING_PAGE,
         component: BoardingViewPage,

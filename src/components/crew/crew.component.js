@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPage,
+  goToPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -107,6 +107,7 @@ class Crew extends Component {
     highlighted: [],
     loading: false,
     currentFilter: null,
+    defaultFilter: null,
     page: 1,
   };
 
@@ -114,7 +115,6 @@ class Crew extends Component {
     if (searchService.searchResults && searchService.searchResults.query) {
       searchService.searchResults.query = value;
     }
-
     this.loadData({ searchQuery: value, offset: 0 });
   };
 
@@ -134,7 +134,13 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    this.loadData();
+    let { filter } = this.props; 
+    if (filter) {
+      this.setState({ defaultFilter: filter });
+      //The loadData will be called automatically from filter-panel
+    } else {
+      this.loadData();
+    }
   }
 
   prepareSearchResultData(data) {
@@ -145,7 +151,6 @@ class Crew extends Component {
           const addedCrew = allCrew.find((item) => {
             return (
               item.license === crewMember.captain.license &&
-              item.vessel === crewMember.vessel &&
               item.safetyLevel === crewMember.safetyLevel
             );
           });
@@ -154,11 +159,14 @@ class Crew extends Component {
             if (addedCrew.date < crewMember.date) {
               addedCrew.date = crewMember.date;
             }
+            if (addedCrew.vessels.indexOf(crewMember.vessel) < 0) {
+              addedCrew.vessels.push(crewMember.vessel);
+            }
           } else {
             allCrew.push({
               name: crewMember.captain.name,
               rank: "captain",
-              vessel: crewMember.vessel,
+              vessels: [crewMember.vessel],
               license: crewMember.captain.license,
               violations: crewMember.violations,
               date: crewMember.date,
@@ -170,7 +178,6 @@ class Crew extends Component {
             const addedCrew = allCrew.find((item) => {
               return (
                 item.license === member.license &&
-                item.vessel === crewMember.vessel &&
                 item.safetyLevel === crewMember.safetyLevel
               );
             });
@@ -182,7 +189,6 @@ class Crew extends Component {
             }).value;
             if (
               member.name.includes(foundMatch) ||
-              crewMember.vessel.includes(foundMatch) ||
               member.license.includes(foundMatch)
             ) {
               if (addedCrew) {
@@ -190,11 +196,14 @@ class Crew extends Component {
                 if (addedCrew.date < crewMember.date) {
                   addedCrew.date = crewMember.date;
                 }
+                if (addedCrew.vessels.indexOf(crewMember.vessel) < 0) {
+                  addedCrew.vessels.push(crewMember.vessel);
+                }
               } else {
                 allCrew.push({
                   name: member.name,
                   rank: "crew",
-                  vessel: crewMember.vessel,
+                  vessels: [crewMember.vessel],
                   license: member.license,
                   violations: crewMember.violations,
                   date: crewMember.date,
@@ -206,10 +215,8 @@ class Crew extends Component {
         }
       });
     });
-    return allCrew.sort(
-      (a, b) =>
-        (a.name === b.name ? 0 : a.name < b.name ? -1 : 1) +
-        (a.vessel === b.vessel ? 0 : a.vessel < b.vessel ? -1 : 1) / 10
+    return allCrew.sort((a, b) =>
+      a.name === b.name ? 0 : a.name < b.name ? -1 : 1
     );
   }
 
@@ -241,6 +248,18 @@ class Crew extends Component {
     });
   }
 
+  goCrewViewPage(item){
+    const filter = {};
+    if (item.license){
+      filter["crew.license"] = item.license;
+    }
+    if (item.name){
+      filter["crew.name"] = item.name;
+    }
+    goToPageWithFilter(VIEW_CREW_PAGE, filter);
+  }
+
+
   render() {
     const {
       crew,
@@ -249,6 +268,7 @@ class Crew extends Component {
       loading,
       highlighted,
       searchQuery,
+      defaultFilter,
       page,
     } = this.state;
 
@@ -272,6 +292,7 @@ class Crew extends Component {
           )}
           <FilterPanel
             options={{ searchByFilter: true }}
+            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />
@@ -295,14 +316,7 @@ class Crew extends Component {
                       className="table-row row-body"
                       key={ind}
                       onClick={() =>
-                        goToPage(
-                          VIEW_CREW_PAGE,
-                          item.license
-                            ? "ln" + item.license
-                            : item.name
-                            ? "in" + item.name
-                            : "no_license_number"
-                        )
+                        this.goCrewViewPage(item)
                       }
                     >
                       <td>
@@ -330,14 +344,7 @@ class Crew extends Component {
                           textToHighlight={item.license}
                         />
                       </td>
-                      <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.vessel}
-                        />
-                      </td>
+                      <td>{item.vessels.slice(0, 4).join(", ")}</td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
                       </td>

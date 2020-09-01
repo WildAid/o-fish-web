@@ -46,11 +46,17 @@ class CustomSelect extends Component {
     return (
       <div className="flex-row relative select-menu">
         <div
-          className="flex-row align-center justify-between full-view selected-item"
+          className="flex-row align-center full-view selected-item"
           onClick={() => this.setState({ showOptionsList: !showOptionsList })}
         >
           <div className="capitalize">{selected}</div>
-          <div>&#11206;</div>
+          <div className="arrow">
+            <img
+              className="icon"
+              src={require("../../../assets/filled-arrow.svg")}
+              alt="no logo"
+            />
+          </div>
         </div>
         {showOptionsList && (
           <div className="flex-column white-bg box-shadow absolute options-list">

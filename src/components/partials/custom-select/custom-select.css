@@ -35,3 +35,7 @@
     background: #eeeeee;
     cursor: pointer;
 }
+
+.select-menu .arrow {
+    width: 11px;
+}

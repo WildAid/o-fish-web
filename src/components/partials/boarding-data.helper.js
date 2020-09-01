@@ -1,8 +1,7 @@
 import moment from "moment";
 
-export default class CrewDataHelper {
-  constructor(permitNumber, boardings) {
-    this.permitNumber = permitNumber;
+export default class BoardingDataHelper {
+  constructor(boardings) {
     this.boardings = boardings;
   }
 
@@ -34,6 +33,16 @@ export default class CrewDataHelper {
     return name;
   }
 
+  getCaptainName(item) {
+    let captainName;
+    this.boardings.forEach((boarding) => {
+      if (boarding.captain.license === item || boarding.captain.name === item) {
+        captainName = boarding.captain.name;
+      }
+    });
+    return captainName;
+  }
+
   getBoardings() {
     return this.boardings.map((boarding) => {
       const violations = boarding.inspection.summary.violations
@@ -53,15 +62,13 @@ export default class CrewDataHelper {
         risk: boarding.inspection.summary.safetyLevel.level,
         boardedBy:
           boarding.reportingOfficer && boarding.reportingOfficer.name
-            ? boarding.reportingOfficer.name.first +
-              " " +
-              boarding.reportingOfficer.name.last
+            ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
             : "",
       };
     });
   }
 
-  getViolations() {
+  getViolations(crewLicense) {
     const collection = [];
     this.boardings.forEach((boarding) => {
       if (
@@ -71,6 +78,9 @@ export default class CrewDataHelper {
       ) {
         const { violations } = boarding.inspection.summary;
         violations.map((violation) => {
+          if (crewLicense) {
+            if (violation.crewMember.license !== crewLicense) return "";
+          }
           collection.push({
             boardingId: boarding._id,
             risk: boarding.inspection.summary.safetyLevel.level,
@@ -87,30 +97,32 @@ export default class CrewDataHelper {
           return "";
         });
       }
+      return "";
     });
     return collection;
   }
 
   getVessels() {
-    const collection = [];
+    const crewVessels = [];
+
     this.boardings.forEach((boarding) => {
-      if (
-        boarding.vessel &&
-        !collection.find((c) => c.permitNumber === boarding.vessel.permitNumber)
-      ) {
-        collection.push({
+      if (boarding.vessel) {
+        crewVessels.push({
           permitNumber: boarding.vessel.permitNumber,
           name: boarding.vessel.name,
-          photos: boarding.vessel.attachments
-            ? boarding.vessel.attachments.photoIDs
-            : [],
-          notes: boarding.vessel.attachments
-            ? boarding.vessel.attachments.notes
-            : [],
+          photos:
+            boarding.vessel.attachments && boarding.vessel.attachments.photoIDs
+              ? boarding.vessel.attachments.photoIDs
+              : [],
+          notes:
+            boarding.vessel.attachments && boarding.vessel.attachments.notes
+              ? boarding.vessel.attachments.notes
+              : [],
         });
       }
+      return "";
     });
-    return collection;
+    return crewVessels;
   }
 
   getPhotos(crewLicense) {
@@ -124,7 +136,19 @@ export default class CrewDataHelper {
             !!crewMember.attachments.photoIDs.length
           ) {
             crewMember.attachments.photoIDs.map((photo) => {
-              photos.push({ url: photo, date: boarding.date });
+              photos.push({
+                url: photo,
+                date: boarding.date,
+                risk: boarding.inspection.summary.safetyLevel.level,
+                vessel:
+                  boarding.vessel && boarding.vessel.name
+                    ? boarding.vessel.name
+                    : boarding.vessel,
+                boardedBy:
+                  boarding.reportingOfficer && boarding.reportingOfficer.name
+                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                    : "",
+              });
               return "";
             });
             return "";
@@ -147,7 +171,19 @@ export default class CrewDataHelper {
             !!crewMember.attachments.notes.length
           ) {
             crewMember.attachments.notes.map((note) => {
-              notes.push({ note: note, date: boarding.date });
+              notes.push({
+                note: note,
+                date: boarding.date,
+                risk: boarding.inspection.summary.safetyLevel.level,
+                vessel:
+                  boarding.vessel && boarding.vessel.name
+                    ? boarding.vessel.name
+                    : boarding.vessel,
+                boardedBy:
+                  boarding.reportingOfficer && boarding.reportingOfficer.name
+                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                    : "",
+              });
               return "";
             });
             return "";

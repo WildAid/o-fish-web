@@ -17,13 +17,13 @@ export default class VesselDataHelper {
   }
 
   getVesselNames() {
-    const collection = {};
+    const collection = [];
     this.boardings.forEach((boarding) => {
       if (boarding.vessel && boarding.vessel.name) {
-        collection[boarding.vessel.name] = null;
+        collection.push(boarding.vessel.name);
       }
     });
-    return Object.keys(collection);
+    return collection;
   }
 
   getBoardings() {

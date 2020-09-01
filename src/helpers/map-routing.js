@@ -13,14 +13,13 @@ const mapRouting = (routes) => {
 
     route.render = props => {
       const auth = authService.isStitchAuthenticated;
-      
+
       if (route.auth){
         if (!auth){
           return <Redirect to="/login" />;
         } else {
           if (!authService.isAuthenticated){
             authService.reauthenticateUser();
-            return <Redirect to={route.path} />
           }
         }
       }

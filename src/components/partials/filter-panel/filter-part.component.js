@@ -15,6 +15,13 @@ import "./filter-panel.css";
 class FilterPart extends Component {
   state = { searchPanelShown: false, filterValue: "", searchQuery: "" };
 
+  componentDidMount(){
+    const {value} = this.props;
+    if (value){
+      this.setState({filterValue: value, searchQuery: value});
+    }
+  }
+
   setSearch = (value) => {
     this.setState({
       searchQuery: value,

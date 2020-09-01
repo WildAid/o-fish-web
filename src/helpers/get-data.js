@@ -171,8 +171,20 @@ export const checkUserType = (user) => {
   return userRole;
 };
 
+export const convertFilter = (filterObj) => {
+  const filter = [];
+  for (var key in filterObj){
+    filter.push({name: key, value: filterObj[key] });
+  }
+  return filter;
+};
+
 export const goToPage = (path, id) => {
   history.push(path.replace(":id", id));
+};
+
+export const goToPageWithFilter = (path, filter) => {
+  history.push(path.replace(":filter", JSON.stringify(filter)));
 };
 
 export const bufferToBase64 = (buffer) => {

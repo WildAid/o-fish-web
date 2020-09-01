@@ -2,11 +2,17 @@ import React, { memo, Fragment } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
 
+import {  goToPageWithFilter } from "./../../../../helpers/get-data";
+
 import SeeLink from "../../../partials/see-all-link/see-all-link";
+
+import {
+  NOTES_PAGE,
+} from "../../../../root/root.constants.js";
 
 import "./notes-overview.css";
 
-const NotesOverview = ({ t, notes }) => (
+const NotesOverview = ({ t, notesId, notes, filter }) => (
   <div className="flex-column box-shadow padding-bottom white-bg margin-top notes-section">
     <div className="flex-row justify-between padding border-bottom gray-bg">
       <h3>{t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}</h3>
@@ -36,7 +42,10 @@ const NotesOverview = ({ t, notes }) => (
             ))}
           </tbody>
         </table>
-        <div className="flex-row justify-center padding-top">
+        <div
+          className="flex-row justify-center padding-top"
+          onClick={() => goToPageWithFilter(NOTES_PAGE, filter)}
+        >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>
       </Fragment>
