@@ -11,7 +11,6 @@ const VesselHeaderInfo = ({ t, data, headerText, itemsAmount }) => (
       <h3>{headerText}</h3>
       <div className="item-label">{!!itemsAmount ? itemsAmount : ""}</div>
     </div>
-    {!data && <div className="padding">N/A</div>}
     <div className="flex-row align-center padding">
       {headerText === "Flag States" && (
         <div className="nationality-img">

@@ -51,17 +51,20 @@ class Header extends Component {
   };
 
   componentDidMount(){
+    if (this.state.currentUser !== authService.user){
+      this.setState({currentUser: {...authService.user}})
+    }
     authService.on("user-object-changed", (user) => {
-      this.setState({currentUser: {...user}})
+      if (user){
+        this.setState({currentUser: {...user}})
+      }
     });
   }
 
   render() {
     const { activeMenu, currentUser } = this.state;
     const { t } = this.props;
-    const isAuthenticated = authService.isAuthenticated;
-    const user = currentUser ? currentUser : authService.user;
-    return isAuthenticated ? (
+    return currentUser && (
       <header className="flex-row align-center justify-center full-view header-top">
         <div className="flex-row align-center justify-between standard-view">
           <NavLink to={HOME_PAGE}>
@@ -208,11 +211,11 @@ class Header extends Component {
                 onClick={() => this.showActiveMenu("profile")}
               >
                 <div className="flex-row align-center">
-                  <UserPhoto imageId={user ? user.profilePic : null} defaultIcon={true}/>
+                  <UserPhoto imageId={currentUser ? currentUser.profilePic : null} defaultIcon={true}/>
                 </div>
                 <div className="flex-row align-center profile-name">
-                  {isAuthenticated && user.name
-                    ? `${user.name.first} ${user.name.last}`
+                  {currentUser && currentUser.name
+                    ? `${currentUser.name.first} ${currentUser.name.last}`
                     : t("WARNINGS.NOT_AUTHENTICATED")}
                 </div>
                 <img
@@ -239,7 +242,7 @@ class Header extends Component {
           </div>
         </div>
       </header>
-    ): "";
+    );
   }
 }
 
