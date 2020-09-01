@@ -131,21 +131,21 @@ class VesselViewPage extends Component {
             <div className="flex-row justify-between standard-view">
               <VesselHeaderInfo
                 headerText="Permit Number"
-                data={permitNumbers}
+                data={permitNumbers[0] || ''}
               />
               <VesselHeaderInfo
                 headerText="Flag States"
-                data={nationalities}
+                data={nationalities[0] || ''}
                 itemsAmount={nationalities.length}
               />
               <VesselHeaderInfo
                 headerText="Home Ports"
-                data={homePorts}
+                data={homePorts[0] || ''}
                 itemsAmount={homePorts.length}
               />
               <VesselHeaderInfo
                 headerText="Captains"
-                data={captains}
+                data={captains[0] ? captains[0].name : ''}
                 itemsAmount={captains.length}
               />
             </div>
