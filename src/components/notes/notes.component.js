@@ -82,64 +82,66 @@ const filterConfiguration = {
       title: "Nationality",
     },
   ],
+  "Crews": [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ],
 };
 
 class NotesPage extends Component {
   state = {
     notes: [],
     loading: false,
+    mounted: false
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-
-    if (!id) return;
-
-    if (id.indexOf("ln") === 0) {
-      this.setState({ loading: true }, () => {
-        const licenseNumber = id.substring(2);
-
-        overviewService
-          .getBoardingsByCrewLicense(licenseNumber)
-          .then((data) => {
-            const dataHelper = new BoardingDataHelper(licenseNumber, data);
-
-            const newState = {
-              loading: false,
-              notes: dataHelper.getNotes(licenseNumber),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    }
-    if (id.indexOf("in") === 0) {
-      const crewName = id.substring(2);
+    const filter = JSON.parse(this.props.match.params.filter);
+    this.setState({ loading: true, mounted: true, filter }, () => {
+      const licenseNumber = filter["crew.license"];
 
       overviewService
-        .getBoardingsByCrewName(crewName)
+        .getBoardingsByFilter(filter)
         .then((data) => {
-          const dataHelper = new BoardingDataHelper(crewName, data);
+          const dataHelper = new BoardingDataHelper(data);
 
           const newState = {
             loading: false,
-            notes: dataHelper.getNotes(),
+            notes: dataHelper.getNotes(licenseNumber),
           };
           this.setState(newState);
         })
         .catch((error) => {
           console.error(error);
         });
-    }
+    });
   }
 
   render() {
-    const { notes, loading } = this.state;
+    const { notes, loading, filter, mounted } = this.state;
     const { t } = this.props;
 
-    return (
+    return mounted && (
       <div className="flex-column justify-center align-center padding-bottom notes-overview">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
@@ -159,6 +161,7 @@ class NotesPage extends Component {
                 {t("BOARDING_PAGE.ALL_DATES")} &#11206;
               </div>
               <FilterPanel
+                filter={filter}
                 options={{ searchByFilter: true }}
                 configuration={filterConfiguration}
               />

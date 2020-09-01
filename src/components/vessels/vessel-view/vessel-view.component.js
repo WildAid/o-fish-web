@@ -36,69 +36,38 @@ class VesselViewPage extends Component {
     homePorts: [],
     captains: [],
     nationalities: [],
+    filter: null
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-
-    if (!id) return;
-
-    if (id.indexOf("pn") === 0) {
-      this.setState({ loading: true }, () => {
-        const permitNumber = id.substring(2);
-
-        overviewService
-          .getBoardingsByPermitNumber(permitNumber)
-          .then((data) => {
-            const dataHelper = new VesselDataHelper(permitNumber, data);
-            const newState = {
-              permitNumbers: dataHelper.getPermitNumbers(),
-              vesselNames: dataHelper.getVesselNames(),
-              boardings: dataHelper.getBoardings(),
-              nationalities: dataHelper.getNationalities(),
-              homePorts: dataHelper.getHomePorts(),
-              captains: dataHelper.getCaptains(),
-              crew: dataHelper.getCrew(),
-              deliveries: dataHelper.getDeliveries(),
-              photos: dataHelper.getPhotos(),
-              notes: dataHelper.getNotes(),
-              violations: dataHelper.getViolations(),
-              loading: false,
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    } else if (id.indexOf("in") === 0) {
-      this.setState({ loading: true }, () => {
-        const itemName = id.substring(2);
-        overviewService
-          .getBoardingsByVesselName(itemName)
-          .then((data) => {
-            const dataHelper = new VesselDataHelper(itemName, data);
-            const newState = {
-              permitNumbers: dataHelper.getPermitNumbers(),
-              vesselNames: dataHelper.getVesselNames(),
-              boardings: dataHelper.getBoardings(),
-              nationalities: dataHelper.getNationalities(),
-              homePorts: dataHelper.getHomePorts(),
-              captains: dataHelper.getCaptains(),
-              crew: dataHelper.getCrew(),
-              deliveries: dataHelper.getDeliveries(),
-              photos: dataHelper.getPhotos(),
-              notes: dataHelper.getNotes(),
-              violations: dataHelper.getViolations(),
-              loading: false,
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-    }
+    const filter = JSON.parse(this.props.match.params.filter);
+    if (!filter) return;
+    this.setState({ loading: true, filter }, () => {
+      const permitNumber = filter["vessel.permitNumber"]
+      overviewService
+        .getBoardingsByFilter(filter)
+        .then((data) => {
+          const dataHelper = new VesselDataHelper(permitNumber, data);
+          const newState = {
+            permitNumbers: dataHelper.getPermitNumbers(),
+            vesselNames: dataHelper.getVesselNames(),
+            boardings: dataHelper.getBoardings(),
+            nationalities: dataHelper.getNationalities(),
+            homePorts: dataHelper.getHomePorts(),
+            captains: dataHelper.getCaptains(),
+            crew: dataHelper.getCrew(),
+            deliveries: dataHelper.getDeliveries(),
+            photos: dataHelper.getPhotos(),
+            notes: dataHelper.getNotes(),
+            violations: dataHelper.getViolations(),
+            loading: false,
+          };
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   }
 
   render() {
@@ -115,6 +84,7 @@ class VesselViewPage extends Component {
       violations,
       photos,
       notes,
+      filter
     } = this.state;
     const { t } = this.props;
 
@@ -150,7 +120,7 @@ class VesselViewPage extends Component {
               />
             </div>
             <div className="flex-row standard-view sub-section">
-              <BoardingsOverview boardings={boardings} />
+              <BoardingsOverview filter={filter} boardings={boardings} />
             </div>
             <div className="flex-row standard-view sub-section">
               <div className="flex-column box-shadow white-bg margin-top margin-right crew-section">
@@ -281,11 +251,11 @@ class VesselViewPage extends Component {
               </div>
             </div>
             <div className="flex-row standard-view sub-section">
-              <ViolationsOverview violations={violations} />
+              <ViolationsOverview filter={filter}  violations={violations} />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom sub-section">
-              <PhotosOverview photos={photos} />
-              <NotesOverview notes={notes} />
+              <PhotosOverview filter={filter} photos={photos} />
+              <NotesOverview filter={filter} notes={notes} />
             </div>
           </Fragment>
         ) : (

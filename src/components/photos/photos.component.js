@@ -82,27 +82,49 @@ const filterConfiguration = {
       title: "Nationality",
     },
   ],
+  "Crews": [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ],
 };
 
 class PhotosPage extends Component {
   state = {
     photos: [],
     loading: false,
+    mounted: false
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const filter = JSON.parse(this.props.match.params.filter);
 
-    if (!id) return;
-
-    if (id.indexOf("ln") === 0) {
-      this.setState({ loading: true }, () => {
-        const licenseNumber = id.substring(2);
+      this.setState({ loading: true, mounted: true, filter }, () => {
+        const licenseNumber = filter["crew.license"];
 
         overviewService
-          .getBoardingsByCrewLicense(licenseNumber)
+          .getBoardingsByFilter(filter)
           .then((data) => {
-            const dataHelper = new BoardingDataHelper(licenseNumber, data);
+            const dataHelper = new BoardingDataHelper(data);
 
             const newState = {
               loading: false,
@@ -114,32 +136,13 @@ class PhotosPage extends Component {
             console.error(error);
           });
       });
-    }
-    if (id.indexOf("in") === 0) {
-      const crewName = id.substring(2);
-
-      overviewService
-        .getBoardingsByCrewName(crewName)
-        .then((data) => {
-          const dataHelper = new BoardingDataHelper(crewName, data);
-
-          const newState = {
-            loading: false,
-            photos: dataHelper.getPhotos(),
-          };
-          this.setState(newState);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
   }
 
   render() {
-    const { photos, loading } = this.state;
+    const { photos, loading, filter, mounted } = this.state;
     const { t } = this.props;
 
-    return (
+    return mounted && (
       <div className="flex-column justify-center align-center padding-bottom photos-overview">
         <SearchPanel handler={this.search} isAutofill={false} />
         {!loading ? (
@@ -159,6 +162,7 @@ class PhotosPage extends Component {
                 {t("BOARDING_PAGE.ALL_DATES")} &#11206;
               </div>
               <FilterPanel
+                filter={filter}
                 options={{ searchByFilter: true }}
                 configuration={filterConfiguration}
               />

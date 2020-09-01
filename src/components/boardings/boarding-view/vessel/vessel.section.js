@@ -4,7 +4,7 @@ import { withTranslation } from "react-i18next";
 
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
-import { goToPage } from "./../../../../helpers/get-data";
+import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import { VIEW_VESSEL_PAGE } from "../../../../root/root.constants.js";
 
@@ -29,11 +29,9 @@ class VesselSection extends Component {
             <h3>{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
             <div className="pointer"
               onClick={() =>
-                goToPage(
+                goToPageWithFilter(
                   VIEW_VESSEL_PAGE,
-                  vessel.permitNumber && vessel.permitNumber !== 'N/A'
-                    ? `pn${vessel.permitNumber}`
-                    : `in${vessel.name}`
+                  {"vessel.permitNumber": vessel.permitNumber, "vessel.name": vessel.name}
                 )
               }
             >

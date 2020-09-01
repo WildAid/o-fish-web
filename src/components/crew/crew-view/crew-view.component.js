@@ -204,7 +204,7 @@ class CrewViewPage extends Component {
               </div>
             </div>
             <div className="flex-row justify-between standard-view">
-              <BoardingsOverview boardings={boardings} />
+              <BoardingsOverview filter={filter} boardings={boardings} />
             </div>
             <div className="flex-row justify-between standard-view">
               <ViolationsOverview
@@ -216,6 +216,7 @@ class CrewViewPage extends Component {
               <PhotosOverview
                 photos={photos}
                 photosId={id}
+                filter={filter}
                 captainName={captainName}
                 crewName={crewName}
                 licenseNumber={licenseNumbers[0]}
@@ -223,6 +224,7 @@ class CrewViewPage extends Component {
               <NotesOverview
                 notes={notes}
                 notesId={id}
+                filter={filter}
                 captainName={captainName}
                 crewName={crewName}
                 licenseNumber={licenseNumbers[0] || ''}
