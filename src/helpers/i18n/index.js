@@ -3,10 +3,11 @@ import detector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 import en from './en/translation';
+import fr from './fr/translation';
 
 let lang = navigator.language || navigator.userLanguage;
 
-if (!(lang.includes('en') || lang.includes('fr') || lang.includes('es'))) {
+if (!(lang.includes('fr') || lang.includes('es'))) {
   lang = 'en';
 }
 
@@ -17,6 +18,9 @@ const i18nOptions = {
   resources: {
     en: {
       translation: en
+    },
+    fr: {
+      translation: fr
     }
   }
 };
