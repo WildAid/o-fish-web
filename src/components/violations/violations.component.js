@@ -112,14 +112,13 @@ class ViolationsPage extends Component {
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-    this.setState({ loading: true, mounted: true, filter: filter }, () => {
+    this.setState({ loading: true, mounted: true, defaultFilter : convertFilter(filter) }, () => {
       overviewService
         .getBoardingsByFilter(filter)
         .then((data) => {
           const dataHelper = new BoardingDataHelper(data);
 
           const newState = {
-            defaultFilter : convertFilter(filter),
             loading: false,
             violations: dataHelper.getViolations(filter["crew.license"]),
           };

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 
 import { goToPageWithFilter } from "./../../../../helpers/get-data";
 
+import SeeLink from "../../../partials/see-all-link/see-all-link";
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 
 import { BOARDINGS_PAGE, BOARDING_FILTERED_PAGE } from "../../../../root/root.constants.js";
@@ -39,7 +40,6 @@ const BoardingsOverview = ({ t, boardings, filter }) => (
               <tr
                 key={ind}
                 className="table-row row-body"
-                onClick={() => goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}
               >
                 <td>{moment(boarding.date).format("L")}</td>
                 <td>{moment(boarding.time).format("LT")}</td>
@@ -54,10 +54,8 @@ const BoardingsOverview = ({ t, boardings, filter }) => (
             )})}
           </tbody>
         </table>
-        <div className="flex-row justify-center padding-top">
-          <NavLink className="item-link" to={BOARDINGS_PAGE}>
-            {t("BUTTONS.SEE_ALL")}
-          </NavLink>
+        <div className="flex-row justify-center padding-top" onClick={()=>goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}>
+          <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>
       </Fragment>
     ) : (

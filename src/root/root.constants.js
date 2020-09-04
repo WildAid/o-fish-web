@@ -1,7 +1,6 @@
 //Routes
 export const LOGIN_PAGE = "/login";
 export const HOME_PAGE = "/home";
-export const BOARDINGS_PAGE = "/boardings";
 export const VESSELS_PAGE = "/vessels";
 export const CREW_PAGE = "/crew";
 export const USERS_PAGE = "/users";
@@ -16,10 +15,12 @@ export const RESTORE_PASSWORD_PAGE = "/restore_password";
 
 //Boardings subroutes
 export const FIND_USERS_PAGE = "/boardings/find_users";
+
+export const BOARDINGS_PAGE = "/boardings";
 export const NEW_BOARDING_PAGE = "/boardings/new";
 export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
 export const VIEW_BOARDING_PAGE = "/boardings/view/:id";
-export const BOARDING_FILTERED_PAGE = "/boardings/:id";
+export const BOARDING_FILTERED_PAGE = "/boardings/filtered/:filter";
 
 
 //Crew sub routes

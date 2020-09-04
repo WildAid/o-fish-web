@@ -18,6 +18,7 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
+import { convertFilter } from "./../../helpers/get-data";
 
 import {
   NEW_BOARDING_PAGE,
@@ -141,6 +142,30 @@ const filterConfiguration = {
       title: "Count",
     },
   ],
+  "Crews": [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ],
 };
 
 class Boardings extends Component {
@@ -221,23 +246,13 @@ class Boardings extends Component {
   }
 
   componentDidMount() {
-    let filter = null;
-    //TODO:fill this structure with a correct data
-    /*
-    const start = moment().subtract(1, 'month').startOf('day');
-    const end =  moment().endOf('day');
-
-    filter = [{
-      name: "dateFrom",
-      value: start.format("L")
-    }];
-
-    */
-    if (filter){
-      this.setState({mounted: true, defaultFilter: filter});
+    if (this.props.match.params.filter){
+      const filter = JSON.parse(this.props.match.params.filter);
+      //this.loadData({mounted: true});
+      this.setState({mounted: true, defaultFilter: convertFilter(filter)});
       //The loadData will be called automatically from filter-panel
     } else {
-      this.loadData();
+      this.loadData({mounted: true});
     }
   }
 
