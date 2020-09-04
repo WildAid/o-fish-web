@@ -74,6 +74,10 @@ const filterConfiguration = {
       name: "vessel.nationality",
       title: "Nationality",
     },
+    {
+      name: "vessel.name",
+      title: "Name",
+    },
   ],
   "Crews": [
     {

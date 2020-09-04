@@ -12,8 +12,12 @@ import PhotosOverview from "./../../partials/overview-pages/photo-overview/photo
 import NotesOverview from "./../../partials/overview-pages/notes-overview/notes-overview.component";
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 
-import VesselDataHelper from "../vessel-data.helper";
+import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
+
+import {
+  goCrewViewPage
+} from "./../../../helpers/get-data";
 
 import { CREW_PAGE } from "../../../root/root.constants.js";
 
@@ -36,20 +40,20 @@ class VesselViewPage extends Component {
     homePorts: [],
     captains: [],
     nationalities: [],
-    filter: null
+    filter: null,
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
     if (!filter) return;
     this.setState({ loading: true, filter }, () => {
-      const permitNumber = filter["vessel.permitNumber"]
+      const permitNumber = filter["vessel.permitNumber"];
       overviewService
         .getBoardingsByFilter(filter)
         .then((data) => {
-          const dataHelper = new VesselDataHelper(permitNumber, data);
+          const dataHelper = new BoardingDataHelper(data);
           const newState = {
-            permitNumbers: dataHelper.getPermitNumbers(),
+            permitNumbers: dataHelper.getPermitNumbers(permitNumber),
             vesselNames: dataHelper.getVesselNames(),
             boardings: dataHelper.getBoardings(),
             nationalities: dataHelper.getNationalities(),
@@ -84,7 +88,7 @@ class VesselViewPage extends Component {
       violations,
       photos,
       notes,
-      filter
+      filter,
     } = this.state;
     const { t } = this.props;
 
@@ -101,21 +105,21 @@ class VesselViewPage extends Component {
             <div className="flex-row justify-between standard-view">
               <VesselHeaderInfo
                 headerText="Permit Number"
-                data={permitNumbers[0] || ''}
+                data={permitNumbers[0] || ""}
               />
               <VesselHeaderInfo
                 headerText="Flag States"
-                data={nationalities[0] || ''}
+                data={nationalities[0] || ""}
                 itemsAmount={nationalities.length}
               />
               <VesselHeaderInfo
                 headerText="Home Ports"
-                data={homePorts[0] || ''}
+                data={homePorts[0] || ""}
                 itemsAmount={homePorts.length}
               />
               <VesselHeaderInfo
                 headerText="Captains"
-                data={captains[0] ? captains[0].name : ''}
+                data={captains[0] ? captains[0].name : ""}
                 itemsAmount={captains.length}
               />
             </div>
@@ -143,7 +147,11 @@ class VesselViewPage extends Component {
                       </thead>
                       <tbody>
                         {crew.slice(0, 4).map((crewMember, ind) => (
-                          <tr key={ind} className="table-row row-body">
+                          <tr
+                            key={ind}
+                            className="table-row row-body"
+                            onClick={() => goCrewViewPage(crewMember)}
+                          >
                             <td>{crewMember.name}</td>
                             <td>{crewMember.license}</td>
                             <td>
@@ -251,7 +259,7 @@ class VesselViewPage extends Component {
               </div>
             </div>
             <div className="flex-row standard-view sub-section">
-              <ViolationsOverview filter={filter}  violations={violations} />
+              <ViolationsOverview filter={filter} violations={violations} />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom sub-section">
               <PhotosOverview filter={filter} photos={photos} />

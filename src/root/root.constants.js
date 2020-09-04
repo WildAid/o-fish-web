@@ -19,7 +19,7 @@ export const FIND_USERS_PAGE = "/boardings/find_users";
 export const NEW_BOARDING_PAGE = "/boardings/new";
 export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
 export const VIEW_BOARDING_PAGE = "/boardings/view/:id";
-export const BOARDING_FILTERED_PAGE = "/boardings/:id";
+export const BOARDING_FILTERED_PAGE = "/boardings/:filter";
 
 
 //Crew sub routes

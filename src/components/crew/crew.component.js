@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPageWithFilter
+  goCrewViewPage
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -17,8 +17,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
-
-import { VIEW_CREW_PAGE } from "../../root/root.constants.js";
 
 import "./crew.css";
 
@@ -248,18 +246,6 @@ class Crew extends Component {
     });
   }
 
-  goCrewViewPage(item){
-    const filter = {};
-    if (item.license){
-      filter["crew.license"] = item.license;
-    }
-    if (item.name){
-      filter["crew.name"] = item.name;
-    }
-    goToPageWithFilter(VIEW_CREW_PAGE, filter);
-  }
-
-
   render() {
     const {
       crew,
@@ -316,7 +302,7 @@ class Crew extends Component {
                       className="table-row row-body"
                       key={ind}
                       onClick={() =>
-                        this.goCrewViewPage(item)
+                        goCrewViewPage(item)
                       }
                     >
                       <td>
