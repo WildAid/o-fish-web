@@ -186,7 +186,7 @@ class DeliveriesPage extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {deliveries.map((photo, ind) => (
+                    {deliveries.map((delivery, ind) => (
                       <tr key={ind} className="table-row row-body">
                         <td>
                           <div className="photo-icon">

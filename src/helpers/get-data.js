@@ -185,6 +185,10 @@ export const goToPage = (path, id) => {
   history.push(path.replace(":id", id));
 };
 
+export const pageWithFilterURL = (path, filter) => {
+  return path.replace(":filter", JSON.stringify(filter));
+};
+
 export const goToPageWithFilter = (path, filter) => {
   history.push(path.replace(":filter", JSON.stringify(filter)));
 };

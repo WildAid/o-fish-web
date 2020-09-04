@@ -65,6 +65,7 @@ import {
   VIEW_CREW_PAGE,
   //Vessels sub routes
   VIEW_VESSEL_PAGE,
+  VESSELS_FILTERED_PAGE,
   //Users sub routes
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
@@ -153,6 +154,11 @@ const routes = [
     routes: [
       {
         path: VESSELS_PAGE,
+        exact: true,
+        component: Vessels,
+      },
+      {
+        path: VESSELS_FILTERED_PAGE,
         exact: true,
         component: Vessels,
       },

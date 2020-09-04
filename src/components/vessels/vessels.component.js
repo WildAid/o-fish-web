@@ -7,7 +7,8 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPageWithFilter
+  goToPageWithFilter,
+  convertFilter,
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -73,18 +74,20 @@ const filterConfiguration = {
   ],
   "Vessel Information": [
     {
-      name: "permitNumber",
-      field: "vessel.permitNumber",
+      name: "vessel.name",
+      title: "Vessel",
+    },
+    {
+      name: "vessel.permitNumber",
       title: "Permit Number",
       type: "string-equal",
     },
     {
-      name: "nationality",
-      field: "vessel.nationality",
+      name: "vessel.nationality",
       title: "Nationality",
     },
   ],
-  "Crews": [
+  Crews: [
     {
       name: "crewLicense",
       field: "crew.license",
@@ -93,7 +96,7 @@ const filterConfiguration = {
     },
     {
       name: "crewName",
-      field: "crew.lastName",
+      field: "crew.name",
       title: "Crew name",
     },
     {
@@ -125,6 +128,7 @@ class Vessels extends Component {
     currentFilter: null,
     loading: false,
     defaultFilter: null,
+    mounted: false,
     page: 1,
   };
 
@@ -154,8 +158,9 @@ class Vessels extends Component {
   };
 
   loadData(newState) {
-    newState = newState ? newState : {};
+    newState = newState || {};
     newState.loading = true;
+
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
       stitchService
@@ -177,22 +182,21 @@ class Vessels extends Component {
   }
 
   componentDidMount() {
-    const {filter} = this.props; //Or from other place
-
-    if (filter){
-      this.setState({defaultFilter: filter});
+    if (this.props.match.params.filter) {
+      const filter = JSON.parse(this.props.match.params.filter);
+      this.setState({ mounted: true, defaultFilter: convertFilter(filter) });
       //The loadData will be called automatically from filter-panel
     } else {
-      this.loadData();
+      this.loadData({ mounted: true });
     }
   }
 
-  goVesselsViewPage(item){
+  goVesselsViewPage(item) {
     const filter = {};
-    if (item.permitNumber){
+    if (item.permitNumber) {
       filter["vessel.permitNumber"] = item.permitNumber;
     }
-    if (item.vessel){
+    if (item.vessel) {
       filter["vessel.name"] = item.vessel;
     }
     goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
@@ -207,12 +211,13 @@ class Vessels extends Component {
       highlighted,
       searchQuery,
       page,
-      defaultFilter
+      defaultFilter,
+      mounted
     } = this.state;
 
     const { t } = this.props;
 
-    return (
+    return mounted ? (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
           handler={this.search}
@@ -276,7 +281,11 @@ class Vessels extends Component {
                           {item.nationality || "N/A"}
                         </div>
                       </td>
-                      <td>{item.homePort ? item.homePort.slice(0, 4).join(", ") : "N/A"}</td>
+                      <td>
+                        {item.homePort
+                          ? item.homePort.slice(0, 4).join(", ")
+                          : "N/A"}
+                      </td>
                       <td>
                         <div className="flex-row">
                           <div className="delivery-date">
@@ -317,11 +326,13 @@ class Vessels extends Component {
             )}
           </Fragment>
         ) : loading ? (
-          <LoadingPanel></LoadingPanel>
+          <LoadingPanel />
         ) : (
           t("WARNINGS.NO_VESSELS")
         )}
       </div>
+    ) : (
+      ""
     );
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
-import withQueryParams from 'react-router-query-params';
+import withQueryParams from "react-router-query-params";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -12,11 +11,13 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
 
-import { goToPage } from "./../../../helpers/get-data";
+import SeeLink from "../../partials/see-all-link/see-all-link";
+
+import { goToPageWithFilter } from "./../../../helpers/get-data";
 
 import {
-  VESSELS_PAGE,
   VIEW_VESSEL_PAGE,
+  VESSELS_FILTERED_PAGE,
 } from "../../../root/root.constants.js";
 
 import "./crew-view.css";
@@ -35,6 +36,17 @@ class CrewViewPage extends Component {
     violations: [],
     crewName: "N/A",
     captainName: "",
+  };
+
+  goVesselViewPage = (vessel) => {
+    const filter = {};
+    if (vessel.permitNumber) {
+      filter["vessel.permitNumber"] = vessel.permitNumber;
+    }
+    if (vessel.name) {
+      vessel["vessel.name"] = vessel.name;
+    }
+    goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
   };
 
   componentDidMount() {
@@ -114,14 +126,7 @@ class CrewViewPage extends Component {
                           <tr
                             key={ind}
                             className="table-row row-body"
-                            onClick={() =>
-                              goToPage(
-                                VIEW_VESSEL_PAGE,
-                                vessel.permitNumber
-                                  ? `pn${vessel.permitNumber}`
-                                  : `in${vessel.name}`
-                              )
-                            }
+                            onClick={() => this.goVesselViewPage(vessel)}
                           >
                             <td>{vessel.name}</td>
                             <td>{vessel.permitNumber}</td>
@@ -172,10 +177,13 @@ class CrewViewPage extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex-row justify-center padding-top padding-bottom">
-                      <NavLink className="item-link" to={VESSELS_PAGE}>
-                        {t("BUTTONS.SEE_ALL")}
-                      </NavLink>
+                    <div
+                      className="flex-row justify-center padding-bottom padding-top"
+                      onClick={() =>
+                        goToPageWithFilter(VESSELS_FILTERED_PAGE, filter)
+                      }
+                    >
+                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
                     </div>
                   </Fragment>
                 ) : (
@@ -207,10 +215,7 @@ class CrewViewPage extends Component {
               <BoardingsOverview filter={filter} boardings={boardings} />
             </div>
             <div className="flex-row justify-between standard-view">
-              <ViolationsOverview
-                violations={violations}
-                filter={filter}
-              />
+              <ViolationsOverview violations={violations} filter={filter} />
             </div>
             <div className="flex-row justify-between standard-view margin-bottom">
               <PhotosOverview
@@ -227,7 +232,7 @@ class CrewViewPage extends Component {
                 filter={filter}
                 captainName={captainName}
                 crewName={crewName}
-                licenseNumber={licenseNumbers[0] || ''}
+                licenseNumber={licenseNumbers[0] || ""}
               />
             </div>
           </Fragment>
@@ -240,5 +245,5 @@ class CrewViewPage extends Component {
 }
 
 export default withQueryParams({
-  stripUnknownKeys: true
+  stripUnknownKeys: true,
 })(withTranslation("translation")(CrewViewPage));
