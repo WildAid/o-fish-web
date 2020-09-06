@@ -27,8 +27,6 @@ class EditAgency extends Component {
       email: values.email,
     };
 
-    console.log(newAgency)
-
     agencyService
       .updateAgency(agencyInfo._id, newAgency)
       .then(() => this.goRedirect())
