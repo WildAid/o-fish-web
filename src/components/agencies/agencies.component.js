@@ -137,8 +137,8 @@ class AgenciesMain extends React.Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
+                      onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
                     >
-                      <slot onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}>
                         <td className="blue-color">{item.name}</td>
                         <td>{item.description}</td>
                         <td>{item.officers || "N/A"}</td>
@@ -147,10 +147,12 @@ class AgenciesMain extends React.Component {
                             {status}
                           </div>
                         </td>
-                      </slot>
                       <td
                         className="blue-color"
-                        onClick={() => goToPage(EDIT_AGENCIES_PAGE, item._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToPage(EDIT_AGENCIES_PAGE, item._id);
+                        }}
                       >
                         {t("BUTTONS.EDIT")}
                       </td>

@@ -32,4 +32,11 @@ export default class AgencyService {
   createAgency(data) {
     return stitchService.database.collection("Agency").insertOne(data);
   }
+
+  updateAgency(id, data) {
+    id = new BSON.ObjectId(id);
+    return stitchService.database.collection("Agency").updateOne({
+      _id: id
+    }, data);
+  }
 }

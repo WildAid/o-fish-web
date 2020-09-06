@@ -2,15 +2,11 @@ import React, { Component, Fragment } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
 import history from "../../../root/root.history";
 import AgencyService from "./../../../services/agency.service";
-import { AGENCIES_PAGE } from "../../../root/root.constants";
+import Switch from "@material-ui/core/Switch";
 
-// import "./view-agency.css";
+import "./edit-agency.css";
 
 const agencyService = AgencyService.getInstance();
 
@@ -21,12 +17,27 @@ class EditAgency extends Component {
   };
 
   saveAgency = (values) => {
-    console.log(values)
-  }
+    const { agencyInfo, loading } = this.state;
+    let newAgency = {
+      active: true,
+      name: values.name,
+      description: values.description,
+      site: values.site,
+      email: values.email,
+    };
+
+    agencyService
+      .updateAgency(agencyInfo._id, newAgency)
+      .then(() => this.goRedirect())
+      .catch((error) => {
+        error.message
+        ? this.setState({ error: `${error.name}: ${error.message}` })
+        : this.setState({ error: "An unexpected error occurred!" });
+      });
+  };
 
   goRedirect() {
     history.goBack();
-    // history.push(AGENCIES_PAGE);
   }
 
   clearForm = () => {
@@ -85,7 +96,7 @@ class EditAgency extends Component {
                 <div className="item-name">{agencyInfo.name}</div>
               </div>
             </div>
-            <div className="flex-row standard-view white-bg box-shadow relative new-agency-form">
+            <div className="flex-column justify-center align-center standard-view white-bg box-shadow relative edit-agency-form">
               <Formik
                 initialValues={initialValues}
                 onSubmit={this.saveAgency}
@@ -98,26 +109,34 @@ class EditAgency extends Component {
                   setFieldValue,
                 }) => (
                   <Form onSubmit={handleSubmit}>
-                    <div className="flex-column new-agency-box">
-                      <FormControl className="form-input">
-                        <InputLabel id="role-label">
-                          {t("AGENCY_PAGE.EDIT_AGENCY.STATUS")}
-                        </InputLabel>
-                        <Select
-                          labelId="active-label"
-                          onChange={(e) =>
-                            setFieldValue("active", e.target.value === "active")
+                    <div className="flex-column edit-agency-box">
+                      <div className="status-line flex-row justify-between">
+                        <TextField
+                          label={t("AGENCY_PAGE.EDIT_AGENCY.STATUS")}
+                          name="active"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          type="text"
+                          value={
+                            values.active
+                              ? t("AGENCY_PAGE.EDIT_AGENCY.ACTIVE")
+                              : t("AGENCY_PAGE.EDIT_AGENCY.INACTIVE")
                           }
-                          value={values.active ? "active" : "inactive"}
-                        >
-                          <MenuItem value="active">
-                            {t("CREATE_USER_PAGE.ACTIVE")}
-                          </MenuItem>
-                          <MenuItem value="inactive">
-                            {t("CREATE_USER_PAGE.INACTIVE")}
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
+                        <Switch
+                          checked={values.active}
+                          onChange={(e) =>
+                            setFieldValue("active", e.target.checked)
+                          }
+                          color="default"
+                          name="active"
+                          className="status-switch"
+                          inputProps={{ "aria-label": "primary checkbox" }}
+                        />
+                      </div>
                       <TextField
                         label={t("AGENCY_PAGE.EDIT_AGENCY.NAME")}
                         name="name"
@@ -160,17 +179,17 @@ class EditAgency extends Component {
                       />
                     </div>
                     <div className="flex-row justify-around align-center margin-top">
-                      <button 
-                        className="blue-btn" 
-                        type="submit" 
+                      <button
+                        className="blue-btn"
+                        type="submit"
                         onClick={this.saveAgency}
-                        >
+                      >
                         {t("BUTTONS.SAVE")}
                       </button>
                       <div
                         className="blue-color pointer"
                         onClick={this.clearForm}
-                        >
+                      >
                         {t("BUTTONS.CANCEL")}
                       </div>
                     </div>

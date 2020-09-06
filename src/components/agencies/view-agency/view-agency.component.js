@@ -4,6 +4,8 @@ import { withTranslation } from "react-i18next";
 
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
+import { goToPage } from "./../../../helpers/get-data";
+
 import AgencyService from "./../../../services/agency.service";
 import AgencyFormData from "../form-data/form-data.js"
 
@@ -86,7 +88,7 @@ class ViewAgency extends Component {
               </Fragment>
             )}
           </div>
-          <NavLink to={EDIT_AGENCIES_PAGE}>
+          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agencyInfo._id)}>
             <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>
