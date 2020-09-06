@@ -111,7 +111,7 @@ class EditAgency extends Component {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <div className="flex-column edit-agency-box">
-                      <div className="status-line flex-row justify-between">
+                      <div className="active-line flex-row justify-between">
                         <TextField
                           label={t("AGENCY_PAGE.EDIT_AGENCY.STATUS")}
                           name="active"
@@ -123,14 +123,12 @@ class EditAgency extends Component {
                               ? t("AGENCY_PAGE.EDIT_AGENCY.ACTIVE")
                               : t("AGENCY_PAGE.EDIT_AGENCY.INACTIVE")
                           }
-                          InputProps={{
-                            readOnly: true,
-                          }}
+                          InputProps={{ readOnly: true }}
                         />
                         <IOSSwitch
                           checked={values.active}
                           name="active"
-                          className="status-switch"
+                          className="active-switch"
                           onChange={(e) =>
                             setFieldValue("active", e.target.checked)
                           }
@@ -144,6 +142,7 @@ class EditAgency extends Component {
                         onChange={(e) => setFieldValue("name", e.target.value)}
                         type="text"
                         value={values.name}
+                        required
                       />
                       <TextField
                         label={t("AGENCY_PAGE.EDIT_AGENCY.DESCRIPTION")}
@@ -155,26 +154,27 @@ class EditAgency extends Component {
                           setFieldValue("description", e.target.value)
                         }
                         value={values.description}
+                        required
                       />
                       <TextField
                         label={t("AGENCY_PAGE.EDIT_AGENCY.SITE")}
-                        name="email"
+                        name="site"
                         type="text"
                         className="form-input"
                         onBlur={handleBlur}
-                        onChange={(e) =>
-                          setFieldValue("website", e.target.value)
-                        }
+                        onChange={(e) => setFieldValue("site", e.target.value)}
                         value={values.site}
+                        required
                       />
                       <TextField
                         label={t("AGENCY_PAGE.EDIT_AGENCY.EMAIL")}
-                        name="site"
+                        name="email"
                         type="text"
                         className="form-input"
                         onBlur={handleBlur}
                         onChange={(e) => setFieldValue("email", e.target.value)}
                         value={values.email}
+                        required
                       />
                     </div>
                     <div className="flex-row justify-center align-center margin-top">

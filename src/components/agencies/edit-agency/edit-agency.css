@@ -7,12 +7,7 @@
 .edit-agency-form .blue-btn {
     top: -75px;
     right: 65px;
-}
-
-.edit-agency-form .white-btn {
-    top: -75px;
-    right: 0px;
-    padding: 9px;
+    padding: 10px 24px;
 }
 
 .edit-agency-box .form-input {
@@ -24,21 +19,17 @@
     margin-top: 0;
 }
 
-.edit-agency-form .status-line {
+.edit-agency-form .active-line {
     position: relative;
 }
 
-.edit-agency-form .status-line .form-input {
+.edit-agency-form .active-line .form-input {
     width: 100%;
 }
 
-.edit-agency-form .status-line .status-switch {
+.edit-agency-form .active-line .active-switch {
     position: absolute;
     right: 0;
     margin: 0;
     margin-top: 4px;
-}
-
-.edit-agency-form .blue-btn {
-    padding: 10px 24px;
 }
