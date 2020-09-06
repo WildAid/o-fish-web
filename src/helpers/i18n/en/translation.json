@@ -83,7 +83,16 @@
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
-    "PREFERED_NATIONALITIES": "Prefered Nationatities"
+    "PREFERED_NATIONALITIES": "Prefered Nationatities",
+    "EDIT_AGENCY": {
+      "STATUS": "Status",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NAME": "Agency Name",
+      "DESCRIPTION": "Description",
+      "SITE": "Website",
+      "EMAIL": "Contact Email"
+    }
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "See Activity"

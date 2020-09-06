@@ -36,5 +36,5 @@ export const VIEW_USER_PAGE = "/users/view_user";
 
 //Agencies subroutes
 export const NEW_AGENCIES_PAGE = "/agencies/new_agency";
-export const EDIT_AGENCIES_PAGE = "/agencies/edit_agency/";
+export const EDIT_AGENCIES_PAGE = "/agencies/edit_agency/:id";
 export const VIEW_AGENCIES_PAGE = "/agencies/view_agency/:id";
