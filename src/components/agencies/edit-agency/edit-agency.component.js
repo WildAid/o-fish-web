@@ -4,7 +4,8 @@ import { TextField } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
 import history from "../../../root/root.history";
 import AgencyService from "./../../../services/agency.service";
-import Switch from "@material-ui/core/Switch";
+
+import IOSSwitch from "../../partials/ios-switch/ios-switch";
 
 import "./edit-agency.css";
 
@@ -126,15 +127,13 @@ class EditAgency extends Component {
                             readOnly: true,
                           }}
                         />
-                        <Switch
+                        <IOSSwitch
                           checked={values.active}
+                          name="active"
+                          className="status-switch"
                           onChange={(e) =>
                             setFieldValue("active", e.target.checked)
                           }
-                          color="default"
-                          name="active"
-                          className="status-switch"
-                          inputProps={{ "aria-label": "primary checkbox" }}
                         />
                       </div>
                       <TextField
@@ -178,7 +177,7 @@ class EditAgency extends Component {
                         value={values.email}
                       />
                     </div>
-                    <div className="flex-row justify-around align-center margin-top">
+                    <div className="flex-row justify-center align-center margin-top">
                       <button
                         className="blue-btn"
                         type="submit"
