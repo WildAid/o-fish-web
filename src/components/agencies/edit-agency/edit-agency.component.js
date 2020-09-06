@@ -19,7 +19,7 @@ class EditAgency extends Component {
   saveAgency = (values) => {
     const { agencyInfo, loading } = this.state;
     let newAgency = {
-      active: true,
+      active: values.active,
       name: values.name,
       description: values.description,
       site: values.site,
@@ -31,8 +31,8 @@ class EditAgency extends Component {
       .then(() => this.goRedirect())
       .catch((error) => {
         error.message
-        ? this.setState({ error: `${error.name}: ${error.message}` })
-        : this.setState({ error: "An unexpected error occurred!" });
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
       });
   };
 
@@ -70,14 +70,14 @@ class EditAgency extends Component {
 
     const initialValues = !loading
       ? {
-          active: true,
+          active: agencyInfo.active,
           name: agencyInfo.name,
           description: agencyInfo.description,
           site: agencyInfo.site,
           email: agencyInfo.email,
         }
       : {
-          active: true,
+          active: false,
           name: "",
           description: "",
           site: "",

@@ -4,8 +4,6 @@ import { withTranslation } from "react-i18next";
 
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
-import { goToPage } from "./../../../helpers/get-data";
-
 import AgencyService from "./../../../services/agency.service";
 import AgencyFormData from "../form-data/form-data.js"
 

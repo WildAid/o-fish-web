@@ -139,14 +139,14 @@ class AgenciesMain extends React.Component {
                       key={ind}
                       onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
                     >
-                        <td className="blue-color">{item.name}</td>
-                        <td>{item.description}</td>
-                        <td>{item.officers || "N/A"}</td>
-                        <td>
-                          <div className={`status-icon ${status}-status-icon`}>
-                            {status}
-                          </div>
-                        </td>
+                      <td className="blue-color">{item.name}</td>
+                      <td>{item.description}</td>
+                      <td>{item.officers || "N/A"}</td>
+                      <td>
+                        <div className={`status-icon ${status}-status-icon`}>
+                          {status}
+                        </div>
+                      </td>
                       <td
                         className="blue-color"
                         onClick={(e) => {
