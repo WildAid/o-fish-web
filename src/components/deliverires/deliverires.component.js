@@ -11,9 +11,7 @@ import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
 import { convertFilter } from "./../../helpers/get-data";
 
-// import UserPhoto from "../../components/partials/user-photo/user-photo.component";
-
-import './photos.css';
+import "./deliveries.css";
 
 const overviewService = OverviewService.getInstance();
 
@@ -87,7 +85,7 @@ const filterConfiguration = {
       title: "Name",
     },
   ],
-  "Crews": [
+  Crews: [
     {
       name: "crewLicense",
       field: "crew.license",
@@ -113,18 +111,20 @@ const filterConfiguration = {
   ],
 };
 
-class PhotosPage extends Component {
+class DeliveriesPage extends Component {
   state = {
-    photos: [],
+    deliveries: [],
     loading: false,
-    mounted: false
+    mounted: false,
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-      this.setState({ loading: true, mounted: true, filter: convertFilter(filter) }, () => {
-        const licenseNumber = filter["crew.license"];
+    this.setState(
+      { loading: true, mounted: true, filter: convertFilter(filter) },
+      () => {
+        const permitNumber = filter["vessel.permitNumber"];
 
         overviewService
           .getBoardingsByFilter(filter)
@@ -133,87 +133,89 @@ class PhotosPage extends Component {
 
             const newState = {
               loading: false,
-              photos: dataHelper.getPhotos(licenseNumber),
+              deliveries: dataDeliveries.getPhotos(),
             };
             this.setState(newState);
           })
           .catch((error) => {
             console.error(error);
           });
-      });
+      }
+    );
   }
 
   render() {
-    const { photos, loading, filter, mounted } = this.state;
+    const { deliveries, loading, filter, mounted } = this.state;
     const { t } = this.props;
 
-    return mounted && (
-      <div className="flex-column justify-center align-center padding-bottom photos-overview">
-        <SearchPanel handler={this.search} isAutofill={false} />
-        {!loading ? (
-          <Fragment>
-            <div className="flex-row align-center standard-view">
-              <div>
-                <div className="item-label margin-top">
-                  {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+    return (
+      mounted && (
+        <div className="flex-column justify-center align-center padding-bottom photos-overview">
+          <SearchPanel handler={this.search} isAutofill={false} />
+          {!loading ? (
+            <Fragment>
+              <div className="flex-row align-center standard-view">
+                <div>
+                  <div className="item-label margin-top">
+                    {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+                  </div>
+                  <div className="item-name">{`${photos.length} ${t(
+                    "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
+                  )}`}</div>
                 </div>
-                <div className="item-name">{`${photos.length} ${t(
-                  "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
-                )}`}</div>
               </div>
-            </div>
-            <div className="flex-row align-center standard-view">
-              <div className="margin-right">
-                {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+              <div className="flex-row align-center standard-view">
+                <div className="margin-right">
+                  {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+                </div>
+                <FilterPanel
+                  filter={filter}
+                  options={{ searchByFilter: true }}
+                  configuration={filterConfiguration}
+                />
               </div>
-              <FilterPanel
-                filter={filter}
-                options={{ searchByFilter: true }}
-                configuration={filterConfiguration}
-              />
-            </div>
-            <div className="table-wrapper">
-              <table className="full-view">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.PHOTO")}</td>
-                    <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
-                    <td></td>
-                    <td>{t("TABLE.VESSEL")}</td>
-                    <td>{t("TABLE.BOARDED_BY")}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {photos.map((photo, ind) => (
-                    <tr key={ind} className="table-row row-body">
-                      <td>
-                        {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
-                        <div className="photo-icon">
-                          <img
-                            className="icon"
-                            src={require("../../assets/photo-big-icon.png")}
-                            alt="no logo"
-                          />
-                        </div>
-                      </td>
-                      <td>{moment(photo.date).format("LLL")}</td>
-                      <td>
-                        <RiskIcon safetyLevel={photo.risk} />
-                      </td>
-                      <td>{photo.vessel}</td>
-                      <td>{photo.boardedBy}</td>
+              <div className="table-wrapper">
+                <table className="full-view">
+                  <thead>
+                    <tr className="table-row row-head border-bottom">
+                      <td>{t("TABLE.PHOTO")}</td>
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
+                      <td></td>
+                      <td>{t("TABLE.VESSEL")}</td>
+                      <td>{t("TABLE.BOARDED_BY")}</td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Fragment>
-        ) : (
-          <LoadingPanel />
-        )}
-      </div>
+                  </thead>
+                  <tbody>
+                    {deliveries.map((delivery, ind) => (
+                      <tr key={ind} className="table-row row-body">
+                        <td>
+                          <div className="photo-icon">
+                            <img
+                              className="icon"
+                              src={require("../../assets/photo-big-icon.png")}
+                              alt="no logo"
+                            />
+                          </div>
+                        </td>
+                        <td>{moment(photo.date).format("LLL")}</td>
+                        <td>
+                          <RiskIcon safetyLevel={photo.risk} />
+                        </td>
+                        <td>{photo.vessel}</td>
+                        <td>{photo.boardedBy}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Fragment>
+          ) : (
+            <LoadingPanel />
+          )}
+        </div>
+      )
     );
   }
 }
 
-export default withTranslation("translation")(PhotosPage);
+export default withTranslation("translation")(DeliveriesPage);

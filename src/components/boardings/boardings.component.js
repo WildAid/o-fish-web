@@ -6,7 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage, convertFilter } from "./../../helpers/get-data";
 
 import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -18,7 +18,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
-import { convertFilter } from "./../../helpers/get-data";
 
 import {
   NEW_BOARDING_PAGE,
@@ -74,13 +73,13 @@ const filterConfiguration = {
     },
     {
       name: "dateFrom",
-      field:  "date-from",
+      field: "date-from",
       title: "Date from",
       type: "date",
     },
     {
       name: "dateTo",
-      field:  "date-to",
+      field: "date-to",
       title: "Date To",
       type: "date",
     },
@@ -142,7 +141,7 @@ const filterConfiguration = {
       title: "Count",
     },
   ],
-  "Crews": [
+  Crews: [
     {
       name: "crewLicense",
       field: "crew.license",
@@ -184,7 +183,7 @@ class Boardings extends Component {
     highlighted: [],
     loading: true,
     defaultFilter: null,
-    mounted : false,
+    mounted: false,
     page: 1,
   };
 
@@ -222,9 +221,9 @@ class Boardings extends Component {
   };
 
   loadData(newState) {
-    newState = newState ? newState : {};
-    newState.mounted = true;
+    newState = newState || {};
     newState.loading = true;
+
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
       boardingService
@@ -246,13 +245,13 @@ class Boardings extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.filter){
+    if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
       //this.loadData({mounted: true});
-      this.setState({mounted: true, defaultFilter: convertFilter(filter)});
+      this.setState({ mounted: true, defaultFilter: convertFilter(filter) });
       //The loadData will be called automatically from filter-panel
     } else {
-      this.loadData({mounted: true});
+      this.loadData({ mounted: true });
     }
   }
 
@@ -388,12 +387,14 @@ class Boardings extends Component {
             )}
           </Fragment>
         ) : loading ? (
-          <LoadingPanel/>
+          <LoadingPanel />
         ) : (
           t("WARNINGS.NO_BOARDINGS")
         )}
       </div>
-    ) : "";
+    ) : (
+      ""
+    );
   }
 }
 

@@ -22,7 +22,6 @@ export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
 export const VIEW_BOARDING_PAGE = "/boardings/view/:id";
 export const BOARDING_FILTERED_PAGE = "/boardings/filtered/:filter";
 
-
 //Crew sub routes
 export const VIEW_CREW_PAGE = "/crew/view/:filter";
 export const CREW_FILTERED_PAGE = "/crew/filtered/:filter";

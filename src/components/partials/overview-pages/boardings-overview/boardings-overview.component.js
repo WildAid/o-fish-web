@@ -1,14 +1,16 @@
 import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
-import { NavLink } from "react-router-dom";
 
-import { goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 
-import { BOARDINGS_PAGE, BOARDING_FILTERED_PAGE } from "../../../../root/root.constants.js";
+import {
+  VIEW_BOARDING_PAGE,
+  BOARDING_FILTERED_PAGE,
+} from "../../../../root/root.constants.js";
 
 import "./boardings-overview.css";
 
@@ -37,24 +39,31 @@ const BoardingsOverview = ({ t, boardings, filter }) => (
           <tbody>
             {boardings.slice(0, 4).map((boarding, ind) => {
               return (
-              <tr
-                key={ind}
-                className="table-row row-body"
-              >
-                <td>{moment(boarding.date).format("L")}</td>
-                <td>{moment(boarding.time).format("LT")}</td>
-                <td>{boarding.violations}</td>
-                <td>{boarding.citations}</td>
-                <td>{boarding.warnings}</td>
-                <td>{boarding.boardedBy}</td>
-                <td>
-                  <RiskIcon safetyLevel={boarding.risk} />
-                </td>
-              </tr>
-            )})}
+                <tr
+                  key={ind}
+                  className="table-row row-body"
+                  onClick={() =>
+                    goToPage(VIEW_BOARDING_PAGE, boarding.id)
+                  }
+                >
+                  <td>{moment(boarding.date).format("L")}</td>
+                  <td>{moment(boarding.time).format("LT")}</td>
+                  <td>{boarding.violations}</td>
+                  <td>{boarding.citations}</td>
+                  <td>{boarding.warnings}</td>
+                  <td>{boarding.boardedBy}</td>
+                  <td>
+                    <RiskIcon safetyLevel={boarding.risk} />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
-        <div className="flex-row justify-center padding-top" onClick={()=>goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}>
+        <div
+          className="flex-row justify-center padding-top"
+          onClick={() => goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}
+        >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>
       </Fragment>

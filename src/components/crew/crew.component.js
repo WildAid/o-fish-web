@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPageWithFilter
+  goCrewViewPage
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -18,8 +18,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import { convertFilter } from "./../../helpers/get-data";
-
-import { VIEW_CREW_PAGE } from "../../root/root.constants.js";
 
 import "./crew.css";
 
@@ -83,6 +81,10 @@ const filterConfiguration = {
   ],
   "Vessel Information": [
     {
+      name: "vessel.name",
+      title: "Vessel",
+    },
+    {
       name: "vessel.permitNumber",
       title: "Permit Number",
       type: "string-equal",
@@ -92,6 +94,30 @@ const filterConfiguration = {
       title: "Nationality",
     },
   ],
+  Crews: [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ]
 };
 
 class Crew extends Component {
@@ -251,18 +277,6 @@ class Crew extends Component {
     });
   }
 
-  goCrewViewPage(item){
-    const filter = {};
-    if (item.license){
-      filter["crew.license"] = item.license;
-    }
-    if (item.name){
-      filter["crew.name"] = item.name;
-    }
-    goToPageWithFilter(VIEW_CREW_PAGE, filter);
-  }
-
-
   render() {
     const {
       crew,
@@ -320,7 +334,7 @@ class Crew extends Component {
                       className="table-row row-body"
                       key={ind}
                       onClick={() =>
-                        this.goCrewViewPage(item)
+                        goCrewViewPage(item)
                       }
                     >
                       <td>
