@@ -3,6 +3,7 @@ import { withTranslation } from "react-i18next";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 
+import { goToPageWithFilter } from "./../../../helpers/get-data";
 import SeeLink from "../../partials/see-all-link/see-all-link";
 
 import VesselHeaderInfo from "./../../partials/overview-pages/vessel-header-info/vessel-header-info.component";
@@ -15,7 +16,7 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 import VesselDataHelper from "../vessel-data.helper";
 import OverviewService from "./../../../services/overview.service";
 
-import { CREW_PAGE } from "../../../root/root.constants.js";
+import { CREW_PAGE, CREW_FILTERED_PAGE } from "../../../root/root.constants.js";
 
 import "./vessel-view.css";
 
@@ -195,10 +196,8 @@ class VesselViewPage extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex-row justify-center padding-top padding-bottom">
-                      <NavLink className="item-link" to={CREW_PAGE}>
-                        {t("BUTTONS.SEE_ALL")}
-                      </NavLink>
+                    <div className="flex-row justify-center padding-top" onClick={()=>goToPageWithFilter(CREW_FILTERED_PAGE, filter)}>
+                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
                     </div>
                   </Fragment>
                 ) : (

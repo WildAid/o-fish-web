@@ -63,8 +63,10 @@ import {
   BOARDING_FILTERED_PAGE,
   //Crew sub routes
   VIEW_CREW_PAGE,
+  CREW_FILTERED_PAGE,
   //Vessels sub routes
   VIEW_VESSEL_PAGE,
+  VESSELS_FILTERED_PAGE,
   //Users sub routes
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
@@ -127,7 +129,7 @@ const routes = [
         path: BOARDING_FILTERED_PAGE,
         component: Boardings,
         exact: true,
-      },    
+      },
       {
         path: VIEW_BOARDING_PAGE,
         component: BoardingViewPage,
@@ -157,6 +159,11 @@ const routes = [
         component: Vessels,
       },
       {
+        path: VESSELS_FILTERED_PAGE,
+        exact: true,
+        component: Vessels,
+      },
+      {
         path: VIEW_VESSEL_PAGE,
         exact: true,
         component: VesselViewPage,
@@ -171,6 +178,11 @@ const routes = [
     routes: [
       {
         path: CREW_PAGE,
+        exact: true,
+        component: Crew,
+      },
+      {
+        path: CREW_FILTERED_PAGE,
         exact: true,
         component: Crew,
       },

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import withQueryParams from 'react-router-query-params';
+import SeeLink from "../../partials/see-all-link/see-all-link";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -12,11 +13,12 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
 
-import { goToPage } from "./../../../helpers/get-data";
+import { goToPage, goToPageWithFilter } from "./../../../helpers/get-data";
 
 import {
   VESSELS_PAGE,
   VIEW_VESSEL_PAGE,
+  VESSELS_FILTERED_PAGE
 } from "../../../root/root.constants.js";
 
 import "./crew-view.css";
@@ -115,11 +117,9 @@ class CrewViewPage extends Component {
                             key={ind}
                             className="table-row row-body"
                             onClick={() =>
-                              goToPage(
-                                VIEW_VESSEL_PAGE,
-                                vessel.permitNumber
-                                  ? `pn${vessel.permitNumber}`
-                                  : `in${vessel.name}`
+                              goToPageWithFilter(
+                                VESSELS_FILTERED_PAGE,
+                                {"vessel.permitNumber" : vessel.permitNumber}
                               )
                             }
                           >
@@ -172,10 +172,8 @@ class CrewViewPage extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex-row justify-center padding-top padding-bottom">
-                      <NavLink className="item-link" to={VESSELS_PAGE}>
-                        {t("BUTTONS.SEE_ALL")}
-                      </NavLink>
+                    <div className="flex-row justify-center padding-top" onClick={()=>goToPageWithFilter(VESSELS_FILTERED_PAGE, filter)}>
+                      <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
                     </div>
                   </Fragment>
                 ) : (

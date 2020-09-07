@@ -25,9 +25,11 @@ export const BOARDING_FILTERED_PAGE = "/boardings/filtered/:filter";
 
 //Crew sub routes
 export const VIEW_CREW_PAGE = "/crew/view/:filter";
+export const CREW_FILTERED_PAGE = "/crew/filtered/:filter";
 
 //Vessels sub routes
 export const VIEW_VESSEL_PAGE = "/vessels/view/:filter";
+export const VESSELS_FILTERED_PAGE = "/vessels/filtered/:filter";
 
 //Users subroutes
 export const NEW_USER_PAGE = "/users/new_user";

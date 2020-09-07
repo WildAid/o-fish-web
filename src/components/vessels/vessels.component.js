@@ -18,6 +18,7 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
+import { convertFilter } from "./../../helpers/get-data";
 
 import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
 
@@ -126,6 +127,7 @@ class Vessels extends Component {
     loading: false,
     defaultFilter: null,
     page: 1,
+    mounted: false
   };
 
   search = (value) => {
@@ -177,13 +179,13 @@ class Vessels extends Component {
   }
 
   componentDidMount() {
-    const {filter} = this.props; //Or from other place
-
-    if (filter){
-      this.setState({defaultFilter: filter});
+    if (this.props.match.params.filter){
+      const filter = JSON.parse(this.props.match.params.filter);
+      //this.loadData({mounted: true});
+      this.setState({mounted: true, defaultFilter: convertFilter(filter)});
       //The loadData will be called automatically from filter-panel
     } else {
-      this.loadData();
+      this.loadData({mounted: true});
     }
   }
 
@@ -207,12 +209,13 @@ class Vessels extends Component {
       highlighted,
       searchQuery,
       page,
-      defaultFilter
+      defaultFilter,
+      mounted
     } = this.state;
 
     const { t } = this.props;
 
-    return (
+    return mounted && (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
           handler={this.search}
