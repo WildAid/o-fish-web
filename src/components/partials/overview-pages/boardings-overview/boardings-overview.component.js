@@ -9,7 +9,7 @@ import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 
 import {
   VIEW_BOARDING_PAGE,
-  BOARDING_FILTERED_PAGE,
+  BOARDINGS_PAGE,
 } from "../../../../root/root.constants.js";
 
 import "./boardings-overview.css";
@@ -62,7 +62,7 @@ const BoardingsOverview = ({ t, boardings, filter }) => (
         </table>
         <div
           className="flex-row justify-center padding-top"
-          onClick={() => goToPageWithFilter(BOARDING_FILTERED_PAGE, filter)}
+          onClick={() => goToPageWithFilter(BOARDINGS_PAGE, filter)}
         >
           <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
         </div>

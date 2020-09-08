@@ -22,7 +22,7 @@ class FoundCrew extends Component {
               </div>
             </div>
             {total > 1 && (
-              <NavLink className="item-link" to={CREW_PAGE}>
+              <NavLink className="item-link" to={CREW_PAGE.replace(":filter", "null")}>
                 See all
               </NavLink>
             )}

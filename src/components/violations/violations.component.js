@@ -10,8 +10,6 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
 
-import { convertFilter } from "./../../helpers/get-data";
-
 const overviewService = OverviewService.getInstance();
 
 const filterConfiguration = {
@@ -109,14 +107,13 @@ class ViolationsPage extends Component {
   state = {
     violations: [],
     loading: false,
-    defaultFilter: null,
     mounted: false
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-    this.setState({ loading: true, mounted: true, defaultFilter : convertFilter(filter) }, () => {
+    this.setState({ loading: true, mounted: true }, () => {
       overviewService
         .getBoardingsByFilter(filter)
         .then((data) => {
@@ -135,7 +132,7 @@ class ViolationsPage extends Component {
   }
 
   render() {
-    const { violations, loading, defaultFilter, mounted } = this.state;
+    const { violations, loading, mounted } = this.state;
     const { t } = this.props;
 
     return mounted && (
@@ -155,7 +152,6 @@ class ViolationsPage extends Component {
               <div className="margin-right">{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
               <FilterPanel
                 options={{ searchByFilter: true }}
-                filter={defaultFilter}
                 configuration={filterConfiguration}
               />
             </div>

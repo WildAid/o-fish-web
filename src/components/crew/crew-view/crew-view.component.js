@@ -17,7 +17,7 @@ import { goToPageWithFilter } from "./../../../helpers/get-data";
 
 import {
   VIEW_VESSEL_PAGE,
-  VESSELS_FILTERED_PAGE
+  VESSELS_PAGE
 } from "../../../root/root.constants.js";
 
 import "./crew-view.css";
@@ -180,7 +180,7 @@ class CrewViewPage extends Component {
                     <div
                       className="flex-row justify-center padding-bottom padding-top"
                       onClick={() =>
-                        goToPageWithFilter(VESSELS_FILTERED_PAGE, filter)
+                        goToPageWithFilter(VESSELS_PAGE, filter)
                       }
                     >
                       <SeeLink linkText={t("BUTTONS.SEE_ALL")} />

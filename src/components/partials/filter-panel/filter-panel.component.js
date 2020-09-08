@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import moment from "moment";
 import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 
+import history from "../../../root/root.history";
 import FilterPart from "./filter-part.component";
 import FilterLine from "./filter-line.component";
 
@@ -11,8 +13,20 @@ import "./filter-panel.css";
 class FilterPanel extends Component {
   state = { isFilterPanelShown: false, filterParts: [], searchQuery: "" };
 
+  convertFilter(filterObj){
+    const filter = [];
+    for (var key in filterObj) {
+      filter.push({ name: key, value: filterObj[key] });
+    }
+    return filter;
+  }
+
   componentDidMount(){
-    const { filter, configuration } = this.props;
+    let filter = [];
+    if (this.props.match.params.filter) {
+      filter = this.convertFilter(JSON.parse(this.props.match.params.filter));
+    }
+    const { configuration } = this.props;
     if (configuration && filter && filter.length){
       const flatConfig = {};
       for (const section in configuration){
@@ -30,11 +44,7 @@ class FilterPanel extends Component {
           })
         }
       });
-
       this.setState({filterParts: defaultFilter});
-      if (this.props.onFilterChanged) {
-        this.props.onFilterChanged(this.constructFilter(defaultFilter));
-      }
     }
   }
 
@@ -95,11 +105,19 @@ class FilterPanel extends Component {
       this.setState({
         filterParts: filterParts,
       });
-      if (this.props.onFilterChanged) {
-        this.props.onFilterChanged(this.constructFilter(filterParts));
-      }
+      this.applyFilterChanges();
     }
   };
+
+  applyFilterChanges(){
+    const { filterParts } = this.state;
+    const path = this.props.match.path;
+    const filter = JSON.stringify(this.constructFilter(filterParts));
+    history.push(path.replace(":filter", filter));
+    if (this.props.onFilterChanged) {
+      this.props.onFilterChanged(this.constructFilter(filterParts));
+    }
+  }
 
   checkFilterPart = (part) => {
     const { filterParts } = this.state;
@@ -113,9 +131,7 @@ class FilterPanel extends Component {
         isFilterPanelShown: false,
       });
       if (part.type === "value" || part.type === "risk") {
-        if (this.props.onFilterChanged) {
-          this.props.onFilterChanged(this.constructFilter(filterParts));
-        }
+        this.applyFilterChanges();
       }
     }
   };
@@ -127,9 +143,7 @@ class FilterPanel extends Component {
       filterParts: filterParts,
       isFilterPanelShown: false,
     });
-    if (this.props.onFilterChanged) {
-      this.props.onFilterChanged(this.constructFilter(filterParts));
-    }
+    this.applyFilterChanges();
   };
 
   render() {
@@ -201,4 +215,4 @@ class FilterPanel extends Component {
   }
 }
 
-export default withTranslation("translation")(FilterPanel);
+export default withRouter(withTranslation("translation")(FilterPanel));

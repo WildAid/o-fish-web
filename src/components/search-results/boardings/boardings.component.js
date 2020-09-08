@@ -28,7 +28,7 @@ class FoundBoardings extends Component {
               <div className="item-name">Boardings ({total})</div>
             </div>
             {total > 1 && (
-              <NavLink className="item-link" to={BOARDINGS_PAGE}>
+              <NavLink className="item-link" to={BOARDINGS_PAGE.replace(":filter", "null")}>
                 See all
               </NavLink>
             )}

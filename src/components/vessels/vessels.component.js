@@ -8,7 +8,6 @@ import {
   getColor,
   getHighlightedText,
   goToPageWithFilter,
-  convertFilter,
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -127,8 +126,6 @@ class Vessels extends Component {
     highlighted: [],
     currentFilter: null,
     loading: false,
-    defaultFilter: null,
-    mounted: false,
     page: 1,
     mounted: false
   };
@@ -185,7 +182,7 @@ class Vessels extends Component {
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
-      this.setState({ mounted: true, defaultFilter: convertFilter(filter) });
+      this.loadData({ mounted: true, currentFilter: filter});
       //The loadData will be called automatically from filter-panel
     } else {
       this.loadData({ mounted: true });
@@ -212,7 +209,6 @@ class Vessels extends Component {
       highlighted,
       searchQuery,
       page,
-      defaultFilter,
       mounted
     } = this.state;
 
@@ -237,7 +233,6 @@ class Vessels extends Component {
           <FilterPanel
             options={{ searchByFilter: true }}
             configuration={filterConfiguration}
-            filter={defaultFilter}
             onFilterChanged={this.handleFilterChanged}
           />
         </div>
