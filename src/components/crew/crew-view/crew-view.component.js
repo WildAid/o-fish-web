@@ -51,7 +51,13 @@ class CrewViewPage extends Component {
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
-    const licenseNumber = filter["crew.license"];
+    const isCaptain =  filter["captain.license"] !== undefined;
+    let licenseNumber;
+    if (isCaptain){
+      licenseNumber = filter["captain.license"]
+    } else {
+      licenseNumber = filter["crew.license"];
+    }
     this.setState({ loading: true }, () => {
       overviewService
         .getBoardingsByFilter(filter)
@@ -64,11 +70,14 @@ class CrewViewPage extends Component {
             violations: dataHelper.getViolations(licenseNumber),
             licenseNumbers: [licenseNumber],
             vessels: dataHelper.getVessels(),
-            captainName: dataHelper.getCaptainName(licenseNumber),
-            crewName: dataHelper.getCrewName(licenseNumber),
             notes: dataHelper.getNotes(licenseNumber),
+            captainName: dataHelper.getCaptainName(licenseNumber),
+            crewName: isCaptain ?
+              dataHelper.getCaptainName(licenseNumber):
+              dataHelper.getCrewName(licenseNumber),
             photos: dataHelper.getPhotos(licenseNumber),
           };
+
 
           this.setState(newState);
         })

@@ -189,11 +189,21 @@ export const goToPageWithFilter = (path, filter) => {
 
 export const goCrewViewPage = (item) => {
   const filter = {};
-  if (item.license) {
-    filter["crew.license"] = item.license;
+  if (item.isCaptain){
+    if (item.license) {
+      filter["captain.license"] = item.license;
+    }
+    if (item.name) {
+      filter["captain.name"] = item.name;
+    }
   }
-  if (item.name) {
-    filter["crew.name"] = item.name;
+  else {
+    if (item.license) {
+      filter["crew.license"] = item.license;
+    }
+    if (item.name) {
+      filter["crew.name"] = item.name;
+    }
   }
   goToPageWithFilter(VIEW_CREW_PAGE, filter);
 };

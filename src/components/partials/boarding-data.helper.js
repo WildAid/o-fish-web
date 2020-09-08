@@ -299,7 +299,8 @@ export default class BoardingDataHelper {
           photos: boarding.captain.attachments ?
               boarding.captain.attachments.photoIDs : [],
           notes: boarding.captain.attachments ?
-              boarding.captain.attachments.notes : []           
+              boarding.captain.attachments.notes : [],
+          isCaptain: true
         });
       }
     });
@@ -313,6 +314,7 @@ export default class BoardingDataHelper {
               photos: crewMember.attachments
                 ? crewMember.attachments.photoIDs
                 : [],
+              isCaptain: false,
               notes: crewMember.attachments ? crewMember.attachments.notes : [],
             });
           }
