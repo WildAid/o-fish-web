@@ -130,7 +130,6 @@ class Vessels extends Component {
     defaultFilter: null,
     mounted: false,
     page: 1,
-    mounted: false
   };
 
   search = (value) => {

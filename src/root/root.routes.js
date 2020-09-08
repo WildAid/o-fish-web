@@ -18,6 +18,7 @@ import Profile from "../components/profile/profile.component";
 import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
 import NotesPage from "../components/notes/notes.component";
+import DeliveriesPage from "../components/deliverires/deliverires.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";
@@ -56,6 +57,7 @@ import {
   VIOLATIONS_PAGE,
   PHOTOS_PAGE,
   NOTES_PAGE,
+  DELIVERIES_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -111,6 +113,12 @@ const routes = [
   {
     path: NOTES_PAGE,
     component: NotesPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: DELIVERIES_PAGE,
+    component: DeliveriesPage,
     auth: true,
     exact: false,
   },

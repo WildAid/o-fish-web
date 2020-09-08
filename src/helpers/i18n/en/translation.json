@@ -134,6 +134,7 @@
     "UPDATE_USER": "Update User"
   },
   "TABLE": {
+    "ADDRESS": "Address",
     "DATE": "Date",
     "TIME": "Time",
     "VESSEL": "Vessel",
