@@ -205,7 +205,7 @@ class VesselViewPage extends Component {
                       </tbody>
                     </table>
                     <div
-                      className="flex-row justify-center padding-top"
+                      className="flex-row justify-center padding-top padding-bottom"
                       onClick={() =>
                         goToPageWithFilter(CREW_FILTERED_PAGE, filter)
                       }
