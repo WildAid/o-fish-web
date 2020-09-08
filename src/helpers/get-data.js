@@ -173,16 +173,10 @@ export const checkUserType = (user) => {
   return userRole;
 };
 
-export const convertFilter = (filterObj) => {
-  const filter = [];
-  for (var key in filterObj) {
-    filter.push({ name: key, value: filterObj[key] });
-  }
-  return filter;
-};
-
 export const goToPage = (path, id) => {
-  history.push(path.replace(":id", id));
+  path = path.replace(":id", id);
+  path = path.replace(":filter", "null");
+  history.push(path);
 };
 
 export const pageWithFilterURL = (path, filter) => {

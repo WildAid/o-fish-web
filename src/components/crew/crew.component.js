@@ -17,7 +17,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
-import { convertFilter } from "./../../helpers/get-data";
 
 import "./crew.css";
 
@@ -134,7 +133,6 @@ class Crew extends Component {
     highlighted: [],
     loading: false,
     currentFilter: null,
-    defaultFilter: null,
     page: 1,
     mounted: false
   };
@@ -164,9 +162,7 @@ class Crew extends Component {
   componentDidMount() {
     if (this.props.match.params.filter){
       const filter = JSON.parse(this.props.match.params.filter);
-      //this.loadData({mounted: true});
-      this.setState({mounted: true, defaultFilter: convertFilter(filter)});
-      //The loadData will be called automatically from filter-panel
+      this.loadData({mounted: true, currentFilter: filter});
     } else {
       this.loadData({mounted: true});
     }
@@ -254,7 +250,6 @@ class Crew extends Component {
     newState.loading = true;
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
-
       stitchService
         .getCrewsWithFacet(limit, offset, searchQuery, currentFilter)
         .then((data) => {
@@ -285,7 +280,6 @@ class Crew extends Component {
       loading,
       highlighted,
       searchQuery,
-      defaultFilter,
       page,
       mounted
     } = this.state;
@@ -310,7 +304,6 @@ class Crew extends Component {
           )}
           <FilterPanel
             options={{ searchByFilter: true }}
-            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />

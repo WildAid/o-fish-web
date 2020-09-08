@@ -8,7 +8,6 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-import { convertFilter } from "./../../helpers/get-data";
 
 const overviewService = OverviewService.getInstance();
 
@@ -119,7 +118,7 @@ class DeliveriesPage extends Component {
     const filter = JSON.parse(this.props.match.params.filter);
 
     this.setState(
-      { loading: true, mounted: true, filter: convertFilter(filter) },
+      { loading: true, mounted: true, filter: filter },
       () => {
         overviewService
           .getBoardingsByFilter(filter)
@@ -140,7 +139,7 @@ class DeliveriesPage extends Component {
   }
 
   render() {
-    const { deliveries, loading, filter, mounted } = this.state;
+    const { deliveries, loading, mounted } = this.state;
     const { t } = this.props;
 
     return (
@@ -164,7 +163,6 @@ class DeliveriesPage extends Component {
                   {t("BOARDING_PAGE.ALL_DATES")} &#11206;
                 </div>
                 <FilterPanel
-                  filter={filter}
                   options={{ searchByFilter: true }}
                   configuration={filterConfiguration}
                 />

@@ -6,7 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getHighlightedText, goToPage, convertFilter } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -182,7 +182,6 @@ class Boardings extends Component {
         : "",
     highlighted: [],
     loading: true,
-    defaultFilter: null,
     mounted: false,
     page: 1,
   };
@@ -247,9 +246,7 @@ class Boardings extends Component {
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
-      //this.loadData({mounted: true});
-      this.setState({ mounted: true, defaultFilter: convertFilter(filter) });
-      //The loadData will be called automatically from filter-panel
+      this.loadData({ mounted: true, currentFilter: filter});
     } else {
       this.loadData({ mounted: true });
     }
@@ -264,7 +261,6 @@ class Boardings extends Component {
       isMapShown,
       highlighted,
       searchQuery,
-      defaultFilter,
       mounted,
       page,
     } = this.state;
@@ -307,7 +303,6 @@ class Boardings extends Component {
           </div>
           <FilterPanel
             options={{ searchByFilter: true }}
-            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />

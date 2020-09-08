@@ -121,21 +121,21 @@ class Header extends Component {
                     <NavLink
                       onClick={this.navigate}
                       className="nav-link"
-                      to={BOARDINGS_PAGE}
+                      to={BOARDINGS_PAGE.replace(":filter", "null")}
                     >
                       {t("NAVIGATION.BOARDINGS")}
                     </NavLink>
                     <NavLink
                       onClick={this.navigate}
                       className="nav-link"
-                      to={VESSELS_PAGE}
+                      to={VESSELS_PAGE.replace(":filter", "null")}
                     >
                       {t("NAVIGATION.VESSELS")}
                     </NavLink>
                     <NavLink
                       onClick={this.navigate}
                       className="nav-link"
-                      to={CREW_PAGE}
+                      to={CREW_PAGE.replace(":filter", "null")}
                     >
                       {t("NAVIGATION.CREW")}
                     </NavLink>

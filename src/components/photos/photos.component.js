@@ -9,7 +9,6 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-import { convertFilter } from "./../../helpers/get-data";
 
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
@@ -123,7 +122,7 @@ class PhotosPage extends Component {
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-      this.setState({ loading: true, mounted: true, filter: convertFilter(filter) }, () => {
+      this.setState({ loading: true, mounted: true }, () => {
         const licenseNumber = filter["crew.license"];
 
         overviewService
@@ -144,7 +143,7 @@ class PhotosPage extends Component {
   }
 
   render() {
-    const { photos, loading, filter, mounted } = this.state;
+    const { photos, loading, mounted } = this.state;
     const { t } = this.props;
 
     return mounted && (
@@ -167,7 +166,6 @@ class PhotosPage extends Component {
                 {t("BOARDING_PAGE.ALL_DATES")} &#11206;
               </div>
               <FilterPanel
-                filter={filter}
                 options={{ searchByFilter: true }}
                 configuration={filterConfiguration}
               />
