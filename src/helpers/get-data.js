@@ -189,7 +189,7 @@ export const goToPageWithFilter = (path, filter) => {
 
 export const goCrewViewPage = (item) => {
   const filter = {};
-  if (item.isCaptain){
+  if (item.isCaptain || item.rank === "captain"){
     if (item.license) {
       filter["captain.license"] = item.license;
     }
