@@ -64,6 +64,18 @@ class AgenciesMain extends React.Component {
     e.stopPropagation();
   };
 
+  getAgenciesWithOfficers = (agencies, officers) => {
+    return agencies.map((agency) => {
+      var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+      if (agencyWithOfficers) {
+        agency.officers = Array.from(new Set(agencyWithOfficers.officers))
+          .slice(0, 3)
+          .join(", ");
+      }
+      return agency;
+    });
+  };
+
   loadData(newState) {
     newState = newState || {};
     newState.loading = true;
@@ -75,7 +87,8 @@ class AgenciesMain extends React.Component {
         .then((data) => {
           this.setState({
             loading: false,
-            agencies: data.agencies || [],
+            agencies:
+              this.getAgenciesWithOfficers(data.agencies, data.officers) || [],
             total: data.amount && data.amount[0] ? data.amount[0].total : 0,
             highlighted: data.highlighted
               ? getHighlightedText(data.highlighted)
