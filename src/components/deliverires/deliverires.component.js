@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-import moment from "moment";
 
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -9,9 +8,6 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-import { convertFilter } from "./../../helpers/get-data";
-
-import "./deliveries.css";
 
 const overviewService = OverviewService.getInstance();
 
@@ -122,10 +118,8 @@ class DeliveriesPage extends Component {
     const filter = JSON.parse(this.props.match.params.filter);
 
     this.setState(
-      { loading: true, mounted: true, filter: convertFilter(filter) },
+      { loading: true, mounted: true, filter: filter },
       () => {
-        const permitNumber = filter["vessel.permitNumber"];
-
         overviewService
           .getBoardingsByFilter(filter)
           .then((data) => {
@@ -133,7 +127,7 @@ class DeliveriesPage extends Component {
 
             const newState = {
               loading: false,
-              deliveries: dataDeliveries.getPhotos(),
+              deliveries: dataHelper.getDeliveries(),
             };
             this.setState(newState);
           })
@@ -145,7 +139,7 @@ class DeliveriesPage extends Component {
   }
 
   render() {
-    const { deliveries, loading, filter, mounted } = this.state;
+    const { deliveries, loading, mounted } = this.state;
     const { t } = this.props;
 
     return (
@@ -157,10 +151,10 @@ class DeliveriesPage extends Component {
               <div className="flex-row align-center standard-view">
                 <div>
                   <div className="item-label margin-top">
-                    {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+                    {t("TABLE.DELIVERIES")}
                   </div>
-                  <div className="item-name">{`${photos.length} ${t(
-                    "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
+                  <div className="item-name">{`${deliveries.length} ${t(
+                    "TABLE.DELIVERIES"
                   )}`}</div>
                 </div>
               </div>
@@ -169,7 +163,6 @@ class DeliveriesPage extends Component {
                   {t("BOARDING_PAGE.ALL_DATES")} &#11206;
                 </div>
                 <FilterPanel
-                  filter={filter}
                   options={{ searchByFilter: true }}
                   configuration={filterConfiguration}
                 />
@@ -178,31 +171,27 @@ class DeliveriesPage extends Component {
                 <table className="full-view">
                   <thead>
                     <tr className="table-row row-head border-bottom">
-                      <td>{t("TABLE.PHOTO")}</td>
+                      <td>{`${t("FILTER.MAIN.LAST_DELIVERY.NAME")} ${t(
+                        "TABLE.DATE"
+                      )}`}</td>
+                      <td>{t("FILTER.MAIN.LAST_DELIVERY.BUSINESS")}</td>
+                      <td>{t("TABLE.ADDRESS")}</td>
+                      <td>{t("TABLE.VESSEL")}</td>
                       <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
                       <td></td>
-                      <td>{t("TABLE.VESSEL")}</td>
-                      <td>{t("TABLE.BOARDED_BY")}</td>
                     </tr>
                   </thead>
                   <tbody>
                     {deliveries.map((delivery, ind) => (
                       <tr key={ind} className="table-row row-body">
+                        <td>{delivery.lastDelivery}</td>
+                        <td>{delivery.business}</td>
+                        <td>{delivery.location}</td>
+                        <td>{delivery.vessel}</td>
+                        <td>{delivery.date}</td>
                         <td>
-                          <div className="photo-icon">
-                            <img
-                              className="icon"
-                              src={require("../../assets/photo-big-icon.png")}
-                              alt="no logo"
-                            />
-                          </div>
+                          <RiskIcon safetyLevel={delivery.risk} />
                         </td>
-                        <td>{moment(photo.date).format("LLL")}</td>
-                        <td>
-                          <RiskIcon safetyLevel={photo.risk} />
-                        </td>
-                        <td>{photo.vessel}</td>
-                        <td>{photo.boardedBy}</td>
                       </tr>
                     ))}
                   </tbody>

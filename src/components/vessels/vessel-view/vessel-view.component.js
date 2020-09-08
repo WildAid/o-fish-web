@@ -15,11 +15,12 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
 
-import {
-  goCrewViewPage
-} from "./../../../helpers/get-data";
+import { goCrewViewPage } from "./../../../helpers/get-data";
 
-import { CREW_PAGE } from "../../../root/root.constants.js";
+import {
+  CREW_PAGE,
+  DELIVERIES_PAGE,
+} from "../../../root/root.constants.js";
 
 import "./vessel-view.css";
 
@@ -203,7 +204,12 @@ class VesselViewPage extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex-row justify-center padding-top" onClick={()=>goToPageWithFilter(CREW_PAGE, filter)}>
+                    <div
+                      className="flex-row justify-center padding-top"
+                      onClick={() =>
+                        goToPageWithFilter(CREW_PAGE, filter)
+                      }
+                    >
                       <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
                     </div>
                   </Fragment>
@@ -247,7 +253,12 @@ class VesselViewPage extends Component {
                         ))}
                       </tbody>
                     </table>
-                    <div className="flex-row justify-center padding-top">
+                    <div
+                      className="flex-row justify-center padding-top"
+                      onClick={() =>
+                        goToPageWithFilter(DELIVERIES_PAGE, filter)
+                      }
+                    >
                       <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
                     </div>
                   </Fragment>

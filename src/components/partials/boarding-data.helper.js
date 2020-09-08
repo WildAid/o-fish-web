@@ -292,6 +292,18 @@ export default class BoardingDataHelper {
   getCrew() {
     const collection = [];
     this.boardings.forEach((boarding) => {
+      if (!collection.find((c) => c.license === boarding.captain.license)) {
+        collection.push({
+          license: boarding.captain.license,
+          name: boarding.captain.name,
+          photos: boarding.captain.attachments ?
+              boarding.captain.attachments.photoIDs : [],
+          notes: boarding.captain.attachments ?
+              boarding.captain.attachments.notes : []           
+        });
+      }
+    });
+    this.boardings.forEach((boarding) => {
       if (boarding.crew && boarding.crew.length) {
         boarding.crew.forEach((crewMember) => {
           if (!collection.find((c) => c.license === crewMember.license)) {
