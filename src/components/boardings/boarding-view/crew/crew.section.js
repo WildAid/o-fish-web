@@ -63,14 +63,14 @@ class CrewSection extends Component {
                 <tr
                   className="table-row row-body"
                   key={ind}
-                  onClick={() =>
-                    goCrewViewPage(item)
-                  }
+                  onClick={() => goCrewViewPage(item)}
                 >
                   <td>{item.name}</td>
                   <td>{item.license}</td>
-                  <td>N/A</td>
-                  <td>{item.attachments.notes[0]}</td>
+                  <td>{item.attachments && item.attachments.photos ? item.attachments.photos.length : "N/A"}</td>
+                  <td>
+                    {item.attachments ? item.attachments.notes[0] : "N/A"}
+                  </td>
                 </tr>
               ))}
             </tbody>
