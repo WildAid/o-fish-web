@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-import moment from "moment";
 
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -9,10 +8,6 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
-
-// import UserPhoto from "../../components/partials/user-photo/user-photo.component";
-
-import './photos.css';
 
 const overviewService = OverviewService.getInstance();
 
@@ -86,7 +81,7 @@ const filterConfiguration = {
       title: "Name",
     },
   ],
-  "Crews": [
+  Crews: [
     {
       name: "crewLicense",
       field: "crew.license",
@@ -112,19 +107,19 @@ const filterConfiguration = {
   ],
 };
 
-class PhotosPage extends Component {
+class DeliveriesPage extends Component {
   state = {
-    photos: [],
+    deliveries: [],
     loading: false,
-    mounted: false
+    mounted: false,
   };
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-      this.setState({ loading: true, mounted: true }, () => {
-        const licenseNumber = filter["crew.license"];
-
+    this.setState(
+      { loading: true, mounted: true, filter: filter },
+      () => {
         overviewService
           .getBoardingsByFilter(filter)
           .then((data) => {
@@ -132,86 +127,84 @@ class PhotosPage extends Component {
 
             const newState = {
               loading: false,
-              photos: dataHelper.getPhotos(licenseNumber),
+              deliveries: dataHelper.getDeliveries(),
             };
             this.setState(newState);
           })
           .catch((error) => {
             console.error(error);
           });
-      });
+      }
+    );
   }
 
   render() {
-    const { photos, loading, mounted } = this.state;
+    const { deliveries, loading, mounted } = this.state;
     const { t } = this.props;
 
-    return mounted && (
-      <div className="flex-column justify-center align-center padding-bottom photos-overview">
-        <SearchPanel handler={this.search} isAutofill={false} />
-        {!loading ? (
-          <Fragment>
-            <div className="flex-row align-center standard-view">
-              <div>
-                <div className="item-label margin-top">
-                  {t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
+    return (
+      mounted && (
+        <div className="flex-column justify-center align-center padding-bottom photos-overview">
+          <SearchPanel handler={this.search} isAutofill={false} />
+          {!loading ? (
+            <Fragment>
+              <div className="flex-row align-center standard-view">
+                <div>
+                  <div className="item-label margin-top">
+                    {t("TABLE.DELIVERIES")}
+                  </div>
+                  <div className="item-name">{`${deliveries.length} ${t(
+                    "TABLE.DELIVERIES"
+                  )}`}</div>
                 </div>
-                <div className="item-name">{`${photos.length} ${t(
-                  "BOARDING_PAGE.VIEW_BOARDING.PHOTOS"
-                )}`}</div>
               </div>
-            </div>
-            <div className="flex-row align-center standard-view">
-              <div className="margin-right">
-                {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+              <div className="flex-row align-center standard-view">
+                <div className="margin-right">
+                  {t("BOARDING_PAGE.ALL_DATES")} &#11206;
+                </div>
+                <FilterPanel
+                  options={{ searchByFilter: true }}
+                  configuration={filterConfiguration}
+                />
               </div>
-              <FilterPanel
-                options={{ searchByFilter: true }}
-                configuration={filterConfiguration}
-              />
-            </div>
-            <div className="table-wrapper">
-              <table className="full-view">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.PHOTO")}</td>
-                    <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
-                    <td></td>
-                    <td>{t("TABLE.VESSEL")}</td>
-                    <td>{t("TABLE.BOARDED_BY")}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {photos.map((photo, ind) => (
-                    <tr key={ind} className="table-row row-body">
-                      <td>
-                        {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
-                        <div className="photo-icon">
-                          <img
-                            className="icon"
-                            src={require("../../assets/photo-big-icon.png")}
-                            alt="no logo"
-                          />
-                        </div>
-                      </td>
-                      <td>{moment(photo.date).format("LLL")}</td>
-                      <td>
-                        <RiskIcon safetyLevel={photo.risk} />
-                      </td>
-                      <td>{photo.vessel}</td>
-                      <td>{photo.boardedBy}</td>
+              <div className="table-wrapper">
+                <table className="full-view">
+                  <thead>
+                    <tr className="table-row row-head border-bottom">
+                      <td>{`${t("FILTER.MAIN.LAST_DELIVERY.NAME")} ${t(
+                        "TABLE.DATE"
+                      )}`}</td>
+                      <td>{t("FILTER.MAIN.LAST_DELIVERY.BUSINESS")}</td>
+                      <td>{t("TABLE.ADDRESS")}</td>
+                      <td>{t("TABLE.VESSEL")}</td>
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.BOARDING")}</td>
+                      <td></td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Fragment>
-        ) : (
-          <LoadingPanel />
-        )}
-      </div>
+                  </thead>
+                  <tbody>
+                    {deliveries.map((delivery, ind) => (
+                      <tr key={ind} className="table-row row-body">
+                        <td>{delivery.lastDelivery}</td>
+                        <td>{delivery.business}</td>
+                        <td>{delivery.location}</td>
+                        <td>{delivery.vessel}</td>
+                        <td>{delivery.date}</td>
+                        <td>
+                          <RiskIcon safetyLevel={delivery.risk} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Fragment>
+          ) : (
+            <LoadingPanel />
+          )}
+        </div>
+      )
     );
   }
 }
 
-export default withTranslation("translation")(PhotosPage);
+export default withTranslation("translation")(DeliveriesPage);

@@ -4,7 +4,176 @@ export default class BoardingDataHelper {
   constructor(boardings) {
     this.boardings = boardings;
   }
+  //Both overview pages
+  getBoardings() {
+    return this.boardings.map((boarding) => {
+      const violations = boarding.inspection.summary.violations
+        ? boarding.inspection.summary.violations
+        : [];
+      return {
+        id: boarding._id,
+        date: boarding.date,
+        time: boarding.date,
+        vessel:
+          boarding.vessel && boarding.vessel.name
+            ? boarding.vessel.name
+            : boarding.vessel,
+        violations: violations.length,
+        citations: violations.length,
+        warnings: violations.length,
+        risk: boarding.inspection.summary.safetyLevel.level,
+        boardedBy:
+          boarding.reportingOfficer && boarding.reportingOfficer.name
+            ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+            : "",
+      };
+    });
+  }
 
+  getViolations(query) {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (
+        boarding.inspection &&
+        boarding.inspection.summary &&
+        boarding.inspection.summary.violations
+      ) {
+        const { violations } = boarding.inspection.summary;
+        violations.map((violation) => {
+          if (query && violation.crewMember.license !== query) return "";
+
+          collection.push({
+            boardingId: boarding._id,
+            risk: boarding.inspection.summary.safetyLevel.level,
+            vessel:
+              boarding.vessel && boarding.vessel.name
+                ? boarding.vessel.name
+                : boarding.vessel,
+            violation: violation.offence ? violation.offence.explanation : "",
+            issuedBy: violation.crewMember.name,
+            license: violation.crewMember.license,
+            result: violation.disposition,
+            boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
+          });
+          return "";
+        });
+      }
+      return "";
+    });
+    return collection;
+  }
+
+  getPhotos(crewLicense) {
+    let photos = [];
+    this.boardings.map((boarding) => {
+      if (crewLicense) {
+        if (boarding.crew && boarding.crew.length) {
+          boarding.crew.forEach((crewMember) => {
+            if (
+              crewLicense === crewMember.license &&
+              !!crewMember.attachments &&
+              !!crewMember.attachments.photoIDs.length
+            ) {
+              crewMember.attachments.photoIDs.map((photo) => {
+                photos.push({
+                  url: photo,
+                  date: boarding.date,
+                  risk: boarding.inspection.summary.safetyLevel.level,
+                  vessel:
+                    boarding.vessel && boarding.vessel.name
+                      ? boarding.vessel.name
+                      : boarding.vessel,
+                  boardedBy:
+                    boarding.reportingOfficer && boarding.reportingOfficer.name
+                      ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                      : "",
+                });
+                return "";
+              });
+              return "";
+            }
+          });
+        }
+      } else {
+        if (boarding.vessel.attachments && boarding.vessel.attachments.photos) {
+          boarding.vessel.attachments.photos.forEach((photo) => {
+            photos.push({
+              url: photo,
+              date: boarding.date,
+              risk: boarding.inspection.summary.safetyLevel.level,
+              vessel:
+                boarding.vessel && boarding.vessel.name
+                  ? boarding.vessel.name
+                  : boarding.vessel,
+              boardedBy:
+                boarding.reportingOfficer && boarding.reportingOfficer.name
+                  ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                  : "",
+            });
+          });
+        }
+      }
+      return "";
+    });
+    return photos;
+  }
+
+  getNotes(crewLicense) {
+    let notes = [];
+    this.boardings.map((boarding) => {
+      if (crewLicense) {
+        if (boarding.crew && boarding.crew.length) {
+          boarding.crew.forEach((crewMember) => {
+            if (
+              crewLicense === crewMember.license &&
+              !!crewMember.attachments &&
+              !!crewMember.attachments.notes.length
+            ) {
+              crewMember.attachments.notes.map((note) => {
+                notes.push({
+                  note: note,
+                  date: boarding.date,
+                  risk: boarding.inspection.summary.safetyLevel.level,
+                  vessel:
+                    boarding.vessel && boarding.vessel.name
+                      ? boarding.vessel.name
+                      : boarding.vessel,
+                  boardedBy:
+                    boarding.reportingOfficer && boarding.reportingOfficer.name
+                      ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                      : "",
+                });
+                return "";
+              });
+              return "";
+            }
+          });
+        }
+      } else {
+        if (boarding.vessel.attachments && boarding.vessel.attachments.notes) {
+          boarding.vessel.attachments.notes.forEach((note) => {
+            notes.push({
+              note: note,
+              date: boarding.date,
+              risk: boarding.inspection.summary.safetyLevel.level,
+              vessel:
+                boarding.vessel && boarding.vessel.name
+                  ? boarding.vessel.name
+                  : boarding.vessel,
+              boardedBy:
+                boarding.reportingOfficer && boarding.reportingOfficer.name
+                  ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
+                  : "",
+            });
+          });
+        }
+      }
+      return "";
+    });
+    return notes;
+  }
+
+  //Crew overview page
   getLicenseNumbersByCrewName(crewName) {
     const collection = {};
     this.boardings.forEach((boarding) => {
@@ -43,65 +212,6 @@ export default class BoardingDataHelper {
     return captainName;
   }
 
-  getBoardings() {
-    return this.boardings.map((boarding) => {
-      const violations = boarding.inspection.summary.violations
-        ? boarding.inspection.summary.violations
-        : [];
-      return {
-        id: boarding._id,
-        date: boarding.date,
-        time: boarding.date,
-        vessel:
-          boarding.vessel && boarding.vessel.name
-            ? boarding.vessel.name
-            : boarding.vessel,
-        violations: violations.length,
-        citations: violations.length,
-        warnings: violations.length,
-        risk: boarding.inspection.summary.safetyLevel.level,
-        boardedBy:
-          boarding.reportingOfficer && boarding.reportingOfficer.name
-            ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
-            : "",
-      };
-    });
-  }
-
-  getViolations(crewLicense) {
-    const collection = [];
-    this.boardings.forEach((boarding) => {
-      if (
-        boarding.inspection &&
-        boarding.inspection.summary &&
-        boarding.inspection.summary.violations
-      ) {
-        const { violations } = boarding.inspection.summary;
-        violations.map((violation) => {
-          if (crewLicense) {
-            if (violation.crewMember.license !== crewLicense) return "";
-          }
-          collection.push({
-            boardingId: boarding._id,
-            risk: boarding.inspection.summary.safetyLevel.level,
-            vessel:
-              boarding.vessel && boarding.vessel.name
-                ? boarding.vessel.name
-                : boarding.vessel,
-            violation: violation.offence ? violation.offence.explanation : "",
-            issuedBy: violation.crewMember.name,
-            license: violation.crewMember.license,
-            result: violation.disposition,
-            boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
-          });
-          return "";
-        });
-      }
-      return "";
-    });
-    return collection;
-  }
-
   getVessels() {
     const crewVessels = [];
 
@@ -125,73 +235,109 @@ export default class BoardingDataHelper {
     return crewVessels;
   }
 
-  getPhotos(crewLicense) {
-    let photos = [];
-    this.boardings.map((boarding) => {
-      if (boarding.crew && boarding.crew.length) {
-        boarding.crew.forEach((crewMember) => {
-          if (
-            crewLicense === crewMember.license &&
-            !!crewMember.attachments &&
-            !!crewMember.attachments.photoIDs.length
-          ) {
-            crewMember.attachments.photoIDs.map((photo) => {
-              photos.push({
-                url: photo,
-                date: boarding.date,
-                risk: boarding.inspection.summary.safetyLevel.level,
-                vessel:
-                  boarding.vessel && boarding.vessel.name
-                    ? boarding.vessel.name
-                    : boarding.vessel,
-                boardedBy:
-                  boarding.reportingOfficer && boarding.reportingOfficer.name
-                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
-                    : "",
-              });
-              return "";
-            });
-            return "";
-          }
-        });
+  //Vessel overview page
+  getPermitNumbers(permitNumber) {
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.permitNumber) {
+        collection[boarding.vessel.permitNumber] = null;
       }
-      return "";
     });
-    return photos;
+    return Object.keys(collection);
   }
 
-  getNotes(crewLicense) {
-    let notes = [];
-    this.boardings.map((boarding) => {
+  getVesselNames() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.name) {
+        collection.push(boarding.vessel.name);
+      }
+    });
+    return collection;
+  }
+
+  getNationalities() {
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel.nationality) {
+        collection[boarding.vessel.nationality] = null;
+      }
+    });
+    return Object.keys(collection);
+  }
+
+  getHomePorts() {
+    const collection = {};
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel.homePort) {
+        collection[boarding.vessel.homePort] = null;
+      }
+    });
+    return Object.keys(collection);
+  }
+
+  getCaptains() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (!collection.find((c) => c.license === boarding.captain.license)) {
+        collection.push({
+          license: boarding.captain.license,
+          name: boarding.captain.name,
+        });
+      }
+    });
+    return collection;
+  }
+
+  getCrew() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (!collection.find((c) => c.license === boarding.captain.license)) {
+        collection.push({
+          license: boarding.captain.license,
+          name: boarding.captain.name,
+          photos: boarding.captain.attachments ?
+              boarding.captain.attachments.photoIDs : [],
+          notes: boarding.captain.attachments ?
+              boarding.captain.attachments.notes : [],
+          isCaptain: true
+        });
+      }
+    });
+    this.boardings.forEach((boarding) => {
       if (boarding.crew && boarding.crew.length) {
         boarding.crew.forEach((crewMember) => {
-          if (
-            crewLicense === crewMember.license &&
-            !!crewMember.attachments &&
-            !!crewMember.attachments.notes.length
-          ) {
-            crewMember.attachments.notes.map((note) => {
-              notes.push({
-                note: note,
-                date: boarding.date,
-                risk: boarding.inspection.summary.safetyLevel.level,
-                vessel:
-                  boarding.vessel && boarding.vessel.name
-                    ? boarding.vessel.name
-                    : boarding.vessel,
-                boardedBy:
-                  boarding.reportingOfficer && boarding.reportingOfficer.name
-                    ? `${boarding.reportingOfficer.name.first} ${boarding.reportingOfficer.name.last}`
-                    : "",
-              });
-              return "";
+          if (!collection.find((c) => c.license === crewMember.license)) {
+            collection.push({
+              license: crewMember.license,
+              name: crewMember.name,
+              photos: crewMember.attachments
+                ? crewMember.attachments.photoIDs
+                : [],
+              isCaptain: false,
+              notes: crewMember.attachments ? crewMember.attachments.notes : [],
             });
-            return "";
           }
         });
       }
-      return "";
     });
-    return notes;
+    return collection;
+  }
+
+  getDeliveries() {
+    const collection = [];
+    this.boardings.forEach((boarding) => {
+      if (boarding.vessel && boarding.vessel.lastDelivery) {
+        collection.push({
+          vessel: boarding.vessel.name,
+          location: boarding.vessel.lastDelivery.location,
+          business: boarding.vessel.lastDelivery.business,
+          date: moment(boarding.date).format("L"),
+          lastDelivery: moment(boarding.vessel.lastDelivery.date).format("L"),
+          risk: boarding.inspection.summary.safetyLevel.level,
+        });
+      }
+    });
+    return collection;
   }
 }

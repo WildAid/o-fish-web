@@ -73,13 +73,13 @@ const filterConfiguration = {
     },
     {
       name: "dateFrom",
-      field:  "date-from",
+      field: "date-from",
       title: "Date from",
       type: "date",
     },
     {
       name: "dateTo",
-      field:  "date-to",
+      field: "date-to",
       title: "Date To",
       type: "date",
     },
@@ -141,6 +141,30 @@ const filterConfiguration = {
       title: "Count",
     },
   ],
+  Crews: [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ],
 };
 
 class Boardings extends Component {
@@ -158,8 +182,7 @@ class Boardings extends Component {
         : "",
     highlighted: [],
     loading: true,
-    defaultFilter: null,
-    mounted : false,
+    mounted: false,
     page: 1,
   };
 
@@ -197,9 +220,9 @@ class Boardings extends Component {
   };
 
   loadData(newState) {
-    newState = newState ? newState : {};
-    newState.mounted = true;
+    newState = newState || {};
     newState.loading = true;
+
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
       boardingService
@@ -221,23 +244,11 @@ class Boardings extends Component {
   }
 
   componentDidMount() {
-    let filter = null;
-    //TODO:fill this structure with a correct data
-    /*
-    const start = moment().subtract(1, 'month').startOf('day');
-    const end =  moment().endOf('day');
-
-    filter = [{
-      name: "dateFrom",
-      value: start.format("L")
-    }];
-
-    */
-    if (filter){
-      this.setState({mounted: true, defaultFilter: filter});
-      //The loadData will be called automatically from filter-panel
+    if (this.props.match.params.filter) {
+      const filter = JSON.parse(this.props.match.params.filter);
+      this.loadData({ mounted: true, currentFilter: filter});
     } else {
-      this.loadData();
+      this.loadData({ mounted: true });
     }
   }
 
@@ -250,7 +261,6 @@ class Boardings extends Component {
       isMapShown,
       highlighted,
       searchQuery,
-      defaultFilter,
       mounted,
       page,
     } = this.state;
@@ -293,7 +303,6 @@ class Boardings extends Component {
           </div>
           <FilterPanel
             options={{ searchByFilter: true }}
-            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />
@@ -373,12 +382,14 @@ class Boardings extends Component {
             )}
           </Fragment>
         ) : loading ? (
-          <LoadingPanel/>
+          <LoadingPanel />
         ) : (
           t("WARNINGS.NO_BOARDINGS")
         )}
       </div>
-    ) : "";
+    ) : (
+      ""
+    );
   }
 }
 

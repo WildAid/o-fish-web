@@ -20,7 +20,7 @@ class FoundVessels extends Component {
               <div className="item-name">Records of Vessels ({total})</div>
             </div>
             {total > 1 && (
-              <NavLink className="item-link" to={VESSELS_PAGE}>
+              <NavLink className="item-link" to={VESSELS_PAGE.replace(":filter", "null")}>
                 See all
               </NavLink>
             )}

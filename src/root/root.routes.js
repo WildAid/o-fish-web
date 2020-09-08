@@ -18,6 +18,7 @@ import Profile from "../components/profile/profile.component";
 import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
 import NotesPage from "../components/notes/notes.component";
+import DeliveriesPage from "../components/deliverires/deliverires.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";
@@ -56,11 +57,11 @@ import {
   VIOLATIONS_PAGE,
   PHOTOS_PAGE,
   NOTES_PAGE,
+  DELIVERIES_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
   VIEW_BOARDING_PAGE,
-  BOARDING_FILTERED_PAGE,
   //Crew sub routes
   VIEW_CREW_PAGE,
   //Vessels sub routes
@@ -113,6 +114,12 @@ const routes = [
     exact: false,
   },
   {
+    path: DELIVERIES_PAGE,
+    component: DeliveriesPage,
+    auth: true,
+    exact: false,
+  },
+  {
     path: BOARDINGS_PAGE,
     component: BoardingsMain,
     auth: true,
@@ -123,11 +130,6 @@ const routes = [
         component: Boardings,
         exact: true,
       },
-      {
-        path: BOARDING_FILTERED_PAGE,
-        component: Boardings,
-        exact: true,
-      },    
       {
         path: VIEW_BOARDING_PAGE,
         component: BoardingViewPage,

@@ -2,6 +2,8 @@ import SearchService from "./../services/search.service";
 
 import history from "../root/root.history";
 
+import { VIEW_CREW_PAGE } from "../root/root.constants.js";
+
 //TODO Show pics in Users list
 // import StitchService from "./../services/stitch.service";
 // const stitchService = StitchService.getInstance();
@@ -171,20 +173,39 @@ export const checkUserType = (user) => {
   return userRole;
 };
 
-export const convertFilter = (filterObj) => {
-  const filter = [];
-  for (var key in filterObj){
-    filter.push({name: key, value: filterObj[key] });
-  }
-  return filter;
+export const goToPage = (path, id) => {
+  path = path.replace(":id", id);
+  path = path.replace(":filter", "null");
+  history.push(path);
 };
 
-export const goToPage = (path, id) => {
-  history.push(path.replace(":id", id));
+export const pageWithFilterURL = (path, filter) => {
+  return path.replace(":filter", JSON.stringify(filter));
 };
 
 export const goToPageWithFilter = (path, filter) => {
   history.push(path.replace(":filter", JSON.stringify(filter)));
+};
+
+export const goCrewViewPage = (item) => {
+  const filter = {};
+  if (item.isCaptain || item.rank === "captain"){
+    if (item.license) {
+      filter["captain.license"] = item.license;
+    }
+    if (item.name) {
+      filter["captain.name"] = item.name;
+    }
+  }
+  else {
+    if (item.license) {
+      filter["crew.license"] = item.license;
+    }
+    if (item.name) {
+      filter["crew.name"] = item.name;
+    }
+  }
+  goToPageWithFilter(VIEW_CREW_PAGE, filter);
 };
 
 export const bufferToBase64 = (buffer) => {

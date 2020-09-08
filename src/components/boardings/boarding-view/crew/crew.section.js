@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
+import { goCrewViewPage } from "./../../../../helpers/get-data";
+
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
 class CrewSection extends Component {
@@ -19,7 +21,9 @@ class CrewSection extends Component {
 
     return (
       <div className="flex-column">
-        <div className="item-name margin-left margin-top">{t("TABLE.CAPTAIN")}</div>
+        <div className="item-name margin-left margin-top">
+          {t("TABLE.CAPTAIN")}
+        </div>
         <section className="flex-row justify-between box-shadow padding white-bg margin-top">
           <TextViewer mainText={captain.name} subText={t("TABLE.NAME")} />
           <TextViewer
@@ -31,7 +35,13 @@ class CrewSection extends Component {
             subText={t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}
           />
           <TextViewer
-            mainText={captain.attachments && captain.attachments.notes && captain.attachments.notes.length ? captain.attachments.notes[0] : ""}
+            mainText={
+              captain.attachments &&
+              captain.attachments.notes &&
+              captain.attachments.notes.length
+                ? captain.attachments.notes[0]
+                : ""
+            }
             subText={t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
           />
         </section>
@@ -50,11 +60,17 @@ class CrewSection extends Component {
             </thead>
             <tbody>
               {crew.map((item, ind) => (
-                <tr className="table-row row-body" key={ind}>
+                <tr
+                  className="table-row row-body"
+                  key={ind}
+                  onClick={() => goCrewViewPage(item)}
+                >
                   <td>{item.name}</td>
                   <td>{item.license}</td>
-                  <td>N/A</td>
-                  <td>{item.attachments.notes[0]}</td>
+                  <td>{item.attachments && item.attachments.photos ? item.attachments.photos.length : "N/A"}</td>
+                  <td>
+                    {item.attachments ? item.attachments.notes[0] : "N/A"}
+                  </td>
                 </tr>
               ))}
             </tbody>

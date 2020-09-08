@@ -7,7 +7,7 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goToPageWithFilter
+  goCrewViewPage
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -17,8 +17,6 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
-
-import { VIEW_CREW_PAGE } from "../../root/root.constants.js";
 
 import "./crew.css";
 
@@ -82,6 +80,10 @@ const filterConfiguration = {
   ],
   "Vessel Information": [
     {
+      name: "vessel.name",
+      title: "Vessel",
+    },
+    {
       name: "vessel.permitNumber",
       title: "Permit Number",
       type: "string-equal",
@@ -91,6 +93,30 @@ const filterConfiguration = {
       title: "Nationality",
     },
   ],
+  Crews: [
+    {
+      name: "crewLicense",
+      field: "crew.license",
+      title: "Crew License Number",
+      type: "string-equal",
+    },
+    {
+      name: "crewName",
+      field: "crew.name",
+      title: "Crew name",
+    },
+    {
+      name: "captainLicense",
+      field: "captain.license",
+      title: "Captain license Number",
+      type: "string-equal",
+    },
+    {
+      name: "captainName",
+      field: "captain.lastName",
+      title: "Captain name",
+    },
+  ]
 };
 
 class Crew extends Component {
@@ -107,8 +133,8 @@ class Crew extends Component {
     highlighted: [],
     loading: false,
     currentFilter: null,
-    defaultFilter: null,
     page: 1,
+    mounted: false
   };
 
   search = (value) => {
@@ -134,12 +160,11 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    let { filter } = this.props; 
-    if (filter) {
-      this.setState({ defaultFilter: filter });
-      //The loadData will be called automatically from filter-panel
+    if (this.props.match.params.filter){
+      const filter = JSON.parse(this.props.match.params.filter);
+      this.loadData({mounted: true, currentFilter: filter});
     } else {
-      this.loadData();
+      this.loadData({mounted: true});
     }
   }
 
@@ -225,7 +250,6 @@ class Crew extends Component {
     newState.loading = true;
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
-
       stitchService
         .getCrewsWithFacet(limit, offset, searchQuery, currentFilter)
         .then((data) => {
@@ -248,18 +272,6 @@ class Crew extends Component {
     });
   }
 
-  goCrewViewPage(item){
-    const filter = {};
-    if (item.license){
-      filter["crew.license"] = item.license;
-    }
-    if (item.name){
-      filter["crew.name"] = item.name;
-    }
-    goToPageWithFilter(VIEW_CREW_PAGE, filter);
-  }
-
-
   render() {
     const {
       crew,
@@ -268,13 +280,13 @@ class Crew extends Component {
       loading,
       highlighted,
       searchQuery,
-      defaultFilter,
       page,
+      mounted
     } = this.state;
 
     const { t } = this.props;
 
-    return (
+    return mounted && (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
           handler={this.search}
@@ -292,7 +304,6 @@ class Crew extends Component {
           )}
           <FilterPanel
             options={{ searchByFilter: true }}
-            filter={defaultFilter}
             configuration={filterConfiguration}
             onFilterChanged={this.handleFilterChanged}
           />
@@ -316,7 +327,7 @@ class Crew extends Component {
                       className="table-row row-body"
                       key={ind}
                       onClick={() =>
-                        this.goCrewViewPage(item)
+                        goCrewViewPage(item)
                       }
                     >
                       <td>
