@@ -44,7 +44,7 @@ const ViolationsOverview = ({ t, filter, violations }) => (
                 </td>
                 <td>{violation.result}</td>
                 <td>{violation.issuedBy}</td>
-                <td>{moment(violation.boarding).format("L")}</td>
+                <td>{moment(violation.boardingDate).format("L")}</td>
                 <td
                   onClick={() =>
                     goToPage(VIEW_BOARDING_PAGE, violation.boardingId)
