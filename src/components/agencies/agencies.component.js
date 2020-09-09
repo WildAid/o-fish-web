@@ -162,7 +162,10 @@ class AgenciesMain extends React.Component {
                       </td>
                       <td
                         className="blue-color"
-                        onClick={(e) => this.goTo(e, EDIT_AGENCIES_PAGE)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToPage(EDIT_AGENCIES_PAGE, item._id);
+                        }}
                       >
                         {t("BUTTONS.EDIT")}
                       </td>
