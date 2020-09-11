@@ -47,18 +47,22 @@
     margin-right: 2%;
 }
 
-
-.user-editor-form .password-line{
-  position: relative;
+.user-editor-form .password-line {
+    position: relative;
 }
 
-.user-editor-form .password-line .form-input{
-  width: 100%;
+.user-editor-form .password-line .form-input {
+    width: 100%;
 }
 
-.user-editor-form .password-line button{
-   position: absolute;
-   right: 0;
-   margin: 0;
-   margin-top: 30px;
+.user-editor-form .password-line button {
+    position: absolute;
+    right: 0;
+    margin: 0;
+    margin-top: 30px;
+}
+
+.user-editor-form .error-messages {
+    color: red;
+    margin: 5px 10px;
 }

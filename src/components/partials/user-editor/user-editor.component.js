@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withTranslation } from "react-i18next";
 
-import { checkUserRole } from "./../../../helpers/get-data";
+import { checkUserRole, required } from "./../../../helpers/get-data";
 
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
@@ -20,7 +20,6 @@ import UserService from "./../../../services/user.service";
 import AgencyService from "./../../../services/agency.service";
 
 import "./user-editor.css";
-
 
 const stitchService = StitchService.getInstance();
 const userService = UserService.getInstance();
@@ -34,6 +33,7 @@ class UserEditor extends Component {
     agencies: [],
     imgData: null,
     imageId: null,
+    disabled: true,
   };
 
   removeErrMsg = () => {
@@ -72,61 +72,69 @@ class UserEditor extends Component {
         agency: { name: values.agency, admin: true },
       };
     } else if (values.adminType === "agency") {
-      newUser = { ...newUser, agency: { name: values.agency, admin: true }, global: { admin: false } };
+      newUser = {
+        ...newUser,
+        agency: { name: values.agency, admin: true },
+        global: { admin: false },
+      };
     } else {
-      newUser = { ...newUser, agency: { name: values.agency, admin: false }, global: { admin: false } };
+      newUser = {
+        ...newUser,
+        agency: { name: values.agency, admin: false },
+        global: { admin: false },
+      };
     }
 
     const saveUserFunc = () => {
       if (userId) {
         newUser.realmUserID = values.realmUserID;
-        if (values.profilePic && !newUser.profilePic){
+        if (values.profilePic && !newUser.profilePic) {
           newUser.profilePic = values.profilePic;
         }
         const userId = user._id;
         userService
-        .updateUser(userId, newUser)
-        .then(() => {
-          newUser._id = userId;
-          if (this.props.onSave){
-            this.props.onSave(newUser);
-          }
-          this.goRedirect()
-        })
-        .catch((error) => {
-          error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-        });
+          .updateUser(userId, newUser)
+          .then(() => {
+            newUser._id = userId;
+            if (this.props.onSave) {
+              this.props.onSave(newUser);
+            }
+            this.goRedirect();
+          })
+          .catch((error) => {
+            error.message
+              ? this.setState({ error: `${error.name}: ${error.message}` })
+              : this.setState({ error: "An unexpected error occurred!" });
+          });
       } else {
         userService
-        .createUser(values.password, newUser)
-        .then((user) => {
-          if (this.props.onSave){
-            this.props.onSave(user);
-          }
-          this.goRedirect()
-        })
-        .catch((error) => {
-          error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-        });
+          .createUser(values.password, newUser)
+          .then((user) => {
+            if (this.props.onSave) {
+              this.props.onSave(user);
+            }
+            this.goRedirect();
+          })
+          .catch((error) => {
+            error.message
+              ? this.setState({ error: `${error.name}: ${error.message}` })
+              : this.setState({ error: "An unexpected error occurred!" });
+          });
       }
     };
 
     if (imgData) {
       stitchService
-      .uploadImage(imgData, newUser.agency.name)
-      .then((result) => {
-        newUser.profilePic = result.insertedId.toString();
-        saveUserFunc();
-      })
-      .catch((error) => {
-        error.message
-        ? this.setState({ error: `${error.name}: ${error.message}` })
-        : this.setState({ error: "An unexpected error occurred!" });
-      });
+        .uploadImage(imgData, newUser.agency.name)
+        .then((result) => {
+          newUser.profilePic = result.insertedId.toString();
+          saveUserFunc();
+        })
+        .catch((error) => {
+          error.message
+            ? this.setState({ error: `${error.name}: ${error.message}` })
+            : this.setState({ error: "An unexpected error occurred!" });
+        });
     } else {
       saveUserFunc();
     }
@@ -142,62 +150,66 @@ class UserEditor extends Component {
     this.goRedirect();
   };
 
+  validate = (values) => {
+    return required(values, "adminType");
+  };
+
   componentDidMount() {
     const { userId } = this.props;
     agencyService
-    .getAgencies(50, 0, "", null)
-    .then((data) => {
-      this.setState({
-        agencies: data.agencies.map((agency) => agency.name) || [],
-      });
-    })
-    .catch((error) => {
-      this.setState({ error: error });
-      console.error(error);
-    });
-    if (userId) {
-      userService
-      .getUserById(userId)
-      .then((user) => {
-        this.setState({ isLoaded: true, user: user });
+      .getAgencies(50, 0, "", null)
+      .then((data) => {
+        this.setState({
+          agencies: data.agencies.map((agency) => agency.name) || [],
+        });
       })
       .catch((error) => {
         this.setState({ error: error });
         console.error(error);
       });
+    if (userId) {
+      userService
+        .getUserById(userId)
+        .then((user) => {
+          this.setState({ isLoaded: true, user: user });
+        })
+        .catch((error) => {
+          this.setState({ error: error });
+          console.error(error);
+        });
     } else {
       this.setState({ isLoaded: true, user: null });
     }
   }
 
   render() {
-    const { user, isLoaded, error, agencies } = this.state;
+    const { user, isLoaded, error, agencies, disabled } = this.state;
     let { t, showingOptions } = this.props;
 
     if (!showingOptions) showingOptions = {};
-    if (!showingOptions.saveText) showingOptions.saveText = t("BUTTONS.SAVE")
+    if (!showingOptions.saveText) showingOptions.saveText = t("BUTTONS.SAVE");
 
     const initialValues = user
-    ? {
-      profilePic: user.profilePic,
-      firstName: user.name.first,
-      lastName: user.name.last,
-      password: "",
-      agency: user.agency.name,
-      adminType: checkUserRole(user),
-      email: user.email,
-      userGroup: user.userGroup,
-      realmUserID: user.realmUserID
-    }
-    : {
-      firstName: "",
-      lastName: "",
-      password: "",
-      agency: "",
-      adminType: "",
-      email: "",
-      userGroup: "",
-    };
+      ? {
+          profilePic: user.profilePic,
+          firstName: user.name.first,
+          lastName: user.name.last,
+          password: "",
+          agency: user.agency.name,
+          adminType: checkUserRole(user),
+          email: user.email,
+          userGroup: user.userGroup,
+          realmUserID: user.realmUserID,
+        }
+      : {
+          firstName: "",
+          lastName: "",
+          password: "",
+          agency: "",
+          adminType: "",
+          email: "",
+          userGroup: "",
+        };
 
     return (
       <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
@@ -207,6 +219,7 @@ class UserEditor extends Component {
           <Formik
             initialValues={initialValues}
             onSubmit={this.saveUser}
+            validate={this.validate}
             render={({
               errors,
               values,
@@ -214,74 +227,50 @@ class UserEditor extends Component {
               handleBlur,
               handleSubmit,
               setFieldValue,
+              isValid,
             }) => (
               <Form
                 onSubmit={handleSubmit}
                 className="flex-column justify-center"
-                >
+              >
                 <div className="flex-row justify-center">
                   <PhotoUploader
                     imageId={values.profilePic}
                     onData={this.imageUploaded}
-                    >
-                  </PhotoUploader>
+                  />
                 </div>
-                  <div className="flex-row justify-between">
-                    <TextField
-                      label={t("CREATE_USER_PAGE.FIRST_NAME")}
-                      name="firstName"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("firstName", e.target.value)
-                      }
-                      type="text"
-                      value={values.firstName}
-                      />
-                    <TextField
-                      label={t("CREATE_USER_PAGE.LAST_NAME")}
-                      name="lastName"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("lastName", e.target.value)
-                      }
-                      type="text"
-                      value={values.lastName}
-                      />
-                  </div>
-                  <div className="flex-column">
-                    <TextField
-                      label={t("CREATE_AGENCY_PAGE.EMAIL")}
-                      name="email"
-                      type="text"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("email", e.target.value)}
-                      value={values.email}
-                      />
-                    {showingOptions.changePassword && (
-                      <div className="password-line flex-row justify-between">
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          type="password"
-                          className="form-input"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value={values.password}
-                          />
-                        <button
-                          className="white-btn"
-                          onClick={this.changePassword}
-                          >
-                          {t("BUTTONS.CHANGE_PASSWORD")}
-                        </button>
-                      </div>
-                    )}
-                    {showingOptions.newPassword && (
+                <div className="flex-row justify-between">
+                  <TextField
+                    label={t("CREATE_USER_PAGE.FIRST_NAME")}
+                    name="firstName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("firstName", e.target.value)}
+                    type="text"
+                    value={values.firstName}
+                  />
+                  <TextField
+                    label={t("CREATE_USER_PAGE.LAST_NAME")}
+                    name="lastName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("lastName", e.target.value)}
+                    type="text"
+                    value={values.lastName}
+                  />
+                </div>
+                <div className="flex-column">
+                  <TextField
+                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
+                    name="email"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    value={values.email}
+                  />
+                  {showingOptions.changePassword && (
+                    <div className="password-line flex-row justify-between">
                       <TextField
                         label={t("LOGIN_PAGE.PASSWORD")}
                         name="password"
@@ -292,113 +281,133 @@ class UserEditor extends Component {
                           setFieldValue("password", e.target.value)
                         }
                         value={values.password}
-                        />
-                    )}
-                  </div>
-                  {showingOptions.active && (
+                      />
+                      <button
+                        className="white-btn"
+                        onClick={this.changePassword}
+                      >
+                        {t("BUTTONS.CHANGE_PASSWORD")}
+                      </button>
+                    </div>
+                  )}
+                  {showingOptions.newPassword && (
+                    <TextField
+                      label={t("LOGIN_PAGE.PASSWORD")}
+                      name="password"
+                      type="password"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("password", e.target.value)
+                      }
+                      value={values.password}
+                    />
+                  )}
+                </div>
+                {showingOptions.active && (
+                  <FormControl className="form-input">
+                    <InputLabel id="role-label">
+                      {t("CREATE_USER_PAGE.ACTIVE")}
+                    </InputLabel>
+                    <Select
+                      labelId="active-label"
+                      onChange={(e) => setFieldValue("active", e.target.value)}
+                      value={values.active}
+                    >
+                      <MenuItem value="active">
+                        {t("CREATE_USER_PAGE.ACTIVE")}
+                      </MenuItem>
+                      <MenuItem value="inactive">
+                        {t("CREATE_USER_PAGE.INACTIVE")}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+                {showingOptions.role && (
+                  <Fragment>
                     <FormControl className="form-input">
                       <InputLabel id="role-label">
-                        {t("CREATE_USER_PAGE.ACTIVE")}
+                        {t("CREATE_USER_PAGE.ROLE")}
                       </InputLabel>
                       <Select
-                        labelId="active-label"
-                        onChange={(e) =>
-                          setFieldValue("active", e.target.value)
-                        }
-                        value={values.active}
-                        >
-                        <MenuItem value="active">
-                          {t("CREATE_USER_PAGE.ACTIVE")}
+                        labelId="role-label"
+                        onChange={(e) => {
+                          this.setState({ disabled: isValid });
+                          setFieldValue("adminType", e.target.value);
+                        }}
+                        value={values.adminType}
+                      >
+                        <MenuItem value="global">
+                          <em>{t("ADMINS.GLOBAL")}</em>
                         </MenuItem>
-                        <MenuItem value="inactive">
-                          {t("CREATE_USER_PAGE.INACTIVE")}
+                        <MenuItem value="agency">
+                          <em>{t("ADMINS.AGENCY")}</em>
+                        </MenuItem>
+                        <MenuItem value="group">
+                          <em>{t("ADMINS.GROUP")}</em>
+                        </MenuItem>
+                        <MenuItem value="field">
+                          <em>{t("ADMINS.FIELD")}</em>
                         </MenuItem>
                       </Select>
                     </FormControl>
-                  )}
-                  {showingOptions.role && (
-                    <Fragment>
-                      <FormControl className="form-input">
-                        <InputLabel id="role-label">
-                          {t("CREATE_USER_PAGE.ROLE")}
-                        </InputLabel>
-                        <Select
-                          labelId="role-label"
-                          onChange={(e) =>
-                            setFieldValue("adminType", e.target.value)
-                          }
-                          value={values.adminType}
-                          >
-                          <MenuItem value="global">
-                            <em>Global Admin</em>
+                    <div className="error-messages">{t(errors.adminType)}</div>
+                    <FormControl className="form-input">
+                      <InputLabel id="agency-label">
+                        {t("TABLE.AGENCY")}
+                      </InputLabel>
+                      <Select
+                        labelId="agency-label"
+                        onChange={(e) =>
+                          setFieldValue("agency", e.target.value)
+                        }
+                        value={values.agency}
+                      >
+                        {agencies.map((agency, ind) => (
+                          <MenuItem value={agency} key={ind}>
+                            <em>{agency}</em>
                           </MenuItem>
-                          <MenuItem value="agency">
-                            <em>Agency Admin</em>
-                          </MenuItem>
-                          <MenuItem value="group">
-                            <em>Group Admin</em>
-                          </MenuItem>
-                          <MenuItem value="field">
-                            <em>Field Officer</em>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                      <FormControl className="form-input">
-                        <InputLabel id="agency-label">
-                          {t("TABLE.AGENCY")}
-                        </InputLabel>
-                        <Select
-                          labelId="agency-label"
-                          onChange={(e) =>
-                            setFieldValue("agency", e.target.value)
-                          }
-                          value={values.agency}
-                          >
-                          {agencies.map((agency, ind) => (
-                            <MenuItem value={agency} key={ind}>
-                              <em>{agency}</em>
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      <FormControl className="form-input">
-                        <InputLabel id="group-label">
-                          {t("CREATE_USER_PAGE.USER_GROUP")}
-                        </InputLabel>
-                        <Select
-                          labelId="group-label"
-                          onChange={(e) =>
-                            setFieldValue("userGroup", e.target.value)
-                          }
-                          value={values.userGroup}
-                          >
-                          <MenuItem value="User Group">
-                            <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Fragment>
-                  )}
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl className="form-input">
+                      <InputLabel id="group-label">
+                        {t("CREATE_USER_PAGE.USER_GROUP")}
+                      </InputLabel>
+                      <Select
+                        labelId="group-label"
+                        onChange={(e) =>
+                          setFieldValue("userGroup", e.target.value)
+                        }
+                        value={values.userGroup}
+                      >
+                        <MenuItem value="User Group">
+                          <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Fragment>
+                )}
                 <div className="flex-row justify-around align-center margin-top">
-                  <button className="blue-btn" type="submit">
+                  <button
+                    className={disabled ? "disabled-btn" : "blue-btn"}
+                    type="submit"
+                    disabled={!isValid}
+                  >
                     {showingOptions.saveText}
                   </button>
-                  <div
-                    className="blue-color pointer"
-                    onClick={this.clearForm}
-                    >
+                  <div className="blue-color pointer" onClick={this.clearForm}>
                     {t("BUTTONS.CANCEL")}
                   </div>
                 </div>
               </Form>
             )}
-            >
-          </Formik>
+          ></Formik>
         )}
         {error && (
           <div className="flex-row justify-between standard-view">
             <div className="flex-row justify-between error-message-box">
-              <div>{error ? error.message : "unexpected undefined error!"}</div>
+              <div>{error ? error.message : "Unexpected undefined error!"}</div>
               <Icon className="pointer" onClick={this.removeErrMsg}>
                 close
               </Icon>

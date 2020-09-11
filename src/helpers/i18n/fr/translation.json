@@ -45,9 +45,6 @@
     "PROFILE_INFO": "Information de Profil",
     "SETTINGS": "Réglages"
   },
-  "VESSEL_OVERVIEW_PAGE": {
-    
-  },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Rapports Trouvés",
     "MAP": "Carte",
@@ -134,6 +131,7 @@
     "UPDATE_USER": "Mise à Jour de l'Utilisateur"
   },
   "TABLE": {
+    "ADDRESS": "Adresse",
     "DATE": "Date",
     "TIME": "Heure",
     "VESSEL": "Vaisseau",
@@ -160,7 +158,8 @@
     "BUSINESS": "Entreprise",
     "DELIVERIES": "Livraisons",
     "ISSUED_TO": "Remis à",
-    "CREW_MEMBER": "Membre d'Equipage"
+    "CREW_MEMBER": "Membre d'Equipage",
+    "PHOTO": "Photo"
   },
   "FILTER": {
     "FROM": "A partir de",
@@ -235,5 +234,8 @@
     "NO_PHOTOS": "Pas de Photos trouvées",
     "NO_NOTES": "Pas de Remarques trouvées",
     "NO_LICENSE": "Pas de numéros de brevet trouvés"
+  },
+  "VALIDATION": {
+    "REQUIRED": "Ce champ est obligatoire"
   }
 }

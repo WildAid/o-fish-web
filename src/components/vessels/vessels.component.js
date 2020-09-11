@@ -261,7 +261,7 @@ class Vessels extends Component {
                           highlightClassName="highlighted"
                           searchWords={highlighted}
                           autoEscape={true}
-                          textToHighlight={item.vessel}
+                          textToHighlight={item.vessel || ''}
                         />
                       </td>
                       <td>{item.permitNumber || "N/A"}</td>
