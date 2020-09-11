@@ -179,7 +179,7 @@ class ViolationsPage extends Component {
                       <td>{violation.result}</td>
                       <td>{violation.issuedBy}</td>
                       <td>{violation.vessel}</td>
-                      <td>{moment(violation.boarding).format("L")}</td>
+                      <td>{moment(violation.boardingDate).format("L")}</td>
                       <td>
                         <RiskIcon safetyLevel={violation.risk} />
                       </td>
