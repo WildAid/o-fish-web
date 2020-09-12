@@ -100,6 +100,12 @@
   "PROFILE_PAGE": {
     "EDIT_USER": "Edit User"
   },
+  "CHANGE_PASSWORD": {
+    "CHANGE_PASSWORD": "Change Password",
+    "OLD_PASSWORD": "Old Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_NEW_PASSWORD": "Confirm New Password"
+  },
   "SEARCH": {
     "FILTER_SEARCH": "Search",
     "ALL": "All",
