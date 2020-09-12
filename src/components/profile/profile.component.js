@@ -63,8 +63,6 @@ class Profile extends Component {
         {dialogDisplayed && (
           <ChangePasswordDialog
             onApply={this.dialogClosed}
-            title={""}
-            lineText={""}
           />
         )}
       </div>

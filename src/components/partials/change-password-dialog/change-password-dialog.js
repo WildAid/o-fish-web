@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
 
 import "./change-password-dialog.css";
 
@@ -22,48 +27,41 @@ class ChangePasswordDialog extends Component {
     }
   };
 
-  addItem = () => {
-    let newItems = [];
-    newItems.push("");
-    this.setState({ items: newItems });
-  };
-
-  changeItem = (event, ind) => {
-    let newItems = [...this.state.items];
-
-    newItems[ind] = event.target.value;
-    this.setState({ items: newItems });
-  };
-
   render() {
-    const { items } = this.state;
     const { user, t } = this.props;
     return (
-      <div className="new-menu-dialog full-screen">
-        <div className="internal flex-column">
-          <div className="title flex-row full-view">
-            <h2>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</h2>
-          </div>
-          <div className="content justify-center full-view">
-            <Formik
-              initialValues={{
-                oldPassword: "",
-                newPassword: "",
-                confirmNewPassword: "",
-              }}
-              onSubmit={this.handleLogin}
-              render={({
-                touched,
-                errors,
-                values,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                setFieldValue,
-              }) => (
-                <Form
-                  onSubmit={handleSubmit}
-                >
+      <Dialog
+        open
+        onClose={this.applyDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth="sm"
+      >
+        <DialogTitle className="title">
+          <Typography variant="h6">
+            <b>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</b>
+          </Typography>
+        </DialogTitle>
+        <DialogContent className="internal">
+          <Formik
+            initialValues={{
+              oldPassword: "",
+              newPassword: "",
+              confirmNewPassword: "",
+            }}
+            onSubmit={this.handleLogin}
+            render={({
+              touched,
+              errors,
+              values,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue,
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="form-field">
                   <TextField
                     className="form-input"
                     label={t("CHANGE_PASSWORD.OLD_PASSWORD")}
@@ -75,6 +73,8 @@ class ChangePasswordDialog extends Component {
                     }
                     value={values.oldPassword}
                   />
+                </div>
+                <div className="form-field">
                   <TextField
                     className="form-input"
                     label={`${t("CHANGE_PASSWORD.NEW_PASSWORD")}`}
@@ -86,6 +86,8 @@ class ChangePasswordDialog extends Component {
                     }
                     value={values.newPassword}
                   />
+                </div>
+                <div className="form-field">
                   <TextField
                     className="form-input"
                     label={`${t("CHANGE_PASSWORD.CONFIRM_NEW_PASSWORD")}`}
@@ -97,21 +99,20 @@ class ChangePasswordDialog extends Component {
                     }
                     value={values.confirmNewPassword}
                   />
-                </Form>
-              )}
-            />
-          </div>
-
-          <div className="buttons-row flex-row full-view">
-            <button className="blue-btn" onClick={this.applyDialog}>{`${t(
-              "BUTTONS.CHANGE_PASSWORD"
-            )}`}</button>
-            <button className="simple-btn" onClick={this.cancelDialog}>{`${t(
-              "BUTTONS.CANCEL"
-            )}`}</button>
-          </div>
-        </div>
-      </div>
+                </div>
+              </Form>
+            )}
+          />
+        </DialogContent>
+        <DialogActions className="action-btns">
+          <button className="blue-btn" onClick={this.applyDialog}>
+            {`${t("BUTTONS.CHANGE_PASSWORD")}`}
+          </button>
+          <button className="simple-btn" onClick={this.cancelDialog}>
+            {`${t("BUTTONS.CANCEL")}`}
+          </button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }
