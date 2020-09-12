@@ -39,10 +39,10 @@ class NewDialog extends Component {
     return (
       <div className="new-menu-dialog full-screen">
         <div className="internal flex-column">
-          <div className="title flex-row  full-view">
+          <div className="title flex-row full-view">
             <h2>{title}</h2>
           </div>
-          <div className="content  justify-center full-view">
+          <div className="content justify-center full-view">
             {items && items.length
               ? items.map((item, ind) => (
                   <div className="line" key={ind}>

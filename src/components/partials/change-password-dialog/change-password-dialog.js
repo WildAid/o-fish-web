@@ -3,6 +3,8 @@ import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
 
+import "./change-password-dialog.css";
+
 class ChangePasswordDialog extends Component {
   state = {
     items: [""],
@@ -39,7 +41,7 @@ class ChangePasswordDialog extends Component {
     return (
       <div className="new-menu-dialog full-screen">
         <div className="internal flex-column">
-          <div className="title flex-row  full-view">
+          <div className="title flex-row full-view">
             <h2>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</h2>
           </div>
           <div className="content justify-center full-view">
@@ -60,10 +62,10 @@ class ChangePasswordDialog extends Component {
                 setFieldValue,
               }) => (
                 <Form
-                  className="flex-column justify-around login-form"
                   onSubmit={handleSubmit}
                 >
                   <TextField
+                    className="form-input"
                     label={t("CHANGE_PASSWORD.OLD_PASSWORD")}
                     name="oldPassword"
                     type="password"
@@ -74,6 +76,7 @@ class ChangePasswordDialog extends Component {
                     value={values.oldPassword}
                   />
                   <TextField
+                    className="form-input"
                     label={`${t("CHANGE_PASSWORD.NEW_PASSWORD")}`}
                     name="newPassword"
                     type="password"
@@ -84,6 +87,7 @@ class ChangePasswordDialog extends Component {
                     value={values.newPassword}
                   />
                   <TextField
+                    className="form-input"
                     label={`${t("CHANGE_PASSWORD.CONFIRM_NEW_PASSWORD")}`}
                     name="confirmNewPassword"
                     type="password"
