@@ -20,15 +20,16 @@ class Profile extends Component {
   };
 
   dialogClosed = (items) => {
-    const { menuItems, activeItem } = this.state;
-    const item = menuItems[activeItem];
-    if (items && item) {
-      item.data = item.data.concat(items);
-      this.setState({
-        menuItems: menuItems,
-        dialogDisplayed: false,
-      });
-      this.saveData();
+    // const { menuItems, activeItem } = this.state;
+    // const item = menuItems[activeItem];
+    if (items) {
+      console.log("change password")
+      // item.data = item.data.concat(items);
+      // this.setState({
+      //   menuItems: menuItems,
+      //   dialogDisplayed: false,
+      // });
+      // this.saveData();
     } else {
       this.setState({
         dialogDisplayed: false,

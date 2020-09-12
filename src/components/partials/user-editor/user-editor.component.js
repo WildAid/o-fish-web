@@ -273,7 +273,8 @@ class UserEditor extends Component {
                           onChange={(e) =>
                             setFieldValue("password", e.target.value)
                           }
-                          value={values.password}
+                          value="******************"
+                          InputProps={{ readOnly: true }}
                           />
                         <button
                           type="button"

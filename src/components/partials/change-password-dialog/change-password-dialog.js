@@ -1,21 +1,34 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
-import { TextField } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Typography from "@material-ui/core/Typography";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+
+import DoneIcon from "@material-ui/icons/Done";
 
 import "./change-password-dialog.css";
 
 class ChangePasswordDialog extends Component {
   state = {
     items: [""],
+    validations: {
+      containsNumber: false,
+      containsUpper: false,
+      containsLower: false,
+      atLeastLength: false,
+      passwordsMatch: false,
+    },
+    isValid: false,
   };
 
   applyDialog = () => {
+    console.log("submit")
     if (this.props.onApply) {
       this.props.onApply(this.state.items);
     }
@@ -27,7 +40,27 @@ class ChangePasswordDialog extends Component {
     }
   };
 
+  validate(password, confirmPassword) {
+    let newValidations = this.state.validations;
+    newValidations.containsNumber = /\d/.test(password);
+    newValidations.containsUpper = /[A-Z]/.test(password);
+    newValidations.containsLower = /[a-z]/.test(password);
+    newValidations.atLeastLength = password.length >= 6;
+    newValidations.passwordsMatch =
+      confirmPassword.length && password != confirmPassword;
+    this.setState({ validations: newValidations });
+
+    let valid = true;
+    for (const v in this.state.validations) {
+      if (!this.state.validations[v]) {
+        valid = false;
+      }
+    }
+    this.setState({ isValid: valid })
+  }
+
   render() {
+    const { items, validations } = this.state;
     const { user, t } = this.props;
     return (
       <Dialog
@@ -43,7 +76,7 @@ class ChangePasswordDialog extends Component {
             <b>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</b>
           </Typography>
         </DialogTitle>
-        <DialogContent className="internal">
+        <DialogContent className="content">
           <Formik
             initialValues={{
               oldPassword: "",
@@ -81,9 +114,10 @@ class ChangePasswordDialog extends Component {
                     name="newPassword"
                     type="password"
                     onBlur={handleBlur}
-                    onChange={(e) =>
-                      setFieldValue("newPassword", e.target.value)
-                    }
+                    onChange={(e) => {
+                      setFieldValue("newPassword", e.target.value);
+                      this.validate(e.target.value, values.confirmNewPassword);
+                    }}
                     value={values.newPassword}
                   />
                 </div>
@@ -94,18 +128,50 @@ class ChangePasswordDialog extends Component {
                     name="confirmNewPassword"
                     type="password"
                     onBlur={handleBlur}
-                    onChange={(e) =>
-                      setFieldValue("confirmNewPassword", e.target.value)
-                    }
+                    onChange={(e) => {
+                      setFieldValue("confirmNewPassword", e.target.value);
+                      this.validate(values.newPassword, e.target.value);
+                    }}
                     value={values.confirmNewPassword}
+                    error={validations.passwordsMatch}
+                    helperText={validations.passwordsMatch ? "Passwords don't match." : ""}
                   />
                 </div>
               </Form>
             )}
           />
+          <div>
+            <div className="flex-row">
+              {validations.containsNumber && (
+                <DoneIcon fontSize="small" className="done-icon" />
+              )}
+              <Typography>Must contain one number (0-9)</Typography>
+            </div>
+            <div className="flex-row">
+              {validations.containsUpper && (
+                <DoneIcon fontSize="small" className="done-icon" />
+              )}
+              <Typography>Must contain one upper case letter (A-Z)</Typography>
+            </div>
+            <div className="flex-row">
+              {validations.containsLower && (
+                <DoneIcon fontSize="small" className="done-icon" />
+              )}
+              <Typography>Must contain one lower case letter (a-z)</Typography>
+            </div>
+            <div className="flex-row">
+              {validations.atLeastLength && (
+                <DoneIcon fontSize="small" className="done-icon" />
+              )}
+              <Typography>Minimum length of 6 characters</Typography>
+            </div>
+          </div>
         </DialogContent>
         <DialogActions className="action-btns">
-          <button className="blue-btn" onClick={this.applyDialog}>
+          <button
+            className="blue-btn"
+            onClick={this.applyDialog}
+          >
             {`${t("BUTTONS.CHANGE_PASSWORD")}`}
           </button>
           <button className="simple-btn" onClick={this.cancelDialog}>
