@@ -5,15 +5,17 @@ import UserEditor from "../partials/user-editor/user-editor.component";
 import AuthService from "./../../services/auth.service";
 import UserService from "./../../services/user.service";
 
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
+
+import "./profile.css"
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
 
 class Profile extends Component {
   state = {
-    error: "",
+    successMsg: "",
+    errorMsg: "",
     dialogDisplayed: false,
   };
 
@@ -24,42 +26,73 @@ class Profile extends Component {
   };
 
   dialogClosed = (values) => {
-    this.setState({
-      dialogDisplayed: false,
-    });
+    this.setState({ dialogDisplayed: false });
     if (values) {
       authService
         .authenticate(authService.user.email, values.oldPassword)
         .then(() => {
-          userService.resetPasswordRequest(authService.user.email, values.newPassword)
+          userService.resetPasswordRequest(
+            authService.user.email,
+            values.newPassword
+          );
+        })
+        .then(() => {
+          this.setState({
+            successMsg: this.props.t("CHANGE_PASSWORD.SUCCESS"),
+          });
         })
         .catch((error) => {
-          this.setState({
-            error: error.message
-          })
-        })
+          this.setState({ errorMsg: error.message });
+        });
     }
   };
 
-  resetError = () => {
+  dismissSuccess = () => {
     this.setState({
-      error: "",
-    })
-  }
+      successMsg: "",
+    });
+  };
+
+  dismissError = () => {
+    this.setState({
+      errorMsg: "",
+    });
+  };
 
   render() {
-    const { error, dialogDisplayed } = this.state;
+    const { errorMsg, successMsg, dialogDisplayed } = this.state;
     const { t } = this.props;
     return (
       <div className="flex-column align-center padding-top">
-        <div className="flex-row justify-between standard-view">
-          <div>
+        <div className="flex-row justify-between standard-view ">
+          <div className="banner-row">
             <div className="item-label">
               {authService.user && authService.user.name
                 ? authService.user.name.first + " " + authService.user.name.last
                 : "Unauthenticated user"}
             </div>
             <div className="item-name">{t("NAVIGATION.ACCOUNT")}</div>
+            <div>
+              {successMsg && (
+                <Alert
+                  icon={false}
+                  onClose={this.dismissSuccess}
+                  className="alert-banner"
+                >
+                  {successMsg}
+                </Alert>
+              )}
+              {errorMsg && (
+                <Alert
+                  icon={false}
+                  severity="error"
+                  onClose={this.dismissError}
+                  className="alert-banner"
+                >
+                  {errorMsg}
+                </Alert>
+              )}
+            </div>
           </div>
         </div>
         <UserEditor
@@ -72,15 +105,8 @@ class Profile extends Component {
           onChangePassword={this.showDialog}
         />
         {dialogDisplayed && (
-          <ChangePasswordDialog
-            onApply={this.dialogClosed}
-          />
+          <ChangePasswordDialog onApply={this.dialogClosed} />
         )}
-        <Snackbar open={error.length > 0} onClose={this.resetError}>
-          <Alert severity="error">
-            {error}
-          </Alert>
-        </Snackbar>
       </div>
     );
   }

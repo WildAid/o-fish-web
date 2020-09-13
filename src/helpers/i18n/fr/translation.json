@@ -100,7 +100,8 @@
     "CONTAINS_UPPER": "Contient au moins une majuscule (A-Z)",
     "CONTAINS_LOWER": "Contient au moins une miniscule (a-z)",
     "AT_LEAST_SIX_CHARS": "Utilise au moins 6 caractères",
-    "CONFIRM_PASSWORD_ERROR": "Les mots de passe ne concordent pas."
+    "CONFIRM_PASSWORD_ERROR": "Les mots de passe ne concordent pas.",
+    "SUCCESS": "Votre mot de passe a bien été mis à jour"
   },
   "SEARCH": {
     "FILTER_SEARCH": "Recherche",

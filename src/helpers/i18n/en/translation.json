@@ -109,7 +109,8 @@
     "CONTAINS_UPPER": "Must contain one upper case letter (A-Z)",
     "CONTAINS_LOWER": "Must contain one lower case letter (a-z)",
     "AT_LEAST_SIX_CHARS": "Minimum length of 6 characters",
-    "CONFIRM_PASSWORD_ERROR": "Passwords don't match."
+    "CONFIRM_PASSWORD_ERROR": "Passwords don't match.",
+    "SUCCESS": "Password changed successfully"
   },
   "SEARCH": {
     "FILTER_SEARCH": "Search",

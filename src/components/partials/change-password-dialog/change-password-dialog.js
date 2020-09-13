@@ -25,7 +25,7 @@ class ChangePasswordDialog extends Component {
     isValid: false,
   };
 
-  applyDialog = (values) => {
+  handleSubmit = (values) => {
     if (this.props.onApply) {
       this.props.onApply(values);
     }
@@ -63,7 +63,6 @@ class ChangePasswordDialog extends Component {
     return (
       <Dialog
         open
-        onClose={this.applyDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth={true}
@@ -78,7 +77,7 @@ class ChangePasswordDialog extends Component {
             newPassword: "",
             confirmNewPassword: "",
           }}
-          onSubmit={this.applyDialog}
+          onSubmit={this.handleSubmit}
           render={({
             touched,
             errors,
