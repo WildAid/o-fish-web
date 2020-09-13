@@ -129,7 +129,7 @@ class ChangePasswordDialog extends Component {
                     }}
                     value={values.confirmNewPassword}
                     error={
-                      values.confirmNewPassword && !validations.passwordsMatch
+                      Boolean(values.confirmNewPassword && !validations.passwordsMatch)
                     }
                     helperText={
                       values.confirmNewPassword && !validations.passwordsMatch

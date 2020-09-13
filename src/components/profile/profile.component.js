@@ -23,6 +23,8 @@ class Profile extends Component {
     this.setState({
       dialogDisplayed: true,
     });
+    this.dismissSuccess();
+    this.dismissError();
   };
 
   dialogClosed = (values) => {
@@ -72,12 +74,11 @@ class Profile extends Component {
                 : "Unauthenticated user"}
             </div>
             <div className="item-name">{t("NAVIGATION.ACCOUNT")}</div>
-            <div>
+            <div className="alert-banner">
               {successMsg && (
                 <Alert
                   icon={false}
                   onClose={this.dismissSuccess}
-                  className="alert-banner"
                 >
                   {successMsg}
                 </Alert>
@@ -87,7 +88,6 @@ class Profile extends Component {
                   icon={false}
                   severity="error"
                   onClose={this.dismissError}
-                  className="alert-banner"
                 >
                   {errorMsg}
                 </Alert>
