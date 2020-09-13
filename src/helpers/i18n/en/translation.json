@@ -104,7 +104,12 @@
     "CHANGE_PASSWORD": "Change Password",
     "OLD_PASSWORD": "Old Password",
     "NEW_PASSWORD": "New Password",
-    "CONFIRM_NEW_PASSWORD": "Confirm New Password"
+    "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "CONTAINS_NUMBER": "Must contain one number (0-9)",
+    "CONTAINS_UPPER": "Must contain one upper case letter (A-Z)",
+    "CONTAINS_LOWER": "Must contain one lower case letter (a-z)",
+    "AT_LEAST_SIX_CHARS": "Minimum length of 6 characters",
+    "CONFIRM_PASSWORD_ERROR": "Passwords don't match."
   },
   "SEARCH": {
     "FILTER_SEARCH": "Search",

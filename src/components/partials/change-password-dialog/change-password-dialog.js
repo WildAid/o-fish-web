@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import {
@@ -9,28 +9,25 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-
 import DoneIcon from "@material-ui/icons/Done";
 
 import "./change-password-dialog.css";
 
 class ChangePasswordDialog extends Component {
   state = {
-    items: [""],
     validations: {
       containsNumber: false,
       containsUpper: false,
       containsLower: false,
       atLeastLength: false,
-      passwordsMatch: false,
+      passwordsMatch: true,
     },
     isValid: false,
   };
 
-  applyDialog = () => {
-    console.log("submit")
+  applyDialog = (values) => {
     if (this.props.onApply) {
-      this.props.onApply(this.state.items);
+      this.props.onApply(values);
     }
   };
 
@@ -46,8 +43,9 @@ class ChangePasswordDialog extends Component {
     newValidations.containsUpper = /[A-Z]/.test(password);
     newValidations.containsLower = /[a-z]/.test(password);
     newValidations.atLeastLength = password.length >= 6;
-    newValidations.passwordsMatch =
-      confirmPassword.length && password != confirmPassword;
+    newValidations.passwordsMatch = Boolean(
+      confirmPassword.length && password == confirmPassword
+    );
     this.setState({ validations: newValidations });
 
     let valid = true;
@@ -56,12 +54,12 @@ class ChangePasswordDialog extends Component {
         valid = false;
       }
     }
-    this.setState({ isValid: valid })
+    this.setState({ isValid: valid });
   }
 
   render() {
-    const { items, validations } = this.state;
-    const { user, t } = this.props;
+    const { validations, isValid } = this.state;
+    const { t } = this.props;
     return (
       <Dialog
         open
@@ -72,28 +70,27 @@ class ChangePasswordDialog extends Component {
         maxWidth="sm"
       >
         <DialogTitle className="title">
-          <Typography variant="h6">
-            <b>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</b>
-          </Typography>
+          <b>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</b>
         </DialogTitle>
-        <DialogContent className="content">
-          <Formik
-            initialValues={{
-              oldPassword: "",
-              newPassword: "",
-              confirmNewPassword: "",
-            }}
-            onSubmit={this.handleLogin}
-            render={({
-              touched,
-              errors,
-              values,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              setFieldValue,
-            }) => (
-              <Form onSubmit={handleSubmit}>
+
+        <Formik
+          initialValues={{
+            oldPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          }}
+          onSubmit={this.applyDialog}
+          render={({
+            touched,
+            errors,
+            values,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <DialogContent className="content">
                 <div className="form-field">
                   <TextField
                     className="form-input"
@@ -133,51 +130,54 @@ class ChangePasswordDialog extends Component {
                       this.validate(values.newPassword, e.target.value);
                     }}
                     value={values.confirmNewPassword}
-                    error={validations.passwordsMatch}
-                    helperText={validations.passwordsMatch ? "Passwords don't match." : ""}
+                    error={
+                      values.confirmNewPassword && !validations.passwordsMatch
+                    }
+                    helperText={
+                      values.confirmNewPassword && !validations.passwordsMatch
+                        ? t("CHANGE_PASSWORD.CONFIRM_PASSWORD_ERROR")
+                        : ""
+                    }
                   />
                 </div>
-              </Form>
-            )}
-          />
-          <div>
-            <div className="flex-row">
-              {validations.containsNumber && (
-                <DoneIcon fontSize="small" className="done-icon" />
-              )}
-              <Typography>Must contain one number (0-9)</Typography>
-            </div>
-            <div className="flex-row">
-              {validations.containsUpper && (
-                <DoneIcon fontSize="small" className="done-icon" />
-              )}
-              <Typography>Must contain one upper case letter (A-Z)</Typography>
-            </div>
-            <div className="flex-row">
-              {validations.containsLower && (
-                <DoneIcon fontSize="small" className="done-icon" />
-              )}
-              <Typography>Must contain one lower case letter (a-z)</Typography>
-            </div>
-            <div className="flex-row">
-              {validations.atLeastLength && (
-                <DoneIcon fontSize="small" className="done-icon" />
-              )}
-              <Typography>Minimum length of 6 characters</Typography>
-            </div>
-          </div>
-        </DialogContent>
-        <DialogActions className="action-btns">
-          <button
-            className="blue-btn"
-            onClick={this.applyDialog}
-          >
-            {`${t("BUTTONS.CHANGE_PASSWORD")}`}
-          </button>
-          <button className="simple-btn" onClick={this.cancelDialog}>
-            {`${t("BUTTONS.CANCEL")}`}
-          </button>
-        </DialogActions>
+                <div>
+                  <div className="flex-row validation">
+                    {validations.containsNumber && (
+                      <DoneIcon fontSize="small" className="done-icon" />
+                    )}
+                    <Typography>{t("CHANGE_PASSWORD.CONTAINS_NUMBER")}</Typography>
+                  </div>
+                  <div className="flex-row validation">
+                    {validations.containsUpper && (
+                      <DoneIcon fontSize="small" className="done-icon" />
+                    )}
+                    <Typography>{t("CHANGE_PASSWORD.CONTAINS_UPPER")}</Typography>
+                  </div>
+                  <div className="flex-row validation">
+                    {validations.containsLower && (
+                      <DoneIcon fontSize="small" className="done-icon" />
+                    )}
+                    <Typography>{t("CHANGE_PASSWORD.CONTAINS_LOWER")}</Typography>
+                  </div>
+                  <div className="flex-row validation">
+                    {validations.atLeastLength && (
+                      <DoneIcon fontSize="small" className="done-icon" />
+                    )}
+                    <Typography>{t("CHANGE_PASSWORD.AT_LEAST_SIX_CHARS")}</Typography>
+                  </div>
+                </div>
+              </DialogContent>
+              <DialogActions className="action-btns">
+                <button className="blue-btn" type="submit" disabled={!isValid}>
+                  {`${t("BUTTONS.CHANGE_PASSWORD")}`}
+                </button>
+                <button className="simple-btn" onClick={this.cancelDialog}>
+                  {`${t("BUTTONS.CANCEL")}`}
+                </button>
+              </DialogActions>
+            </Form>
+          )}
+        />
       </Dialog>
     );
   }
