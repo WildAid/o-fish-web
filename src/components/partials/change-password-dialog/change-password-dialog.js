@@ -72,7 +72,6 @@ class ChangePasswordDialog extends Component {
         <DialogTitle className="title">
           <b>{t("CHANGE_PASSWORD.CHANGE_PASSWORD")}</b>
         </DialogTitle>
-
         <Formik
           initialValues={{
             oldPassword: "",
