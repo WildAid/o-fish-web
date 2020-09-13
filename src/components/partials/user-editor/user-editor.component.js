@@ -44,9 +44,9 @@ class UserEditor extends Component {
     this.setState({ imgData: data });
   };
 
-  changePassword = () => {
+  handleChangePassword = () => {
     if (this.props.onChangePassword) {
-      this.props.onChangePassword(this.state.user)
+      this.props.onChangePassword()
     }
   }
 
@@ -279,7 +279,7 @@ class UserEditor extends Component {
                         <button
                           type="button"
                           className="white-btn"
-                          onClick={this.changePassword}
+                          onClick={this.handleChangePassword}
                         >
                           {t("BUTTONS.CHANGE_PASSWORD")}
                         </button>

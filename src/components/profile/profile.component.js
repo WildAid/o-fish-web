@@ -69,7 +69,7 @@ class Profile extends Component {
             role: false,
             changePassword: true,
           }}
-          onChangePassword={(user) => this.showDialog(user)}
+          onChangePassword={this.showDialog}
         />
         {dialogDisplayed && (
           <ChangePasswordDialog
