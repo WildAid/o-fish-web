@@ -11,6 +11,7 @@ import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
+import AuthService from "./../../services/auth.service";
 
 import {
   VIEW_AGENCIES_PAGE,
@@ -21,6 +22,7 @@ import "./agencies.css";
 
 const agencyService = AgencyService.getInstance();
 const searchService = SearchService.getInstance();
+const authService = AuthService.getInstance();
 
 class AgenciesMain extends React.Component {
   state = {
@@ -36,6 +38,7 @@ class AgenciesMain extends React.Component {
         : "",
     highlighted: [],
     currentFilter: null,
+    isAdmin: false,
   };
 
   search = (value) => {
@@ -67,7 +70,9 @@ class AgenciesMain extends React.Component {
   getAgenciesWithOfficers = (agencies, officers) => {
     return agencies.map((agency) => {
       if (officers) {
-        var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+        var agencyWithOfficers = officers.find(
+          (el) => el._id[0] === agency.name
+        );
       }
       if (agencyWithOfficers) {
         agency.officers = Array.from(new Set(agencyWithOfficers.officers))
@@ -104,14 +109,27 @@ class AgenciesMain extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    const user = authService.user;
+
+    if (user.global.admin) {
+      this.setState({ isAdmin: true });
+      this.loadData();
+    }
   }
 
   render() {
-    const { agencies, total, limit, page, searchQuery, loading } = this.state;
+    const {
+      agencies,
+      total,
+      limit,
+      page,
+      searchQuery,
+      loading,
+      isAdmin,
+    } = this.state;
     const { t } = this.props;
 
-    return (
+    return isAdmin ? (
       <div className="padding-bottom flex-column align-center">
         <SearchPanel
           handler={this.search}
@@ -186,6 +204,10 @@ class AgenciesMain extends React.Component {
             onChange={this.handlePageChange}
           />
         )}
+      </div>
+    ) : (
+      <div className="flex-row padding-top justify-center">
+        {t("WARNINGS.NOT_UNAUTHORIZED")}
       </div>
     );
   }

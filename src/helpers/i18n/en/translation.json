@@ -250,6 +250,7 @@
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Not authenticated",
+    "NOT_UNAUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
     "NO_OFFICERS":"No officers found",

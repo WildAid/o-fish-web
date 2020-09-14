@@ -7,7 +7,7 @@ import UserService from "./../../services/user.service";
 
 import Alert from "@material-ui/lab/Alert";
 
-import "./profile.css"
+import "./profile.css";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
@@ -64,6 +64,7 @@ class Profile extends Component {
   render() {
     const { errorMsg, successMsg, dialogDisplayed } = this.state;
     const { t } = this.props;
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view ">
@@ -76,10 +77,7 @@ class Profile extends Component {
             <div className="item-name">{t("NAVIGATION.ACCOUNT")}</div>
             <div className="alert-banner">
               {successMsg && (
-                <Alert
-                  icon={false}
-                  onClose={this.dismissSuccess}
-                >
+                <Alert icon={false} onClose={this.dismissSuccess}>
                   {successMsg}
                 </Alert>
               )}

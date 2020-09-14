@@ -6,16 +6,19 @@ import { withTranslation } from "react-i18next";
 import history from "../../../root/root.history";
 
 import AgencyService from "./../../../services/agency.service";
+import AuthService from "./../../../services/auth.service";
 
 import "./new-agency.css";
 
 const agencyService = AgencyService.getInstance();
+const authService = AuthService.getInstance();
 
 class NewAgency extends Component {
   state = {
     newAgency: {
       name: "",
       description: "",
+      isAdmin: false,
     },
   };
 
@@ -38,10 +41,18 @@ class NewAgency extends Component {
       });
   };
 
-  render() {
-    const { t } = this.props;
+  componentDidMount() {
+    const user = authService.user;
 
-    return (
+    if (user.global.admin) {
+      this.setState({ isAdmin: true });
+    }
+  }
+
+  render() {
+    const { t, isAdmin } = this.props;
+
+    return isAdmin ? (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
@@ -122,6 +133,10 @@ class NewAgency extends Component {
             )}
           />
         </div>
+      </div>
+    ) : (
+      <div className="flex-row padding-top justify-center">
+        {t("WARNINGS.NOT_UNAUTHORIZED")}
       </div>
     );
   }
