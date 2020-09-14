@@ -44,9 +44,11 @@ class UserEditor extends Component {
     this.setState({ imgData: data });
   };
 
-  changePassword = (event) => {
-    userService.resetPasswordRequest(this.state.user, event.target.value);
-  };
+  handleChangePassword = () => {
+    if (this.props.onChangePassword) {
+      this.props.onChangePassword()
+    }
+  }
 
   saveUser = (values) => {
     const { userId } = this.props;
@@ -239,38 +241,65 @@ class UserEditor extends Component {
                     onData={this.imageUploaded}
                   />
                 </div>
-                <div className="flex-row justify-between">
-                  <TextField
-                    label={t("CREATE_USER_PAGE.FIRST_NAME")}
-                    name="firstName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("firstName", e.target.value)}
-                    type="text"
-                    value={values.firstName}
-                  />
-                  <TextField
-                    label={t("CREATE_USER_PAGE.LAST_NAME")}
-                    name="lastName"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("lastName", e.target.value)}
-                    type="text"
-                    value={values.lastName}
-                  />
-                </div>
-                <div className="flex-column">
-                  <TextField
-                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
-                    name="email"
-                    type="text"
-                    className="form-input"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("email", e.target.value)}
-                    value={values.email}
-                  />
-                  {showingOptions.changePassword && (
-                    <div className="password-line flex-row justify-between">
+                  <div className="flex-row justify-between">
+                    <TextField
+                      label={t("CREATE_USER_PAGE.FIRST_NAME")}
+                      name="firstName"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("firstName", e.target.value)
+                      }
+                      type="text"
+                      value={values.firstName}
+                      />
+                    <TextField
+                      label={t("CREATE_USER_PAGE.LAST_NAME")}
+                      name="lastName"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) =>
+                        setFieldValue("lastName", e.target.value)
+                      }
+                      type="text"
+                      value={values.lastName}
+                      />
+                  </div>
+                  <div className="flex-column">
+                    <TextField
+                      label={t("CREATE_AGENCY_PAGE.EMAIL")}
+                      name="email"
+                      type="text"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue("email", e.target.value)}
+                      value={values.email}
+                      />
+                    {showingOptions.changePassword && (
+                      <div className="password-line flex-row justify-between">
+                        <TextField
+                          label={t("LOGIN_PAGE.PASSWORD")}
+                          name="password"
+                          type="password"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) =>
+                            setFieldValue("password", e.target.value)
+                          }
+                          value="******************"
+                          InputProps={{ readOnly: true }}
+                          />
+                        <button
+                          type="button"
+                          className="white-btn"
+                          onClick={this.handleChangePassword}
+                        >
+                          {t("BUTTONS.CHANGE_PASSWORD")}
+                        </button>
+                      </div>
+                    )}
+                    {showingOptions.newPassword && (
+                     <Fragment>
                       <TextField
                         label={t("LOGIN_PAGE.PASSWORD")}
                         name="password"
@@ -288,14 +317,13 @@ class UserEditor extends Component {
                       >
                         {t("BUTTONS.CHANGE_PASSWORD")}
                       </button>
-                    </div>
+                    </Fragment>
                   )}
                   {showingOptions.newPassword && (
                     <TextField
                       label={t("LOGIN_PAGE.PASSWORD")}
                       name="password"
                       type="password"
-                      className="form-input"
                       onBlur={handleBlur}
                       onChange={(e) =>
                         setFieldValue("password", e.target.value)

@@ -37,5 +37,5 @@ export const USERS_GROOP_PAGE = "/users/groops";
 
 //Agencies subroutes
 export const NEW_AGENCIES_PAGE = "/agencies/new_agency";
-export const EDIT_AGENCIES_PAGE = "/agencies/edit_agency/";
+export const EDIT_AGENCIES_PAGE = "/agencies/edit_agency/:id";
 export const VIEW_AGENCIES_PAGE = "/agencies/view_agency/:id";

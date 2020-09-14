@@ -88,6 +88,18 @@
   "PROFILE_PAGE": {
     "EDIT_USER": "Modifier Utilisateur"
   },
+  "CHANGE_PASSWORD": {
+    "CHANGE_PASSWORD": "Changer le mot de passe",
+    "OLD_PASSWORD": "Mot de passe actuel",
+    "NEW_PASSWORD": "Nouveau mot de passe",
+    "CONFIRM_NEW_PASSWORD": "Confirmez le nouveau mot de passe",
+    "CONTAINS_NUMBER": "Contient au moins un chiffre (0-9)",
+    "CONTAINS_UPPER": "Contient au moins une majuscule (A-Z)",
+    "CONTAINS_LOWER": "Contient au moins une miniscule (a-z)",
+    "AT_LEAST_SIX_CHARS": "Utilise au moins 6 caractères",
+    "CONFIRM_PASSWORD_ERROR": "Les mots de passe ne concordent pas.",
+    "SUCCESS": "Votre mot de passe a bien été mis à jour"
+  },
   "SEARCH": {
     "FILTER_SEARCH": "Recherche",
     "ALL": "Tous",

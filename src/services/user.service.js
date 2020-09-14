@@ -47,10 +47,10 @@ export default class UserService {
     }, data);
   }
 
-  resetPasswordRequest(user, password) {
+  resetPasswordRequest(email, password) {
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
-      .callResetPasswordFunction(user.email, password, []);
+      .callResetPasswordFunction(email, password, []);
   }
 
   resetPassword(token, tokenId, newPassword) {

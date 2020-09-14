@@ -43,12 +43,15 @@
 
 .user-editor-form .form-input {
     margin-top: 30px;
-    margin-left: 2%;
     margin-right: 2%;
 }
 
 .user-editor-form .password-line {
     position: relative;
+}
+
+.user-editor-form .white-btn {
+    margin: 35px 0 20px 0;
 }
 
 .user-editor-form .password-line .form-input {
