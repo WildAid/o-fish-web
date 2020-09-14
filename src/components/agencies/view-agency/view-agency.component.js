@@ -86,7 +86,7 @@ class ViewAgency extends Component {
               </Fragment>
             )}
           </div>
-          <NavLink to={EDIT_AGENCIES_PAGE}>
+          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agencyInfo._id)}>
             <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>

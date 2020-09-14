@@ -66,7 +66,9 @@ class AgenciesMain extends React.Component {
 
   getAgenciesWithOfficers = (agencies, officers) => {
     return agencies.map((agency) => {
-      var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+      if (officers) {
+        var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+      }
       if (agencyWithOfficers) {
         agency.officers = Array.from(new Set(agencyWithOfficers.officers))
           .slice(0, 3)
@@ -162,7 +164,10 @@ class AgenciesMain extends React.Component {
                       </td>
                       <td
                         className="blue-color"
-                        onClick={(e) => this.goTo(e, EDIT_AGENCIES_PAGE)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToPage(EDIT_AGENCIES_PAGE, item._id);
+                        }}
                       >
                         {t("BUTTONS.EDIT")}
                       </td>

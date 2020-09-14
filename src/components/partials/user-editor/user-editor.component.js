@@ -44,9 +44,11 @@ class UserEditor extends Component {
     this.setState({ imgData: data });
   };
 
-  changePassword = (event) => {
-    userService.resetPasswordRequest(this.state.user, event.target.value);
-  };
+  handleChangePassword = () => {
+    if (this.props.onChangePassword) {
+      this.props.onChangePassword()
+    }
+  }
 
   saveUser = (values) => {
     const { userId } = this.props;
@@ -271,12 +273,14 @@ class UserEditor extends Component {
                           onChange={(e) =>
                             setFieldValue("password", e.target.value)
                           }
-                          value={values.password}
+                          value="******************"
+                          InputProps={{ readOnly: true }}
                           />
                         <button
+                          type="button"
                           className="white-btn"
-                          onClick={this.changePassword}
-                          >
+                          onClick={this.handleChangePassword}
+                        >
                           {t("BUTTONS.CHANGE_PASSWORD")}
                         </button>
                       </div>

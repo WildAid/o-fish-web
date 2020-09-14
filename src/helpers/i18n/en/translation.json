@@ -83,13 +83,34 @@
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
-    "PREFERED_NATIONALITIES": "Prefered Nationatities"
+    "PREFERED_NATIONALITIES": "Prefered Nationatities",
+    "EDIT_AGENCY": {
+      "STATUS": "Status",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NAME": "Agency Name",
+      "DESCRIPTION": "Description",
+      "SITE": "Website",
+      "EMAIL": "Contact Email"
+    }
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "See Activity"
   },
   "PROFILE_PAGE": {
     "EDIT_USER": "Edit User"
+  },
+  "CHANGE_PASSWORD": {
+    "CHANGE_PASSWORD": "Change Password",
+    "OLD_PASSWORD": "Old Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "CONTAINS_NUMBER": "Must contain one number (0-9)",
+    "CONTAINS_UPPER": "Must contain one upper case letter (A-Z)",
+    "CONTAINS_LOWER": "Must contain one lower case letter (a-z)",
+    "AT_LEAST_SIX_CHARS": "Minimum length of 6 characters",
+    "CONFIRM_PASSWORD_ERROR": "Passwords don't match.",
+    "SUCCESS": "Password changed successfully"
   },
   "SEARCH": {
     "FILTER_SEARCH": "Search",
