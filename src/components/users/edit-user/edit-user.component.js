@@ -49,7 +49,7 @@ export default withRouter(withTranslation("translation")(
     };
 
     changePassword = (event) => {
-      userService.resetPasswordRequest(this.state.user, event.target.value);
+      userService.resetPasswordRequest(this.state.user.email, event.target.value);
     };
 
     saveUser = (values) => {
