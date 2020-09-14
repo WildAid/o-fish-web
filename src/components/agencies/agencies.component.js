@@ -66,7 +66,9 @@ class AgenciesMain extends React.Component {
 
   getAgenciesWithOfficers = (agencies, officers) => {
     return agencies.map((agency) => {
-      var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+      if (officers) {
+        var agencyWithOfficers = officers.find((el) => el._id[0] === agency.name);
+      }
       if (agencyWithOfficers) {
         agency.officers = Array.from(new Set(agencyWithOfficers.officers))
           .slice(0, 3)
