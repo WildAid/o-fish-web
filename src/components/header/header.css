@@ -66,6 +66,12 @@
   padding-right: 7px;
 }
 
+.nav-menu-item {
+  color: white;
+  text-decoration: none;
+  margin-right: 30px;
+}
+
 /* Profile */
 .profile-info {
   padding-right: 20px;

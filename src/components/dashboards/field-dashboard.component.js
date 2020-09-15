@@ -4,6 +4,7 @@ import { withTranslation } from "react-i18next";
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import BoardingsTable from "./../boardings/boardings-table/boardings-table.component";
 import UserPhoto from "./../partials/user-photo/user-photo.component";
+import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 
 import { getHighlightedText } from "./../../helpers/get-data";
 
@@ -40,15 +41,12 @@ class FieldDashboard extends Component {
   loadData(newState) {
     newState = newState || {};
     newState.loading = true;
-    const { user } = this.props;
 
     this.setState(newState, () => {
-      const { limit, offset, currentFilter } = this.state;
-      const agenciesSearch = true;
-      const searchQuery = user.agency.name;
+      const { limit, offset, currentFilter, searchQuery } = this.state;
 
       boardingService
-        .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter, agenciesSearch)
+        .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter)
         .then((data) => {
           this.setState({
             loading: false,
@@ -70,16 +68,15 @@ class FieldDashboard extends Component {
   }
 
   render() {
-    const { user, isLoaded, changeFilter, datesFilter, t } = this.props;
+    const { user, isLoaded, changeFilter, t } = this.props;
     const {
       boardings,
       total,
       limit,
-      offset,
       isMapShown,
       highlighted,
-      loading,
       page,
+      loading,
     } = this.state;
 
     return (
@@ -123,7 +120,12 @@ class FieldDashboard extends Component {
               </div>
             </div>
             <div className="flex-column align-center field-item">
-              <div className="field-number">5</div>
+              {loading ? (
+                <LoadingPanel />
+              ) : (
+                <div className="field-number">{total}</div>
+              )}
+
               <div className="item-label">
                 {t("NAVIGATION.BOARDINGS").toUpperCase()}
               </div>

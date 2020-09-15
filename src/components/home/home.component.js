@@ -86,7 +86,6 @@ class Home extends Component {
         )}
         {!user.global.admin && !user.agency.admin && (
           <FieldDashboard
-            datesFilter={datesFilter}
             changeFilter={this.changeFilter}
             user={user}
             isLoaded={isLoaded}

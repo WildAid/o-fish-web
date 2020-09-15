@@ -121,8 +121,8 @@ export default class BoardingService {
     return stitchService.client.callFunction("getBoardings", [limit, offset, filter]);
   }
 
-  getBoardingsWithFacet(limit, offset, search, filter, agenciesSearch = false) {
-    return stitchService.client.callFunction("searchFacetByBoardings", [limit, offset, search, filter, agenciesSearch]);
+  getBoardingsWithFacet(limit, offset, search, filter) {
+    return stitchService.client.callFunction("searchFacetByBoardings", [limit, offset, search, filter]);
   }
 
   getChangeHistory(boardingId){
