@@ -299,38 +299,18 @@ class UserEditor extends Component {
                       </div>
                     )}
                     {showingOptions.newPassword && (
-                     <Fragment>
-                      <TextField
-                        label={t("LOGIN_PAGE.PASSWORD")}
-                        name="password"
-                        type="password"
-                        className="form-input"
-                        onBlur={handleBlur}
-                        onChange={(e) =>
-                          setFieldValue("password", e.target.value)
-                        }
-                        value={values.password}
-                      />
-                      <button
-                        className="white-btn"
-                        onClick={this.changePassword}
-                      >
-                        {t("BUTTONS.CHANGE_PASSWORD")}
-                      </button>
-                    </Fragment>
-                  )}
-                  {showingOptions.newPassword && (
-                    <TextField
-                      label={t("LOGIN_PAGE.PASSWORD")}
-                      name="password"
-                      type="password"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("password", e.target.value)
-                      }
-                      value={values.password}
-                    />
-                  )}
+                        <TextField
+                          label={t("LOGIN_PAGE.PASSWORD")}
+                          name="password"
+                          className="form-input"
+                          type="password"
+                          onBlur={handleBlur}
+                          onChange={(e) =>
+                            setFieldValue("password", e.target.value)
+                          }
+                          value={values.password}
+                        />
+                    )}
                 </div>
                 {showingOptions.active && (
                   <FormControl className="form-input">
