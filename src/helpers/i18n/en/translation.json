@@ -25,7 +25,6 @@
   },
   "HOME_PAGE": {
     "DASHBOARD": "Dashboard",
-    "MY_DASHBOARD": "My Dashboard",
     "MY_BOARDINGS": "My Boardings",
     "MY_ACTIVITY": "My Activity",
     "OVERVIEW": "Overview for",
@@ -34,6 +33,7 @@
     "DAYS": "Days",
     "HOURS": "Hours"
   },
+
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "New Agency",
     "EMAIL": "E-mail",

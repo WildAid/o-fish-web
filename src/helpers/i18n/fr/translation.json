@@ -6,6 +6,8 @@
     "PASSWORD": "Mot de passe"
   },
   "NAVIGATION": {
+    "MY_DASHBOARD": "Mon Tableau de Bord",
+    "USER_GROOP": "",
     "DASHBOARD": "Tableau de Bord",
     "BOARDING_RECORDS": "Rapports d'Inspection",
     "USERS": "Utilisateurs",
@@ -23,9 +25,13 @@
   },
   "HOME_PAGE": {
     "DASHBOARD": "Tableau de Bord",
+    "MY_BOARDINGS": "",
+    "MY_ACTIVITY": "",
     "OVERVIEW": "Aperçu pour",
     "COMPLIANCE_RATE": "Taux de Conformité",
-    "OFFICER_PATROL_HOURS": "Heures de Patrouille"
+    "OFFICER_PATROL_HOURS": "Heures de Patrouille",
+    "DAYS": "",
+    "HOURS": ""
   },
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "Nouvelle Agence",
@@ -230,6 +236,12 @@
     "GEAR" : "Equipement",
     "ADD_SPECIE" : "Ajouter une espèce",
     "ADD_ANOTHER" : "Ajouter unne autre"
+  },
+  "ADMINS": {
+    "GLOBAL": "",
+    "AGENCY": "",
+    "GROUP": "",
+    "FIELD": ""
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Non-authentifié",
