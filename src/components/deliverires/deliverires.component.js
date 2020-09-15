@@ -117,25 +117,22 @@ class DeliveriesPage extends Component {
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
 
-    this.setState(
-      { loading: true, mounted: true, filter: filter },
-      () => {
-        overviewService
-          .getBoardingsByFilter(filter)
-          .then((data) => {
-            const dataHelper = new BoardingDataHelper(data);
+    this.setState({ loading: true, mounted: true, filter: filter }, () => {
+      overviewService
+        .getBoardingsByFilter(filter)
+        .then((data) => {
+          const dataHelper = new BoardingDataHelper(data);
 
-            const newState = {
-              loading: false,
-              deliveries: dataHelper.getDeliveries(),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    );
+          const newState = {
+            loading: false,
+            deliveries: dataHelper.getDeliveries(),
+          };
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   }
 
   render() {

@@ -40,7 +40,7 @@ class CrewSection extends Component {
               captain.attachments.notes &&
               captain.attachments.notes.length
                 ? captain.attachments.notes[0]
-                : ""
+                : "N/A"
             }
             subText={t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
           />
@@ -69,7 +69,7 @@ class CrewSection extends Component {
                   <td>{item.license}</td>
                   <td>{item.attachments && item.attachments.photos ? item.attachments.photos.length : "N/A"}</td>
                   <td>
-                    {item.attachments ? item.attachments.notes[0] : "N/A"}
+                    {item.attachments && item.attachments.notes ? item.attachments.notes[0] : "N/A"}
                   </td>
                 </tr>
               ))}

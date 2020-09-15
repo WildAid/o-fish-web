@@ -6,6 +6,8 @@
     "PASSWORD": "Mot de passe"
   },
   "NAVIGATION": {
+    "MY_DASHBOARD": "Mon Tableau de Bord",
+    "USER_GROOP": "",
     "DASHBOARD": "Tableau de Bord",
     "BOARDING_RECORDS": "Rapports d'Inspection",
     "USERS": "Utilisateurs",
@@ -23,9 +25,13 @@
   },
   "HOME_PAGE": {
     "DASHBOARD": "Tableau de Bord",
+    "MY_BOARDINGS": "",
+    "MY_ACTIVITY": "",
     "OVERVIEW": "Aperçu pour",
     "COMPLIANCE_RATE": "Taux de Conformité",
-    "OFFICER_PATROL_HOURS": "Heures de Patrouille"
+    "OFFICER_PATROL_HOURS": "Heures de Patrouille",
+    "DAYS": "",
+    "HOURS": ""
   },
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "Nouvelle Agence",
@@ -44,9 +50,6 @@
     "PERMISSIONS": "Permissions",
     "PROFILE_INFO": "Information de Profil",
     "SETTINGS": "Réglages"
-  },
-  "VESSEL_OVERVIEW_PAGE": {
-    
   },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Rapports Trouvés",
@@ -146,6 +149,7 @@
     "UPDATE_USER": "Mise à Jour de l'Utilisateur"
   },
   "TABLE": {
+    "ADDRESS": "Adresse",
     "DATE": "Date",
     "TIME": "Heure",
     "VESSEL": "Vaisseau",
@@ -172,7 +176,8 @@
     "BUSINESS": "Entreprise",
     "DELIVERIES": "Livraisons",
     "ISSUED_TO": "Remis à",
-    "CREW_MEMBER": "Membre d'Equipage"
+    "CREW_MEMBER": "Membre d'Equipage",
+    "PHOTO": "Photo"
   },
   "FILTER": {
     "FROM": "A partir de",
@@ -232,6 +237,12 @@
     "ADD_SPECIE" : "Ajouter une espèce",
     "ADD_ANOTHER" : "Ajouter unne autre"
   },
+  "ADMINS": {
+    "GLOBAL": "",
+    "AGENCY": "",
+    "GROUP": "",
+    "FIELD": ""
+  },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Non-authentifié",
     "NO_BOARDINGS": "Pas d'Inspections trouvées",
@@ -247,5 +258,8 @@
     "NO_PHOTOS": "Pas de Photos trouvées",
     "NO_NOTES": "Pas de Remarques trouvées",
     "NO_LICENSE": "Pas de numéros de brevet trouvés"
+  },
+  "VALIDATION": {
+    "REQUIRED": "Ce champ est obligatoire"
   }
 }

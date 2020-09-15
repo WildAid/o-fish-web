@@ -296,11 +296,13 @@ export default class BoardingDataHelper {
         collection.push({
           license: boarding.captain.license,
           name: boarding.captain.name,
-          photos: boarding.captain.attachments ?
-              boarding.captain.attachments.photoIDs : [],
-          notes: boarding.captain.attachments ?
-              boarding.captain.attachments.notes : [],
-          isCaptain: true
+          photos: boarding.captain.attachments
+            ? boarding.captain.attachments.photoIDs
+            : [],
+          notes: boarding.captain.attachments
+            ? boarding.captain.attachments.notes
+            : [],
+          isCaptain: true,
         });
       }
     });
@@ -330,10 +332,20 @@ export default class BoardingDataHelper {
       if (boarding.vessel && boarding.vessel.lastDelivery) {
         collection.push({
           vessel: boarding.vessel.name,
-          location: boarding.vessel.lastDelivery.location,
-          business: boarding.vessel.lastDelivery.business,
+          location:
+            boarding.vessel && boarding.vessel.lastDelivery
+              ? boarding.vessel.lastDelivery.location
+              : "N/A",
+          business:
+            boarding.vessel && boarding.vessel.lastDelivery
+              ? boarding.vessel.lastDelivery.business
+              : "N/A",
           date: moment(boarding.date).format("L"),
-          lastDelivery: moment(boarding.vessel.lastDelivery.date).format("L"),
+          lastDelivery: moment(
+            boarding.vessel && boarding.vessel.lastDelivery
+              ? boarding.vessel.lastDelivery.date
+              : "N/A"
+          ).format("L"),
           risk: boarding.inspection.summary.safetyLevel.level,
         });
       }

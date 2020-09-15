@@ -27,12 +27,13 @@ class VesselSection extends Component {
         <section className="flex-row box-shadow padding white-bg margin-top">
           <div className="flex-column section-block">
             <h3>{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
-            <div className="pointer"
+            <div
+              className="pointer"
               onClick={() =>
-                goToPageWithFilter(
-                  VIEW_VESSEL_PAGE,
-                  {"vessel.permitNumber": vessel.permitNumber, "vessel.name": vessel.name}
-                )
+                goToPageWithFilter(VIEW_VESSEL_PAGE, {
+                  "vessel.permitNumber": vessel.permitNumber,
+                  "vessel.name": vessel.name,
+                })
               }
             >
               <TextViewer
@@ -56,15 +57,25 @@ class VesselSection extends Component {
           <div className="flex-column section-block padding-left">
             <h3>{t("BOARDING_PAGE.VIEW_BOARDING.DELIVERY_DATE")}</h3>
             <TextViewer
-              mainText={moment(vessel.lastDelivery.date).format("LLL")}
+              mainText={moment(
+                vessel && vessel.lastDelivery ? vessel.lastDelivery.date : ""
+              ).format("LLL")}
               subText={t("TABLE.DATE")}
             />
             <TextViewer
-              mainText={vessel.lastDelivery.location}
+              mainText={
+                vessel && vessel.lastDelivery
+                  ? vessel.lastDelivery.location
+                  : ""
+              }
               subText={t("FILTER.MAIN.BOARDING_INFO.LOCATION")}
             />
             <TextViewer
-              mainText={vessel.lastDelivery.business}
+              mainText={
+                vessel && vessel.lastDelivery
+                  ? vessel.lastDelivery.business
+                  : ""
+              }
               subText={t("FILTER.MAIN.LAST_DELIVERY.BUSINESS")}
             />
           </div>

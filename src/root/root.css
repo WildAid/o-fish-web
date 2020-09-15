@@ -208,6 +208,17 @@ img.icon {
     outline-color: transparent;
 }
 
+.disabled-btn {
+    color: white;
+    background-color: #a2a2a2;
+    margin: 18px 20px 20px 0;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    outline-color: transparent;
+    padding: 10px 30px;
+}
+
 .blue-btn:hover {
     box-shadow: 2px 2px 2px #ccc;
 }

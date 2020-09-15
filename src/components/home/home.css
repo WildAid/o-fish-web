@@ -1,23 +1,77 @@
 .home .search-panel .filled {
-    background: #fff;
-    border-radius: 30px 30px 0 0;
-    border: 1.5px solid #0a4074;
+  background: #fff;
+  border-radius: 30px 30px 0 0;
+  border: 1.5px solid #0a4074;
 }
 
 .home .autofilled:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    width: 100%;
-    height: 100vh;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
 }
 
-.home .page-header{
+.home .page-header {
   margin-top: 1em;
   margin-bottom: 2em;
+}
+
+.home .officer-info {
+  margin-top: 10px;
+}
+
+.home .officer-name {
+  font-size: 35px;
+}
+
+.home .officer-icon {
+  width: 60px;
+  margin-right: 15px;
+}
+
+.home .user-photo .profile-pic {
+  border-radius: 35px;
+  width: 65px;
+  height: 65px;
+  margin-right: 10px;
+}
+
+.home .field-item {
+  width: 20%;
+  border-right: 1px solid #efeded;
+  margin: 15px 15px 25px 15px;
+  padding: 0 20px;
+}
+
+.home .field-item:last-child {
+  border-right: none;
+}
+
+.home .field-item .field-number {
+  font-size: 75px;
+  font-weight: 500;
+}
+
+.home .map-handler {
+  margin: 4px 10px 0 20px;
+}
+
+.home .table-wrapper {
+  width: 95%;
+  background: white;
+  padding: 0 20px 20px 20px;
+  margin-bottom: 0;
+  margin-left: 0;
+  box-shadow: none;
+}
+
+.home .all-boardings-map {
+  width: 95%;
+  margin-left: 0;
 }

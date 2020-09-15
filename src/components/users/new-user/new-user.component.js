@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import history from "../../../root/root.history";
-import UserEditor from "../../partials/user-editor/user-editor.component"
+import UserEditor from "../../partials/user-editor/user-editor.component";
 import AuthService from "./../../../services/auth.service";
 
-import {
-  USERS_PAGE
-} from "../../../root/root.constants.js";
+import { USERS_PAGE } from "../../../root/root.constants.js";
 
 const authService = AuthService.getInstance();
 
@@ -23,13 +21,15 @@ class NewUser extends Component {
           </div>
         </div>
         <UserEditor
-            showingOptions={{
-              saveText: t("BUTTONS.CREATE_USER"),
-              role: true,
-              newPassword: authService.userRole === "global" || authService.userRole === "agency"
-            }}
-            onRedirect={() => history.push(USERS_PAGE)}>
-          </UserEditor>
+          showingOptions={{
+            saveText: t("BUTTONS.CREATE_USER"),
+            role: true,
+            newPassword:
+              authService.userRole === "global" ||
+              authService.userRole === "agency",
+          }}
+          onRedirect={() => history.push(USERS_PAGE)}
+        />
       </div>
     );
   }
