@@ -71,10 +71,10 @@ class BoardingsTable extends Component {
                       highlightClassName="highlighted"
                       searchWords={highlighted}
                       autoEscape={true}
-                      textToHighlight={item.vessel.name}
+                      textToHighlight={item.vessel ? item.vessel.name : ""}
                     />
                   </td>
-                  <td>{item.vessel.permitNumber || "N/A"}</td>
+                  <td>{item.vessel && item.vessel.permitNumber ? item.vessel.permitNumber : "N/A"}</td>
                   <td>{item.captain.name}</td>
                   <td>
                     {!!item.inspection.summary.violations
