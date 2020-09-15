@@ -13,7 +13,7 @@ import {
   NEW_USER_PAGE,
   NEW_AGENCIES_PAGE,
   PROFILE_PAGE,
-  USERS_GROOP_PAGE
+  USERS_GROOP_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";
@@ -253,7 +253,9 @@ class Header extends Component {
             {!currentUser.global.admin && !currentUser.agency.admin && (
               <div className="flex-row align-center justify-between full-view padding-left">
                 <div className="flex-row align-center justify-between padding-left">
-                  <div className="nav-item pointer menu-item">{t("NAVIGATION.MY_DASHBOARD")}</div>
+                  <div className="nav-item pointer menu-item">
+                    {t("NAVIGATION.MY_DASHBOARD")}
+                  </div>
                   <div className="relative menu-item">
                     <div
                       className="flex-row align-baseline pointer"

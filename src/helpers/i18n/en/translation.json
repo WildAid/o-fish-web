@@ -25,9 +25,14 @@
   },
   "HOME_PAGE": {
     "DASHBOARD": "Dashboard",
+    "MY_DASHBOARD": "My Dashboard",
+    "MY_BOARDINGS": "My Boardings",
+    "MY_ACTIVITY": "My Activity",
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",
-    "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
+    "OFFICER_PATROL_HOURS": "Officer Patrol Hours",
+    "DAYS": "Days",
+    "HOURS": "Hours"
   },
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "New Agency",

@@ -17,6 +17,7 @@ class UserPhoto extends Component {
     const { imageId } = this.props;
 
     if (!imageId) return;
+
     this.setState({ loading: true });
     stitchService.getPhoto(imageId).then((pic) => {
       if (pic) {
@@ -46,7 +47,7 @@ class UserPhoto extends Component {
   render() {
     const { userPhoto, loading } = this.state;
     const { defaultIcon } = this.props;
-
+    
     return (
       <div className="user-photo">
         {loading ? (
