@@ -21,7 +21,7 @@ class AgencyFormData extends Component {
       "gear": {title: "Gear Types", btn: "Add gear type", data:  []},
       "fisheries": {title: "Catches", btn: "Add catch", data:  []},
       "emsTypes": {title: "EMS", btn: "Add EMS", data:  []},
-      "ports": {title: "Vessel flags", btn: "Add vessel flag state", data:  []},
+      "countryPickerList": {title: "Vessel flags", btn: "Add vessel flag state", data:  []},
       "violationCodes": {title: "Violation Codes", btn: "Add code", data:  []},
       "violationDescriptions": {title: "Violation Descriptions", btn: "Add description", data:  []}
     }
@@ -135,7 +135,7 @@ class AgencyFormData extends Component {
         <div onClick={()=>this.changeCurrentTab("emsTypes")} className={"form-menu-item" + (activeItem === "emsTypes" ? " active-form-menu-item": "")}>
           EMS
         </div>
-        <div onClick={()=>this.changeCurrentTab("ports")} className={"form-menu-item" + (activeItem === "ports" ? " active-form-menu-item": "")}>
+        <div onClick={()=>this.changeCurrentTab("countryPickerList")} className={"form-menu-item" + (activeItem === "countryPickerList" ? " active-form-menu-item": "")}>
           Vessel flag State
         </div>
         <div onClick={()=>this.changeCurrentTab("violationCodes")} className={"form-menu-item" + (activeItem === "violationCodes" ? " active-form-menu-item": "")}>
