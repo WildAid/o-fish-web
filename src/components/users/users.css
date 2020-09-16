@@ -1,4 +1,15 @@
-.user-img{
-  padding: 5px;
-  width: 45px;
+.users-page table td{
+  width: 15%;
+}
+
+.users-page table td:first-child {
+  width: 20%;
+}
+
+.users-page table td:last-child {
+  width: 10%;
+}
+
+.agency-admin .view-activity {
+  width: 90px;
 }
