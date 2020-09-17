@@ -36,6 +36,10 @@ class BoardingsTable extends Component {
       limit,
     } = this.props;
 
+    boardingsChartOptions.filter = {
+      _id: { $in: boardings.map((item) => item._id) },
+    };
+
     return (
       <Fragment>
         {isMapShown && (

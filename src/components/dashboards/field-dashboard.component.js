@@ -9,8 +9,10 @@ import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import { getHighlightedText } from "./../../helpers/get-data";
 
 import BoardingService from "./../../services/boarding.service";
+import AuthService from "./../../services/auth.service";
 
 const boardingService = BoardingService.getInstance();
+const authService = AuthService.getInstance();
 
 class FieldDashboard extends Component {
   state = {
@@ -46,7 +48,11 @@ class FieldDashboard extends Component {
       const { limit, offset, currentFilter, searchQuery } = this.state;
 
       boardingService
-        .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter)
+        .getBoardingsWithFacet(limit, offset, searchQuery,
+        {
+          ...currentFilter,
+          "reportingOfficer.email": authService.user.email
+        })
         .then((data) => {
           this.setState({
             loading: false,
