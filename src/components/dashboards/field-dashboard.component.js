@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
+import moment from "moment";
 
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import BoardingsTable from "./../boardings/boardings-table/boardings-table.component";
@@ -24,6 +25,9 @@ class FieldDashboard extends Component {
     highlighted: [],
     loading: true,
     page: 1,
+    currentFilter: {
+      date: { $gt: moment().subtract(1, "week").toDate() },
+    }
   };
 
   handlePageChange = (e, page) => {
@@ -68,6 +72,20 @@ class FieldDashboard extends Component {
         });
     });
   }
+
+  changeFilter = (filter) => {
+    let filterObject = {
+      $and: [
+        {
+          date: { $gt: new Date(filter.start) },
+        },
+        {
+          date: { $lte: new Date(filter.end) },
+        },
+      ],
+    };
+    this.setState({ currentFilter: filterObject });
+  };
 
   componentDidMount() {
     this.loadData();
