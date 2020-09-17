@@ -50,7 +50,6 @@ class FieldDashboard extends Component {
 
     this.setState(newState, () => {
       const { limit, offset, currentFilter, searchQuery } = this.state;
-      debugger;
       boardingService
         .getBoardingsWithFacet(limit, offset, searchQuery,
         {
