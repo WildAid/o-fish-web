@@ -1,5 +1,3 @@
-//@flow
-
 import Root from "./root.component";
 
 import Login from "../components/login/login.component";
@@ -11,7 +9,7 @@ import UsersMain from "../components/users/users.routes-render";
 import Users from "../components/users/users.component";
 import Agencies from "../components/agencies/agencies.component";
 import AgenciesMain from "../components/agencies/agencies.routes-render";
-import AgenciesDashboard from './../components/dashboards/agencies-dashboard.component';
+import AgenciesDashboard from "./../components/dashboards/agencies-dashboard.component";
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
@@ -20,6 +18,7 @@ import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
 import NotesPage from "../components/notes/notes.component";
 import DeliveriesPage from "../components/deliverires/deliverires.component";
+import ChartsPage from "../components/charts/charts.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";
@@ -61,6 +60,7 @@ import {
   PHOTOS_PAGE,
   NOTES_PAGE,
   DELIVERIES_PAGE,
+  CHARTS_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -90,6 +90,12 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: CHARTS_PAGE,
+    component: ChartsPage,
     auth: true,
     exact: false,
   },

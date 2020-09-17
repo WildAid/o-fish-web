@@ -20,7 +20,7 @@ import {
   NEW_AGENCIES_PAGE
 } from "./../../root/root.constants";
 
-import "./agencies.css";
+import "./agencies.css"; 
 
 const agencyService = AgencyService.getInstance();
 const searchService = SearchService.getInstance();

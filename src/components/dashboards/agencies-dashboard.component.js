@@ -1,32 +1,30 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
+import Pagination from "@material-ui/lab/Pagination";
 
 import DatesRange from "./../partials/dates-range/dates-range.component";
-import BoardingsTable from "./../boardings/boardings-table/boardings-table.component";
-import UserPhoto from "./../partials/user-photo/user-photo.component";
-import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
-import { getHighlightedText } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
-import BoardingService from "./../../services/boarding.service";
-import AuthService from "./../../services/auth.service";
 import SearchService from "./../../services/search.service";
+import AgencyService from "./../../services/agency.service";
 
-const authService = AuthService.getInstance();
-const boardingService = BoardingService.getInstance();
+import { CHARTS_PAGE, BOARDINGS_PAGE } from "./../../root/root.constants";
+
 const searchService = SearchService.getInstance();
+const agencyService = AgencyService.getInstance();
 
 class AgenciesDashboard extends Component {
   state = {
     boardings: [],
     vessels: [],
     crew: [],
+    agencies: [],
     total: 0,
     limit: 50,
     offset: 0,
-    isMapShown: true,
     highlighted: [],
     loading: true,
     page: 1,
@@ -42,11 +40,19 @@ class AgenciesDashboard extends Component {
     this.loadData({ offset: newOffset, page: page });
   };
 
-  showMap = () => {
-    const { isMapShown } = this.state;
-
-    this.setState({
-      isMapShown: !isMapShown,
+  getAgenciesWithOfficers = (agencies, officers) => {
+    return agencies.map((agency) => {
+      if (officers) {
+        var agencyWithOfficers = officers.find(
+          (el) => el._id[0] === agency.name
+        );
+      }
+      if (agencyWithOfficers) {
+        agency.officers = Array.from(new Set(agencyWithOfficers.officers))
+          .slice(0, 3)
+          .join(", ");
+      }
+      return agency;
     });
   };
 
@@ -55,21 +61,19 @@ class AgenciesDashboard extends Component {
     newState.loading = true;
 
     this.setState(newState, () => {
-      const { limit, offset, currentFilter, searchQuery } = this.state;
+      const { limit, offset, searchQuery } = this.state;
 
-      boardingService
-        .getBoardingsWithFacet(limit, offset, searchQuery, {
-          ...currentFilter,
-          "reportingOfficer.email": authService.user.email,
-        })
+      agencyService
+        .getAgencies(limit, offset, searchQuery, null)
         .then((data) => {
           this.setState({
             loading: false,
-            boardings: data.boardings,
+            agencies:
+              this.getAgenciesWithOfficers(data.agencies, data.officers) || [],
             total: data.amount && data.amount[0] ? data.amount[0].total : 0,
-            highlighted: getHighlightedText(
-              data.highlighted ? data.highlighted : []
-            ),
+            highlighted: data.highlighted
+              ? getHighlightedText(data.highlighted)
+              : [],
           });
         })
         .catch((error) => {
@@ -114,15 +118,14 @@ class AgenciesDashboard extends Component {
       boardings,
       vessels,
       crew,
+      agencies,
       total,
       limit,
-      isMapShown,
       highlighted,
       page,
       loading,
       searchQuery,
     } = this.state;
-    const { user } = authService;
 
     return (
       <div className="flex-column full-view align-center global-agencies-page">
@@ -144,64 +147,74 @@ class AgenciesDashboard extends Component {
             <DatesRange onFilterChange={changeFilter} />
           </div>
         </div>
-        <div className="flex-column align-center white-bg box-shadow standard-view margin-top margin-bottom padding-bottom">
-          {/* {!!agencies.length && ( */}
-          {/* <Fragment>
-            <div className="flex-row justify-between align-center full-view padding-top padding-bottom border-bottom">
-              <div className="item-name padding-left">
-                {t("HOME_PAGE.COMPLIANCE_RATE")}
-              </div>
-              <div className="blue-btn">
-                <img
-                  className="icon"
-                  src={require("../../assets/filter-icon.png")}
-                  alt="no logo"
-                />
-              </div>
-            </div>
-            <div className="table-wrapper">
-              <table className="agencies-table custom-table">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.AGENCY")}</td>
-                    <td>{t("NAVIGATION.BOARDINGS")}</td>
-                    <td>{t("TABLE.VIOLATIONS")}</td>
-                    <td>{t("HOME_PAGE.COMPLIANCE_RATE")}</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {agencies.map((item, ind) => (
-                    <tr
-                      className="table-row row-body"
-                      key={ind}
-                      onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
-                    >
-                      <td className="blue-color">{item.name}</td>
-                      <td>{item.description}</td>
-                      <td>{item.officers || "N/A"}</td>
-                      <td>
-                        <div className={`status-icon ${status}-status-icon`}>
-                          {status}
-                        </div>
-                      </td>
-                      <td
-                        className="blue-color"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          goToPage(EDIT_AGENCIES_PAGE, item._id);
-                        }}
-                      >
-                        {t("BUTTONS.EDIT")}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Fragment> */}
-          {/* )} */}
-        </div>
+        {!loading ? (
+          <div className="flex-column align-center white-bg box-shadow standard-view margin-top margin-bottom padding-bottom">
+            {!!agencies.length && (
+              <Fragment>
+                <div className="flex-row justify-between align-center full-view padding-top padding-bottom border-bottom">
+                  <div className="item-name padding-left">
+                    {t("HOME_PAGE.COMPLIANCE_RATE")}
+                  </div>
+                  <div className="blue-btn">
+                    <img
+                      className="icon"
+                      src={require("../../assets/filter-icon.png")}
+                      alt="no logo"
+                    />
+                  </div>
+                </div>
+                <div className="table-wrapper">
+                  <table className="agencies-table custom-table">
+                    <thead>
+                      <tr className="table-row row-head border-bottom">
+                        <td>{t("TABLE.AGENCY")}</td>
+                        <td>{t("NAVIGATION.BOARDINGS")}</td>
+                        <td>{t("TABLE.VIOLATIONS")}</td>
+                        <td>{t("HOME_PAGE.COMPLIANCE_RATE")}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {agencies.map((item, ind) => (
+                        <tr
+                          className="table-row row-body"
+                          key={ind}
+                          onClick={() => goToPage(CHARTS_PAGE, item._id)}
+                        >
+                          <td className="blue-color">{item.name}</td>
+                          <td>100</td>
+                          <td>46</td>
+                          <td>34%</td>
+                          <td
+                            className="blue-color"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              goToPage(BOARDINGS_PAGE, item._id);
+                            }}
+                          >
+                            {`${t("BUTTONS.VIEW")} ${t(
+                              "NAVIGATION.BOARDINGS"
+                            )}`}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Fragment>
+            )}
+            {total > limit && (
+              <Pagination
+                page={page}
+                count={Math.ceil(total / limit)}
+                shape="rounded"
+                onChange={this.handlePageChange}
+              />
+            )}
+          </div>
+        ) : (
+          t("LOADING.LOADING")
+        )}
       </div>
     );
   }
