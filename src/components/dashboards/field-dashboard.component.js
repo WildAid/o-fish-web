@@ -50,7 +50,7 @@ class FieldDashboard extends Component {
 
     this.setState(newState, () => {
       const { limit, offset, currentFilter, searchQuery } = this.state;
-
+      debugger;
       boardingService
         .getBoardingsWithFacet(limit, offset, searchQuery,
         {
@@ -84,7 +84,7 @@ class FieldDashboard extends Component {
         },
       ],
     };
-    this.setState({ currentFilter: filterObject });
+    this.loadData({ currentFilter: filterObject })
   };
 
   componentDidMount() {
@@ -121,7 +121,7 @@ class FieldDashboard extends Component {
                 </div>
               </div>
             </div>
-            <DatesRange onFilterChange={changeFilter} />
+            <DatesRange onFilterChange={this.changeFilter} />
           </div>
         </div>
         <div className="white-bg box-shadow standard-view margin-bottom">
