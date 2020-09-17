@@ -9,7 +9,9 @@ import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 import { getHighlightedText } from "./../../helpers/get-data";
 
 import BoardingService from "./../../services/boarding.service";
+import AuthService from "./../../services/auth.service";
 
+const authService = AuthService.getInstance();
 const boardingService = BoardingService.getInstance();
 
 class FieldDashboard extends Component {
@@ -22,6 +24,7 @@ class FieldDashboard extends Component {
     highlighted: [],
     loading: true,
     page: 1,
+    isLoaded: false,
   };
 
   handlePageChange = (e, page) => {
@@ -68,7 +71,7 @@ class FieldDashboard extends Component {
   }
 
   render() {
-    const { user, isLoaded, changeFilter, t } = this.props;
+    const { changeFilter, t } = this.props;
     const {
       boardings,
       total,
@@ -77,8 +80,10 @@ class FieldDashboard extends Component {
       highlighted,
       page,
       loading,
+      isLoaded,
     } = this.state;
-
+    const { user } = authService;
+console.log(isLoaded);
     return (
       <Fragment>
         <div className="standard-view page-header">
@@ -88,12 +93,12 @@ class FieldDashboard extends Component {
               <UserPhoto imageId={user.profilePic || ""} defaultIcon={false} />
               <div className="flex-column margin-bottom">
                 <div className="officer-name">
-                  {isLoaded && user
+                  {!isLoaded && user
                     ? `${user.name.first} ${user.name.last}`
                     : t("LOADING.LOADING")}
                 </div>
                 <div>
-                  {isLoaded && user ? user.agency.name : t("LOADING.LOADING")}
+                  {!isLoaded && user ? user.agency.name : t("LOADING.LOADING")}
                 </div>
               </div>
             </div>
@@ -144,7 +149,7 @@ class FieldDashboard extends Component {
             </div>
           </div>
         </div>
-        {isLoaded && (
+        {!isLoaded && (
           <div className="flex-column align-center white-bg box-shadow standard-view margin-top margin-bottom padding-bottom">
             <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
               <div className="main-info">

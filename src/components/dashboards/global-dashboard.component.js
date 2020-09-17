@@ -12,22 +12,7 @@ class GlobalDashboard extends Component {
 
     return (
       <Fragment>
-        <div className="standard-view page-header">
-          <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
-          <div className="flex-row full-view justify-between align-center">
-            <div className="item-name">
-              {isLoaded && user ? user.agency.name : t("LOADING.LOADING")}
-            </div>
-            <DatesRange onFilterChange={changeFilter} />
-          </div>
-        </div>
-        {isLoaded && (
-          <Fragment>
-            <ComplianceRateSection filter={datesFilter} />
-            <BoardingsSection filter={datesFilter} />
-            <PatrolHoursSection filter={datesFilter} />
-          </Fragment>
-        )}
+        vvf
       </Fragment>
     );
   }

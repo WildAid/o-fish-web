@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import { withTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
@@ -16,6 +17,7 @@ import AuthService from "./../../services/auth.service";
 import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
+  NEW_AGENCIES_PAGE
 } from "./../../root/root.constants";
 
 import "./agencies.css";
@@ -109,11 +111,8 @@ class AgenciesMain extends React.Component {
   }
 
   componentDidMount() {
-    const user = authService.user;
-
-    if (user.global.admin) {
-      this.setState({ isAdmin: true });
-      this.loadData();
+    if (authService.user.global.admin) {
+      this.loadData({ isAdmin: true });
     }
   }
 
@@ -130,7 +129,7 @@ class AgenciesMain extends React.Component {
     const { t } = this.props;
 
     return isAdmin ? (
-      <div className="padding-bottom flex-column align-center">
+      <div className="padding-bottom flex-column align-center agencies-page">
         <SearchPanel
           handler={this.search}
           value={searchQuery}
@@ -144,6 +143,13 @@ class AgenciesMain extends React.Component {
               ? `${total} ${t("NAVIGATION.AGENCIES")}`
               : t("WARNINGS.NO_AGENCIES")}
           </div>
+          <NavLink
+            onClick={this.navigate}
+            className="white-btn "
+            to={NEW_AGENCIES_PAGE}
+          >
+            {t("NAVIGATION.CREATE_NEW_AGENCY")}
+          </NavLink>
         </div>
         {!!agencies.length && (
           <div className="standard-view">

@@ -19,7 +19,7 @@
     "ALL_USERS": "All Users",
     "CREATE_NEW_USER": "Create New User",
     "ALL_AGENCIES": "All Agencies",
-    "CREATE_NEW_AGENCY": "Create New Agency",
+    "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
     "LOG_OUT": "Log out"
   },
@@ -33,7 +33,6 @@
     "DAYS": "Days",
     "HOURS": "Hours"
   },
-
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "New Agency",
     "EMAIL": "E-mail",

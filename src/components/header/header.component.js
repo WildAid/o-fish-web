@@ -11,7 +11,6 @@ import {
   USERS_PAGE,
   AGENCIES_PAGE,
   NEW_USER_PAGE,
-  NEW_AGENCIES_PAGE,
   PROFILE_PAGE,
   USERS_GROOP_PAGE,
 } from "../../root/root.constants.js";
@@ -103,7 +102,16 @@ class Header extends Component {
                           className="nav-link"
                           to={HOME_PAGE}
                         >
-                          {t("NAVIGATION.GLOBAL_DASHBOARD")}
+                          {t("NAVIGATION.AGENCIES")}
+                        </NavLink>
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={HOME_PAGE}
+                        >
+                          {currentUser && currentUser.name
+                            ? `${currentUser.name.first} ${currentUser.name.last}`
+                            : t("WARNINGS.NOT_AUTHENTICATED")}
                         </NavLink>
                       </div>
                     )}
@@ -180,35 +188,13 @@ class Header extends Component {
                     )}
                   </div>
                   <div className="relative">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("agencies")}
+                    <NavLink
+                      onClick={this.navigate}
+                      className="nav-menu-item"
+                      to={AGENCIES_PAGE}
                     >
-                      <div className="nav-item">{t("NAVIGATION.AGENCIES")}</div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "agencies" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu agencies-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={AGENCIES_PAGE}
-                        >
-                          {t("NAVIGATION.ALL_AGENCIES")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={NEW_AGENCIES_PAGE}
-                        >
-                          {t("NAVIGATION.CREATE_NEW_AGENCY")}
-                        </NavLink>
-                      </div>
-                    )}
+                      {t("NAVIGATION.AGENCIES")}
+                    </NavLink>
                   </div>
                 </div>
                 <div className="relative">

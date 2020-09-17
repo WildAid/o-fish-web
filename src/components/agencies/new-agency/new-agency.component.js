@@ -42,15 +42,14 @@ class NewAgency extends Component {
   };
 
   componentDidMount() {
-    const user = authService.user;
-
-    if (user.global.admin) {
+    if (authService.user.global.admin) {
       this.setState({ isAdmin: true });
     }
   }
 
   render() {
-    const { t, isAdmin } = this.props;
+    const { t } = this.props;
+    const { isAdmin } = this.state;
 
     return isAdmin ? (
       <div className="flex-column align-center padding-top">
