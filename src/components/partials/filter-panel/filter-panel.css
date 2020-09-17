@@ -12,7 +12,7 @@
   transition-timing-function: ease-in-out;
 }
 
-.filter-panel .invisible {
+.filter-panel.invisible {
   height: 0;
   overflow-y: hidden;
   padding-top: 0;
