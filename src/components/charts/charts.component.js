@@ -7,6 +7,18 @@ import PatrolHoursSection from "../home/patrol-hours-section/patrol-hours.sectio
 import DatesRange from "./../partials/dates-range/dates-range.component";
 
 class ChartsPage extends Component {
+  state = {
+    vessels: [],
+    boardings: [],
+    crew: [],
+    searchQuery: "",
+    highlighted: [],
+    isLoaded: true,
+    datesFilter: {
+      date: { $gt: moment().subtract(1, "week").toDate() },
+    },
+  };
+
   changeFilter = (filter) => {
     let filterObject = {
       $and: [
@@ -20,9 +32,9 @@ class ChartsPage extends Component {
     };
     this.setState({ datesFilter: filterObject });
   };
-  
+
   render() {
-    const { user, isLoaded, changeFilter, datesFilter, t } = this.props;
+    const { user, isLoaded, t } = this.props;
 
     return (
       <Fragment>

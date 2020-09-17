@@ -11,6 +11,7 @@ import UsersMain from "../components/users/users.routes-render";
 import Users from "../components/users/users.component";
 import Agencies from "../components/agencies/agencies.component";
 import AgenciesMain from "../components/agencies/agencies.routes-render";
+import AgenciesDashboard from './../components/dashboards/agencies-dashboard.component';
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
@@ -51,6 +52,7 @@ import {
   CREW_PAGE,
   USERS_PAGE,
   AGENCIES_PAGE,
+  GLOBAL_AGENCIES_PAGE,
   FORMS_PAGE,
   SEARCH_RESULTS_PAGE,
   RESTORE_PASSWORD_PAGE,
@@ -112,6 +114,12 @@ const routes = [
   {
     path: NOTES_PAGE,
     component: NotesPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: GLOBAL_AGENCIES_PAGE,
+    component: AgenciesDashboard,
     auth: true,
     exact: false,
   },

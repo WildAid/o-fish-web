@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
+import moment from "moment";
 
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import BoardingsTable from "./../boardings/boardings-table/boardings-table.component";
@@ -24,7 +25,9 @@ class FieldDashboard extends Component {
     highlighted: [],
     loading: true,
     page: 1,
-    isLoaded: false,
+    currentFilter: {
+      date: { $gt: moment().subtract(1, "year").toDate() },
+    },
   };
 
   handlePageChange = (e, page) => {
@@ -49,7 +52,10 @@ class FieldDashboard extends Component {
       const { limit, offset, currentFilter, searchQuery } = this.state;
 
       boardingService
-        .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter)
+        .getBoardingsWithFacet(limit, offset, searchQuery, {
+          ...currentFilter,
+          "reportingOfficer.email": authService.user.email,
+        })
         .then((data) => {
           this.setState({
             loading: false,
@@ -66,6 +72,20 @@ class FieldDashboard extends Component {
     });
   }
 
+  changeFilter = (filter) => {
+    let filterObject = {
+      $and: [
+        {
+          date: { $gt: new Date(filter.start) },
+        },
+        {
+          date: { $lte: new Date(filter.end) },
+        },
+      ],
+    };
+    this.setState({ currentFilter: filterObject });
+  };
+
   componentDidMount() {
     this.loadData();
   }
@@ -80,10 +100,9 @@ class FieldDashboard extends Component {
       highlighted,
       page,
       loading,
-      isLoaded,
     } = this.state;
     const { user } = authService;
-console.log(isLoaded);
+
     return (
       <Fragment>
         <div className="standard-view page-header">
@@ -92,13 +111,13 @@ console.log(isLoaded);
             <div className="flex-row align-center officer-info">
               <UserPhoto imageId={user.profilePic || ""} defaultIcon={false} />
               <div className="flex-column margin-bottom">
-                <div className="officer-name">
-                  {!isLoaded && user
+                <div className="font-35">
+                  {!loading && user
                     ? `${user.name.first} ${user.name.last}`
                     : t("LOADING.LOADING")}
                 </div>
                 <div>
-                  {!isLoaded && user ? user.agency.name : t("LOADING.LOADING")}
+                  {!loading && user ? user.agency.name : t("LOADING.LOADING")}
                 </div>
               </div>
             </div>
@@ -149,32 +168,44 @@ console.log(isLoaded);
             </div>
           </div>
         </div>
-        {!isLoaded && (
+        {!loading ? (
           <div className="flex-column align-center white-bg box-shadow standard-view margin-top margin-bottom padding-bottom">
-            <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
-              <div className="main-info">
-                <div className="item-name">{t("HOME_PAGE.MY_BOARDINGS")}</div>
+            {!!boardings.length ? (
+              <Fragment>
+                <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
+                  <div className="main-info">
+                    <div className="item-name">
+                      {t("HOME_PAGE.MY_BOARDINGS")}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-row align-center full-view show-map-handler">
+                  <input
+                    className="map-handler"
+                    type="checkbox"
+                    defaultChecked
+                    onChange={this.showMap}
+                  />
+                  <p>{t("BOARDING_PAGE.MAP")}</p>
+                </div>
+                <BoardingsTable
+                  isMapShown={isMapShown}
+                  boardings={boardings}
+                  highlighted={highlighted}
+                  total={total}
+                  limit={limit}
+                  page={page}
+                  handlePageChange={this.handlePageChange}
+                />
+              </Fragment>
+            ) : (
+              <div className="padding-top">
+                {t("WARNINGS.NO_BOARDINGS")}
               </div>
-            </div>
-            <div className="flex-row align-center full-view show-map-handler">
-              <input
-                className="map-handler"
-                type="checkbox"
-                defaultChecked
-                onChange={this.showMap}
-              />
-              <p>{t("BOARDING_PAGE.MAP")}</p>
-            </div>
-            <BoardingsTable
-              isMapShown={isMapShown}
-              boardings={boardings}
-              highlighted={highlighted}
-              total={total}
-              limit={limit}
-              page={page}
-              handlePageChange={this.handlePageChange}
-            />
+            )}
           </div>
+        ) : (
+          t("LOADING.LOADING")
         )}
       </Fragment>
     );

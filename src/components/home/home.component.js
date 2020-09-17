@@ -1,17 +1,13 @@
 import React, { Component } from "react";
-import moment from "moment";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
 import SearchService from "./../../services/search.service";
-import AuthService from "./../../services/auth.service";
 
-import GlobalDashboard from "./../dashboards/global-dashboard.component";
 import FieldDashboard from "./../dashboards/field-dashboard.component";
 
 import "./home.css";
 
-const authService = AuthService.getInstance();
 const searchService = SearchService.getInstance();
 
 class Home extends Component {
@@ -21,9 +17,6 @@ class Home extends Component {
     crew: [],
     searchQuery: "",
     highlighted: [],
-    datesFilter: {
-      date: { $gt: moment().subtract(1, "week").toDate() },
-    },
   };
 
   search = (value) => {
@@ -45,8 +38,6 @@ class Home extends Component {
       crew,
       searchQuery,
       highlighted,
-      isLoaded,
-      datesFilter,
     } = this.state;
 
     return (

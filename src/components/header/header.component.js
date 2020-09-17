@@ -13,6 +13,7 @@ import {
   NEW_USER_PAGE,
   PROFILE_PAGE,
   USERS_GROOP_PAGE,
+  GLOBAL_AGENCIES_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";
@@ -100,7 +101,7 @@ class Header extends Component {
                         <NavLink
                           onClick={this.navigate}
                           className="nav-link"
-                          to={HOME_PAGE}
+                          to={GLOBAL_AGENCIES_PAGE}
                         >
                           {t("NAVIGATION.AGENCIES")}
                         </NavLink>

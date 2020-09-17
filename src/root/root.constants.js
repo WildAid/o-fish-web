@@ -3,6 +3,7 @@ export const LOGIN_PAGE = "/login";
 export const HOME_PAGE = "/home";
 export const USERS_PAGE = "/users";
 export const AGENCIES_PAGE = "/agencies";
+export const GLOBAL_AGENCIES_PAGE = "/global_agencies";
 export const FORMS_PAGE = "/forms";
 export const PROFILE_PAGE = "/profile";
 export const VIOLATIONS_PAGE = "/violations/:filter";
