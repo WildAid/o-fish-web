@@ -19,7 +19,7 @@
     "ALL_USERS": "All Users",
     "CREATE_NEW_USER": "Create New User",
     "ALL_AGENCIES": "All Agencies",
-    "CREATE_NEW_AGENCY": "Create New Agency",
+    "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
     "LOG_OUT": "Log out"
   },
@@ -33,7 +33,6 @@
     "DAYS": "Days",
     "HOURS": "Hours"
   },
-
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "New Agency",
     "EMAIL": "E-mail",
@@ -45,7 +44,7 @@
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "ROLE": "Role",
-    "USER_GROUP": "User Group",
+    "USER_GROUP": "Group",
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "PERMISSIONS": "Permissions",
@@ -140,6 +139,7 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "SAVE": "Save",
+    "VIEW": "View",
     "DELETE": "delete",
     "SEARCH": "Search",
     "CHANGE_PASSWORD": "Change Password",
@@ -174,7 +174,7 @@
     "AGENCY": "Agency",
     "NAME": "Name",
     "USER_TYPE": "User Type",
-    "CREATED_ON": "Created On",
+    "DATE_ADDED": "Date Added",
     "STATUS": "Status",
     "DESCRIPTION": "Description",
     "OFFICERS": "Officers",

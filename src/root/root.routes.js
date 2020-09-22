@@ -11,6 +11,7 @@ import UsersMain from "../components/users/users.routes-render";
 import Users from "../components/users/users.component";
 import Agencies from "../components/agencies/agencies.component";
 import AgenciesMain from "../components/agencies/agencies.routes-render";
+import AgenciesDashboard from "./../components/dashboards/agencies-dashboard.component";
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
@@ -40,6 +41,7 @@ import UsersGroop from "../components/users/user-groop/user-groop.component";
 import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
 import EditAgency from "../components/agencies/edit-agency/edit-agency.component";
+import ChartsPage from "../components/charts/charts.component";
 
 import mapRouting from "../helpers/map-routing";
 
@@ -51,6 +53,7 @@ import {
   CREW_PAGE,
   USERS_PAGE,
   AGENCIES_PAGE,
+  GLOBAL_AGENCIES_PAGE,
   FORMS_PAGE,
   SEARCH_RESULTS_PAGE,
   RESTORE_PASSWORD_PAGE,
@@ -77,6 +80,7 @@ import {
   EDIT_AGENCIES_PAGE,
   VIEW_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
+  CHARTS_PAGE,
 } from "./root.constants";
 
 const routes = [
@@ -88,6 +92,12 @@ const routes = [
   {
     path: HOME_PAGE,
     component: Home,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: CHARTS_PAGE,
+    component: ChartsPage,
     auth: true,
     exact: false,
   },
@@ -112,6 +122,12 @@ const routes = [
   {
     path: NOTES_PAGE,
     component: NotesPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: GLOBAL_AGENCIES_PAGE,
+    component: AgenciesDashboard,
     auth: true,
     exact: false,
   },

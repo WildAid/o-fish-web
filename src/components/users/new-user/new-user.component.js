@@ -26,7 +26,7 @@ class NewUser extends Component {
             role: true,
             newPassword:
               authService.userRole === "global" ||
-              authService.userRole === "agency",
+              authService.userRole === "agency"
           }}
           onRedirect={() => history.push(USERS_PAGE)}
         />

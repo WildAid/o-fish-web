@@ -2,12 +2,13 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import { withTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import history from "../../root/root.history";
 
-import { getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
@@ -16,6 +17,8 @@ import AuthService from "./../../services/auth.service";
 import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
+  NEW_AGENCIES_PAGE,
+  BOARDINGS_PAGE
 } from "./../../root/root.constants";
 
 import "./agencies.css";
@@ -39,6 +42,7 @@ class AgenciesMain extends React.Component {
     highlighted: [],
     currentFilter: null,
     isAdmin: false,
+    isAgencyAdmin: false,
   };
 
   search = (value) => {
@@ -90,7 +94,7 @@ class AgenciesMain extends React.Component {
       const { limit, offset, searchQuery, currentFilter } = this.state;
 
       agencyService
-        .getAgencies(limit, offset, searchQuery, currentFilter)
+        .searchAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
           this.setState({
             loading: false,
@@ -109,11 +113,12 @@ class AgenciesMain extends React.Component {
   }
 
   componentDidMount() {
-    const user = authService.user;
-
-    if (user.global.admin) {
-      this.setState({ isAdmin: true });
-      this.loadData();
+    if (authService.user.global.admin) {
+      this.loadData({ isAdmin: true });
+    } else if (authService.user.agency.admin) {
+      this.loadData({ isAgencyAdmin: true });
+    } else if (authService.user.agency.admin && authService.user.global.admin) {
+      this.loadData({ isAgencyAdmin: true, isAdmin: true });
     }
   }
 
@@ -126,11 +131,12 @@ class AgenciesMain extends React.Component {
       searchQuery,
       loading,
       isAdmin,
+      isAgencyAdmin,
     } = this.state;
     const { t } = this.props;
 
-    return isAdmin ? (
-      <div className="padding-bottom flex-column align-center">
+    return isAdmin || isAgencyAdmin ? (
+      <div className="padding-bottom flex-column align-center agencies-page">
         <SearchPanel
           handler={this.search}
           value={searchQuery}
@@ -144,6 +150,15 @@ class AgenciesMain extends React.Component {
               ? `${total} ${t("NAVIGATION.AGENCIES")}`
               : t("WARNINGS.NO_AGENCIES")}
           </div>
+          {isAdmin && !isAgencyAdmin && (
+            <NavLink
+              onClick={this.navigate}
+              className="white-btn "
+              to={NEW_AGENCIES_PAGE}
+            >
+              {t("NAVIGATION.CREATE_NEW_AGENCY")}
+            </NavLink>
+          )}
         </div>
         {!!agencies.length && (
           <div className="standard-view">
@@ -170,7 +185,15 @@ class AgenciesMain extends React.Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
+                      onClick={() =>
+                        (!authService.user.agency.admin &&
+                          authService.user.global.admin) ||
+                        authService.user.global.admin
+                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                          : authService.user.agency.name === item.name
+                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                          : ""
+                      }
                     >
                       <td className="blue-color">{item.name}</td>
                       <td>{item.description}</td>
@@ -180,15 +203,33 @@ class AgenciesMain extends React.Component {
                           {status}
                         </div>
                       </td>
-                      <td
-                        className="blue-color"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          goToPage(EDIT_AGENCIES_PAGE, item._id);
-                        }}
-                      >
-                        {t("BUTTONS.EDIT")}
-                      </td>
+                      {authService.user.agency.admin &&
+                      !authService.user.global.admin &&
+                      authService.user.agency.name === item.name ? (
+                        <td
+                          className="blue-color"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                          }}
+                        >
+                          {t("BUTTONS.EDIT")}
+                        </td>
+                      ) : authService.user.global.admin ? (
+                        <td
+                          className="blue-color"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            goToPageWithFilter(BOARDINGS_PAGE, {
+                              agency: item.name,
+                            });
+                          }}
+                        >
+                          {t("BUTTONS.EDIT")}
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
                     </tr>
                   );
                 })}

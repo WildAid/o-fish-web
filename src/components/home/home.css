@@ -1,10 +1,14 @@
-.home .search-panel .filled {
+.home .search-panel .filled,
+.global-agencies-page .search-panel .filled,
+.charts-page .search-panel .filled {
   background: #fff;
   border-radius: 30px 30px 0 0;
   border: 1.5px solid #0a4074;
 }
 
-.home .autofilled:after {
+.home .autofilled:after,
+.global-agencies-page .autofilled:after,
+.charts-page .autofilled:after {
   content: "";
   position: absolute;
   top: 0;
@@ -24,10 +28,6 @@
 
 .home .officer-info {
   margin-top: 10px;
-}
-
-.home .officer-name {
-  font-size: 35px;
 }
 
 .home .officer-icon {
@@ -62,7 +62,8 @@
   margin: 4px 10px 0 20px;
 }
 
-.home .table-wrapper {
+.home .table-wrapper,
+.global-agencies-page .table-wrapper {
   width: 95%;
   background: white;
   padding: 0 20px 20px 20px;
@@ -74,4 +75,10 @@
 .home .all-boardings-map {
   width: 95%;
   margin-left: 0;
+}
+
+.global-agencies-page .blue-btn {
+  margin: 0 20px;
+  border-radius: 5px;
+  padding: 5px 8px 2px 8px;
 }

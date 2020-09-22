@@ -97,8 +97,9 @@ class Profile extends Component {
           userId={authService.user._id}
           showingOptions={{
             saveText: t("BUTTONS.SAVE"),
-            role: false,
+            readOnly: authService.userRole !== "global" && authService.userRole !== "agency",
             changePassword: true,
+            role: true
           }}
           onChangePassword={this.showDialog}
         />

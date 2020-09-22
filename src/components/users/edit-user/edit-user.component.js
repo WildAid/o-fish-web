@@ -361,12 +361,12 @@ export default withRouter(withTranslation("translation")(
                               }
                               value={values.adminType}
                               >
-                              <MenuItem value="global">
-                                <em>Global Admin</em>
-                              </MenuItem>
-                              <MenuItem value="agency">
-                                <em>Agency Admin</em>
-                              </MenuItem>
+                              {authService.userRole === "global" ? <MenuItem value="global">
+                                <em>{t("ADMINS.GLOBAL")}</em>
+                              </MenuItem> : ""}
+                              {authService.userRole === "global" || authService.userRole === "agency"  ? <MenuItem value="agency">
+                                <em>{t("ADMINS.AGENCY")}</em>
+                              </MenuItem>: ""}
                               <MenuItem value="group">
                                 <em>Group Admin</em>
                               </MenuItem>
@@ -386,11 +386,12 @@ export default withRouter(withTranslation("translation")(
                               }
                               value={values.agency}
                               >
-                              {agencies.map((agency, ind) => (
+                              {authService.userRole === "global" ? agencies.map((agency, ind) => (
                                 <MenuItem value={agency} key={ind}>
                                   <em>{agency}</em>
                                 </MenuItem>
-                              ))}
+                              )) : (<MenuItem value={authService.user.agency.name} key={0}>
+                                <em>{authService.user.agency.name}</em></MenuItem>)}
                             </Select>
                           </FormControl>
                           <FormControl className="form-input">
