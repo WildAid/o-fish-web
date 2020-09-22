@@ -11,13 +11,16 @@ import { getHighlightedText } from "./../../helpers/get-data";
 
 import BoardingService from "./../../services/boarding.service";
 import AuthService from "./../../services/auth.service";
+import AgencyService from "./../../services/agency.service";
 
 const authService = AuthService.getInstance();
 const boardingService = BoardingService.getInstance();
+const agencyService = AgencyService.getInstance();
 
 class FieldDashboard extends Component {
   state = {
     boardings: [],
+    stats: {warnings: 0, citations: 0},
     total: 0,
     limit: 50,
     offset: 0,
@@ -56,14 +59,20 @@ class FieldDashboard extends Component {
           "reportingOfficer.email": authService.user.email,
         })
         .then((data) => {
-          this.setState({
-            loading: false,
-            boardings: data.boardings,
-            total: data.amount && data.amount[0] ? data.amount[0].total : 0,
-            highlighted: getHighlightedText(
-              data.highlighted ? data.highlighted : []
-            ),
-          });
+          agencyService.getStats(searchQuery, {
+            ...currentFilter,
+            "reportingOfficer.email": authService.user.email,
+          }).then((stats)=>{
+            this.setState({
+              loading: false,
+              boardings: data.boardings,
+              stats: stats,
+              total: data.amount && data.amount[0] ? data.amount[0].total : 0,
+              highlighted: getHighlightedText(
+                data.highlighted ? data.highlighted : []
+              ),
+            });
+          })
         })
         .catch((error) => {
           console.error(error);
@@ -99,6 +108,7 @@ class FieldDashboard extends Component {
       highlighted,
       page,
       loading,
+      stats
     } = this.state;
     const { user } = authService;
 
@@ -154,13 +164,13 @@ class FieldDashboard extends Component {
               </div>
             </div>
             <div className="flex-column align-center field-item">
-              <div className="field-number">16</div>
+              <div className="field-number">{stats.citations}</div>
               <div className="item-label">
                 {t("TABLE.CITATIONS").toUpperCase()}
               </div>
             </div>
             <div className="flex-column align-center field-item">
-              <div className="field-number">1</div>
+              <div className="field-number">{stats.warnings}</div>
               <div className="item-label">
                 {t("TABLE.WARNINGS").toUpperCase()}
               </div>

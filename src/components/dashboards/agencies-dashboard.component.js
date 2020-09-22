@@ -40,22 +40,6 @@ class AgenciesDashboard extends Component {
     this.loadData({ offset: newOffset, page: page });
   };
 
-  getAgenciesWithOfficers = (agencies, officers) => {
-    return agencies.map((agency) => {
-      if (officers) {
-        var agencyWithOfficers = officers.find(
-          (el) => el._id[0] === agency.name
-        );
-      }
-      if (agencyWithOfficers) {
-        agency.officers = Array.from(new Set(agencyWithOfficers.officers))
-          .slice(0, 3)
-          .join(", ");
-      }
-      return agency;
-    });
-  };
-
   loadData(newState) {
     newState = newState || {};
     newState.loading = true;
@@ -68,8 +52,7 @@ class AgenciesDashboard extends Component {
         .then((data) => {
           this.setState({
             loading: false,
-            agencies:
-              this.getAgenciesWithOfficers(data.agencies, data.officers) || [],
+            agencies: data.agencies,
             total: data.amount && data.amount[0] ? data.amount[0].total : 0,
             highlighted: data.highlighted
               ? getHighlightedText(data.highlighted)
@@ -182,9 +165,9 @@ class AgenciesDashboard extends Component {
                           onClick={() => goToPage(CHARTS_PAGE, item._id)}
                         >
                           <td className="blue-color">{item.name}</td>
-                          <td>100</td>
-                          <td>46</td>
-                          <td>34%</td>
+                          <td>{item.boardings}</td>
+                          <td>{item.violations}</td>
+                          <td>{item.boardings ? (Math.round(item.violations / item.boardings * 100)): 100}%</td>
                           <td
                             className="blue-color"
                             onClick={(e) => {

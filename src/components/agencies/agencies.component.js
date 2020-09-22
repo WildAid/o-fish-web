@@ -93,7 +93,7 @@ class AgenciesMain extends React.Component {
       const { limit, offset, searchQuery, currentFilter } = this.state;
 
       agencyService
-        .getAgencies(limit, offset, searchQuery, currentFilter)
+        .searchAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
           this.setState({
             loading: false,
