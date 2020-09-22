@@ -17,10 +17,10 @@ import AuthService from "./../../services/auth.service";
 import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
-  NEW_AGENCIES_PAGE
+  NEW_AGENCIES_PAGE,
 } from "./../../root/root.constants";
 
-import "./agencies.css"; 
+import "./agencies.css";
 
 const agencyService = AgencyService.getInstance();
 const searchService = SearchService.getInstance();
@@ -41,6 +41,7 @@ class AgenciesMain extends React.Component {
     highlighted: [],
     currentFilter: null,
     isAdmin: false,
+    isAgencyAdmin: false,
   };
 
   search = (value) => {
@@ -113,6 +114,10 @@ class AgenciesMain extends React.Component {
   componentDidMount() {
     if (authService.user.global.admin) {
       this.loadData({ isAdmin: true });
+    } else if (authService.user.agency.admin) {
+      this.loadData({ isAgencyAdmin: true });
+    } else if (authService.user.agency.admin && authService.user.global.admin) {
+      this.loadData({ isAgencyAdmin: true, isAdmin: true });
     }
   }
 
@@ -125,10 +130,11 @@ class AgenciesMain extends React.Component {
       searchQuery,
       loading,
       isAdmin,
+      isAgencyAdmin,
     } = this.state;
     const { t } = this.props;
 
-    return isAdmin ? (
+    return isAdmin || isAgencyAdmin ? (
       <div className="padding-bottom flex-column align-center agencies-page">
         <SearchPanel
           handler={this.search}
@@ -143,13 +149,15 @@ class AgenciesMain extends React.Component {
               ? `${total} ${t("NAVIGATION.AGENCIES")}`
               : t("WARNINGS.NO_AGENCIES")}
           </div>
-          <NavLink
-            onClick={this.navigate}
-            className="white-btn "
-            to={NEW_AGENCIES_PAGE}
-          >
-            {t("NAVIGATION.CREATE_NEW_AGENCY")}
-          </NavLink>
+          {isAdmin && !isAgencyAdmin && (
+            <NavLink
+              onClick={this.navigate}
+              className="white-btn "
+              to={NEW_AGENCIES_PAGE}
+            >
+              {t("NAVIGATION.CREATE_NEW_AGENCY")}
+            </NavLink>
+          )}
         </div>
         {!!agencies.length && (
           <div className="standard-view">

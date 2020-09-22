@@ -14,6 +14,7 @@ import {
   PROFILE_PAGE,
   USERS_GROOP_PAGE,
   GLOBAL_AGENCIES_PAGE,
+  CHARTS_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";
@@ -79,7 +80,7 @@ class Header extends Component {
                 />
               </div>
             </NavLink>
-            {(currentUser.global.admin || currentUser.agency.admin) && (
+            {currentUser.global.admin && (
               <div className="flex-row align-center justify-between full-view padding-left">
                 <div className="flex-row align-center justify-between half-row-view padding-left">
                   <div className="relative">
@@ -104,6 +105,164 @@ class Header extends Component {
                           to={GLOBAL_AGENCIES_PAGE}
                         >
                           {t("NAVIGATION.AGENCIES")}
+                        </NavLink>
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={HOME_PAGE}
+                        >
+                          {currentUser && currentUser.name
+                            ? `${currentUser.name.first} ${currentUser.name.last}`
+                            : t("WARNINGS.NOT_AUTHENTICATED")}
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <div
+                      className="flex-row align-baseline pointer"
+                      onClick={() => this.showActiveMenu("boarding")}
+                    >
+                      <div className="nav-item">
+                        {t("NAVIGATION.BOARDING_RECORDS")}
+                      </div>
+                      <img
+                        className="custom-down-arrow"
+                        src={require("../../assets/angle-arrow-down.svg")}
+                        alt="no arrow img"
+                      />
+                    </div>
+                    {activeMenu === "boarding" && (
+                      <div className="flex-column absolute box-shadow white-bg nav-menu boardings-menu">
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={BOARDINGS_PAGE.replace(":filter", "null")}
+                        >
+                          {t("NAVIGATION.BOARDINGS")}
+                        </NavLink>
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={VESSELS_PAGE.replace(":filter", "null")}
+                        >
+                          {t("NAVIGATION.VESSELS")}
+                        </NavLink>
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={CREW_PAGE.replace(":filter", "null")}
+                        >
+                          {t("NAVIGATION.CREW")}
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <div
+                      className="flex-row align-baseline pointer"
+                      onClick={() => this.showActiveMenu("users")}
+                    >
+                      <div className="nav-item">{t("NAVIGATION.USERS")}</div>
+                      <img
+                        className="custom-down-arrow"
+                        src={require("../../assets/angle-arrow-down.svg")}
+                        alt="no arrow img"
+                      />
+                    </div>
+                    {activeMenu === "users" && (
+                      <div className="flex-column absolute box-shadow white-bg nav-menu users-menu">
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={USERS_PAGE}
+                        >
+                          {t("NAVIGATION.ALL_USERS")}
+                        </NavLink>
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={NEW_USER_PAGE}
+                        >
+                          {t("NAVIGATION.CREATE_NEW_USER")}
+                        </NavLink>
+                      </div>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <NavLink
+                      onClick={this.navigate}
+                      className="nav-menu-item"
+                      to={AGENCIES_PAGE}
+                    >
+                      {t("NAVIGATION.AGENCIES")}
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div
+                    className="flex-row pointer"
+                    onClick={() => this.showActiveMenu("profile")}
+                  >
+                    <div className="flex-row align-center">
+                      <UserPhoto
+                        imageId={currentUser ? currentUser.profilePic : null}
+                        defaultIcon={true}
+                      />
+                    </div>
+                    <div className="flex-row align-center profile-name">
+                      {currentUser && currentUser.name
+                        ? `${currentUser.name.first} ${currentUser.name.last}`
+                        : t("WARNINGS.NOT_AUTHENTICATED")}
+                    </div>
+                    <img
+                      className="custom-down-arrow"
+                      src={require("../../assets/angle-arrow-down.svg")}
+                      alt="no arrow img"
+                    />
+                  </div>
+                  {activeMenu === "profile" && (
+                    <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">
+                      <NavLink
+                        onClick={this.navigate}
+                        className="nav-link"
+                        to={PROFILE_PAGE}
+                      >
+                        {t("NAVIGATION.ACCOUNT")}
+                      </NavLink>
+                      <div className="nav-link pointer" onClick={this.logout}>
+                        {t("NAVIGATION.LOG_OUT")}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {currentUser.agency.admin && !currentUser.global.admin && (
+              <div className="flex-row align-center justify-between full-view padding-left">
+                <div className="flex-row align-center justify-between half-row-view padding-left">
+                  <div className="relative">
+                    <div
+                      className="flex-row align-baseline pointer"
+                      onClick={() => this.showActiveMenu("dashboard")}
+                    >
+                      <div className="nav-item">
+                        {t("NAVIGATION.DASHBOARD")}
+                      </div>
+                      <img
+                        className="custom-down-arrow"
+                        src={require("../../assets/angle-arrow-down.svg")}
+                        alt="no arrow img"
+                      />
+                    </div>
+                    {activeMenu === "dashboard" && (
+                      <div className="flex-column absolute box-shadow white-bg nav-menu dashboard-menu">
+                        <NavLink
+                          onClick={this.navigate}
+                          className="nav-link"
+                          to={CHARTS_PAGE}
+                        >
+                          {currentUser.agency.name}
                         </NavLink>
                         <NavLink
                           onClick={this.navigate}

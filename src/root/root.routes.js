@@ -1,3 +1,5 @@
+//@flow
+
 import Root from "./root.component";
 
 import Login from "../components/login/login.component";
@@ -18,7 +20,6 @@ import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
 import NotesPage from "../components/notes/notes.component";
 import DeliveriesPage from "../components/deliverires/deliverires.component";
-import ChartsPage from "../components/charts/charts.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";
@@ -40,6 +41,7 @@ import UsersGroop from "../components/users/user-groop/user-groop.component";
 import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
 import EditAgency from "../components/agencies/edit-agency/edit-agency.component";
+import ChartsPage from "../components/charts/charts.component";
 
 import mapRouting from "../helpers/map-routing";
 
@@ -60,7 +62,6 @@ import {
   PHOTOS_PAGE,
   NOTES_PAGE,
   DELIVERIES_PAGE,
-  CHARTS_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -79,6 +80,7 @@ import {
   EDIT_AGENCIES_PAGE,
   VIEW_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
+  CHARTS_PAGE,
 } from "./root.constants";
 
 const routes = [

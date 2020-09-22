@@ -16,7 +16,6 @@ export const CHARTS_PAGE = "/agency_charts/:id";
 
 //Boardings subroutes
 export const FIND_USERS_PAGE = "/boardings/find_users";
-
 export const BOARDINGS_PAGE = "/boardings/:filter";
 export const NEW_BOARDING_PAGE = "/boardings/new";
 export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
