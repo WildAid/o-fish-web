@@ -20,7 +20,7 @@ import {
   NEW_AGENCIES_PAGE
 } from "./../../root/root.constants";
 
-import "./agencies.css"; 
+import "./agencies.css";
 
 const agencyService = AgencyService.getInstance();
 const searchService = SearchService.getInstance();
@@ -92,7 +92,7 @@ class AgenciesMain extends React.Component {
       const { limit, offset, searchQuery, currentFilter } = this.state;
 
       agencyService
-        .getAgencies(limit, offset, searchQuery, currentFilter)
+        .searchAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
           this.setState({
             loading: false,
