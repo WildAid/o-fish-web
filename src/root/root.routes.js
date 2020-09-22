@@ -36,7 +36,7 @@ import UsersActivities from "../components/users/activities/activities.component
 import NewUser from "../components/users/new-user/new-user.component";
 import ViewUser from "../components/users/view-user/view-user.component";
 import EditUser from "../components/users/edit-user/edit-user.component";
-import UsersGroop from "../components/users/user-groop/user-groop.component";
+import UsersGroup from "../components/users/user-group/user-group.component";
 //Agencies sub components
 import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
@@ -75,7 +75,7 @@ import {
   VIEW_USER_PAGE,
   NEW_USER_PAGE,
   USERS_ACTIVITIES_PAGE,
-  USERS_GROOP_PAGE,
+  USERS_GROUP_PAGE,
   //Agencies sub routes
   EDIT_AGENCIES_PAGE,
   VIEW_AGENCIES_PAGE,
@@ -233,9 +233,9 @@ const routes = [
         component: NewUser,
       },
       {
-        path: USERS_GROOP_PAGE,
+        path: USERS_GROUP_PAGE,
         exact: true,
-        component: UsersGroop,
+        component: UsersGroup,
       },
     ],
   },
