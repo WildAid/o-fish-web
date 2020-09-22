@@ -18,9 +18,11 @@ import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.compon
 import StitchService from "./../../../services/stitch.service";
 import UserService from "./../../../services/user.service";
 import AgencyService from "./../../../services/agency.service";
+import AuthService from "./../../../services/auth.service";
 
 import "./user-editor.css";
 
+const authService = AuthService.getInstance();
 const stitchService = StitchService.getInstance();
 const userService = UserService.getInstance();
 const agencyService = AgencyService.getInstance();
@@ -159,7 +161,7 @@ class UserEditor extends Component {
   componentDidMount() {
     const { userId } = this.props;
     agencyService
-      .getAgencies(50, 0, "", null)
+      .searchAgencies(50, 0, "", null)
       .then((data) => {
         this.setState({
           agencies: data.agencies.map((agency) => agency.name) || [],
@@ -207,8 +209,8 @@ class UserEditor extends Component {
           firstName: "",
           lastName: "",
           password: "",
-          agency: "",
-          adminType: "",
+          agency: authService.userRole === "global" ? "" : authService.user.agency.name,
+          adminType: authService.userRole === "global" || authService.userRole === "agency" ? "" : checkUserRole(authService.user),
           email: "",
           userGroup: "",
         };
@@ -345,12 +347,12 @@ class UserEditor extends Component {
                         }}
                         value={values.adminType}
                       >
-                        <MenuItem value="global">
+                        {authService.userRole === "global" ? <MenuItem value="global">
                           <em>{t("ADMINS.GLOBAL")}</em>
-                        </MenuItem>
-                        <MenuItem value="agency">
+                        </MenuItem> : ""}
+                        {authService.userRole === "global" || authService.userRole === "agency"  ? <MenuItem value="agency">
                           <em>{t("ADMINS.AGENCY")}</em>
-                        </MenuItem>
+                        </MenuItem>: ""}
                         <MenuItem value="group">
                           <em>{t("ADMINS.GROUP")}</em>
                         </MenuItem>
@@ -371,11 +373,13 @@ class UserEditor extends Component {
                         }
                         value={values.agency}
                       >
-                        {agencies.map((agency, ind) => (
+                        {authService.userRole === "global" ? agencies.map((agency, ind) => (
                           <MenuItem value={agency} key={ind}>
                             <em>{agency}</em>
                           </MenuItem>
-                        ))}
+                        )) : (<MenuItem value={authService.user.agency.name} key={0}>
+                          <em>{authService.user.agency.name}</em>
+                        </MenuItem>)}
                       </Select>
                     </FormControl>
                     <FormControl className="form-input">
