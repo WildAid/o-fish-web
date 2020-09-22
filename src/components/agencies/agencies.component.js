@@ -184,7 +184,15 @@ class AgenciesMain extends React.Component {
                     <tr
                       className="table-row row-body"
                       key={ind}
-                      onClick={() => goToPage(VIEW_AGENCIES_PAGE, item._id)}
+                      onClick={() =>
+                        (!authService.user.agency.admin &&
+                          authService.user.global.admin) ||
+                        authService.user.global.admin
+                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                          : authService.user.agency.name === item.name
+                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                          : ""
+                      }
                     >
                       <td className="blue-color">{item.name}</td>
                       <td>{item.description}</td>
@@ -194,15 +202,31 @@ class AgenciesMain extends React.Component {
                           {status}
                         </div>
                       </td>
-                      <td
-                        className="blue-color"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          goToPage(EDIT_AGENCIES_PAGE, item._id);
-                        }}
-                      >
-                        {t("BUTTONS.EDIT")}
-                      </td>
+                      {authService.user.agency.admin &&
+                      !authService.user.global.admin &&
+                      authService.user.agency.name === item.name ? (
+                        <td
+                          className="blue-color"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                          }}
+                        >
+                          {t("BUTTONS.EDIT")}
+                        </td>
+                      ) : authService.user.global.admin ? (
+                        <td
+                          className="blue-color"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                          }}
+                        >
+                          {t("BUTTONS.EDIT")}
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
                     </tr>
                   );
                 })}
