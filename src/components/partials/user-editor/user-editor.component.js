@@ -320,6 +320,7 @@ class UserEditor extends Component {
                       {t("CREATE_USER_PAGE.ACTIVE")}
                     </InputLabel>
                     <Select
+                      readOnly={!!showingOptions.readOnly}
                       labelId="active-label"
                       onChange={(e) => setFieldValue("active", e.target.value)}
                       value={values.active}
@@ -340,6 +341,7 @@ class UserEditor extends Component {
                         {t("CREATE_USER_PAGE.ROLE")}
                       </InputLabel>
                       <Select
+                        readOnly={!!showingOptions.readOnly}
                         labelId="role-label"
                         onChange={(e) => {
                           this.setState({ disabled: isValid });
@@ -367,6 +369,7 @@ class UserEditor extends Component {
                         {t("TABLE.AGENCY")}
                       </InputLabel>
                       <Select
+                        readOnly={!!showingOptions.readOnly}
                         labelId="agency-label"
                         onChange={(e) =>
                           setFieldValue("agency", e.target.value)
@@ -387,6 +390,7 @@ class UserEditor extends Component {
                         {t("CREATE_USER_PAGE.USER_GROUP")}
                       </InputLabel>
                       <Select
+                        readOnly={!!showingOptions.readOnly}
                         labelId="group-label"
                         onChange={(e) =>
                           setFieldValue("userGroup", e.target.value)
