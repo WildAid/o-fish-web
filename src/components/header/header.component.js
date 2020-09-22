@@ -260,7 +260,7 @@ class Header extends Component {
                         <NavLink
                           onClick={this.navigate}
                           className="nav-link"
-                          to={CHARTS_PAGE}
+                          to={CHARTS_PAGE.replace(":id", currentUser.agency.name)}
                         >
                           {currentUser.agency.name}
                         </NavLink>

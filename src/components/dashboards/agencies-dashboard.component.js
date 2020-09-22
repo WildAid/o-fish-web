@@ -6,7 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
-import { getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
 
 import SearchService from "./../../services/search.service";
 import AgencyService from "./../../services/agency.service";
@@ -162,17 +162,26 @@ class AgenciesDashboard extends Component {
                         <tr
                           className="table-row row-body"
                           key={ind}
-                          onClick={() => goToPage(CHARTS_PAGE, item._id)}
+                          onClick={() => goToPage(CHARTS_PAGE, item.name)}
                         >
                           <td className="blue-color">{item.name}</td>
                           <td>{item.boardings}</td>
                           <td>{item.violations}</td>
-                          <td>{item.boardings ? (Math.round(item.violations / item.boardings * 100)): 100}%</td>
+                          <td>
+                            {item.boardings
+                              ? Math.round(
+                                  (item.violations / item.boardings) * 100
+                                )
+                              : 100}
+                            %
+                          </td>
                           <td
                             className="blue-color"
                             onClick={(e) => {
                               e.stopPropagation();
-                              goToPage(BOARDINGS_PAGE, item._id);
+                              goToPageWithFilter(BOARDINGS_PAGE, {
+                                agency: item.name,
+                              });
                             }}
                           >
                             {`${t("BUTTONS.VIEW")} ${t(

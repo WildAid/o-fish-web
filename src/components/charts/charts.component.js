@@ -20,7 +20,7 @@ class ChartsPage extends Component {
     vessels: [],
     boardings: [],
     crew: [],
-    agency: null,
+    agencyName: '',
     searchQuery: "",
     loading: true,
     datesFilter: {
@@ -43,24 +43,14 @@ class ChartsPage extends Component {
   };
 
   loadData(newState) {
-    newState = newState || {};
-    newState.loading = true;
+    const agencyName = this.props.match.params.id;
+    const datesFilter = {
+      ...this.state.datesFilter,
+      agency: agencyName
+    };
+    const state = { loading: true, agencyName, datesFilter, ...newState }
 
-    this.setState(newState, () => {
-      const { id } = this.props.match.params;
-
-      agencyService
-        .getAgency(id)
-        .then((data) => {
-          this.setState({
-            loading: false,
-            agency: data,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
+    this.setState(state);
   }
 
   componentDidMount() {
@@ -70,7 +60,7 @@ class ChartsPage extends Component {
   render() {
     const { loading, t } = this.props;
     const {
-      agency,
+      agencyName,
       datesFilter,
       vessels,
       crew,
@@ -94,8 +84,8 @@ class ChartsPage extends Component {
           <div className="flex-row full-view justify-between align-center margin-top margin-bottom">
             <div className="flex-column margin-bottom">
               <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
-              {!loading && agency ? (
-                <div className="font-35">{agency.name}</div>
+              {!loading ? (
+                <div className="font-35">{agencyName}</div>
               ) : (
                 <LoadingPanel />
               )}
