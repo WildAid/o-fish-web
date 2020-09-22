@@ -8,7 +8,7 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import history from "../../root/root.history";
 
-import { getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
@@ -18,6 +18,7 @@ import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
+  BOARDINGS_PAGE
 } from "./../../root/root.constants";
 
 import "./agencies.css";
@@ -219,7 +220,9 @@ class AgenciesMain extends React.Component {
                           className="blue-color"
                           onClick={(e) => {
                             e.stopPropagation();
-                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                            goToPageWithFilter(BOARDINGS_PAGE, {
+                              agency: item.name,
+                            });
                           }}
                         >
                           {t("BUTTONS.EDIT")}
