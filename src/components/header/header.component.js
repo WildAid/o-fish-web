@@ -12,7 +12,7 @@ import {
   AGENCIES_PAGE,
   NEW_USER_PAGE,
   PROFILE_PAGE,
-  USERS_GROOP_PAGE,
+  USERS_GROUP_PAGE,
   GLOBAL_AGENCIES_PAGE,
   CHARTS_PAGE,
 } from "../../root/root.constants.js";
@@ -466,9 +466,9 @@ class Header extends Component {
                         <NavLink
                           onClick={this.navigate}
                           className="nav-link"
-                          to={USERS_GROOP_PAGE}
+                          to={USERS_GROUP_PAGE}
                         >
-                          {t("NAVIGATION.USER_GROOP")}
+                          {t("NAVIGATION.USER_GROUP")}
                         </NavLink>
                       </div>
                     )}
