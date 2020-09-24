@@ -469,6 +469,7 @@ class Header extends Component {
                           to={USERS_GROOP_PAGE}
                         >
                           {t("NAVIGATION.USER_GROOP")}
+
                         </NavLink>
                       </div>
                     )}
