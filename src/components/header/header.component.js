@@ -11,9 +11,9 @@ import {
   USERS_PAGE,
   AGENCIES_PAGE,
   PROFILE_PAGE,
+  USERS_GROUP_PAGE,
   GLOBAL_AGENCIES_PAGE,
   CHARTS_PAGE,
-  USERS_GROUP_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";

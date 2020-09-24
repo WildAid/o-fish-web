@@ -36,7 +36,7 @@ import UsersActivities from "../components/users/activities/activities.component
 import NewUser from "../components/users/new-user/new-user.component";
 import ViewUser from "../components/users/view-user/view-user.component";
 import EditUser from "../components/users/edit-user/edit-user.component";
-import UsersGroop from "../components/users/user-groop/user-groop.component";
+import UsersGroup from "../components/users/user-group/user-group.component";
 //Agencies sub components
 import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
@@ -235,7 +235,7 @@ const routes = [
       {
         path: USERS_GROUP_PAGE,
         exact: true,
-        component: UsersGroop,
+        component: UsersGroup,
       },
     ],
   },
