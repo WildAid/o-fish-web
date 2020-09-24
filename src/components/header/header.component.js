@@ -10,11 +10,10 @@ import {
   CREW_PAGE,
   USERS_PAGE,
   AGENCIES_PAGE,
-  NEW_USER_PAGE,
   PROFILE_PAGE,
-  USERS_GROOP_PAGE,
   GLOBAL_AGENCIES_PAGE,
   CHARTS_PAGE,
+  USERS_GROUP_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";
@@ -66,6 +65,11 @@ class Header extends Component {
   render() {
     const { activeMenu, currentUser } = this.state;
     const { t } = this.props;
+    const isItemShown = currentUser
+      ? currentUser.global.admin ||
+        currentUser.agency.admin ||
+        (currentUser.global.admin && currentUser.agency.admin)
+      : false;
 
     return (
       currentUser && (
@@ -80,48 +84,70 @@ class Header extends Component {
                 />
               </div>
             </NavLink>
-            {currentUser.global.admin && (
+            {currentUser && (
               <div className="flex-row align-center justify-between full-view padding-left">
-                <div className="flex-row align-center justify-between half-row-view padding-left">
-                  <div className="relative">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("dashboard")}
-                    >
-                      <div className="nav-item">
-                        {t("NAVIGATION.DASHBOARD")}
+                <div className="flex-row align-center half-row-view padding-left">
+                  {!currentUser.global.admin && !currentUser.agency.admin && (
+                    <NavLink to={HOME_PAGE} className="nav-menu-item">
+                      {t("NAVIGATION.MY_DASHBOARD")}
+                    </NavLink>
+                  )}
+                  {isItemShown && (
+                    <div className="relative nav-menu-item">
+                      <div
+                        className="flex-row align-baseline pointer"
+                        onMouseEnter={() => this.showActiveMenu("dashboard")}
+                      >
+                        <div className="nav-item">
+                          {t("NAVIGATION.DASHBOARD")}
+                        </div>
+                        <img
+                          className="custom-down-arrow"
+                          src={require("../../assets/angle-arrow-down.svg")}
+                          alt="no arrow img"
+                        />
                       </div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
+                      {activeMenu === "dashboard" && (
+                        <div className="flex-column absolute box-shadow white-bg nav-menu dashboard-menu">
+                          {currentUser.global.admin && (
+                            <NavLink
+                              onClick={this.navigate}
+                              className="nav-link"
+                              to={GLOBAL_AGENCIES_PAGE}
+                            >
+                              {t("NAVIGATION.AGENCIES")}
+                            </NavLink>
+                          )}
+                          {currentUser.agency.admin &&
+                            !currentUser.global.admin && (
+                              <NavLink
+                                onClick={this.navigate}
+                                className="nav-link"
+                                to={CHARTS_PAGE.replace(
+                                  ":id",
+                                  currentUser.agency.name
+                                )}
+                              >
+                                {currentUser.agency.name}
+                              </NavLink>
+                            )}
+                          <NavLink
+                            onClick={this.navigate}
+                            className="nav-link"
+                            to={HOME_PAGE}
+                          >
+                            {currentUser && currentUser.name
+                              ? `${currentUser.name.first} ${currentUser.name.last}`
+                              : t("WARNINGS.NOT_AUTHENTICATED")}
+                          </NavLink>
+                        </div>
+                      )}
                     </div>
-                    {activeMenu === "dashboard" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu dashboard-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={GLOBAL_AGENCIES_PAGE}
-                        >
-                          {t("NAVIGATION.AGENCIES")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={HOME_PAGE}
-                        >
-                          {currentUser && currentUser.name
-                            ? `${currentUser.name.first} ${currentUser.name.last}`
-                            : t("WARNINGS.NOT_AUTHENTICATED")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative">
+                  )}
+                  <div className="relative nav-menu-item">
                     <div
                       className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("boarding")}
+                      onMouseEnter={() => this.showActiveMenu("boarding")}
                     >
                       <div className="nav-item">
                         {t("NAVIGATION.BOARDING_RECORDS")}
@@ -158,10 +184,10 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  <div className="relative">
+                  <div className="relative nav-menu-item">
                     <div
                       className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("users")}
+                      onMouseEnter={() => this.showActiveMenu("users")}
                     >
                       <div className="nav-item">{t("NAVIGATION.USERS")}</div>
                       <img
@@ -182,303 +208,28 @@ class Header extends Component {
                         <NavLink
                           onClick={this.navigate}
                           className="nav-link"
-                          to={NEW_USER_PAGE}
+                          to={USERS_GROUP_PAGE}
                         >
-                          {t("NAVIGATION.CREATE_NEW_USER")}
+                          {t("NAVIGATION.USER_GROUP")}
                         </NavLink>
                       </div>
                     )}
                   </div>
-                  <div className="relative">
+                  {isItemShown && (
                     <NavLink
-                      onClick={this.navigate}
                       className="nav-menu-item"
                       to={AGENCIES_PAGE}
+                      onMouseLeave={this.navigate}
                     >
                       {t("NAVIGATION.AGENCIES")}
                     </NavLink>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div
-                    className="flex-row pointer"
-                    onClick={() => this.showActiveMenu("profile")}
-                  >
-                    <div className="flex-row align-center">
-                      <UserPhoto
-                        imageId={currentUser ? currentUser.profilePic : null}
-                        defaultIcon={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center profile-name">
-                      {currentUser && currentUser.name
-                        ? `${currentUser.name.first} ${currentUser.name.last}`
-                        : t("WARNINGS.NOT_AUTHENTICATED")}
-                    </div>
-                    <img
-                      className="custom-down-arrow"
-                      src={require("../../assets/angle-arrow-down.svg")}
-                      alt="no arrow img"
-                    />
-                  </div>
-                  {activeMenu === "profile" && (
-                    <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">
-                      <NavLink
-                        onClick={this.navigate}
-                        className="nav-link"
-                        to={PROFILE_PAGE}
-                      >
-                        {t("NAVIGATION.ACCOUNT")}
-                      </NavLink>
-                      <div className="nav-link pointer" onClick={this.logout}>
-                        {t("NAVIGATION.LOG_OUT")}
-                      </div>
-                    </div>
                   )}
                 </div>
-              </div>
-            )}
-            {currentUser.agency.admin && !currentUser.global.admin && (
-              <div className="flex-row align-center justify-between full-view padding-left">
-                <div className="flex-row align-center justify-between half-row-view padding-left">
-                  <div className="relative">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("dashboard")}
-                    >
-                      <div className="nav-item">
-                        {t("NAVIGATION.DASHBOARD")}
-                      </div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "dashboard" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu dashboard-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={CHARTS_PAGE.replace(":id", currentUser.agency.name)}
-                        >
-                          {currentUser.agency.name}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={HOME_PAGE}
-                        >
-                          {currentUser && currentUser.name
-                            ? `${currentUser.name.first} ${currentUser.name.last}`
-                            : t("WARNINGS.NOT_AUTHENTICATED")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("boarding")}
-                    >
-                      <div className="nav-item">
-                        {t("NAVIGATION.BOARDING_RECORDS")}
-                      </div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "boarding" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu boardings-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={BOARDINGS_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.BOARDINGS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={VESSELS_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.VESSELS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={CREW_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.CREW")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("users")}
-                    >
-                      <div className="nav-item">{t("NAVIGATION.USERS")}</div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "users" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu users-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={USERS_PAGE}
-                        >
-                          {t("NAVIGATION.ALL_USERS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={NEW_USER_PAGE}
-                        >
-                          {t("NAVIGATION.CREATE_NEW_USER")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <NavLink
-                      onClick={this.navigate}
-                      className="nav-menu-item"
-                      to={AGENCIES_PAGE}
-                    >
-                      {t("NAVIGATION.AGENCIES")}
-                    </NavLink>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div
-                    className="flex-row pointer"
-                    onClick={() => this.showActiveMenu("profile")}
-                  >
-                    <div className="flex-row align-center">
-                      <UserPhoto
-                        imageId={currentUser ? currentUser.profilePic : null}
-                        defaultIcon={true}
-                      />
-                    </div>
-                    <div className="flex-row align-center profile-name">
-                      {currentUser && currentUser.name
-                        ? `${currentUser.name.first} ${currentUser.name.last}`
-                        : t("WARNINGS.NOT_AUTHENTICATED")}
-                    </div>
-                    <img
-                      className="custom-down-arrow"
-                      src={require("../../assets/angle-arrow-down.svg")}
-                      alt="no arrow img"
-                    />
-                  </div>
-                  {activeMenu === "profile" && (
-                    <div className="flex-column absolute box-shadow white-bg nav-menu profile-menu">
-                      <NavLink
-                        onClick={this.navigate}
-                        className="nav-link"
-                        to={PROFILE_PAGE}
-                      >
-                        {t("NAVIGATION.ACCOUNT")}
-                      </NavLink>
-                      <div className="nav-link pointer" onClick={this.logout}>
-                        {t("NAVIGATION.LOG_OUT")}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-            {!currentUser.global.admin && !currentUser.agency.admin && (
-              <div className="flex-row align-center justify-between full-view padding-left">
-                <div className="flex-row align-center justify-between padding-left">
-                  <NavLink to={HOME_PAGE} className="nav-menu-item">
-                    {t("NAVIGATION.MY_DASHBOARD")}
-                  </NavLink>
-                  <div className="relative menu-item">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("boarding")}
-                    >
-                      <div className="nav-item">
-                        {t("NAVIGATION.BOARDING_RECORDS")}
-                      </div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "boarding" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu boardings-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={BOARDINGS_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.BOARDINGS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={VESSELS_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.VESSELS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={CREW_PAGE.replace(":filter", "null")}
-                        >
-                          {t("NAVIGATION.CREW")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative menu-item">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onClick={() => this.showActiveMenu("users")}
-                    >
-                      <div className="nav-item">{t("NAVIGATION.USERS")}</div>
-                      <img
-                        className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "users" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu users-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={USERS_PAGE}
-                        >
-                          {t("NAVIGATION.ALL_USERS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={USERS_GROOP_PAGE}
-                        >
-                          {t("NAVIGATION.USER_GROOP")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="relative">
-                  <div
-                    className="flex-row pointer"
-                    onClick={() => this.showActiveMenu("profile")}
-                  >
+                <div
+                  className="relative"
+                  onMouseEnter={() => this.showActiveMenu("profile")}
+                >
+                  <div className="flex-row pointer">
                     <div className="flex-row align-center">
                       <UserPhoto
                         imageId={currentUser ? currentUser.profilePic : null}

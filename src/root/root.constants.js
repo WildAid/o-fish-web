@@ -34,7 +34,7 @@ export const NEW_USER_PAGE = "/users/new_user";
 export const USERS_ACTIVITIES_PAGE = "/users/activities";
 export const EDIT_USER_PAGE = "/users/edit/:id";
 export const VIEW_USER_PAGE = "/users/view_user";
-export const USERS_GROOP_PAGE = "/users/groops";
+export const USERS_GROUP_PAGE = "/users/groups";
 
 //Agencies subroutes
 export const NEW_AGENCIES_PAGE = "/agencies/new_agency";

@@ -7,7 +7,7 @@
   },
   "NAVIGATION": {
     "MY_DASHBOARD": "My Dashboard",
-    "USER_GROOP": "Users Groop",
+    "USER_GROUP": "User Groups",
     "DASHBOARD": "Dashboard",
     "BOARDING_RECORDS": "Boarding records",
     "USERS": "Users",
@@ -17,7 +17,7 @@
     "VESSELS": "Vessels",
     "CREW": "Crew",
     "ALL_USERS": "All Users",
-    "CREATE_NEW_USER": "Create New User",
+    "ADD_NEW_USER": "Add New User",
     "ALL_AGENCIES": "All Agencies",
     "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
