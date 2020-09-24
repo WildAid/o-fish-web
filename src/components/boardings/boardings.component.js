@@ -1,28 +1,21 @@
-import React, { Component, Fragment } from "react";
-import moment from "moment";
+import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router";
-import Pagination from "@material-ui/lab/Pagination";
-import Highlighter from "react-highlight-words";
 
 import history from "../../root/root.history";
-import { getHighlightedText, goToPage } from "./../../helpers/get-data";
+import { getHighlightedText } from "./../../helpers/get-data";
 
-import ChartBox from "../charts/chart-box.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
-import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 import SearchResultsFor from "./../partials/search-results-for/search-results-for.component";
+import BoardingsTable from "./boardings-table/boardings-table.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
 
-import {
-  NEW_BOARDING_PAGE,
-  VIEW_BOARDING_PAGE,
-} from "../../root/root.constants.js";
+import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
 
@@ -210,6 +203,7 @@ class Boardings extends Component {
 
   showMap = () => {
     const { isMapShown } = this.state;
+
     this.setState({
       isMapShown: !isMapShown,
     });
@@ -225,6 +219,7 @@ class Boardings extends Component {
 
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
+
       boardingService
         .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter)
         .then((data) => {
@@ -246,7 +241,7 @@ class Boardings extends Component {
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
-      this.loadData({ mounted: true, currentFilter: filter});
+      this.loadData({ mounted: true, currentFilter: filter });
     } else {
       this.loadData({ mounted: true });
     }
@@ -309,78 +304,15 @@ class Boardings extends Component {
         </div>
 
         {boardings && boardings.length && !loading ? (
-          <Fragment>
-            {isMapShown && (
-              <div className="flex-row align-center all-boardings-map">
-                <ChartBox
-                  options={boardingsChartOptions}
-                  className="with-map"
-                />
-              </div>
-            )}
-            <div className="table-wrapper">
-              <table className="custom-table boardings-table">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.DATE")}</td>
-                    <td>{t("TABLE.TIME")}</td>
-                    <td>{t("TABLE.VESSEL")}</td>
-                    <td>{t("TABLE.PERMIT_NUMBER")}</td>
-                    <td>{t("TABLE.CAPTAIN")}</td>
-                    <td>{t("TABLE.VIOLATIONS")}</td>
-                    <td>{t("TABLE.BOARDED_BY")}</td>
-                    <td>{t("TABLE.RISK")}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {boardings.map((item, ind) => (
-                    <tr
-                      className="table-row row-body"
-                      key={ind}
-                      onClick={() => goToPage(VIEW_BOARDING_PAGE, item._id)}
-                    >
-                      <td> {moment(item.date).format("L")}</td>
-                      <td> {moment(item.date).format("LT")}</td>
-                      <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.vessel.name}
-                        />
-                      </td>
-                      <td>{item.vessel.permitNumber || "N/A"}</td>
-                      <td>{item.captain.name}</td>
-                      <td>
-                        {!!item.inspection.summary.violations
-                          ? item.inspection.summary.violations.length
-                          : "N/A"}
-                      </td>
-                      <td>{`${item.reportingOfficer.name.first} ${item.reportingOfficer.name.last}`}</td>
-                      <td>
-                        <RiskIcon
-                          safetyLevel={
-                            item.inspection.summary.safetyLevel &&
-                            item.inspection.summary.safetyLevel.level
-                              ? item.inspection.summary.safetyLevel.level
-                              : item.inspection.summary.safetyLevel
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {total > limit && (
-              <Pagination
-                page={page}
-                count={Math.ceil(total / limit)}
-                shape="rounded"
-                onChange={this.handlePageChange}
-              />
-            )}
-          </Fragment>
+          <BoardingsTable
+            isMapShown={isMapShown}
+            boardings={boardings}
+            highlighted={highlighted}
+            total={total}
+            limit={limit}
+            page={page}
+            handlePageChange={this.handlePageChange}
+          />
         ) : loading ? (
           <LoadingPanel />
         ) : (

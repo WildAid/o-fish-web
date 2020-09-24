@@ -92,7 +92,7 @@ class VesselSection extends Component {
     const { t } = this.props;
 
     const lastDelivery =
-      vessel && vessel.lastDelivery ? vessel.lastDelivery : {};
+      vessel && vessel.lastDelivery ? vessel.lastDelivery : null;
     const ems = vessel && vessel.ems && vessel.ems[0] ? vessel.ems[0] : {};
 
     return (
@@ -167,14 +167,14 @@ class VesselSection extends Component {
               label={t("TABLE.DATE")}
               className="half-row-view"
               name="ldod_date"
-              value={lastDelivery.date || ""}
+              value={!!lastDelivery ? lastDelivery.date : ""}
               onChange={(e) => this.setLdodFieldValue("date", e.target.value)}
             />
             <TextField
               label={t("FILTER.MAIN.BOARDING_INFO.LOCATION")}
               className="half-row-view"
               name="ldod_location"
-              value={lastDelivery.location || ""}
+              value={!!lastDelivery ? lastDelivery.location : ""}
               onChange={(e) =>
                 this.setLdodFieldValue("location", e.target.value)
               }
@@ -185,7 +185,7 @@ class VesselSection extends Component {
               label={t("FILTER.MAIN.LAST_DELIVERY.BUSINESS")}
               className="half-row-view"
               name="ldod_business"
-              value={lastDelivery.business || ""}
+              value={!!lastDelivery ? lastDelivery.business : ""}
               onChange={(e) =>
                 this.setLdodFieldValue("business", e.target.value)
               }

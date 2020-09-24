@@ -18,7 +18,7 @@ class EditAgency extends Component {
   };
 
   saveAgency = (values) => {
-    const { agencyInfo, loading } = this.state;
+    const { agencyInfo } = this.state;
     let newAgency = {
       active: values.active,
       name: values.name,

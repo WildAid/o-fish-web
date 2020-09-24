@@ -20,7 +20,23 @@ export default class AgencyService {
     return stitchService.database.collection("Agency").findOne({_id: objectId});
   }
 
+  getStats(searchQuery, currentFilter) {
+    return stitchService.client.callFunction("getDashboardStats", [
+      searchQuery,
+      currentFilter,
+    ]);
+  }
+
   getAgencies(limit, offset, searchQuery, currentFilter) {
+    return stitchService.client.callFunction("getAgencies", [
+      limit,
+      offset,
+      searchQuery,
+      currentFilter,
+    ]);
+  }
+
+  searchAgencies(limit, offset, searchQuery, currentFilter) {
     return stitchService.client.callFunction("searchFacetByAgency", [
       limit,
       offset,

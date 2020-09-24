@@ -6,6 +6,8 @@
     "PASSWORD": "Password"
   },
   "NAVIGATION": {
+    "MY_DASHBOARD": "My Dashboard",
+    "USER_GROOP": "Users Groop",
     "DASHBOARD": "Dashboard",
     "BOARDING_RECORDS": "Boarding records",
     "USERS": "Users",
@@ -17,15 +19,19 @@
     "ALL_USERS": "All Users",
     "CREATE_NEW_USER": "Create New User",
     "ALL_AGENCIES": "All Agencies",
-    "CREATE_NEW_AGENCY": "Create New Agency",
+    "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
     "LOG_OUT": "Log out"
   },
   "HOME_PAGE": {
     "DASHBOARD": "Dashboard",
+    "MY_BOARDINGS": "My Boardings",
+    "MY_ACTIVITY": "My Activity",
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",
-    "OFFICER_PATROL_HOURS": "Officer Patrol Hours"
+    "OFFICER_PATROL_HOURS": "Officer Patrol Hours",
+    "DAYS": "Days",
+    "HOURS": "Hours"
   },
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "New Agency",
@@ -38,15 +44,12 @@
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "ROLE": "Role",
-    "USER_GROUP": "User Group",
+    "USER_GROUP": "Group",
     "ACTIVE": "Active",
     "INACTIVE": "Inactive",
     "PERMISSIONS": "Permissions",
     "PROFILE_INFO": "Profile information",
     "SETTINGS": "Settings"
-  },
-  "VESSEL_OVERVIEW_PAGE": {
-    
   },
   "BOARDING_PAGE": {
     "RECORDS_FOUND": "Records Found",
@@ -136,6 +139,7 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "SAVE": "Save",
+    "VIEW": "View",
     "DELETE": "delete",
     "SEARCH": "Search",
     "CHANGE_PASSWORD": "Change Password",
@@ -170,7 +174,7 @@
     "AGENCY": "Agency",
     "NAME": "Name",
     "USER_TYPE": "User Type",
-    "CREATED_ON": "Created On",
+    "DATE_ADDED": "Date Added",
     "STATUS": "Status",
     "DESCRIPTION": "Description",
     "OFFICERS": "Officers",
@@ -243,8 +247,15 @@
     "ADD_SPECIE" : "Add specie",
     "ADD_ANOTHER" : "Add another"
   },
+  "ADMINS": {
+    "GLOBAL": "Global Admin",
+    "AGENCY": "Agency Admin",
+    "GROUP": "Group Admin",
+    "FIELD": "Field Officer"
+  },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Not authenticated",
+    "NOT_UNAUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
     "NO_OFFICERS":"No officers found",
@@ -258,5 +269,8 @@
     "NO_PHOTOS": "No photos found",
     "NO_NOTES": "No notes found",
     "NO_LICENSE": "No license number found"
+  },
+  "VALIDATION": {
+    "REQUIRED": "This field is required"
   }
 }

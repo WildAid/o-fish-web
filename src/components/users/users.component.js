@@ -18,6 +18,7 @@ import {
 
 import UserService from "./../../services/user.service";
 import SearchService from "./../../services/search.service";
+import AuthService from "./../../services/auth.service";
 
 import {
   USERS_ACTIVITIES_PAGE,
@@ -28,6 +29,7 @@ import "./users.css";
 
 const userService = UserService.getInstance();
 const searchService = SearchService.getInstance();
+const authService = AuthService.getInstance();
 
 class UsersMain extends React.Component {
   state = {
@@ -117,6 +119,7 @@ class UsersMain extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     const {
       users,
       total,
@@ -128,10 +131,17 @@ class UsersMain extends React.Component {
       loading,
     } = this.state;
 
-    const { t } = this.props;
-
+    const isGlobalAdmin = authService.user.global.admin;
+    const isAgencyAdmin = authService.user.agency.admin;
+    const isFieldOfficer =
+      !authService.user.global.admin && !authService.user.agency.admin;
+    console.log(users);
     return (
-      <div className="padding-bottom flex-column align-center">
+      <div
+        className={`padding-bottom flex-column align-center users-page ${
+          isAgencyAdmin && !isGlobalAdmin ? "agency-admin" : ""
+        }`}
+      >
         <SearchPanel
           handler={this.search}
           value={searchQuery}
@@ -168,11 +178,20 @@ class UsersMain extends React.Component {
                       <p>{t("TABLE.NAME")}</p>
                     </div>
                   </td>
-                  <td>{t("TABLE.AGENCY")}</td>
-                  <td>{t("TABLE.USER_TYPE")}</td>
-                  <td>{t("TABLE.CREATED_ON")}</td>
+                  {isGlobalAdmin && <td>{t("TABLE.AGENCY")}</td>}
+                  <td>{t("CREATE_USER_PAGE.USER_GROUP")}</td>
+                  <td>{t("CREATE_USER_PAGE.ROLE")}</td>
+                  {isAgencyAdmin && !isGlobalAdmin && (
+                    <td>{t("TABLE.DATE_ADDED")}</td>
+                  )}
+                  {isFieldOfficer && !isGlobalAdmin && (
+                    <td>{t("CREATE_AGENCY_PAGE.EMAIL")}</td>
+                  )}
                   <td>{t("TABLE.STATUS")}</td>
-                  <td></td>
+                  {isAgencyAdmin && <td></td>}
+                  {(!isGlobalAdmin || !isAgencyAdmin) && !isFieldOfficer && (
+                    <td></td>
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -188,7 +207,10 @@ class UsersMain extends React.Component {
                             type="checkbox"
                             onChange={(e) => this.checkUsers(e, item)}
                           />
-                          <UserPhoto imageId={item.profilePic || ""} defaultIcon={false}/>
+                          <UserPhoto
+                            imageId={item.profilePic || ""}
+                            defaultIcon={false}
+                          />
                           <Highlighter
                             highlightClassName="highlighted"
                             searchWords={highlighted}
@@ -197,37 +219,56 @@ class UsersMain extends React.Component {
                           />
                         </div>
                       </td>
+                      {isGlobalAdmin && (
+                        <td>
+                          <Highlighter
+                            highlightClassName="highlighted"
+                            searchWords={highlighted}
+                            autoEscape={true}
+                            textToHighlight={item.agency.name}
+                          />
+                        </td>
+                      )}
                       <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.agency.name}
-                        />
+                        {isGlobalAdmin
+                          ? item.group
+                            ? item.group.name
+                            : item.userGroup
+                            ? item.userGroup.name
+                            : "N/A"
+                          : item.userGroup}
                       </td>
                       <td>{checkUserType(item)}</td>
-                      <td>
-                        {item.createdOn
-                          ? moment(item.createdOn).format("LLL")
-                          : "N/A"}
-                      </td>
+                      {isAgencyAdmin && !isGlobalAdmin && (
+                        <td>{moment(item.createdOn).format("L")}</td>
+                      )}
+                      {isFieldOfficer && !isGlobalAdmin && (
+                        <td>{item.email}</td>
+                      )}
                       <td>
                         <div className={`status-icon ${status}-status-icon`}>
                           {status}
                         </div>
                       </td>
-                      <td>
-                        <div
-                          className="edit-img"
-                          onClick={() => this.goEditUser(item._id)}
-                        >
-                          <img
-                            className="full-view"
-                            src={require("../../assets/edit-icon.png")}
-                            alt="no icon"
-                          />
-                        </div>
-                      </td>
+                      {isAgencyAdmin && (
+                        <td>
+                          <div
+                            className="pointer see-all"
+                            onClick={() => this.goEditUser(item._id)}
+                          >
+                            {t("BUTTONS.EDIT")}
+                          </div>
+                        </td>
+                      )}
+                      {(!isGlobalAdmin || !isAgencyAdmin) && !isFieldOfficer && (
+                        <td>
+                          <div className="pointer see-all view-activity">
+                            {`${t("BUTTONS.VIEW")} ${t(
+                              "BOARDING_PAGE.VIEW_BOARDING.ACTIVITY"
+                            )}`}
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}

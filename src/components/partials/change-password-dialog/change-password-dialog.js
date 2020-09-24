@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import {
@@ -44,7 +44,7 @@ class ChangePasswordDialog extends Component {
     newValidations.containsLower = /[a-z]/.test(password);
     newValidations.atLeastLength = password.length >= 6;
     newValidations.passwordsMatch = Boolean(
-      confirmPassword.length && password == confirmPassword
+      confirmPassword.length && password === confirmPassword
     );
     this.setState({ validations: newValidations });
 

@@ -189,15 +189,14 @@ export const goToPageWithFilter = (path, filter) => {
 
 export const goCrewViewPage = (item) => {
   const filter = {};
-  if (item.isCaptain || item.rank === "captain"){
+  if (item.isCaptain || item.rank === "captain") {
     if (item.license) {
       filter["captain.license"] = item.license;
     }
     if (item.name) {
       filter["captain.name"] = item.name;
     }
-  }
-  else {
+  } else {
     if (item.license) {
       filter["crew.license"] = item.license;
     }
@@ -217,3 +216,8 @@ export const bufferToBase64 = (buffer) => {
   }
   return window.btoa(binary);
 };
+
+export const required = (values, key) =>
+  !values[key] && values[key] !== 0
+    ? { [key]: "VALIDATION.REQUIRED" }
+    : undefined;
