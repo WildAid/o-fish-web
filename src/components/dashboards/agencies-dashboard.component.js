@@ -6,7 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
-import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
+import { getHighlightedText, goToPage } from "./../../helpers/get-data";
 
 import SearchService from "./../../services/search.service";
 import AgencyService from "./../../services/agency.service";

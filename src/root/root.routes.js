@@ -75,7 +75,7 @@ import {
   VIEW_USER_PAGE,
   NEW_USER_PAGE,
   USERS_ACTIVITIES_PAGE,
-  USERS_GROOP_PAGE,
+  USERS_GROUP_PAGE,
   //Agencies sub routes
   EDIT_AGENCIES_PAGE,
   VIEW_AGENCIES_PAGE,
@@ -233,7 +233,7 @@ const routes = [
         component: NewUser,
       },
       {
-        path: USERS_GROOP_PAGE,
+        path: USERS_GROUP_PAGE,
         exact: true,
         component: UsersGroop,
       },

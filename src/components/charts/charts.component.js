@@ -9,12 +9,6 @@ import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 
-import { getHighlightedText } from "./../../helpers/get-data";
-
-import AgencyService from "./../../services/agency.service";
-
-const agencyService = AgencyService.getInstance();
-
 class ChartsPage extends Component {
   state = {
     vessels: [],

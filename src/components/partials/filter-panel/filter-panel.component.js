@@ -13,7 +13,7 @@ import "./filter-panel.css";
 class FilterPanel extends Component {
   state = { isFilterPanelShown: false, filterParts: [], searchQuery: "" };
 
-  convertFilter(filterObj){
+  convertFilter(filterObj) {
     const filter = [];
     for (var key in filterObj) {
       filter.push({ name: key, value: filterObj[key] });
@@ -21,30 +21,30 @@ class FilterPanel extends Component {
     return filter;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let filter = [];
     if (this.props.match.params.filter) {
       filter = this.convertFilter(JSON.parse(this.props.match.params.filter));
     }
     const { configuration } = this.props;
-    if (configuration && filter && filter.length){
+    if (configuration && filter && filter.length) {
       const flatConfig = {};
-      for (const section in configuration){
+      for (const section in configuration) {
         configuration[section].forEach((item, i) => {
           flatConfig[item.field ? item.field : item.name] = item;
         });
-      };
+      }
       const defaultFilter = [];
       filter.forEach((filterPart) => {
         const config = flatConfig[filterPart.name];
-        if (config){
+        if (config) {
           defaultFilter.push({
             ...config,
-            value: filterPart.value
-          })
+            value: filterPart.value,
+          });
         }
       });
-      this.setState({filterParts: defaultFilter});
+      this.setState({ filterParts: defaultFilter });
     }
   }
 
@@ -109,7 +109,7 @@ class FilterPanel extends Component {
     }
   };
 
-  applyFilterChanges(){
+  applyFilterChanges() {
     const { filterParts } = this.state;
     const path = this.props.match.path;
     const filter = JSON.stringify(this.constructFilter(filterParts));
@@ -169,9 +169,16 @@ class FilterPanel extends Component {
           ))}
         </div>
         <div className="relative">
-          <button className="filter-btn blue-btn" onClick={this.showFilter}>
-            {options && options.buttonTitle ? options.buttonTitle : `+ ${t("FILTER.FILTER")}`}
-          </button>
+          <div className="filter-btn blue-btn" onClick={this.showFilter}>
+            {options && options.buttonTitle
+              ? options.buttonTitle
+              : t("FILTER.FILTER")}
+            <img
+              className="custom-down-arrow"
+              src={require("../../../assets/angle-arrow-down.svg")}
+              alt="no arrow img"
+            />
+          </div>
           <div
             className={
               "flex-column justify-start align-stretch absolute white-bg margin-bottom box-shadow filter-panel" +
