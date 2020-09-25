@@ -3,6 +3,11 @@ import moment from "moment";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
+import { getCode } from "country-list";
+
+import ReactCountryFlag from "react-country-flag";
+// import Flag from "react-flags";
+import Flag from 'react-world-flags'
 
 import {
   getColor,
@@ -127,7 +132,7 @@ class Vessels extends Component {
     currentFilter: null,
     loading: false,
     page: 1,
-    mounted: false
+    mounted: false,
   };
 
   search = (value) => {
@@ -182,7 +187,7 @@ class Vessels extends Component {
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
-      this.loadData({ mounted: true, currentFilter: filter});
+      this.loadData({ mounted: true, currentFilter: filter });
       //The loadData will be called automatically from filter-panel
     } else {
       this.loadData({ mounted: true });
@@ -209,124 +214,127 @@ class Vessels extends Component {
       highlighted,
       searchQuery,
       page,
-      mounted
+      mounted,
     } = this.state;
 
     const { t } = this.props;
 
-    return mounted && (
-      <div className="padding-bottom flex-column align-center">
-        <SearchPanel
-          handler={this.search}
-          value={searchQuery}
-          isAutofill={false}
-        />
-        <div className="flex-row justify-between standard-view">
-          {loading ? (
-            <div className="items-amount">{t("LOADING.LOADING")}</div>
-          ) : (
-            <SearchResultsFor
-              query={searchQuery}
-              total={`${total} ${t("NAVIGATION.VESSELS")}`}
-            />
-          )}
-          <FilterPanel
-            options={{ searchByFilter: true }}
-            configuration={filterConfiguration}
-            onFilterChanged={this.handleFilterChanged}
+    return (
+      mounted && (
+        <div className="padding-bottom flex-column align-center">
+          <SearchPanel
+            handler={this.search}
+            value={searchQuery}
+            isAutofill={false}
           />
-        </div>
-        {vessels && vessels.length && !loading ? (
-          <Fragment>
-            <div className="table-wrapper">
-              <table className="custom-table">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}</td>
-                    <td>{t("TABLE.PERMIT_NUMBER")}</td>
-                    <td>{t("FILTER.MAIN.VESSEL_INFO.NATIONALITY")}</td>
-                    <td>{t("TABLE.HOME_PORT")}</td>
-                    <td>{t("TABLE.LAST_BOARDED")}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vessels.map((item, ind) => (
-                    <tr
-                      className="table-row row-body"
-                      key={ind}
-                      onClick={() => this.goVesselsViewPage(item)}
-                    >
-                      <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.vessel || ''}
-                        />
-                      </td>
-                      <td>{item.permitNumber || "N/A"}</td>
-                      <td>
-                        <div className="flex-row align-center">
-                          <div className="nationality-img">
-                            <img
-                              className="full-view"
-                              src={require("../../assets/nationality.png")}
-                              alt="no icon"
-                            />
-                          </div>
-                          {item.nationality || "N/A"}
-                        </div>
-                      </td>
-                      <td>
-                        {item.homePort
-                          ? item.homePort.slice(0, 4).join(", ")
-                          : "N/A"}
-                      </td>
-                      <td>
-                        <div className="flex-row">
-                          <div className="delivery-date">
-                            {moment(item.date).format("LLL")}
-                          </div>
-                          <div
-                            className="risk-icon"
-                            style={{
-                              background: `${getColor(
-                                (item.safetyLevel && item.safetyLevel.level
-                                  ? item.safetyLevel.level.toLowerCase()
-                                  : item.safetyLevel
-                                ).toLowerCase()
-                              )}`,
-                            }}
-                          ></div>
-                          <RiskIcon
-                            safetyLevel={
-                              item.safetyLevel && item.safetyLevel.level
-                                ? item.safetyLevel.level
-                                : item.safetyLevel
-                            }
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {total > limit && (
-              <Pagination
-                page={page}
-                count={Math.ceil(total / limit)}
-                shape="rounded"
-                onChange={this.handlePageChange}
+          <div className="flex-row justify-between standard-view">
+            {loading ? (
+              <div className="items-amount">{t("LOADING.LOADING")}</div>
+            ) : (
+              <SearchResultsFor
+                query={searchQuery}
+                total={`${total} ${t("NAVIGATION.VESSELS")}`}
               />
             )}
-          </Fragment>
-        ) : loading ? (
-          <LoadingPanel />
-        ) : (
-          t("WARNINGS.NO_VESSELS")
-        )}
-      </div>
+            <FilterPanel
+              options={{ searchByFilter: true }}
+              configuration={filterConfiguration}
+              onFilterChanged={this.handleFilterChanged}
+            />
+          </div>
+          {vessels && vessels.length && !loading ? (
+            <Fragment>
+              <div className="table-wrapper">
+                <table className="custom-table">
+                  <thead>
+                    <tr className="table-row row-head border-bottom">
+                      <td>{t("BOARDING_PAGE.VIEW_BOARDING.STATUS")}</td>
+                      <td>{t("TABLE.PERMIT_NUMBER")}</td>
+                      <td>{t("FILTER.MAIN.VESSEL_INFO.NATIONALITY")}</td>
+                      <td>{t("TABLE.HOME_PORT")}</td>
+                      <td>{t("TABLE.LAST_BOARDED")}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vessels.map((item, ind) => (
+                      <tr
+                        className="table-row row-body"
+                        key={ind}
+                        onClick={() => this.goVesselsViewPage(item)}
+                      >
+                        <td>
+                          <Highlighter
+                            highlightClassName="highlighted"
+                            searchWords={highlighted}
+                            autoEscape={true}
+                            textToHighlight={item.vessel || ""}
+                          />
+                        </td>
+                        <td>{item.permitNumber || "N/A"}</td>
+                        <td>
+                          <div className="flex-row align-center">
+                            <div className="nationality-img">
+                              {item.nationality && (
+                                <Flag
+                                  code={getCode(item.nationality) || "UA"}
+                                  height="16"
+                                />
+                              )}
+                            </div>
+                            {item.nationality || "N/A"}
+                          </div>
+                        </td>
+                        <td>
+                          {item.homePort
+                            ? item.homePort.slice(0, 4).join(", ")
+                            : "N/A"}
+                        </td>
+                        <td>
+                          <div className="flex-row">
+                            <div className="delivery-date">
+                              {moment(item.date).format("LLL")}
+                            </div>
+                            <div
+                              className="risk-icon"
+                              style={{
+                                background: `${getColor(
+                                  (item.safetyLevel && item.safetyLevel.level
+                                    ? item.safetyLevel.level.toLowerCase()
+                                    : item.safetyLevel
+                                  ).toLowerCase()
+                                )}`,
+                              }}
+                            ></div>
+                            <RiskIcon
+                              safetyLevel={
+                                item.safetyLevel && item.safetyLevel.level
+                                  ? item.safetyLevel.level
+                                  : item.safetyLevel
+                              }
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {total > limit && (
+                <Pagination
+                  page={page}
+                  count={Math.ceil(total / limit)}
+                  shape="rounded"
+                  onChange={this.handlePageChange}
+                />
+              )}
+            </Fragment>
+          ) : loading ? (
+            <LoadingPanel />
+          ) : (
+            t("WARNINGS.NO_VESSELS")
+          )}
+        </div>
+      )
     );
   }
 }
