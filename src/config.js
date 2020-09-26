@@ -23,7 +23,8 @@ const config = {
     "citations-and-warnings":{
       chartId: "chart-id"
     }
-  }
+  },
+  sandbox: true,
 };
 
 module.exports = config;
