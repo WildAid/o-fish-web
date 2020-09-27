@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import history from "../../../root/root.history";
-import { HOME_PAGE } from "../../../root/root.constants";
+import { HOME_PAGE, LOGIN_PAGE } from "../../../root/root.constants";
 import config from "../../../config";
 
-import AuthService from "./../../../services/auth.service";
-import UserService from "./../../../services/user.service";
-
-import { withRouter } from "react-router";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+
+import AuthService from "./../../../services/auth.service";
+import UserService from "./../../../services/user.service";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
@@ -22,9 +21,7 @@ class NewDevUser extends Component {
     error: "",
   };
 
-  saveUser = (values) => {
-    const defaultErrorMessage = "An unexpected error occurred!";
-
+  registerUser = (values) => {
     authService
       .authenticateAnonymous()
       .then(() => {
@@ -50,22 +47,22 @@ class NewDevUser extends Component {
                     });
                 })
                 .catch((error) => {
-                  // error creating realm user
+                  this.setState({ error: "Could not create Realm user." });
                 });
             }
           })
           .catch((error) => {
-            // error on regdevuser
+            this.setState({ error: "Could not create user/agency." });
           });
       })
       .catch((error) => {
-        // error on anon auth
+        this.setState({ error: "Could not authenicate anonymously." });
       });
   };
 
   validatePassword(password) {
     this.setState({
-      isValidPassword: password.length >= 6 && password.length <= 28,
+      isValidPassword: password.length >= 6 && password.length <= 128,
     });
   }
 
@@ -73,6 +70,10 @@ class NewDevUser extends Component {
     this.setState({
       error: "",
     });
+  };
+
+  clearForm = () => {
+    history.push(LOGIN_PAGE);
   };
 
   componentDidMount() {
@@ -117,16 +118,13 @@ class NewDevUser extends Component {
         <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
           <Formik
             initialValues={initialValues}
-            onSubmit={this.saveUser}
+            onSubmit={this.registerUser}
             validate={this.validate}
             render={({
-              errors,
               values,
-              handleChange,
               handleBlur,
               handleSubmit,
               setFieldValue,
-              isValid,
             }) => (
               <Form
                 onSubmit={handleSubmit}
@@ -174,8 +172,8 @@ class NewDevUser extends Component {
                     }}
                     value={values.password}
                     required
-                    error={values.password.length && !isValidPassword}
-                    helperText="Passwords must be between 6 and 28 characters long."
+                    error={Boolean(values.password.length && !isValidPassword)}
+                    helperText="Passwords must be between 6 and 128 characters long."
                   />
                   <TextField
                     label={t("AGENCY_PAGE.EDIT_AGENCY.NAME")}
