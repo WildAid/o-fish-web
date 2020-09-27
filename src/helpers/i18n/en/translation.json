@@ -86,6 +86,7 @@
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
+    "DATA_SHARING": "Data Sharing",
     "PREFERED_NATIONALITIES": "Prefered Nationatities",
     "EDIT_AGENCY": {
       "STATUS": "Status",

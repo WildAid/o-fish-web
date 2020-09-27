@@ -86,7 +86,8 @@
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
-    "PREFERED_NATIONALITIES": "Nationatités préférées"
+    "PREFERED_NATIONALITIES": "Nationatités préférées",
+    "DATA_SHARING": "Data Sharing"
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "Voir Activité"
