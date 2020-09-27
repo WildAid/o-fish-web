@@ -24,7 +24,7 @@ const config = {
       chartId: "chart-id"
     }
   },
-  sandbox: true,
+  sandbox: false,
 };
 
 module.exports = config;
