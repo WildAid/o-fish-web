@@ -2,3 +2,10 @@
     width: 25px;
     margin-right: 5px;
 }
+
+.no-flag-country {
+    width: 25px;
+    margin-right: 5px;
+    height: 15px;
+    background: #b1b1b1;
+}
