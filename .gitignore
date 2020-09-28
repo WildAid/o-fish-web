@@ -26,3 +26,4 @@ yarn-error.log*
 package-lock.json
 npm-debug.log*
 **/config*.js
+src/config.js
