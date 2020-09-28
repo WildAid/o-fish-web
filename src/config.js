@@ -4,24 +4,24 @@ const config = {
   realmAppId: '',
   database: 'wildaid',
   chartsConfig: {
-    baseUrl: "",
+    baseUrl: "https://charts.mongodb.com/charts-wildaid-xxxxx",
     "boardings": {
-      chartId: ""
+      chartId: "chart-id"
     },
     "boarding-compliance":{
-      chartId: ""
+      chartId: "chart-id"
     },
     "patrol-hours":{
-      chartId: ""
+      chartId: "chart-id"
     },
     "compliance-rate":{
-      chartId: "
+      chartId: "chart-id"
     },
     "boardings-count-chart":{
-      chartId: ""
+      chartId: "chart-id"
     },
     "citations-and-warnings":{
-      chartId: ""
+      chartId: "chart-id"
     }
   }
 };
