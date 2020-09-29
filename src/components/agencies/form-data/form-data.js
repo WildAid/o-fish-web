@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import NewDialog from "./new-dialog.js";
-
+import NewCountryDialog from "./new-dialog.js";
 import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
+import CountryRegionData from 'country-region-data';
 
 import "../form-data/form-data.css";
 
@@ -82,6 +83,11 @@ class AgencyFormData extends Component {
 
   componentDidMount(){
     const { menuItems } = this.state;
+    this.countries = {};
+    CountryRegionData.forEach((item) => {
+        this.countries[item.countryShortCode] = item.countryName;
+    });
+
     if (this.props.agency && this.props.agency.name){
       menuService.getMenus(this.props.agency.name).then((menuData)=>{
         if (menuData){
@@ -159,7 +165,7 @@ class AgencyFormData extends Component {
                   <input
                     className="search-field"
                     type="search"
-                    placeholder={t("BUTTONS.SEARCH") + " " + item.title} 
+                    placeholder={t("BUTTONS.SEARCH") + " " + item.title}
                   ></input>
               </div>
               <button className="blue-btn" onClick={this.showDialog}>
@@ -173,7 +179,7 @@ class AgencyFormData extends Component {
                       key={ind}
                     >
                       <input className="check-item" type="checkbox" />
-                      <span className="name">{item}</span>
+                      <span className="name">{activeItem == "countryPickerPriorityList" ?  this.countries[item] : item }</span>
                       <span className="inline-btn" onClick={()=>this.deleteItem(activeItem, ind)}>{t("BUTTONS.DELETE")}</span>
                     </div>
                   ))}
@@ -186,7 +192,7 @@ class AgencyFormData extends Component {
             </button>
           </div>
         }
-      {dialogDisplayed && <NewDialog onApply={this.dialogClosed} title={item.title} lineText={item.btn}></NewDialog>}
+      {dialogDisplayed && <NewDialog onApply={this.dialogClosed} title={item.title} lineText={item.btn} showCountry={activeItem === "countryPickerPriorityList"}></NewDialog>}
     </div>;
   }
 }
