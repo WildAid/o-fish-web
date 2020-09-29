@@ -3,13 +3,14 @@ import moment from "moment";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
-import { getCode, getData } from "country-list";
+import { getCode } from "country-list";
 import Flag from "react-world-flags";
 
 import {
   getColor,
   getHighlightedText,
   goToPageWithFilter,
+  getCountryCode
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -192,18 +193,6 @@ class Vessels extends Component {
     goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
   }
 
-  getCountryCode = (countryName) => {
-    if (!countryName) return;
-
-    const countries = getData();
-    console.log(countries);
-    const countryCode = countries.find((country) =>
-      country.name.includes(countryName)
-    );
-    if (!countryCode) return "";
-    return countryCode.code;
-  };
-
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
@@ -291,14 +280,14 @@ class Vessels extends Component {
                                 {item.nationality &&
                                   !getCode(item.nationality) && (
                                     <Flag
-                                      code={this.getCountryCode(
+                                      code={getCountryCode(
                                         item.nationality
                                       )}
                                     />
                                   )}
                                 {item.nationality &&
                                   !getCode(item.nationality) &&
-                                  !this.getCountryCode(item.nationality) && (
+                                  !getCountryCode(item.nationality) && (
                                     <div className="no-flag-country"></div>
                                   )}
                               </div>

@@ -14,6 +14,7 @@ import {
   USERS_GROUP_PAGE,
   GLOBAL_AGENCIES_PAGE,
   CHARTS_PAGE,
+  DATA_SHARING_PAGE,
 } from "../../root/root.constants.js";
 
 import UserPhoto from "./../partials/user-photo/user-photo.component";
@@ -86,7 +87,7 @@ class Header extends Component {
             </NavLink>
             {currentUser && (
               <div className="flex-row align-center justify-between full-view padding-left">
-                <div className="flex-row align-center half-row-view padding-left">
+                <div className="flex-row align-center padding-left">
                   {!currentUser.global.admin && !currentUser.agency.admin && (
                     <NavLink to={HOME_PAGE} className="nav-menu-item">
                       {t("NAVIGATION.MY_DASHBOARD")}
@@ -215,13 +216,22 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  {isItemShown && (
+                  {(currentUser.global.admin || currentUser.agency.admin) && (
                     <NavLink
                       className="nav-menu-item"
                       to={AGENCIES_PAGE}
                       onMouseLeave={this.navigate}
                     >
                       {t("NAVIGATION.AGENCIES")}
+                    </NavLink>
+                  )}
+                  {currentUser.agency.admin && !currentUser.global.admin && (
+                    <NavLink
+                      className="nav-menu-item"
+                      to={DATA_SHARING_PAGE}
+                      onMouseLeave={this.navigate}
+                    >
+                      {t("AGENCY_PAGE.DATA_SHARING")}
                     </NavLink>
                   )}
                 </div>

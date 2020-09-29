@@ -5,6 +5,7 @@ export const USERS_PAGE = "/users";
 export const AGENCIES_PAGE = "/agencies";
 export const GLOBAL_AGENCIES_PAGE = "/global_agencies";
 export const FORMS_PAGE = "/forms";
+export const DATA_SHARING_PAGE = "/data_sharing";
 export const PROFILE_PAGE = "/profile";
 export const VIOLATIONS_PAGE = "/violations/:filter";
 export const PHOTOS_PAGE = "/photos/:filter";

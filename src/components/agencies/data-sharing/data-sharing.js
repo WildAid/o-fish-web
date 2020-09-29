@@ -1,58 +1,38 @@
-import React, { Component } from 'react';
-import SearchIcon from "@material-ui/icons/Search";
+import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 
 import "./data-sharing.css";
 
 class AgencyDataSharing extends Component {
   state = {
-    dialogDisplayed : false,
-  }
+    dialogDisplayed: false,
+  };
 
   showDialog = () => {
     this.setState({
-      dialogDisplayed: true
-    })
-  }
+      dialogDisplayed: true,
+    });
+  };
 
-  saveData = () => {
+  saveData = () => {};
 
-  }
+  dialogClosed = (items) => {};
 
-  dialogClosed = (items) => {
+  deleteItem = (tab, itemIndex) => {};
 
-  }
+  changeCurrentTab = (tab) => {};
 
-
-  deleteItem = (tab, itemIndex) => {
-
-  }
-
-
-  changeCurrentTab = (tab) => {
-
-  }
-
-  componentDidMount(){
-
-  }
+  componentDidMount() {}
 
   render() {
-
     const { item } = this.state;
-    const { t } = this.props;
 
-
-    return <div className="agency-form-data flex-row full-view">
-        <div className="flex-start justify-between form-content-menu">
-
-        </div>
-        <div>
-        {item &&
-            (<div></div>)
-        }
-        </div>
+    return (
+      <div className="agency-form-data flex-row full-view">
+        <div className="flex-start justify-between form-content-menu"></div>
+        <div>{item && <div></div>}</div>
       </div>
+    );
   }
 }
 
