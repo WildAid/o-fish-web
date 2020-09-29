@@ -1,3 +1,5 @@
+import { getData } from "country-list";
+
 import SearchService from "./../services/search.service";
 
 import history from "../root/root.history";
@@ -221,3 +223,14 @@ export const required = (values, key) =>
   !values[key] && values[key] !== 0
     ? { [key]: "VALIDATION.REQUIRED" }
     : undefined;
+
+export const getCountryCode = (countryName) => {
+  if (!countryName) return;
+
+  const countries = getData();
+  const countryCode = countries.find((country) =>
+    country.name.includes(countryName)
+  );
+  if (!countryCode) return "";
+  return countryCode.code;
+};

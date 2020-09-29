@@ -8,7 +8,10 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import history from "../../root/root.history";
 
-import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
+import {
+  getHighlightedText,
+  goToPage,
+} from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
 import SearchService from "./../../services/search.service";
@@ -18,7 +21,6 @@ import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
-  BOARDINGS_PAGE
 } from "./../../root/root.constants";
 
 import "./agencies.css";
@@ -142,13 +144,16 @@ class AgenciesMain extends React.Component {
           value={searchQuery}
           isAutofill={false}
         />
-        <div className="flex-row justify-between standard-view">
-          <div className="items-amount">
-            {loading
-              ? t("LOADING.LOADING")
-              : total
-              ? `${total} ${t("NAVIGATION.AGENCIES")}`
-              : t("WARNINGS.NO_AGENCIES")}
+        <div className="flex-row justify-between align-center padding-top standard-view">
+          <div>
+            <div className="item-label">{t("NAVIGATION.AGENCIES")}</div>
+            <div className="items-amount">
+              {loading
+                ? t("LOADING.LOADING")
+                : total
+                ? `${total} ${t("NAVIGATION.AGENCIES")}`
+                : t("WARNINGS.NO_AGENCIES")}
+            </div>
           </div>
           {isAdmin && !isAgencyAdmin && (
             <NavLink
@@ -161,8 +166,15 @@ class AgenciesMain extends React.Component {
           )}
         </div>
         {!!agencies.length && (
-          <div className="standard-view">
-            <button className="blue-btn">{`+ ${t("FILTER.FILTER")}`}</button>
+          <div className="standard-view flex-row justify-start">
+            <div className="blue-btn">
+              {t("FILTER.FILTER")}
+              <img
+                className="custom-down-arrow"
+                src={require("../../assets/angle-arrow-down.svg")}
+                alt="no arrow img"
+              />
+            </div>
           </div>
         )}
         {!!agencies.length && (
@@ -220,9 +232,7 @@ class AgenciesMain extends React.Component {
                           className="blue-color"
                           onClick={(e) => {
                             e.stopPropagation();
-                            goToPageWithFilter(BOARDINGS_PAGE, {
-                              agency: item.name,
-                            });
+                            goToPage(EDIT_AGENCIES_PAGE, item._id);
                           }}
                         >
                           {t("BUTTONS.EDIT")}

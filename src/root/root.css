@@ -198,6 +198,7 @@ img.icon {
     border: 1px solid #0a4074;
     cursor: pointer;
     outline-color: rgba(95, 95, 95, 0.6);
+    text-decoration: none;
 }
 
 .blue-btn {
@@ -210,6 +211,7 @@ img.icon {
     cursor: pointer;
     font-weight: 600;
     outline-color: transparent;
+    text-decoration: none;
 }
 
 .disabled-btn {
@@ -274,6 +276,10 @@ img.icon {
 
 .inactive-status-icon {
     color: #252525;
+}
+
+.blue-btn .custom-down-arrow {
+    margin-left: 8px;
 }
 
 /* Table */

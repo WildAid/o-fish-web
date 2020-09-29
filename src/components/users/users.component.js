@@ -23,6 +23,7 @@ import AuthService from "./../../services/auth.service";
 import {
   USERS_ACTIVITIES_PAGE,
   EDIT_USER_PAGE,
+  NEW_USER_PAGE,
 } from "./../../root/root.constants";
 
 import "./users.css";
@@ -124,7 +125,6 @@ class UsersMain extends React.Component {
       users,
       total,
       limit,
-      activitiesAmount,
       page,
       searchQuery,
       highlighted,
@@ -135,7 +135,7 @@ class UsersMain extends React.Component {
     const isAgencyAdmin = authService.user.agency.admin;
     const isFieldOfficer =
       !authService.user.global.admin && !authService.user.agency.admin;
-    console.log(users);
+
     return (
       <div
         className={`padding-bottom flex-column align-center users-page ${
@@ -147,24 +147,38 @@ class UsersMain extends React.Component {
           value={searchQuery}
           isAutofill={false}
         />
-        <div className="flex-row standard-view">
-          <div className="items-amount">
-            {loading
-              ? t("LOADING.LOADING")
-              : total
-              ? `${total} ${t("NAVIGATION.USERS")}`
-              : t("WARNINGS.NO_USERS")}
+        <div className="flex-row justify-between align-center padding-top standard-view">
+          <div>
+            <div className="item-label">{t("NAVIGATION.ALL_USERS")}</div>
+            <div className="items-amount">
+              {loading
+                ? t("LOADING.LOADING")
+                : total
+                ? `${total} ${t("NAVIGATION.USERS")}`
+                : t("WARNINGS.NO_USERS")}
+            </div>
           </div>
+          {(isAgencyAdmin || isGlobalAdmin) && (
+            <div className="flex-row align-center padding-right">
+              <NavLink to={USERS_ACTIVITIES_PAGE} className="blue-btn">
+                {t("BUTTONS.CREATE_REPORT")}
+              </NavLink>
+              <NavLink className="white-btn" to={NEW_USER_PAGE}>
+                {t("NAVIGATION.ADD_NEW_USER")}
+              </NavLink>
+            </div>
+          )}
         </div>
         {!!users.length && (
-          <div className="flex-row standard-view">
-            <NavLink to={USERS_ACTIVITIES_PAGE}>
-              <button className="blue-btn">
-                {t("USERS_PAGE.SEE_ACTIVITY")}
-                {activitiesAmount.length ? `(${activitiesAmount.length})` : ""}
-              </button>
-            </NavLink>
-            <button className="blue-btn">{`+ ${t("FILTER.FILTER")}`}</button>
+          <div className="flex-row standard-view justify-start">
+            <div className="blue-btn">
+              {t("FILTER.FILTER")}
+              <img
+                className="custom-down-arrow"
+                src={require("../../assets/angle-arrow-down.svg")}
+                alt="no arrow img"
+              />
+            </div>
           </div>
         )}
         {!!users.length && (
@@ -225,7 +239,7 @@ class UsersMain extends React.Component {
                             highlightClassName="highlighted"
                             searchWords={highlighted}
                             autoEscape={true}
-                            textToHighlight={item.agency.name}
+                            textToHighlight={item.agency.name || ""}
                           />
                         </td>
                       )}
