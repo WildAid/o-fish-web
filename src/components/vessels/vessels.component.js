@@ -4,15 +4,13 @@ import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 import { getCode } from "country-list";
-
-import ReactCountryFlag from "react-country-flag";
-// import Flag from "react-flags";
-import Flag from 'react-world-flags'
+import Flag from "react-world-flags";
 
 import {
   getColor,
   getHighlightedText,
   goToPageWithFilter,
+  getCountryCode
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -184,16 +182,6 @@ class Vessels extends Component {
     });
   }
 
-  componentDidMount() {
-    if (this.props.match.params.filter) {
-      const filter = JSON.parse(this.props.match.params.filter);
-      this.loadData({ mounted: true, currentFilter: filter });
-      //The loadData will be called automatically from filter-panel
-    } else {
-      this.loadData({ mounted: true });
-    }
-  }
-
   goVesselsViewPage(item) {
     const filter = {};
     if (item.permitNumber) {
@@ -203,6 +191,16 @@ class Vessels extends Component {
       filter["vessel.name"] = item.vessel;
     }
     goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
+  }
+
+  componentDidMount() {
+    if (this.props.match.params.filter) {
+      const filter = JSON.parse(this.props.match.params.filter);
+      this.loadData({ mounted: true, currentFilter: filter });
+      //The loadData will be called automatically from filter-panel
+    } else {
+      this.loadData({ mounted: true });
+    }
   }
 
   render() {
@@ -256,66 +254,79 @@ class Vessels extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {vessels.map((item, ind) => (
-                      <tr
-                        className="table-row row-body"
-                        key={ind}
-                        onClick={() => this.goVesselsViewPage(item)}
-                      >
-                        <td>
-                          <Highlighter
-                            highlightClassName="highlighted"
-                            searchWords={highlighted}
-                            autoEscape={true}
-                            textToHighlight={item.vessel || ""}
-                          />
-                        </td>
-                        <td>{item.permitNumber || "N/A"}</td>
-                        <td>
-                          <div className="flex-row align-center">
-                            <div className="nationality-img">
-                              {item.nationality && (
-                                <Flag
-                                  code={getCode(item.nationality) || "UA"}
-                                  height="16"
-                                />
-                              )}
-                            </div>
-                            {item.nationality || "N/A"}
-                          </div>
-                        </td>
-                        <td>
-                          {item.homePort
-                            ? item.homePort.slice(0, 4).join(", ")
-                            : "N/A"}
-                        </td>
-                        <td>
-                          <div className="flex-row">
-                            <div className="delivery-date">
-                              {moment(item.date).format("LLL")}
-                            </div>
-                            <div
-                              className="risk-icon"
-                              style={{
-                                background: `${getColor(
-                                  (item.safetyLevel && item.safetyLevel.level
-                                    ? item.safetyLevel.level.toLowerCase()
-                                    : item.safetyLevel
-                                  ).toLowerCase()
-                                )}`,
-                              }}
-                            ></div>
-                            <RiskIcon
-                              safetyLevel={
-                                item.safetyLevel && item.safetyLevel.level
-                                  ? item.safetyLevel.level
-                                  : item.safetyLevel
-                              }
+                    {vessels.map((item, ind) => {
+                      return (
+                        <tr
+                          className="table-row row-body"
+                          key={ind}
+                          onClick={() => this.goVesselsViewPage(item)}
+                        >
+                          <td>
+                            <Highlighter
+                              highlightClassName="highlighted"
+                              searchWords={highlighted}
+                              autoEscape={true}
+                              textToHighlight={item.vessel || ""}
                             />
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td>{item.permitNumber || "N/A"}</td>
+                          <td>
+                            <div className="flex-row align-center">
+                              <div className="nationality-img">
+                                {item.nationality &&
+                                  getCode(item.nationality) && (
+                                    <Flag code={getCode(item.nationality)} />
+                                  )}
+                                {item.nationality &&
+                                  !getCode(item.nationality) && (
+                                    <Flag
+                                      code={getCountryCode(
+                                        item.nationality
+                                      )}
+                                    />
+                                  )}
+                                {item.nationality &&
+                                  !getCode(item.nationality) &&
+                                  !getCountryCode(item.nationality) && (
+                                    <div className="no-flag-country"></div>
+                                  )}
+                              </div>
+                              {item.nationality || "N/A"}
+                            </div>
+                          </td>
+                          <td>
+                            {item.homePort
+                              ? item.homePort.slice(0, 4).join(", ")
+                              : "N/A"}
+                          </td>
+                          <td>
+                            <div className="flex-row">
+                              <div className="delivery-date">
+                                {moment(item.date).format("LLL")}
+                              </div>
+                              <div
+                                className="risk-icon"
+                                style={{
+                                  background: `${getColor(
+                                    (item.safetyLevel && item.safetyLevel.level
+                                      ? item.safetyLevel.level.toLowerCase()
+                                      : item.safetyLevel
+                                    ).toLowerCase()
+                                  )}`,
+                                }}
+                              ></div>
+                              <RiskIcon
+                                safetyLevel={
+                                  item.safetyLevel && item.safetyLevel.level
+                                    ? item.safetyLevel.level
+                                    : item.safetyLevel
+                                }
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

@@ -42,6 +42,8 @@ import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
 import EditAgency from "../components/agencies/edit-agency/edit-agency.component";
 import ChartsPage from "../components/charts/charts.component";
+//Data sharing
+import DataSharing from "../components/data-sharing/data-sharing";
 
 import mapRouting from "../helpers/map-routing";
 
@@ -62,6 +64,7 @@ import {
   PHOTOS_PAGE,
   NOTES_PAGE,
   DELIVERIES_PAGE,
+  DATA_SHARING_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -134,6 +137,12 @@ const routes = [
   {
     path: DELIVERIES_PAGE,
     component: DeliveriesPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: DATA_SHARING_PAGE,
+    component: DataSharing,
     auth: true,
     exact: false,
   },

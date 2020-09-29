@@ -11,8 +11,9 @@ const authService = AuthService.getInstance();
 class NewUser extends Component {
   render() {
     const { t } = this.props;
+    const currentUser = authService.user;
 
-    return (
+    return currentUser.global.admin || currentUser.agency.admin ? (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view">
           <div>
@@ -26,10 +27,14 @@ class NewUser extends Component {
             role: true,
             newPassword:
               authService.userRole === "global" ||
-              authService.userRole === "agency"
+              authService.userRole === "agency",
           }}
           onRedirect={() => history.push(USERS_PAGE)}
         />
+      </div>
+    ) : (
+      <div className="flex-row padding-top justify-center">
+        {t("WARNINGS.NOT_UNAUTHORIZED")}
       </div>
     );
   }

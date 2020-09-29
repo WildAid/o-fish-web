@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import NewDialog from "./new-dialog.js";
-import NewCountryDialog from "./new-dialog.js";
 import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 import CountryRegionData from 'country-region-data';
@@ -179,7 +178,7 @@ class AgencyFormData extends Component {
                       key={ind}
                     >
                       <input className="check-item" type="checkbox" />
-                      <span className="name">{activeItem == "countryPickerPriorityList" ?  this.countries[item] : item }</span>
+                      <span className="name">{activeItem === "countryPickerPriorityList" ?  this.countries[item] : item }</span>
                       <span className="inline-btn" onClick={()=>this.deleteItem(activeItem, ind)}>{t("BUTTONS.DELETE")}</span>
                     </div>
                   ))}

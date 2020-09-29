@@ -11,7 +11,6 @@ import history from "../../root/root.history";
 import {
   getHighlightedText,
   goToPage,
-  goToPageWithFilter,
 } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
@@ -22,7 +21,6 @@ import {
   VIEW_AGENCIES_PAGE,
   EDIT_AGENCIES_PAGE,
   NEW_AGENCIES_PAGE,
-  BOARDINGS_PAGE,
 } from "./../../root/root.constants";
 
 import "./agencies.css";
@@ -234,9 +232,7 @@ class AgenciesMain extends React.Component {
                           className="blue-color"
                           onClick={(e) => {
                             e.stopPropagation();
-                            goToPageWithFilter(BOARDINGS_PAGE, {
-                              agency: item.name,
-                            });
+                            goToPage(EDIT_AGENCIES_PAGE, item._id);
                           }}
                         >
                           {t("BUTTONS.EDIT")}
