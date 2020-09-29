@@ -3,6 +3,7 @@ import {
   StitchAppClientConfiguration,
   UserPasswordCredential,
   RemoteMongoClient,
+  AnonymousCredential,
 } from "mongodb-stitch-browser-sdk";
 import { BSON } from "mongodb-stitch-browser-sdk";
 
@@ -70,6 +71,15 @@ export default class StitchService {
       });
   }
 
+  authenticateAnonymousStitch() {
+    return this._localStitchClient.auth
+      .loginWithCredential(new AnonymousCredential())
+      .then((authData) => {
+        this.reinitializeClient();
+        return authData;
+      });
+  }
+
   //After stitch authenticated, you could connect to database
   reinitializeClient() {
     return (this._database = this._localStitchClient
@@ -101,7 +111,7 @@ export default class StitchService {
 
   getPhoto(id) {
     if (!id) return;
-    
+
     return this.database
       .collection("Photo")
       .findOne({ _id: new BSON.ObjectId(id) });

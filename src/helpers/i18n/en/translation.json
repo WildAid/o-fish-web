@@ -7,7 +7,7 @@
   },
   "NAVIGATION": {
     "MY_DASHBOARD": "My Dashboard",
-    "USER_GROOP": "Users Groop",
+    "USER_GROUP": "User Groups",
     "DASHBOARD": "Dashboard",
     "BOARDING_RECORDS": "Boarding records",
     "USERS": "Users",
@@ -17,7 +17,7 @@
     "VESSELS": "Vessels",
     "CREW": "Crew",
     "ALL_USERS": "All Users",
-    "CREATE_NEW_USER": "Create New User",
+    "ADD_NEW_USER": "Add New User",
     "ALL_AGENCIES": "All Agencies",
     "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
@@ -84,8 +84,14 @@
       "AMOUNT": "Amount"
     }
   },
+  "DATA_SHARING": {
+    "SHARED_DATA": "Shared Data",
+    "WHO_CAN_ACCESS_DATA": "Who can access this data",
+    "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}"
+  },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
+    "DATA_SHARING": "Data Sharing",
     "PREFERED_NATIONALITIES": "Prefered Nationatities",
     "EDIT_AGENCY": {
       "STATUS": "Status",
@@ -156,7 +162,8 @@
     "ADD_CUTCH": "Add catch",
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
-    "UPDATE_USER": "Update User"
+    "UPDATE_USER": "Update User",
+    "MANAGE_SHARED_DATA": "Manage Shared Data"
   },
   "TABLE": {
     "ADDRESS": "Address",

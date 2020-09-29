@@ -6,6 +6,7 @@ import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
 import AgencyService from "./../../../services/agency.service";
 import AgencyFormData from "../form-data/form-data.js"
+import AgencyDataSharing from "../data-sharing/data-sharing.js"
 
 import "./view-agency.css";
 
@@ -108,9 +109,17 @@ class ViewAgency extends Component {
             >
               {t("AGENCY_PAGE.FORM_DATA")}
             </div>
+            <div
+              className={`agency-tab ${
+                3 === activeTab ? "active-agency-tab" : ""
+              }`}
+              onClick={() => this.handleChangeTab(3)}
+            >
+              {t("AGENCY_PAGE.DATA_SHARING")}
+            </div>
           </div>
           <div className="flex-row">
-            {1 === activeTab ? (
+            {1 === activeTab && (
               <div className="full-view white-bg box-shadow agency-tab-content">
                 <table className="custom-table">
                   <thead>
@@ -151,9 +160,15 @@ class ViewAgency extends Component {
                   </tbody>
                 </table>
               </div>
-            ) : (
+            )}
+            { 2 === activeTab && (
               <div className="full-view white-bg box-shadow agency-tab-content">
                     <AgencyFormData agency={agencyInfo}></AgencyFormData>
+              </div>
+            )}
+            { 3 === activeTab && (
+              <div className="full-view white-bg box-shadow agency-tab-content">
+                    <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
               </div>
             )}
           </div>
