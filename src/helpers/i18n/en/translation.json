@@ -7,8 +7,8 @@
   },
   "NAVIGATION": {
     "MY_DASHBOARD": "My Dashboard",
+    "DASHBOARD": "Dashboards",
     "USER_GROUP": "User Groups",
-    "DASHBOARD": "Dashboard",
     "BOARDING_RECORDS": "Boarding records",
     "USERS": "Users",
     "AGENCIES": "Agencies",
