@@ -34,6 +34,7 @@ import VesselViewPage from "../components/vessels/vessel-view/vessel-view.compon
 //Users sub components
 import UsersActivities from "../components/users/activities/activities.component";
 import NewUser from "../components/users/new-user/new-user.component";
+import NewDevUser from "../components/users/new-dev-user/new-dev-user.component";
 import ViewUser from "../components/users/view-user/view-user.component";
 import EditUser from "../components/users/edit-user/edit-user.component";
 import UsersGroup from "../components/users/user-group/user-group.component";
@@ -74,6 +75,7 @@ import {
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
   NEW_USER_PAGE,
+  NEW_DEV_USER_PAGE,
   USERS_ACTIVITIES_PAGE,
   USERS_GROUP_PAGE,
   //Agencies sub routes
@@ -88,6 +90,11 @@ const routes = [
     path: LOGIN_PAGE,
     component: Login,
     exact: false,
+  },
+  {
+    path: NEW_DEV_USER_PAGE,
+    exact: true,
+    component: NewDevUser,
   },
   {
     path: HOME_PAGE,

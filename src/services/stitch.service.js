@@ -2,6 +2,7 @@ import {
   Stitch,
   StitchAppClientConfiguration,
   UserPasswordCredential,
+  AnonymousCredential,
   RemoteMongoClient,
 } from "mongodb-stitch-browser-sdk";
 import { BSON } from "mongodb-stitch-browser-sdk";
@@ -68,6 +69,15 @@ export default class StitchService {
         this.reinitializeClient();
         return authData;
       });
+  }
+
+  authenticateAnonymousStitch() {
+    return this._localStitchClient.auth
+      .loginWithCredential(new AnonymousCredential())
+      .then((authData) => {
+        this.reinitializeClient();
+        return authData;
+      })
   }
 
   //After stitch authenticated, you could connect to database
