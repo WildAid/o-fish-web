@@ -1,10 +1,10 @@
 # WildAid O-FISH Web App
 
-**This app is work-in-progress, as is this README**
-
-The [WildAid Marine Program](https://marine.wildaid.org/) work to protect vulnerable marine environments.
+The [WildAid Marine Program](https://marine.wildaid.org/) works to protect vulnerable marine environments.
 
 O-FISH (Officer Fishery Information Sharing Hub) is a multi-platform application that enables officers to browse and record boarding report data from their mobile devices.
+
+<BR><BR>Developers are expected to follow the <A HREF="https://www.mongodb.com/community-code-of-conduct">MongoDB Community Code of Conduct</A> guidelines.
 
 This repo implements the O-FISH web app.
 
@@ -12,7 +12,7 @@ Details on installing all applications making up the solution can be found [here
 
 ## Prerequisites
 
-This is the iOS web app for O-FISH. To build and use the app, you must first create and configure your serverless backend application using the [WildAid O-FISH MongoDB Realm repo](https://github.com/WildAid/o-fish-realm).
+This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://wildaid.github.io/contribute/sandbox.html) or [build your own foundation](http://wildaid.github.io/build).
 
 Setting up MongoDB Charts is optional, but note that the Dashboard view will show errors if you don't - other functionality will be uneffected.
 
@@ -181,3 +181,4 @@ const chartOptions = {
 The code for each page is in `/src`.
 
 Common components are in `/src/partials`.
+
