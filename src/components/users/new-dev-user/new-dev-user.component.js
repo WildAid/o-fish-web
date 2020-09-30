@@ -185,6 +185,7 @@ class NewDevUser extends Component {
                     }
                     value={values.agencyName}
                     required
+                    helperText="Must be unique; we recommend using your github username"
                   />
                   <TextField
                     label={t("AGENCY_PAGE.EDIT_AGENCY.SITE")}
@@ -196,6 +197,7 @@ class NewDevUser extends Component {
                     }
                     value={values.agencySite}
                     required
+                    helperText="Required; does not have to be a website. Can use any string including Twitter handle"
                   />
                 </div>
                 <div className="flex-row justify-around align-center margin-top">
