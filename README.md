@@ -14,7 +14,7 @@ Details on installing all applications making up the solution can be found [here
 
 This is the iOS web app for O-FISH. To build and use the app, you must first create and configure your serverless backend application using the [WildAid O-FISH MongoDB Realm repo](https://github.com/WildAid/o-fish-realm).
 
-Setting up MongoDB Charts is optional, but note that the Dashboard view will show errors if you don't - other functionality will be uneffected.
+Setting up MongoDB Charts is optional, but note that the Dashboard view will show errors if you don't - other functionality will be unaffected.
 
 `git` and `Node.js` must be installed.
 
