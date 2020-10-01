@@ -1,4 +1,4 @@
-# WildAid O-FISH Web App Contribution Guidelines
+# WildAid O-FISH App Contribution Guidelines
 
 There are more details at the [official contribution guidelines](https://wildaid.github.io/contribute/).
 
