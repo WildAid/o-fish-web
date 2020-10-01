@@ -12,11 +12,7 @@ import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
 import "./login.css";
 
-<<<<<<< HEAD
 import { HOME_PAGE, GLOBAL_AGENCIES_PAGE, CHARTS_PAGE } from "../../root/root.constants";
-=======
-import { HOME_PAGE, GLOBAL_AGENCIES_PAGE } from "../../root/root.constants";
->>>>>>> a18a4ad3bb45883abdce8496b16f045a9f425a93
 
 const authService = AuthService.getInstance();
 
@@ -38,11 +34,8 @@ class Login extends Component {
         });
         authService.userRole === "global"
           ? history.push(GLOBAL_AGENCIES_PAGE)
-<<<<<<< HEAD
           : authService.userRole === "agency"
           ? history.push(CHARTS_PAGE.replace(":id",authService.user.agency.name))
-=======
->>>>>>> a18a4ad3bb45883abdce8496b16f045a9f425a93
           : history.push(HOME_PAGE);
       })
       .catch((error) => {
