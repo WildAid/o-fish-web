@@ -17,7 +17,7 @@
     "VESSELS": "Vaisseaux",
     "CREW": "Equipage",
     "ALL_USERS": "Tous Utilisateurs",
-    "CREATE_NEW_USER": "Créer Nouvel Utilisateur",
+    "ADD_NEW_USER": "Ajouter Nouvel Utilisateur",
     "ALL_AGENCIES": "Toutes Agences",
     "CREATE_NEW_AGENCY": "Créer Nouvelle Agence",
     "ACCOUNT": "Mon Compte",
@@ -84,9 +84,24 @@
       "AMOUNT": "Nombre"
     }
   },
+  "DATA_SHARING": {
+    "SHARED_DATA": "",
+    "WHO_CAN_ACCESS_DATA": "",
+    "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}"
+  },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
-    "PREFERED_NATIONALITIES": "Nationatités préférées"
+    "DATA_SHARING": "",
+    "PREFERED_NATIONALITIES": "Nationatités préférées",
+    "EDIT_AGENCY": {
+      "STATUS": "",
+      "ACTIVE": "",
+      "INACTIVE": "",
+      "NAME": "",
+      "DESCRIPTION": "",
+      "SITE": "",
+      "EMAIL": ""
+    }
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "Voir Activité"
@@ -146,7 +161,8 @@
     "ADD_CUTCH": "Ajouter une Saisie",
     "CREATE_REPORT": "Créer un Rapport d'Activité",
     "CREATE_USER": "Créer un Utilisateur",
-    "UPDATE_USER": "Mise à Jour de l'Utilisateur"
+    "UPDATE_USER": "Mise à Jour de l'Utilisateur",
+    "MANAGE_SHARED_DATA": ""
   },
   "TABLE": {
     "ADDRESS": "Adresse",

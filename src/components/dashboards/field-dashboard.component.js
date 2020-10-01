@@ -99,7 +99,7 @@ class FieldDashboard extends Component {
   }
 
   render() {
-    const { changeFilter, t } = this.props;
+    const { t } = this.props;
     const {
       boardings,
       total,

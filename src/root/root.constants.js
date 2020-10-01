@@ -5,6 +5,7 @@ export const USERS_PAGE = "/users";
 export const AGENCIES_PAGE = "/agencies";
 export const GLOBAL_AGENCIES_PAGE = "/global_agencies";
 export const FORMS_PAGE = "/forms";
+export const DATA_SHARING_PAGE = "/data_sharing";
 export const PROFILE_PAGE = "/profile";
 export const VIOLATIONS_PAGE = "/violations/:filter";
 export const PHOTOS_PAGE = "/photos/:filter";
@@ -31,6 +32,7 @@ export const VIEW_VESSEL_PAGE = "/vessels/view/:filter";
 
 //Users subroutes
 export const NEW_USER_PAGE = "/users/new_user";
+export const NEW_DEV_USER_PAGE = "/users/new_dev_user";
 export const USERS_ACTIVITIES_PAGE = "/users/activities";
 export const EDIT_USER_PAGE = "/users/edit/:id";
 export const VIEW_USER_PAGE = "/users/view_user";

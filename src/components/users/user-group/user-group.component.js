@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-class UsersGroup extends Component {
+class UserGroup extends Component {
   render() {
     return (
-      <div className="user-group-page">
-        Users group page
+      <div className="flex-row padding-top justify-center">
+        User groups page
       </div>
     );
   }
 }
 
-export default UsersGroup;
+export default UserGroup;

@@ -15,7 +15,9 @@ export default class UserService {
   }
 
   getUserById(id) {
-    return stitchService.database.collection("User").findOne({_id: new BSON.ObjectId(id)});
+    return stitchService.database
+      .collection("User")
+      .findOne({ _id: new BSON.ObjectId(id) });
   }
 
   getUser(critheria) {
@@ -37,14 +39,23 @@ export default class UserService {
       .registerWithEmail(data.email, password)
       .then((value) => {
         return stitchService.database.collection("User").insertOne(data);
-      })
+      });
+  }
+
+  createRealmUser(email, password) {
+    return stitchService.client.auth
+      .getProviderClient(UserPasswordAuthProviderClient.factory)
+      .registerWithEmail(email, password);
   }
 
   updateUser(id, data) {
     id = new BSON.ObjectId(id);
-    return stitchService.database.collection("User").updateOne({
-      _id : id
-    }, data);
+    return stitchService.database.collection("User").updateOne(
+      {
+        _id: id,
+      },
+      data
+    );
   }
 
   resetPasswordRequest(email, password) {
@@ -57,5 +68,15 @@ export default class UserService {
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)
       .resetPassword(token, tokenId, newPassword);
+  }
+
+  createUserAndAgency(firstName, lastName, email, agencyName, agencyURL) {
+    return stitchService.client.callFunction("regNewAgency", [
+      firstName,
+      lastName,
+      email,
+      agencyName,
+      agencyURL,
+    ]);
   }
 }
