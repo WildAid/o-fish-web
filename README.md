@@ -14,15 +14,14 @@ Details on installing all applications making up the solution can be found [here
 
 This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://wildaid.github.io/contribute/sandbox.html) or [build your own foundation](http://wildaid.github.io/build).
 
-Setting up MongoDB Charts is optional, but note that the Dashboard view will show errors if you don't - other functionality will be uneffected.
+Setting up MongoDB Charts is optional, but places where charts should be will show errors if you don't - other functionality will be unaffected.<BR>
 
-`git` and `Node.js` must be installed.
+`Node.js` must be installed.<BR>
 
 ## Building and running the app:
 
-1. `git clone https://github.com/WildAid/o-fish-web`
-1. `cd o-fish-web`
-1. `npm install`
+1. From the top-level directory (where this README file lives) run:<BR>
+`npm install`
 1. Set your configuration data in `src/config.js` (leave the `chartId` values as they are if you haven't set up [MongoDB Charts](https://www.mongodb.com/products/charts) for the sample data - if you have then you can get the ids from the Charts UI):
 ```js
 module.exports = {
