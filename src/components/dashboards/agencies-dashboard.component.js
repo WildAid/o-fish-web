@@ -101,7 +101,6 @@ class AgenciesDashboard extends Component {
 
   render() {
     const { changeFilter, t } = this.props;
-    console.log(t)
 
     const {
       boardings,
