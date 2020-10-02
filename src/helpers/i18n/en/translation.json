@@ -86,8 +86,12 @@
   },
   "DATA_SHARING": {
     "SHARED_DATA": "Shared Data",
+    "BOARDINGS_FROM": "Boardings From",
+    "BOARDINGS_TO": "To",
     "WHO_CAN_ACCESS_DATA": "Who can access this data",
-    "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}"
+    "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}",
+    "FOLLOWING_AGENCIES": "{{agency}} sharing data with the following agencies",
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies"
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
@@ -163,6 +167,8 @@
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",
+    "SHARE_DATA": "Share Data",
+    "STOP_SHARING": "Stop Sharing",
     "MANAGE_SHARED_DATA": "Manage Shared Data"
   },
   "TABLE": {
@@ -275,7 +281,9 @@
     "NO_VIOLATIONS": "No violations found",
     "NO_PHOTOS": "No photos found",
     "NO_NOTES": "No notes found",
-    "NO_LICENSE": "No license number found"
+    "NO_LICENSE": "No license number found",
+    "NO_END_DATE": "No end date",
+    "NO_START_DATE": "No start date"
   },
   "VALIDATION": {
     "REQUIRED": "This field is required"

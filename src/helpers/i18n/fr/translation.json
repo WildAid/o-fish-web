@@ -86,8 +86,12 @@
   },
   "DATA_SHARING": {
     "SHARED_DATA": "",
+    "BOARDINGS_FROM": "",
+    "BOARDINGS_TO": "",
     "WHO_CAN_ACCESS_DATA": "",
-    "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}"
+    "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}",
+    "FOLLOWING_AGENCIES": "",
+    "SHARING_DATA_WITH_ZERO_AGENCIES": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
@@ -162,7 +166,8 @@
     "CREATE_REPORT": "Créer un Rapport d'Activité",
     "CREATE_USER": "Créer un Utilisateur",
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",
-    "MANAGE_SHARED_DATA": ""
+    "MANAGE_SHARED_DATA": "",
+    "STOP_SHARING": ""
   },
   "TABLE": {
     "ADDRESS": "Adresse",
@@ -273,7 +278,10 @@
     "NO_VIOLATIONS": "Pas d'Infractions trouvées",
     "NO_PHOTOS": "Pas de Photos trouvées",
     "NO_NOTES": "Pas de Remarques trouvées",
-    "NO_LICENSE": "Pas de numéros de brevet trouvés"
+    "NO_LICENSE": "Pas de numéros de brevet trouvés",
+    "NO_END_DATE": "",
+    "NO_START_DATE": ""
+
   },
   "VALIDATION": {
     "REQUIRED": "Ce champ est obligatoire"
