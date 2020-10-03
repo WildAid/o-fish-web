@@ -6,7 +6,11 @@ import Pagination from "@material-ui/lab/Pagination";
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
-import { getHighlightedText, goToPage, goToPageWithFilter } from "./../../helpers/get-data";
+import {
+  getHighlightedText,
+  goToPage,
+  goToPageWithFilter,
+} from "./../../helpers/get-data";
 
 import SearchService from "./../../services/search.service";
 import AgencyService from "./../../services/agency.service";
@@ -97,6 +101,7 @@ class AgenciesDashboard extends Component {
 
   render() {
     const { changeFilter, t } = this.props;
+
     const {
       boardings,
       vessels,
@@ -125,7 +130,7 @@ class AgenciesDashboard extends Component {
           <div className="flex-row full-view justify-between align-center margin-top">
             <div className="flex-column margin-bottom">
               <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
-              <div className="font-35">{t("NAVIGATION.AGENCIES")}</div>
+              <div className="font-35">{t("NAVIGATION.AGENCIES_DASHBOARD")}</div>
             </div>
             <DatesRange onFilterChange={changeFilter} />
           </div>
@@ -167,12 +172,23 @@ class AgenciesDashboard extends Component {
                           <td className="blue-color">{item.name}</td>
                           <td>{item.boardings}</td>
                           <td>{item.violations}</td>
-                          <td>{item.boardings ? (Math.round((item.boardings - item.violations) / item.boardings * 100)): 100}%</td>
+                          <td>
+                            {item.boardings
+                              ? Math.round(
+                                  ((item.boardings - item.violations) /
+                                    item.boardings) *
+                                    100
+                                )
+                              : 100}
+                            %
+                          </td>
                           <td
                             className="blue-color"
                             onClick={(e) => {
                               e.stopPropagation();
-                              goToPage(BOARDINGS_PAGE, item._id);
+                              goToPageWithFilter(BOARDINGS_PAGE, {
+                                agency: item.name,
+                              });
                             }}
                           >
                             {`${t("BUTTONS.VIEW")} ${t(

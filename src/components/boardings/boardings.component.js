@@ -58,36 +58,6 @@ const filterConfiguration = {
       type: "risk",
     },
   ],
-  "Boarding Information": [
-    {
-      name: "date",
-      title: "Date",
-      type: "date",
-    },
-    {
-      name: "dateFrom",
-      field: "date-from",
-      title: "Date from",
-      type: "date",
-    },
-    {
-      name: "dateTo",
-      field: "date-to",
-      title: "Date To",
-      type: "date",
-    },
-    {
-      name: "time",
-      field: "date",
-      title: "Time",
-      type: "time",
-    },
-    {
-      name: "location",
-      title: "Location",
-      type: "location",
-    },
-  ],
   "Vessel Information": [
     {
       name: "vessel.name",

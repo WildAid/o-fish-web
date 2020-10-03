@@ -34,14 +34,17 @@ import VesselViewPage from "../components/vessels/vessel-view/vessel-view.compon
 //Users sub components
 import UsersActivities from "../components/users/activities/activities.component";
 import NewUser from "../components/users/new-user/new-user.component";
+import NewDevUser from "../components/users/new-dev-user/new-dev-user.component";
 import ViewUser from "../components/users/view-user/view-user.component";
 import EditUser from "../components/users/edit-user/edit-user.component";
-import UsersGroop from "../components/users/user-groop/user-groop.component";
+import UserGroup from "../components/users/user-group/user-group.component";
 //Agencies sub components
 import NewAgency from "../components/agencies/new-agency/new-agency.component";
 import ViewAgency from "../components/agencies/view-agency/view-agency.component";
 import EditAgency from "../components/agencies/edit-agency/edit-agency.component";
 import ChartsPage from "../components/charts/charts.component";
+//Data sharing
+import DataSharing from "../components/data-sharing/data-sharing";
 
 import mapRouting from "../helpers/map-routing";
 
@@ -62,6 +65,7 @@ import {
   PHOTOS_PAGE,
   NOTES_PAGE,
   DELIVERIES_PAGE,
+  DATA_SHARING_PAGE,
   //Boardings sub routes
   NEW_BOARDING_PAGE,
   EDIT_BOARDING_PAGE,
@@ -74,8 +78,9 @@ import {
   EDIT_USER_PAGE,
   VIEW_USER_PAGE,
   NEW_USER_PAGE,
+   NEW_DEV_USER_PAGE,
   USERS_ACTIVITIES_PAGE,
-  USERS_GROOP_PAGE,
+  USERS_GROUP_PAGE,
   //Agencies sub routes
   EDIT_AGENCIES_PAGE,
   VIEW_AGENCIES_PAGE,
@@ -88,6 +93,11 @@ const routes = [
     path: LOGIN_PAGE,
     component: Login,
     exact: false,
+  },
+  {
+    path: NEW_DEV_USER_PAGE,
+    exact: true,
+    component: NewDevUser,
   },
   {
     path: HOME_PAGE,
@@ -134,6 +144,12 @@ const routes = [
   {
     path: DELIVERIES_PAGE,
     component: DeliveriesPage,
+    auth: true,
+    exact: false,
+  },
+  {
+    path: DATA_SHARING_PAGE,
+    component: DataSharing,
     auth: true,
     exact: false,
   },
@@ -233,9 +249,9 @@ const routes = [
         component: NewUser,
       },
       {
-        path: USERS_GROOP_PAGE,
+        path: USERS_GROUP_PAGE,
         exact: true,
-        component: UsersGroop,
+        component: UserGroup,
       },
     ],
   },

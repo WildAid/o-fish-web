@@ -1,0 +1,23 @@
+/* Data sharing css */
+.form-data .header-name {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 18px 18px 10px 18px;
+}
+
+.form-data .data-sharing-table {
+    margin: 0 18px;
+}
+
+.form-data .message-icon {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 30px;
+    background: #e17000;
+}
+
+.form-data .white-btn {
+    width: max-content;
+    margin-top: 10px;
+}
