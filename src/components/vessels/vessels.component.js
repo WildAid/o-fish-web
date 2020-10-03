@@ -296,7 +296,7 @@ class Vessels extends Component {
                           </td>
                           <td>
                             {item.homePort
-                              ? item.homePort.slice(0, 4).join(", ")
+                              ? Array.from(new Set(item.homePort.filter((port => port !== "")).slice(0, 4))).join(", ")
                               : "N/A"}
                           </td>
                           <td>
