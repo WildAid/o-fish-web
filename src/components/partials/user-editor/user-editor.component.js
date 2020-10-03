@@ -276,6 +276,7 @@ class UserEditor extends Component {
                       onBlur={handleBlur}
                       onChange={(e) => setFieldValue("email", e.target.value)}
                       value={values.email}
+                      required
                       />
                     {showingOptions.changePassword && (
                       <div className="password-line flex-row justify-between">
