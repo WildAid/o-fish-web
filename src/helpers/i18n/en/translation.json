@@ -195,7 +195,10 @@
     "DELIVERIES": "Deliveries",
     "ISSUED_TO": "Issued To",
     "CREW_MEMBER": "Crew Member",
-    "PHOTO": "Photo"
+    "PHOTO": "Photo",
+    "FLAG_STATES": "Flag States",
+    "HOME_PORTS": "Home Ports",
+    "CAPTAINS": "Captains"
   },
   "FILTER": {
     "FROM": "From",
