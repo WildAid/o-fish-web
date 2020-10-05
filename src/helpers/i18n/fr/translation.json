@@ -91,7 +91,12 @@
     "WHO_CAN_ACCESS_DATA": "",
     "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}",
     "FOLLOWING_AGENCIES": "",
-    "SHARING_DATA_WITH_ZERO_AGENCIES": ""
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "",
+    "AGENCY_ADMINS": "",
+    "MANAGE_SHARED_DATA": {
+      "DATA_ACCESS": "",
+      "READ_ACCESS": ""
+    }
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",

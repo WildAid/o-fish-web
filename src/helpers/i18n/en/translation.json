@@ -91,7 +91,12 @@
     "WHO_CAN_ACCESS_DATA": "Who can access this data",
     "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}",
     "FOLLOWING_AGENCIES": "{{agency}} sharing data with the following agencies",
-    "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies"
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
+    "AGENCY_ADMINS": "Agency admins",
+    "MANAGE_SHARED_DATA": {
+      "DATA_ACCESS": "Data access",
+      "READ_ACCESS": "Read Access"
+    }
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
@@ -237,7 +242,7 @@
         "NAME": "Risks"
       }
     },
-    "DATES_RANGE":{
+    "DATES_RANGE": {
       "RANGE": "Date Range",
       "LAST7DAYS": "Last 7 days",
       "LAST30DAYS": "Last 30 days",
@@ -252,13 +257,13 @@
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Species",
-    "FISHERIES" : "Fisheries",
-    "CATCHES" : "Catches",
-    "ACTIVITIES" : "Activities",
-    "GEAR" : "Gear",
-    "ADD_SPECIE" : "Add specie",
-    "ADD_ANOTHER" : "Add another"
+    "SPECIES": "Species",
+    "FISHERIES": "Fisheries",
+    "CATCHES": "Catches",
+    "ACTIVITIES": "Activities",
+    "GEAR": "Gear",
+    "ADD_SPECIE": "Add specie",
+    "ADD_ANOTHER": "Add another"
   },
   "ADMINS": {
     "GLOBAL": "Global Admin",
@@ -271,7 +276,7 @@
     "NOT_UNAUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
-    "NO_OFFICERS":"No officers found",
+    "NO_OFFICERS": "No officers found",
     "NO_CATCHES": "No catches found",
     "NO_VESSELS": "No vessels found",
     "NO_CREW": "No crew members found",

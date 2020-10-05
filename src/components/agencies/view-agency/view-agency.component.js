@@ -71,6 +71,7 @@ class ViewAgency extends Component {
                     {status}
                   </div>
                 </div>
+                <div className="font-16">{agencyInfo.description}</div>
                 <div className="flex-row agency-box">
                   <div className="agency-box-img">
                     <img
