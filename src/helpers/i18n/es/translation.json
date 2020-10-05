@@ -194,7 +194,11 @@
     "DELIVERIES": "Entregas",
     "ISSUED_TO": "Entregado A",
     "CREW_MEMBER": "Miembro de La Tripulación",
-    "PHOTO": "Foto"
+    "PHOTO": "Foto",
+    "PERMIT_NUMBERS": "Número de Permiso",
+    "FLAG_STATES": "Abanderamiento",
+    "HOME_PORTS": "Puertos de Origen",
+    "CAPTAINS": "Capitanes",
   },
   "FILTER": {
     "FROM": "Desde",
