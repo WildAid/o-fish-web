@@ -2,28 +2,39 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
+import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
+
 import "./data-sharing.css";
 
 class AgencyDataSharing extends Component {
   state = {
-    popupIsShown: false,
+    dialogDisplayed: false,
   };
 
   showDialog = () => {
     this.setState({
-      popupIsShown: true,
+      dialogDisplayed: true,
     });
   };
 
-  saveData = () => {};
+  showDialog = () => {
+    this.setState({
+      dialogDisplayed: true,
+    });
+  };
 
-  dialogClosed = (items) => {};
+  cancelDialog = () => {
+    this.setState({
+      dialogDisplayed: false,
+    });
+  };
 
-  deleteItem = (tab, itemIndex) => {};
-
-  changeCurrentTab = (tab) => {};
+  saveDialog = () => {
+    this.cancelDialog();
+  };
 
   render() {
+    const { dialogDisplayed } = this.state;
     const { agency } = this.props;
     const { t } = this.props;
 
@@ -83,7 +94,10 @@ class AgencyDataSharing extends Component {
                         : t("WARNINGS.NO_END_DATE")}
                     </td>
                     <td>
-                      <div className="pointer white-btn">
+                      <div
+                        className="pointer white-btn"
+                        onClick={this.showDialog}
+                      >
                         {t("BUTTONS.MANAGE_SHARED_DATA")}
                       </div>
                     </td>
@@ -112,6 +126,12 @@ class AgencyDataSharing extends Component {
                 <button className="blue-btn">{t("BUTTONS.SHARE_DATA")}</button>
               </div>
             )}
+          {dialogDisplayed && (
+            <ManageSharedDataByGlobalAdmin
+              onCancel={this.cancelDialog}
+              onSave={this.saveDialog}
+            />
+          )}
         </div>
       </div>
     );

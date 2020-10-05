@@ -94,8 +94,22 @@
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
     "AGENCY_ADMINS": "Agency admins",
     "MANAGE_SHARED_DATA": {
+      "SHARE_BOARDING_DATA": "Share Boarding Data",
+      "CHOOSE_DATA_TO_SHARE": "Choose data to share",
+      "TIME_FRAME": "Time Frame",
+      "CHOOSE_DATES": "Choose dates",
+      "BOARDING_DATA": "Boarding Data",
+      "DATA": "Data",
+      "FIELD": "Field",
+      "GENERAL_BOARDING_INFORMATION": "General Boarding Information",
+      "OFFICER_NAME": "Officer name",
+      "AGENCY_INFO": "Agency Information",
       "DATA_ACCESS": "Data access",
-      "READ_ACCESS": "Read Access"
+      "READ_ACCESS": "Read Access",
+      "FLAG_STATE": "Flag State",
+      "ELECTRINIC_SYSTEM": "Electronic Monitoring System",
+      "RESULT_OF_VIOLATION": "Result of Violation",
+      "VIOLATION_ISSUED_TO": "Violation Issued To"
     }
   },
   "AGENCY_PAGE": {

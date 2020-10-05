@@ -94,8 +94,22 @@
     "SHARING_DATA_WITH_ZERO_AGENCIES": "",
     "AGENCY_ADMINS": "",
     "MANAGE_SHARED_DATA": {
+      "SHARE_BOARDING_DATA": "",
+      "CHOOSE_DATA_TO_SHARE": "",
+      "TIME_FRAME": "",
+      "CHOOSE_DATES": "",
+      "BOARDING_DATA": "",
+      "DATA": "",
+      "FIELD": "",
+      "GENERAL_BOARDING_INFORMATION": "",
+      "OFFICER_NAME": "",
+      "AGENCY_INFO": "",
       "DATA_ACCESS": "",
-      "READ_ACCESS": ""
+      "READ_ACCESS": "",
+      "FLAG_STATE": "",
+      "ELECTRINIC_SYSTEM": "",
+      "RESULT_OF_VIOLATION": "",
+      "VIOLATION_ISSUED_TO": ""
     }
   },
   "AGENCY_PAGE": {

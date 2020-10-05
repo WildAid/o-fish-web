@@ -1,0 +1,157 @@
+.global-shared-data .shared-data-dialog.internal {
+  width: 50%;
+  height: 93%;
+  overflow-y: scroll;
+}
+
+.global-shared-data .close-icon {
+  position: absolute;
+  top: -5px;
+  right: 18px;
+  color: #818181;
+}
+
+.global-shared-data .dialog-header {
+  position: relative;
+  width: 100%;
+  margin-top: 22px;
+  line-height: 1;
+  text-align: center;
+}
+
+.global-shared-data .shared-data-dialog .dialog-title {
+  margin: 0 0 16px;
+  padding-top: 0 !important;
+  font-size: 1.3rem;
+}
+
+.global-shared-data .dialog-subtitle {
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.global-shared-data .boarding-data-to-share {
+  border-right: 1px solid #dadada;
+  padding-right: 18px;
+}
+
+.global-shared-data .boarding-details-tab {
+  padding: 10px;
+  font-weight: 500;
+}
+
+.global-shared-data .active{
+  background-color: #ced9e3;
+}
+
+/* Table */
+.global-shared-data table {
+  width: 64%;
+  margin-left: 18px;
+}
+
+.global-shared-data table thead td {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 0;
+}
+
+/* .global-shared-data table tbody {
+  display: block; 
+  height: 200px; 
+  
+} */
+
+.global-shared-data table tbody tr td {
+  padding: 0;
+}
+
+.global-shared-data table .item-box {
+  margin-top: 18px;
+  border-radius: 5px;
+  border: 1px solid #cdcdcd;
+}
+
+.global-shared-data table .row-header-boarding {
+  background-color: #f3f5f8;
+  border-bottom: 1px solid #cdcdcd;
+  border-radius: 5px 5px 0 0;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.global-shared-data table .row-body-boarding {
+  border-bottom: 1px solid #cdcdcd;
+  padding: 10px;
+}
+
+.global-shared-data table .row-body-boarding:last-child {
+  border-bottom: none;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+}
+
+/* Radio btns*/
+.custom-radio {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.custom-radio:first-child {
+  margin-right: 20px;
+}
+
+.custom-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  border: 1px solid #cfcfcf;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.custom-radio:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.custom-radio input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.custom-radio .checkmark:after {
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
