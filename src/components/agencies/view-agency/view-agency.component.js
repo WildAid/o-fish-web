@@ -5,8 +5,8 @@ import { withTranslation } from "react-i18next";
 import { EDIT_AGENCIES_PAGE } from "./../../../root/root.constants";
 
 import AgencyService from "./../../../services/agency.service";
-import AgencyFormData from "../form-data/form-data.js"
-import AgencyDataSharing from "../data-sharing/data-sharing.js"
+import AgencyFormData from "../form-data/form-data.js";
+import AgencyDataSharing from "../data-sharing/data-sharing.js";
 
 import "./view-agency.css";
 
@@ -20,7 +20,7 @@ class ViewAgency extends Component {
       violations: [],
     },
     activeTab: 1,
-    loading: false
+    loading: false,
   };
 
   handleChangeTab = (newTab) => {
@@ -52,17 +52,25 @@ class ViewAgency extends Component {
   render() {
     const { agencyInfo, activeTab, loading } = this.state;
     const { t } = this.props;
+    const status = agencyInfo.active ? "active" : "inactive";
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <div className="flex-row justify-between standard-view border-bottom agency-header">
+        <div className="flex-row justify-between standard-view agency-header">
           <div className="flex-column">
             {loading ? (
               t("LOADING.LOADING")
             ) : (
               <Fragment>
-                <div className="item-label">{t("TABLE.AGENCY")}</div>
-                <div className="item-name">{agencyInfo.agency}</div>
+                <div className="blue-color font-16">
+                  {t("NAVIGATION.AGENCIES")}
+                </div>
+                <div className="flex-row align-center">
+                  <div className="agency-name">{agencyInfo.name}</div>
+                  <div className={`status-icon ${status}-status-icon`}>
+                    {status}
+                  </div>
+                </div>
                 <div className="font-16">{agencyInfo.description}</div>
                 <div className="flex-row agency-box">
                   <div className="agency-box-img">
@@ -161,14 +169,14 @@ class ViewAgency extends Component {
                 </table>
               </div>
             )}
-            { 2 === activeTab && (
+            {2 === activeTab && (
               <div className="full-view white-bg box-shadow agency-tab-content">
-                    <AgencyFormData agency={agencyInfo}></AgencyFormData>
+                <AgencyFormData agency={agencyInfo}></AgencyFormData>
               </div>
             )}
-            { 3 === activeTab && (
+            {3 === activeTab && (
               <div className="full-view white-bg box-shadow agency-tab-content">
-                    <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
+                <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
               </div>
             )}
           </div>

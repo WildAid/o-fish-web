@@ -64,6 +64,10 @@ table {
     justify-content: space-around;
 }
 
+.justify-flex-end {
+    justify-content: flex-end;
+}
+
 /* Page styles */
 .relative {
     position: relative;
@@ -348,11 +352,11 @@ thead td {
 
 /* Borders & Box-shadows */
 .border {
-    border: 1px solid #e6e3e3;
+    border: 1px solid #9ca4ab;
 }
 
 .border-bottom {
-    border-bottom: 1px solid #efeded;
+    border-bottom: 1px solid #d8d7d7;
 }
 
 .box-shadow {
@@ -402,4 +406,8 @@ thead td {
 /* Colors */
 .blue-color {
     color: #0a4074;
+}
+
+.grey-color {
+    color: #9ca4ab;
 }
