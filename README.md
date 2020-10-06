@@ -22,6 +22,7 @@ Setting up MongoDB Charts is optional, but places where charts should be will sh
 
 1. From the top-level directory (where this README file lives) run:<BR>
 `npm install`
+1. Copy `src/config.js.tmpl` to `src/config.js`
 1. Set your configuration data in `src/config.js` (leave the `chartId` values as they are if you haven't set up [MongoDB Charts](https://www.mongodb.com/products/charts) for the sample data - if you have then you can get the ids from the Charts UI):
 ```js
 module.exports = {
