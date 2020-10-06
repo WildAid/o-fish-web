@@ -9,6 +9,12 @@ import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import LoadingPanel from "./../partials/loading-panel/loading-panel.component";
 
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
+import { GLOBAL_AGENCIES_PAGE } from "../../root/root.constants.js";
+const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
+
 class ChartsPage extends Component {
   state = {
     vessels: [],
@@ -77,7 +83,11 @@ class ChartsPage extends Component {
         <div className="standard-view page-header">
           <div className="flex-row full-view justify-between align-center margin-top margin-bottom">
             <div className="flex-column margin-bottom">
-              <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
+              {/* <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div> */}
+              <Breadcrumbs aria-label="breadcrumb" style={{ color: '#0a4074' }}>
+                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">Dashboard</LinkRouter>
+                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">Agencies</LinkRouter>
+              </Breadcrumbs>
               {!loading ? (
                 <div className="font-35">{agencyName}</div>
               ) : (
