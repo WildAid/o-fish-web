@@ -12,7 +12,7 @@ Details on installing all applications making up the solution can be found [here
 
 ## Prerequisites
 
-This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://wildaid.github.io/contribute/sandbox.html) or [build your own foundation](http://wildaid.github.io/build).
+This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://bit.ly/ofishsandbox) or [build your own foundation](http://wildaid.github.io/build).
 
 Setting up MongoDB Charts is optional, but places where charts should be will show errors if you don't - other functionality will be unaffected.<BR>
 
