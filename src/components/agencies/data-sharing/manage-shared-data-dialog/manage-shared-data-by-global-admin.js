@@ -47,7 +47,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
             <div className="flex-row">
               <label className="custom-radio">
                 {t("BOARDING_PAGE.ALL_DATES")}
-                <input type="radio" name="radio" />
+                <input type="radio" name="radio" defaultChecked/>
                 <span className="checkmark"></span>
               </label>
               <label className="custom-radio">
