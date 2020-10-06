@@ -37,16 +37,13 @@ class ManageSharedDataByGlobalAdmin extends Component {
             <h1 className="title dialog-title">
               {t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h1>
-            <CloseIcon
-              className="close-icon pointer"
-              onClick={onCancel}
-            />
+            <CloseIcon className="close-icon pointer" onClick={onCancel} />
             <h2 className="dialog-subtitle">
-              {`${t("DATA_SHARING.MANAGE_SHARED_DATA.CHOOSE_DATA_TO_SHARE")}`}
+              {t("DATA_SHARING.MANAGE_SHARED_DATA.CHOOSE_DATA_TO_SHARE")}
             </h2>
           </div>
           <div className="flex-column full-view padding-bottom border-bottom time-frame">
-            <h3>{`${t("DATA_SHARING.MANAGE_SHARED_DATA.TIME_FRAME")}`}</h3>
+            <h3>{t("DATA_SHARING.MANAGE_SHARED_DATA.TIME_FRAME")}</h3>
             <div className="flex-row">
               <label className="custom-radio">
                 {t("BOARDING_PAGE.ALL_DATES")}
@@ -138,10 +135,10 @@ class ManageSharedDataByGlobalAdmin extends Component {
           </div>
           <div className="flex-row justify-flex-end full-view">
             <button className="blue-btn save-btn" onClick={onSave}>
-              {`${t("BUTTONS.SAVE")}`}
+              {t("BUTTONS.SAVE")}
             </button>
             <button className="simple-btn" onClick={onCancel}>
-              {`${t("BUTTONS.CANCEL")}`}
+              {t("BUTTONS.CANCEL")}
             </button>
           </div>
         </div>

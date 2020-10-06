@@ -1,5 +1,3 @@
-//@flow
-
 import Root from "./root.component";
 
 import Login from "../components/login/login.component";

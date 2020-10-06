@@ -1,6 +1,6 @@
 .global-shared-data .shared-data-dialog.internal {
   width: 50%;
-  height: 93%;
+  max-height: 93%;
   overflow-y: scroll;
 }
 
@@ -57,12 +57,6 @@
   font-weight: normal;
   padding: 0;
 }
-
-/* .global-shared-data table tbody {
-  display: block; 
-  height: 200px; 
-  
-} */
 
 .global-shared-data table tbody tr td {
   padding: 0;

@@ -109,7 +109,8 @@
       "FLAG_STATE": "Flag State",
       "ELECTRINIC_SYSTEM": "Electronic Monitoring System",
       "RESULT_OF_VIOLATION": "Result of Violation",
-      "VIOLATION_ISSUED_TO": "Violation Issued To"
+      "VIOLATION_ISSUED_TO": "Violation Issued To",
+      "SELECT_AGENCY": "Select an agency to share boarding data with"
     }
   },
   "AGENCY_PAGE": {
@@ -124,7 +125,9 @@
       "DESCRIPTION": "Description",
       "SITE": "Website",
       "EMAIL": "Contact Email"
-    }
+    },
+    "STOP_SHARING_DATA_WITH_AGENCY": "Stop Sharing Data with Agency?",
+    "NO_NEW_DATA_WILL_BE_SHARED_WITH_THIS_AGENCY": "No new data will be shared with this agency. This agency will still have access to previously shared data."
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "See Activity"
@@ -188,7 +191,8 @@
     "UPDATE_USER": "Update User",
     "SHARE_DATA": "Share Data",
     "STOP_SHARING": "Stop Sharing",
-    "MANAGE_SHARED_DATA": "Manage Shared Data"
+    "MANAGE_SHARED_DATA": "Manage Shared Data",
+    "CHOOSE_DATA": "Choose data"
   },
   "TABLE": {
     "ADDRESS": "Address",

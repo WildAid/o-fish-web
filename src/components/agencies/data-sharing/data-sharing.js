@@ -2,41 +2,79 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
+import ShareDataDialog from "./share-data-dialog/share-data-dialog";
 import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
+import StopSharingDialog from "./stop-sharing-dialog/stop-sharing-dialog";
+
+import AgencyService from "./../../../services/agency.service";
 
 import "./data-sharing.css";
 
+const agencyService = AgencyService.getInstance();
+
 class AgencyDataSharing extends Component {
   state = {
-    dialogDisplayed: false,
+    shareDataDialog: false,
+    manageDialogDisplayed: false,
+    stopSharingDialog: false,
+    agencies: [],
+    agencyToShareWith: "",
+    limit: 100,
+    offset: 0,
   };
 
-  showDialog = () => {
+  showDialog = (dialogName) => {
     this.setState({
-      dialogDisplayed: true,
+      [dialogName]: true,
     });
   };
 
-  showDialog = () => {
+  cancelDialog = (dialogName) => {
     this.setState({
-      dialogDisplayed: true,
+      [dialogName]: false,
     });
   };
 
-  cancelDialog = () => {
-    this.setState({
-      dialogDisplayed: false,
-    });
+  stopSharing = () => {
+    this.cancelDialog("stopSharingDialog");
+  };
+
+  showMenagePopup = () => {
+    this.cancelDialog("shareDataDialog");
+    this.showDialog("manageDialogDisplayed");
   };
 
   saveDialog = () => {
     this.cancelDialog();
   };
 
+  onChangeAgency = (agency) => {
+    this.setState({ agencyToShareWith: agency });
+  };
+
+  componentDidMount() {
+    const { limit, offset } = this.state;
+
+    agencyService
+      .getAgencies(limit, offset, "", null)
+      .then((data) => {
+        this.setState({
+          agencies: data.agencies,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
-    const { dialogDisplayed } = this.state;
-    const { agency } = this.props;
-    const { t } = this.props;
+    const {
+      shareDataDialog,
+      manageDialogDisplayed,
+      stopSharingDialog,
+      agencies,
+    } = this.state;
+    const { t, agency } = this.props;
 
     return (
       <div className="padding-bottom flex-column align-center form-data">
@@ -58,7 +96,12 @@ class AgencyDataSharing extends Component {
                     })}
               </div>
             </div>
-            <button className="blue-btn">{t("BUTTONS.SHARE_DATA")}</button>
+            <button
+              className="blue-btn"
+              onClick={() => this.showDialog("shareDataDialog")}
+            >
+              {t("BUTTONS.SHARE_DATA")}
+            </button>
           </div>
           <table className="data-sharing-table custom-table">
             <thead>
@@ -96,13 +139,16 @@ class AgencyDataSharing extends Component {
                     <td>
                       <div
                         className="pointer white-btn"
-                        onClick={this.showDialog}
+                        onClick={() => this.showDialog("manageDialogDisplayed")}
                       >
                         {t("BUTTONS.MANAGE_SHARED_DATA")}
                       </div>
                     </td>
                     <td>
-                      <div className="blue-color">
+                      <div
+                        className="blue-color pointer"
+                        onClick={() => this.showDialog("stopSharingDialog")}
+                      >
                         {t("BUTTONS.STOP_SHARING")}
                       </div>
                     </td>
@@ -123,13 +169,33 @@ class AgencyDataSharing extends Component {
             (!agency.partnerAgencies ||
               (agency.partnerAgencies && !agency.partnerAgencies.length)) && (
               <div className="flex-row justify-center">
-                <button className="blue-btn">{t("BUTTONS.SHARE_DATA")}</button>
+                <button
+                  className="blue-btn"
+                  onClick={() => this.showDialog("shareDataDialog")}
+                >
+                  {t("BUTTONS.SHARE_DATA")}
+                </button>
               </div>
             )}
-          {dialogDisplayed && (
+          {shareDataDialog && (
+            <ShareDataDialog
+              agencies={agencies}
+              onSubmit={this.showMenagePopup}
+              onChangeAgency={this.onChangeAgency}
+              onCancel={() => this.cancelDialog("shareDataDialog")}
+            />
+          )}
+          {manageDialogDisplayed && (
             <ManageSharedDataByGlobalAdmin
-              onCancel={this.cancelDialog}
+              onCancel={() => this.cancelDialog("manageDialogDisplayed")}
               onSave={this.saveDialog}
+            />
+          )}
+          {stopSharingDialog && (
+            <StopSharingDialog
+              agencyName={agency.name}
+              onSubmit={this.stopSharing}
+              onCancel={() => this.cancelDialog("stopSharingDialog")}
             />
           )}
         </div>
