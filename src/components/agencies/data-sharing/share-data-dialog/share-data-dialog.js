@@ -34,7 +34,7 @@ class ShareDataDialog extends Component {
             <h2 className="title dialog-title">
               {t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h2>
-            <CloseIcon className="close-icon" onClick={onCancel} />
+            <CloseIcon className="close-icon" onClick={() => onCancel("shareDataDialog")} />
             <h3>{t("DATA_SHARING.MANAGE_SHARED_DATA.SELECT_AGENCY")}</h3>
           </div>
           <div className="standard-view padding-top padding-bottom">

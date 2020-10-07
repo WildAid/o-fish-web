@@ -182,7 +182,7 @@ class AgencyDataSharing extends Component {
               agencies={agencies}
               onSubmit={this.showMenagePopup}
               onChangeAgency={this.onChangeAgency}
-              onCancel={() => this.cancelDialog("shareDataDialog")}
+              onCancel={this.cancelDialog}
             />
           )}
           {manageDialogDisplayed && (
