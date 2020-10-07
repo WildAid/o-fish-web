@@ -155,7 +155,7 @@ class AgenciesMain extends React.Component {
                 : t("WARNINGS.NO_AGENCIES")}
             </div>
           </div>
-          {isAdmin && !isAgencyAdmin && (
+          {isAdmin && (
             <NavLink
               onClick={this.navigate}
               className="white-btn "
