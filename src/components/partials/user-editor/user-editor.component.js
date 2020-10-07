@@ -155,7 +155,7 @@ class UserEditor extends Component {
   };
 
   validate = (values) => {
-    return required(values, "adminType");
+    return {...required(values, "adminType") , ...required(values, "email")};
   };
 
   componentDidMount() {
@@ -274,10 +274,14 @@ class UserEditor extends Component {
                       type="text"
                       className="form-input"
                       onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("email", e.target.value)}
+                      onChange={(e) => {
+                        this.setState({ disabled: isValid });
+                        setFieldValue("email", e.target.value);
+                      }}
                       value={values.email}
                       required
                       />
+                      <div className="error-messages">{t(errors.email)}</div>
                     {showingOptions.changePassword && (
                       <div className="password-line flex-row justify-between">
                         <TextField
