@@ -48,9 +48,9 @@ class UserEditor extends Component {
 
   handleChangePassword = () => {
     if (this.props.onChangePassword) {
-      this.props.onChangePassword()
+      this.props.onChangePassword();
     }
-  }
+  };
 
   saveUser = (values) => {
     const { userId } = this.props;
@@ -209,8 +209,15 @@ class UserEditor extends Component {
           firstName: "",
           lastName: "",
           password: "",
-          agency: authService.userRole === "global" ? "" : authService.user.agency.name,
-          adminType: authService.userRole === "global" || authService.userRole === "agency" ? "" : checkUserRole(authService.user),
+          agency:
+            authService.userRole === "global"
+              ? ""
+              : authService.user.agency.name,
+          adminType:
+            authService.userRole === "global" ||
+            authService.userRole === "agency"
+              ? ""
+              : checkUserRole(authService.user),
           email: "",
           userGroup: "",
         };
@@ -243,76 +250,72 @@ class UserEditor extends Component {
                     onData={this.imageUploaded}
                   />
                 </div>
-                  <div className="flex-row justify-between">
+                <div className="flex-row justify-between">
+                  <TextField
+                    label={t("CREATE_USER_PAGE.FIRST_NAME")}
+                    name="firstName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("firstName", e.target.value)}
+                    type="text"
+                    value={values.firstName}
+                  />
+                  <TextField
+                    label={t("CREATE_USER_PAGE.LAST_NAME")}
+                    name="lastName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("lastName", e.target.value)}
+                    type="text"
+                    value={values.lastName}
+                  />
+                </div>
+                <div className="flex-column">
+                  <TextField
+                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
+                    name="email"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    value={values.email}
+                  />
+                  {showingOptions.changePassword && (
+                    <div className="password-line flex-row justify-between">
+                      <TextField
+                        label={t("LOGIN_PAGE.PASSWORD")}
+                        name="password"
+                        type="password"
+                        className="form-input"
+                        onBlur={handleBlur}
+                        onChange={(e) =>
+                          setFieldValue("password", e.target.value)
+                        }
+                        value="******************"
+                        InputProps={{ readOnly: true }}
+                      />
+                      <button
+                        type="button"
+                        className="white-btn"
+                        onClick={this.handleChangePassword}
+                      >
+                        {t("BUTTONS.CHANGE_PASSWORD")}
+                      </button>
+                    </div>
+                  )}
+                  {showingOptions.newPassword && (
                     <TextField
-                      label={t("CREATE_USER_PAGE.FIRST_NAME")}
-                      name="firstName"
+                      label={t("LOGIN_PAGE.PASSWORD")}
+                      name="password"
                       className="form-input"
+                      type="password"
                       onBlur={handleBlur}
                       onChange={(e) =>
-                        setFieldValue("firstName", e.target.value)
+                        setFieldValue("password", e.target.value)
                       }
-                      type="text"
-                      value={values.firstName}
-                      />
-                    <TextField
-                      label={t("CREATE_USER_PAGE.LAST_NAME")}
-                      name="lastName"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("lastName", e.target.value)
-                      }
-                      type="text"
-                      value={values.lastName}
-                      />
-                  </div>
-                  <div className="flex-column">
-                    <TextField
-                      label={t("CREATE_AGENCY_PAGE.EMAIL")}
-                      name="email"
-                      type="text"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("email", e.target.value)}
-                      value={values.email}
-                      />
-                    {showingOptions.changePassword && (
-                      <div className="password-line flex-row justify-between">
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          type="password"
-                          className="form-input"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value="******************"
-                          InputProps={{ readOnly: true }}
-                          />
-                        <button
-                          type="button"
-                          className="white-btn"
-                          onClick={this.handleChangePassword}
-                        >
-                          {t("BUTTONS.CHANGE_PASSWORD")}
-                        </button>
-                      </div>
-                    )}
-                    {showingOptions.newPassword && (
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          className="form-input"
-                          type="password"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value={values.password}
-                        />
-                    )}
+                      value={values.password}
+                    />
+                  )}
                 </div>
                 {showingOptions.active && (
                   <FormControl className="form-input">
@@ -349,12 +352,21 @@ class UserEditor extends Component {
                         }}
                         value={values.adminType}
                       >
-                        {authService.userRole === "global" ? <MenuItem value="global">
-                          <em>{t("ADMINS.GLOBAL")}</em>
-                        </MenuItem> : ""}
-                        {authService.userRole === "global" || authService.userRole === "agency"  ? <MenuItem value="agency">
-                          <em>{t("ADMINS.AGENCY")}</em>
-                        </MenuItem>: ""}
+                        {authService.userRole === "global" ? (
+                          <MenuItem value="global">
+                            <em>{t("ADMINS.GLOBAL")}</em>
+                          </MenuItem>
+                        ) : (
+                          ""
+                        )}
+                        {authService.userRole === "global" ||
+                        authService.userRole === "agency" ? (
+                          <MenuItem value="agency">
+                            <em>{t("ADMINS.AGENCY")}</em>
+                          </MenuItem>
+                        ) : (
+                          ""
+                        )}
                         <MenuItem value="group">
                           <em>{t("ADMINS.GROUP")}</em>
                         </MenuItem>
@@ -376,13 +388,20 @@ class UserEditor extends Component {
                         }
                         value={values.agency}
                       >
-                        {authService.userRole === "global" ? agencies.map((agency, ind) => (
-                          <MenuItem value={agency} key={ind}>
-                            <em>{agency}</em>
+                        {authService.userRole === "global" ? (
+                          agencies.map((agency, ind) => (
+                            <MenuItem value={agency} key={ind}>
+                              <em>{agency}</em>
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem
+                            value={authService.user.agency.name}
+                            key={0}
+                          >
+                            <em>{authService.user.agency.name}</em>
                           </MenuItem>
-                        )) : (<MenuItem value={authService.user.agency.name} key={0}>
-                          <em>{authService.user.agency.name}</em>
-                        </MenuItem>)}
+                        )}
                       </Select>
                     </FormControl>
                     <FormControl className="form-input">

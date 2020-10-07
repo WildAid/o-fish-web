@@ -1,4 +1,9 @@
-/* Form info */
 .agency-data-sharing .form-content {
     padding: 15px;
+}
+
+.no-sharing-data {
+    font-size: 20px;
+    color: #dedede;
+    padding-right: 50px;
 }

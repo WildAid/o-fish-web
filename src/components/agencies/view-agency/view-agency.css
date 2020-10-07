@@ -1,6 +1,16 @@
 /* Agency main info */
 .agency-header {
+    border-bottom: 1px solid #dcd7d7;
     padding: 20px 0;
+}
+
+.agency-header .agency-name {
+    font-size: 30px;
+}
+
+.agency-header .status-icon {
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 .agency-box {
@@ -15,12 +25,15 @@
 
 /* Tabs */
 .agency-tab {
+    color: #a0a0a0;
     padding: 15px;
     cursor: pointer;
 }
 
 .active-agency-tab {
-    border-bottom: 2px solid #979797;
+    color: #0a4074;
+    font-weight: 500;
+    border-bottom: 2px solid #0a4074;
 }
 
 .agency-tab-content {

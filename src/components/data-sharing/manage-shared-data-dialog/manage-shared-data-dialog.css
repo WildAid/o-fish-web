@@ -1,0 +1,76 @@
+.shared-data-dialog.internal {
+  width: 44.5%;
+  box-sizing: border-box;
+  border-radius: .5em;
+}
+
+.dialog-header {
+  position: relative;
+  width: 100%;
+  margin-top: 22px;
+  line-height: 1;  
+  text-align: center;
+}
+
+.shared-data-dialog .dialog-title {
+  margin: 0 0 16px;
+  padding-top: 0 !important;
+  font-size: 1.3rem;
+}
+
+.dialog-subtitle {
+  margin: 0 0 20px;
+  font-size: .95rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.close-icon {
+  position: absolute;
+  top: -5px;
+  right: 18px;
+  color: #818181;
+}
+
+.close-icon:hover {
+  cursor: pointer;
+}
+
+.shared-data-dialog .content {
+  width: 73%;
+  margin: 30px 0 27px;
+}
+
+.shared-data-dialog .padding-right {
+  padding-right: 18px;
+}
+
+.table-header-row {
+  font-size: 1em;
+  color: #9ca4ab;
+}
+
+.table-header-cell {
+  padding-bottom: 10px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.dialog-table-row {
+  line-height: 3.1;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.shared-data-dialog .content .dialog-table-row .dialog-checkbox {
+  width: auto;
+}
+
+.save-btn {
+  margin-right: 5px;
+  padding: 0 25px;
+}
+
+.shared-data-dialog .simple-btn {
+  margin-right: 5px;
+}

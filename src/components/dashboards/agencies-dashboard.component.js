@@ -143,7 +143,7 @@ class AgenciesDashboard extends Component {
                   <div className="item-name padding-left">
                     {t("HOME_PAGE.COMPLIANCE_RATE")}
                   </div>
-                  <div className="blue-btn">
+                  <div className="blue-btn filter-btn">
                     <img
                       className="icon"
                       src={require("../../assets/filter-icon.png")}
