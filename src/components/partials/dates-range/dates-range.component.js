@@ -16,7 +16,7 @@ import "./dates-range.css";
 
 export default withTranslation("translation")(class DatesRange extends Component {
   state = {
-    dateStart: moment().subtract(1, "week").toDate(),
+    dateStart: moment().subtract(1, "week").startOf('day').toDate(),
     dateEnd: moment().endOf('day').toDate(),
     currentRange: "week",
     panelShown: false,
