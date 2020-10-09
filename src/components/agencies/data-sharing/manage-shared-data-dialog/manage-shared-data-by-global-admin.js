@@ -7,6 +7,7 @@ import {
   KeyboardDateTimePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/moment";
+import moment from "moment";
 
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -16,7 +17,15 @@ import "./manage-shared-data-by-global-admin.css";
 // import "../../../partials/dates-range/dates-range.css";
 
 class ManageSharedDataByGlobalAdmin extends Component {
-  state = { activeTabIndex: 0, chooseDate: false, isCalendarShown: false, noEndDate: false };
+  state = {
+    activeTabIndex: 0,
+    chooseDate: false,
+    isFromDateShown: false,
+    isToDateShown: false,
+    isEndDate: false,
+    startDate: moment().subtract(5, "year").toDate(),
+    endDate: moment().endOf("day").toDate(),
+  };
 
   handleSubmit = (values) => {
     if (this.props.onApply) {
@@ -34,9 +43,30 @@ class ManageSharedDataByGlobalAdmin extends Component {
     this.setState({ activeTabIndex: ind });
   };
 
+  disableCalendarIfEndDate = () => {
+    const { isEndDate, isToDateShown } = this.state;
+    if (!isEndDate) {
+      this.setState({ isToDateShown: !isToDateShown });
+    }
+  };
+
+  handleDateChanging = (start, end) => {
+    if (!start) start = this.state.startDate;
+    if (!end) end = this.state.endDate;
+    this.setState({ startDate: start, endDate: end });
+  };
+
   render() {
     const { t, onCancel, onSave } = this.props;
-    const { activeTabIndex, chooseDate, isCalendarShown, noEndDate } = this.state;
+    const {
+      activeTabIndex,
+      chooseDate,
+      isEndDate,
+      isFromDateShown,
+      isToDateShown,
+      startDate,
+      endDate,
+    } = this.state;
 
     return (
       <div className="new-menu-dialog full-screen global-shared-data">
@@ -59,7 +89,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                   type="radio"
                   name="radio"
                   defaultChecked
-                  onChange={(e) => this.setState({ chooseDate: false })}
+                  onChange={() => this.setState({ chooseDate: false })}
                 />
                 <span className="checkmark"></span>
               </label>
@@ -68,7 +98,12 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
-                  onChange={(e) => this.setState({ chooseDate: true })}
+                  onChange={() =>
+                    this.setState({
+                      chooseDate: true,
+                      startDate: moment().subtract(1, "week").toDate(),
+                    })
+                  }
                 />
                 <span className="checkmark"></span>
               </label>
@@ -76,16 +111,19 @@ class ManageSharedDataByGlobalAdmin extends Component {
             {chooseDate && (
               <div className="flex-row align-center">
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <div className="time-frame standard-view padding-top flex-column">
+                  <div className="time-frame relative full-view padding-top flex-column">
                     <div className="flex-row padding-bottom date-time-row">
                       <div className="flex-row justify-around">
                         <KeyboardDatePicker
+                          onClick={() =>
+                            this.setState({ isFromDateShown: !isFromDateShown })
+                          }
                           className="date-picker"
                           variant="inline"
                           ampm={false}
                           label="Date"
-                          // value={dateStart}
-                          // onChange={(date) => this.dateChanged(date, dateEnd)}
+                          value={startDate}
+                          onChange={(date) => this.handleDateChanging(date, "")}
                           onError={console.log}
                           format="yyyy/MM/DD"
                         />
@@ -94,76 +132,89 @@ class ManageSharedDataByGlobalAdmin extends Component {
                           variant="inline"
                           ampm={false}
                           label="Time"
-                          // value={dateStart}
-                          // onChange={(date) => this.dateChanged(date, dateEnd)}
+                          value={startDate}
+                          onChange={(date) => this.handleDateChanging(date, "")}
                         />
                       </div>
-                      <div className="flex-row align-center padding-left padding-right">{t("FILTER.TO")}</div>
+                      <div className="flex-row align-center padding-left padding-right">
+                        {t("FILTER.TO")}
+                      </div>
                       <div className="flex-row justify-around">
                         <KeyboardDateTimePicker
+                          onClick={() => this.disableCalendarIfEndDate()}
                           className="date-picker"
                           variant="inline"
                           ampm={false}
                           label="Date"
-                          // value={dateEnd}
-                          // onChange={(date) => this.dateChanged(dateStart, date)}
+                          value={endDate}
+                          onChange={(date) => this.handleDateChanging("", date)}
                           onError={console.log}
                           format="yyyy/MM/DD"
-                          disabled={noEndDate}
+                          disabled={isEndDate}
                         />
                         <TimePicker
                           className="time-picker"
                           variant="inline"
                           ampm={false}
                           label="Time"
-                          // value={dateEnd}
-                          // onChange={(date) => this.dateChanged(dateStart, date)}
-                          disabled={noEndDate}
+                          value={endDate}
+                          onChange={(date) => this.handleDateChanging("", date)}
+                          disabled={isEndDate}
                         />
                       </div>
-                    </div>
-                    {isCalendarShown && (
-                      <div className="flex-row justify-between">
-                        <div className="calendar-from calendar">
-                          <KeyboardDatePicker
-                            disableToolbar
-                            format="MM/DD/YYYY"
-                            margin="normal"
-                            id="date-picker-inline"
-                            // value={dateStart}
-                            variant="static"
-                            // onChange={(date) => this.dateChanged(date, dateEnd)}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-                            }}
-                          ></KeyboardDatePicker>
-                        </div>
-                        <div className="calendar-to calendar">
-                          <KeyboardDatePicker
-                            disableToolbar
-                            format="MM/DD/YYYY"
-                            margin="normal"
-                            id="date-picker-inline"
-                            // value={dateEnd}
-                            variant="static"
-                            // onChange={(date) => this.dateChanged(dateStart, date)}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-                            }}
-                          ></KeyboardDatePicker>
+                      <div className="flex-row align-center padding-left">
+                        <input
+                          className="dialog-checkbox"
+                          type="checkbox"
+                          onChange={() =>
+                            this.setState({ isEndDate: !isEndDate })
+                          }
+                        />
+                        <div>
+                          {t("DATA_SHARING.MANAGE_SHARED_DATA.NO_END_DATE")}
                         </div>
                       </div>
-                    )}
+                    </div>
+                    <div className="flex-row">
+                      {isFromDateShown && (
+                        <div className="absolute box-shadow calendar-from calendar">
+                          <KeyboardDatePicker
+                            disableToolbar
+                            format="MM/DD/YYYY"
+                            margin="normal"
+                            id="date-picker-inline"
+                            value={startDate}
+                            variant="static"
+                            onChange={(date) =>
+                              this.handleDateChanging(date, "")
+                            }
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+                            }}
+                          />
+                        </div>
+                      )}
+                      {isToDateShown && (
+                        <div className="absolute box-shadow calendar-to calendar">
+                          <KeyboardDatePicker
+                            disableToolbar
+                            format="MM/DD/YYYY"
+                            margin="normal"
+                            id="date-picker-inline"
+                            value={endDate}
+                            variant="static"
+                            onChange={(date) =>
+                              this.handleDateChanging("", date)
+                            }
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </MuiPickersUtilsProvider>
-                <div className="flex-row padding-top padding-bottom padding-left">
-                  <input
-                    className="dialog-checkbox"
-                    type="checkbox"
-                    onChange={() => this.setState({ noEndDate: !noEndDate })}
-                  />
-                  <div>{t("DATA_SHARING.MANAGE_SHARED_DATA.NO_END_DATE")}</div>
-                </div>
               </div>
             )}
           </div>
@@ -242,7 +293,10 @@ class ManageSharedDataByGlobalAdmin extends Component {
             </div>
           </div>
           <div className="flex-row justify-flex-end full-view">
-            <button className="blue-btn save-btn" onClick={onSave}>
+            <button
+              className="blue-btn save-btn"
+              onClick={() => onSave(startDate, endDate)}
+            >
               {t("BUTTONS.SAVE")}
             </button>
             <button className="simple-btn" onClick={onCancel}>

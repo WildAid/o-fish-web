@@ -44,8 +44,70 @@ class AgencyDataSharing extends Component {
     this.showDialog("manageDialogDisplayed");
   };
 
-  saveDialog = () => {
-    this.cancelDialog();
+  saveDialog = (startDate, endDate) => {
+    const { agencyToShareWith } = this.state;
+    const { agency } = this.props;
+
+    //Agency that shares data
+    const outboundPartnerAgencies = [
+      {
+        name: agencyToShareWith.name,
+        fromDate: moment(startDate).toDate(),
+        toDate: moment(endDate).toDate(),
+      },
+    ];
+
+    const agencyThatSharingData = agency.outboundPartnerAgencies
+      ? {
+          ...agency,
+          outboundPartnerAgencies: agency.outboundPartnerAgencies.push(
+            outboundPartnerAgencies
+          ),
+        }
+      : {
+          ...agency,
+          outboundPartnerAgencies,
+        };
+
+    //Agency that gets shared data
+    const inboundPartnerAgencies = [
+      { name: agency.name, triaged: false, agencyWideAccess: false },
+    ];
+
+    const agencyThatGetsData = agencyToShareWith.inboundPartnerAgencies
+      ? {
+          ...agencyToShareWith,
+          inboundPartnerAgencies: agencyToShareWith.inboundPartnerAgencies.push(
+            inboundPartnerAgencies
+          ),
+        }
+      : {
+          ...agencyToShareWith,
+          inboundPartnerAgencies,
+        };
+
+    console.log(agencyThatGetsData, "получает");
+    console.log(agencyThatSharingData, "шарит");
+
+    agencyService
+      .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
+      .then(() => console.log('получает ушло'))
+      .catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
+
+    agencyService
+      .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
+      .then(() => console.log('шарит ушло'))
+      .catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
+
+    this.cancelDialog("manageDialogDisplayed");
   };
 
   onChangeAgency = (agency) => {
@@ -84,12 +146,12 @@ class AgencyDataSharing extends Component {
               <div className="header-name">{t("DATA_SHARING.SHARED_DATA")}</div>
               <div className="padding-left padding-bottom">
                 {agency &&
-                agency.partnerAgencies &&
-                agency.partnerAgencies.length &&
-                agency.partnerAgencies.length === 1
+                agency.outboundPartnerAgencies &&
+                agency.outboundPartnerAgencies.length &&
+                agency.outboundPartnerAgencies.length === 1
                   ? t("DATA_SHARING.SHARING_DATA_WITH", {
                       agency: agency.name,
-                      sharingAgency: agency.partnerAgencies[0].name,
+                      sharingAgency: agency.outboundPartnerAgencies[0].name,
                     })
                   : t("DATA_SHARING.FOLLOWING_AGENCIES", {
                       agency: agency ? agency.name : "",
@@ -115,9 +177,9 @@ class AgencyDataSharing extends Component {
             </thead>
             <tbody>
               {agency &&
-              agency.partnerAgencies &&
-              agency.partnerAgencies.length ? (
-                agency.partnerAgencies.map((item, ind) => (
+              agency.outboundPartnerAgencies &&
+              agency.outboundPartnerAgencies.length ? (
+                agency.outboundPartnerAgencies.map((item, ind) => (
                   <tr className="row-body" key={ind}>
                     <td>
                       <div className="flex-row align-center">{item.name}</div>
@@ -166,8 +228,9 @@ class AgencyDataSharing extends Component {
             </tbody>
           </table>
           {agency &&
-            (!agency.partnerAgencies ||
-              (agency.partnerAgencies && !agency.partnerAgencies.length)) && (
+            (!agency.outboundPartnerAgencies ||
+              (agency.outboundPartnerAgencies &&
+                !agency.outboundPartnerAgencies.length)) && (
               <div className="flex-row justify-center">
                 <button
                   className="blue-btn"

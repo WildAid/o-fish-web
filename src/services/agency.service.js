@@ -17,7 +17,13 @@ export default class AgencyService {
   getAgency(id) {
     const objectId = new BSON.ObjectId(id);
 
-    return stitchService.database.collection("Agency").findOne({_id: objectId});
+    return stitchService.database
+      .collection("Agency")
+      .findOne({ _id: objectId });
+  }
+  
+  getAgencyByName(name) {
+    return stitchService.database.collection("Agency").findOne({ name });
   }
 
   getStats(searchQuery, currentFilter) {
@@ -51,8 +57,11 @@ export default class AgencyService {
 
   updateAgency(id, data) {
     id = new BSON.ObjectId(id);
-    return stitchService.database.collection("Agency").updateOne({
-      _id: id
-    }, data);
+    return stitchService.database.collection("Agency").updateOne(
+      {
+        _id: id,
+      },
+      data
+    );
   }
 }

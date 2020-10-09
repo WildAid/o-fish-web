@@ -61,14 +61,18 @@
   background: #f1f1f1;
   border-radius: 5px 5px 0 0;
   padding: 10px;
+  width: 115px;
+}
+
+.global-shared-data .time-frame .calendar-to {
+  right: 200px;
 }
 
 .global-shared-data .date-time-row {
   border-bottom: none;
 }
 
-.global-shared-data .time-frame .MuiIconButton-root,
-.MuiButtonBase-root .MuiIconButton-root {
+.global-shared-data .time-frame .date-picker .MuiInputAdornment-root {
   display: none;
 }
 
