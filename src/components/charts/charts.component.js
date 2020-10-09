@@ -84,9 +84,9 @@ class ChartsPage extends Component {
           <div className="flex-row full-view justify-between align-center margin-top margin-bottom">
             <div className="flex-column margin-bottom">
               {/* <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div> */}
-              <Breadcrumbs aria-label="breadcrumb" style={{ color: '#0a4074' }}>
-                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">Dashboard</LinkRouter>
-                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">Agencies</LinkRouter>
+              <Breadcrumbs aria-label="breadcrumb" classes={{ separator: "blue-color", ol: "blue-color" }}>
+                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">{t("HOME_PAGE.DASHBOARD")}</LinkRouter>
+                <LinkRouter to={GLOBAL_AGENCIES_PAGE} underline="none" color="inherit">{t("NAVIGATION.AGENCIES")}</LinkRouter>
               </Breadcrumbs>
               {!loading ? (
                 <div className="font-35">{agencyName}</div>
