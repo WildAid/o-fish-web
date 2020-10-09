@@ -4,7 +4,6 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import CloseIcon from "@material-ui/icons/Close";
 
 import AuthService from "./../../../../services/auth.service";
@@ -77,7 +76,7 @@ class ShareDataDialog extends Component {
                 />
               </div>
             </div>
-            <button className="simple-btn" onClick={onCancel}>
+            <button className="simple-btn" onClick={() => onCancel("shareDataDialog")}>
               {t("BUTTONS.CANCEL")}
             </button>
           </div>

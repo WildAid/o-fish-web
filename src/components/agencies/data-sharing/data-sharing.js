@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
+import CloseIcon from "@material-ui/icons/Close";
 
 import ShareDataDialog from "./share-data-dialog/share-data-dialog";
 import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
@@ -21,6 +22,9 @@ class AgencyDataSharing extends Component {
     agencyToShareWith: "",
     limit: 100,
     offset: 0,
+    inBoundSuccess: false,
+    outBoundSuccess: false,
+    isDataManaging: true,
   };
 
   showDialog = (dialogName) => {
@@ -39,7 +43,11 @@ class AgencyDataSharing extends Component {
     this.cancelDialog("stopSharingDialog");
   };
 
-  showMenagePopup = () => {
+  showManagePopup = () => {
+    const { isDataManaging } = this.state;
+
+    this.setState({ isDataManaging: false });
+
     this.cancelDialog("shareDataDialog");
     this.showDialog("manageDialogDisplayed");
   };
@@ -52,17 +60,18 @@ class AgencyDataSharing extends Component {
     const outboundPartnerAgencies = [
       {
         name: agencyToShareWith.name,
-        fromDate: moment(startDate).toDate(),
-        toDate: moment(endDate).toDate(),
+        fromDate: startDate ? moment(startDate).toDate() : null,
+        toDate: endDate ? moment(endDate).toDate() : null,
       },
     ];
 
     const agencyThatSharingData = agency.outboundPartnerAgencies
       ? {
           ...agency,
-          outboundPartnerAgencies: agency.outboundPartnerAgencies.push(
-            outboundPartnerAgencies
-          ),
+          outboundPartnerAgencies: [
+            ...agency.outboundPartnerAgencies,
+            ...outboundPartnerAgencies,
+          ],
         }
       : {
           ...agency,
@@ -77,9 +86,10 @@ class AgencyDataSharing extends Component {
     const agencyThatGetsData = agencyToShareWith.inboundPartnerAgencies
       ? {
           ...agencyToShareWith,
-          inboundPartnerAgencies: agencyToShareWith.inboundPartnerAgencies.push(
-            inboundPartnerAgencies
-          ),
+          inboundPartnerAgencies: [
+            ...agencyToShareWith.inboundPartnerAgencies,
+            ...inboundPartnerAgencies,
+          ],
         }
       : {
           ...agencyToShareWith,
@@ -89,29 +99,33 @@ class AgencyDataSharing extends Component {
     console.log(agencyThatGetsData, "получает");
     console.log(agencyThatSharingData, "шарит");
 
-    agencyService
-      .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
-      .then(() => console.log('получает ушло'))
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
+    // agencyService
+    //   .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
+    //   .then(() => this.setState({ inBoundSuccess: true }))
+    //   .catch((error) => {
+    //     error.message
+    //       ? this.setState({ error: `${error.name}: ${error.message}` })
+    //       : this.setState({ error: "An unexpected error occurred!" });
+    //   });
 
-    agencyService
-      .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
-      .then(() => console.log('шарит ушло'))
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
-
+    // agencyService
+    //   .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
+    //   .then(() => this.setState({ outBoundSuccess: true }))
+    //   .catch((error) => {
+    //     error.message
+    //       ? this.setState({ error: `${error.name}: ${error.message}` })
+    //       : this.setState({ error: "An unexpected error occurred!" });
+    //   });
+    this.setState({ isDataManaging: true });
     this.cancelDialog("manageDialogDisplayed");
   };
 
   onChangeAgency = (agency) => {
     this.setState({ agencyToShareWith: agency });
+  };
+
+  removeSuccessMsg = () => {
+    this.setState({ inBoundSuccess: false, outBoundSuccess: false });
   };
 
   componentDidMount() {
@@ -135,12 +149,32 @@ class AgencyDataSharing extends Component {
       manageDialogDisplayed,
       stopSharingDialog,
       agencies,
+      inBoundSuccess,
+      outBoundSuccess,
+      agencyToShareWith,
+      isDataManaging,
     } = this.state;
     const { t, agency } = this.props;
+    const succsessMessageShown = inBoundSuccess && outBoundSuccess;
 
     return (
       <div className="padding-bottom flex-column align-center form-data">
-        <div className="full-view">
+        {succsessMessageShown && (
+          <div className="full-view flex-row margin-bottom justify-between">
+            <div className="flex-row justify-between relative success-message-box">
+              <div>
+                {t("DATA_SHARING.AGENCY_SUCCESS_MESSAGE", {
+                  agency: agencyToShareWith.name,
+                })}
+              </div>
+              <CloseIcon
+                className="close-icon"
+                onClick={this.removeSuccessMsg}
+              />
+            </div>
+          </div>
+        )}
+        <div className="full-view white-bg box-shadow">
           <div className="flex-row justify-between align-center">
             <div className="flex-column">
               <div className="header-name">{t("DATA_SHARING.SHARED_DATA")}</div>
@@ -243,7 +277,7 @@ class AgencyDataSharing extends Component {
           {shareDataDialog && (
             <ShareDataDialog
               agencies={agencies}
-              onSubmit={this.showMenagePopup}
+              onSubmit={this.showManagePopup}
               onChangeAgency={this.onChangeAgency}
               onCancel={this.cancelDialog}
             />
@@ -252,6 +286,8 @@ class AgencyDataSharing extends Component {
             <ManageSharedDataByGlobalAdmin
               onCancel={() => this.cancelDialog("manageDialogDisplayed")}
               onSave={this.saveDialog}
+              isDataManaging={isDataManaging}
+              agencyName={agency.name}
             />
           )}
           {stopSharingDialog && (

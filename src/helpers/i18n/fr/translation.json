@@ -95,6 +95,7 @@
     "AGENCY_ADMINS": "",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "",
+      "MANAGE_DATA_SHARING_WITH": "",
       "CHOOSE_DATA_TO_SHARE": "",
       "TIME_FRAME": "",
       "CHOOSE_DATES": "",

@@ -27,18 +27,6 @@ class ManageSharedDataByGlobalAdmin extends Component {
     endDate: moment().endOf("day").toDate(),
   };
 
-  handleSubmit = (values) => {
-    if (this.props.onApply) {
-      this.props.onApply(values);
-    }
-  };
-
-  cancelDialog = () => {
-    if (this.props.onApply) {
-      this.props.onApply();
-    }
-  };
-
   setActiveTab = (ind) => {
     this.setState({ activeTabIndex: ind });
   };
@@ -51,13 +39,30 @@ class ManageSharedDataByGlobalAdmin extends Component {
   };
 
   handleDateChanging = (start, end) => {
+    const closeCalendar = !start
+      ? { isToDateShown: false }
+      : { isFromDateShown: false };
+
     if (!start) start = this.state.startDate;
     if (!end) end = this.state.endDate;
-    this.setState({ startDate: start, endDate: end });
+
+    this.setState({ startDate: start, endDate: end, ...closeCalendar });
   };
 
+  saveDataSharing = () => {
+    const { chooseDate, startDate, endDate } = this.state;
+    const { onSave } = this.props;
+
+    chooseDate ? onSave(startDate, endDate) : onSave(null, null);
+  };
+
+  componentDidMount() {
+    const { isDataManaging } = this.props;
+    if (isDataManaging) this.setState({ chooseDate: true });
+  }
+
   render() {
-    const { t, onCancel, onSave } = this.props;
+    const { t, onCancel, isDataManaging, agencyName } = this.props;
     const {
       activeTabIndex,
       chooseDate,
@@ -73,12 +78,19 @@ class ManageSharedDataByGlobalAdmin extends Component {
         <div className="shared-data-dialog internal flex-column">
           <div className="dialog-header">
             <h1 className="title dialog-title">
-              {t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
+              {isDataManaging
+                ? t(
+                    "DATA_SHARING.MANAGE_SHARED_DATA.MANAGE_DATA_SHARING_WITH",
+                    { agency: agencyName }
+                  )
+                : t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h1>
             <CloseIcon className="close-icon pointer" onClick={onCancel} />
-            <h2 className="dialog-subtitle">
-              {t("DATA_SHARING.MANAGE_SHARED_DATA.CHOOSE_DATA_TO_SHARE")}
-            </h2>
+            {!isDataManaging && (
+              <h2 className="dialog-subtitle">
+                {t("DATA_SHARING.MANAGE_SHARED_DATA.CHOOSE_DATA_TO_SHARE")}
+              </h2>
+            )}
           </div>
           <div className="flex-column full-view padding-bottom border-bottom time-frame">
             <h3>{t("DATA_SHARING.MANAGE_SHARED_DATA.TIME_FRAME")}</h3>
@@ -166,9 +178,20 @@ class ManageSharedDataByGlobalAdmin extends Component {
                         <input
                           className="dialog-checkbox"
                           type="checkbox"
-                          onChange={() =>
-                            this.setState({ isEndDate: !isEndDate })
-                          }
+                          onChange={() => {
+                            if (endDate) {
+                              this.setState({
+                                isEndDate: true,
+                                isToDateShown: false,
+                                endDate: null,
+                              });
+                            } else {
+                              this.setState({
+                                isEndDate: false,
+                                endDate: moment().endOf("day").toDate(),
+                              });
+                            }
+                          }}
                         />
                         <div>
                           {t("DATA_SHARING.MANAGE_SHARED_DATA.NO_END_DATE")}
@@ -293,15 +316,12 @@ class ManageSharedDataByGlobalAdmin extends Component {
             </div>
           </div>
           <div className="flex-row justify-flex-end full-view">
-            <button
-              className="blue-btn save-btn"
-              onClick={() => onSave(startDate, endDate)}
-            >
+            <button className="blue-btn" onClick={() => this.saveDataSharing()}>
               {t("BUTTONS.SAVE")}
             </button>
-            <button className="simple-btn" onClick={onCancel}>
+            <div className="simple-btn" onClick={onCancel}>
               {t("BUTTONS.CANCEL")}
-            </button>
+            </div>
           </div>
         </div>
       </div>
