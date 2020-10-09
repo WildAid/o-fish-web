@@ -8,7 +8,7 @@ const RiskIcon = ({ safetyLevel }) => {
   return (
     <div
       className="flex-row justify-center risk-icon">
-      {safetyLevel}
+      :{safetyLevel}
     </div>
   );
 };
