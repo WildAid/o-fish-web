@@ -48,7 +48,7 @@ class BoardingsSection extends Component {
     }
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
-        <div className="flex-row justify-between align-center full-view">
+        <div className="flex-row justify-between align-center full-view border-bottom gray-bg">
           <h2 className="chart-name">{t("NAVIGATION.BOARDINGS")}</h2>
           <FilterPanel
             options={{ useChartsSyntax: true }}

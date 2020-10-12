@@ -49,7 +49,7 @@ class PatrolHoursSection extends Component {
 
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section patrol-hours-section">
-        <div className="flex-row justify-between align-center full-view">
+        <div className="flex-row justify-between align-center full-view border-bottom gray-bg">
           <h2 className="chart-name">{t("HOME_PAGE.OFFICER_PATROL_HOURS")}</h2>
           <FilterPanel
             options={{ useChartsSyntax: true }}
