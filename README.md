@@ -176,7 +176,7 @@ const chartOptions = {
 };
 ```
 
-#### Pages
+#### Pages<BR>
 
 The code for each page is in `/src`.
 
