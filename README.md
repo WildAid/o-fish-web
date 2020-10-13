@@ -176,8 +176,8 @@ const chartOptions = {
 };
 ```
 
-#### Pages
+#### Pages<BR>
 
-The code for each page is in `/src`.
+The code for each page is in `/src`.<BR>
 
 Common components are in `/src/partials`.
