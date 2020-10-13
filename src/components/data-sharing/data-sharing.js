@@ -181,11 +181,11 @@ class DataSharing extends Component {
                   agency.inboundPartnerAgencies &&
                   agency.inboundPartnerAgencies.length ? (
                     agency.inboundPartnerAgencies.map((item, ind) => (
-                      <tr className="row-body" key={ind}>
+                      <tr className="row-body " key={ind}>
                         <td>
                           <div
                             className={`flex-row align-center relative ${
-                              item.triaged ? "" : "new-agency"
+                              item.triaged ? "" : "new-agency padding-left"
                             }`}
                           >
                             {item.name}

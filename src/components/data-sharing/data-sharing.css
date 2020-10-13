@@ -9,6 +9,10 @@
     margin: 0 18px;
 }
 
+.form-data .data-sharing-table .table-row:nth-child(even) {
+    background: #f3f5f8;
+}
+
 .new-agency:before {
     position: absolute;
     content: "";

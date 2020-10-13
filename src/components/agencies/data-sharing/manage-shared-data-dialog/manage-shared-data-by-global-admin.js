@@ -14,7 +14,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import { boardingInformation } from "./../data-sharing.constants";
 
 import "./manage-shared-data-by-global-admin.css";
-// import "../../../partials/dates-range/dates-range.css";
 
 class ManageSharedDataByGlobalAdmin extends Component {
   state = {
