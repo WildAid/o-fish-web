@@ -56,11 +56,6 @@ class ManageSharedDataByGlobalAdmin extends Component {
     chooseDate ? onSave(startDate, endDate) : onSave(null, null);
   };
 
-  componentDidMount() {
-    const { isDataManaging } = this.props;
-    if (isDataManaging) this.setState({ chooseDate: true });
-  }
-
   render() {
     const { t, onCancel, isDataManaging, agencyName } = this.props;
     const {

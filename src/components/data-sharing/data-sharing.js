@@ -19,11 +19,16 @@ class DataSharing extends Component {
     offset: 0,
     loading: false,
     dialogDisplayed: false,
+    sharingAgencyName: "",
+    sharingAgencyWideAccess: false,
+    rightsLoader: false,
   };
 
-  showDialog = () => {
+  showDialog = (sharingAgency) => {
     this.setState({
       dialogDisplayed: true,
+      sharingAgencyName: sharingAgency.name,
+      sharingAgencyWideAccess: sharingAgency.agencyWideAccess,
     });
   };
 
@@ -33,7 +38,52 @@ class DataSharing extends Component {
     });
   };
 
-  saveDialog = () => {
+  saveDialog = (customWideAccess) => {
+    let {
+      agency: { _id: agencyId, inboundPartnerAgencies },
+      agency,
+      sharingAgencyName,
+    } = this.state;
+
+    if (inboundPartnerAgencies) {
+      let shouldUpdate = false;
+
+      inboundPartnerAgencies = inboundPartnerAgencies.map((data) => {
+        const { name, agencyWideAccess } = data;
+
+        if (
+          name === sharingAgencyName &&
+          agencyWideAccess !== customWideAccess
+        ) {
+          shouldUpdate = true;
+
+          return {
+            ...data,
+            agencyWideAccess: customWideAccess,
+          };
+        } else {
+          return data;
+        }
+      });
+      if (shouldUpdate) {
+        this.setState({ rightsLoader: true });
+        agencyService
+          .updateAgency(agencyId, {
+            ...agency,
+            inboundPartnerAgencies,
+          })
+          .then(() => {
+            this.setState({
+              agency: {
+                ...agency,
+                inboundPartnerAgencies,
+              },
+              rightsLoader: false,
+            });
+          })
+          .catch((error) => console.error(error));
+      }
+    }
     this.cancelDialog();
   };
 
@@ -60,6 +110,7 @@ class DataSharing extends Component {
               triaged: true,
             };
           });
+          this.setState({ agency });
           agencyService
             .updateAgency(agencyId, {
               ...agency,
@@ -95,7 +146,14 @@ class DataSharing extends Component {
 
   render() {
     const { t } = this.props;
-    const { agency, loading, dialogDisplayed } = this.state;
+    const {
+      agency,
+      loading,
+      dialogDisplayed,
+      sharingAgencyName,
+      sharingAgencyWideAccess,
+      rightsLoader,
+    } = this.state;
 
     return (
       <div className="padding-bottom flex-column align-center form-data">
@@ -134,14 +192,18 @@ class DataSharing extends Component {
                           </div>
                         </td>
                         <td>
-                          {item.agencyWideAccess
-                            ? t("NAVIGATION.ALL_USERS")
-                            : t("DATA_SHARING.AGENCY_ADMINS")}
+                          {rightsLoader && item.name === sharingAgencyName ? (
+                            <LoadingPanel />
+                          ) : item.agencyWideAccess ? (
+                            t("NAVIGATION.ALL_USERS")
+                          ) : (
+                            t("DATA_SHARING.AGENCY_ADMINS")
+                          )}
                         </td>
                         <td>
                           <div
                             className="pointer white-btn"
-                            onClick={this.showDialog}
+                            onClick={() => this.showDialog(item)}
                           >
                             {t("BUTTONS.MANAGE_SHARED_DATA")}
                           </div>
@@ -162,7 +224,8 @@ class DataSharing extends Component {
             </div>
             {dialogDisplayed && (
               <ManageSharedDataDialog
-                agencyName={agency.name}
+                agencyName={sharingAgencyName}
+                receivedWideAccess={sharingAgencyWideAccess}
                 onCancel={this.cancelDialog}
                 onSave={this.saveDialog}
               />
