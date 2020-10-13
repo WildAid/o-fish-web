@@ -14,11 +14,12 @@ const agencyService = AgencyService.getInstance();
 
 class ViewAgency extends Component {
   state = {
-    agencyInfo: {
+    agencyAdditionalInfo: {
       officers: [],
       catches: [],
       violations: [],
     },
+    agency: {},
     activeTab: 1,
     loading: false,
   };
@@ -36,10 +37,8 @@ class ViewAgency extends Component {
       agencyService
         .getAgency(id)
         .then((data) => {
-          const agencyInfo = { ...data, ...this.state.agencyInfo };
-
           this.setState({
-            agencyInfo,
+            agency: data,
             loading: false,
           });
         })
@@ -50,9 +49,9 @@ class ViewAgency extends Component {
   }
 
   render() {
-    const { agencyInfo, activeTab, loading } = this.state;
+    const { agencyAdditionalInfo, agency, activeTab, loading } = this.state;
     const { t } = this.props;
-    const status = agencyInfo.active ? "active" : "inactive";
+    const status = agency.active ? "active" : "inactive";
 
     return (
       <div className="padding-bottom flex-column align-center">
@@ -66,12 +65,12 @@ class ViewAgency extends Component {
                   {t("NAVIGATION.AGENCIES")}
                 </div>
                 <div className="flex-row align-center">
-                  <div className="agency-name">{agencyInfo.name}</div>
+                  <div className="agency-name">{agency.name}</div>
                   <div className={`status-icon ${status}-status-icon`}>
                     {status}
                   </div>
                 </div>
-                <div className="font-16">{agencyInfo.description}</div>
+                <div className="font-16">{agency.description}</div>
                 <div className="flex-row agency-box">
                   <div className="agency-box-img">
                     <img
@@ -80,7 +79,7 @@ class ViewAgency extends Component {
                       alt="no logo"
                     />
                   </div>
-                  {agencyInfo.site}
+                  {agency.site}
                 </div>
                 <div className="flex-row agency-box">
                   <div className="agency-box-img">
@@ -90,12 +89,12 @@ class ViewAgency extends Component {
                       alt="no logo"
                     />
                   </div>
-                  {agencyInfo.email}
+                  {agency.email}
                 </div>
               </Fragment>
             )}
           </div>
-          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agencyInfo._id)}>
+          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agency._id)}>
             <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>
@@ -136,7 +135,7 @@ class ViewAgency extends Component {
                         <div className="flex-row align-center justify-between agency-info-box">
                           <div className="table-name">
                             {`${t("TABLE.OFFICERS")} (${
-                              agencyInfo.officers.length
+                              agencyAdditionalInfo.officers.length
                             })`}
                           </div>
                           <button className="white-btn">
@@ -147,8 +146,8 @@ class ViewAgency extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {agencyInfo.officers
-                      ? agencyInfo.officers.map((officer, ind) => (
+                    {agencyAdditionalInfo.officers
+                      ? agencyAdditionalInfo.officers.map((officer, ind) => (
                           <tr className="table-row" key={ind}>
                             <td>
                               <div className="flex-row align-center agency-info-box">
@@ -170,13 +169,13 @@ class ViewAgency extends Component {
               </div>
             )}
             {2 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
-                <AgencyFormData agency={agencyInfo}></AgencyFormData>
+              <div className="full-view agency-tab-content">
+                <AgencyFormData agency={agency} />
               </div>
             )}
             {3 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
-                <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
+              <div className="full-view agency-tab-content">
+                <AgencyDataSharing agency={agency} />
               </div>
             )}
           </div>

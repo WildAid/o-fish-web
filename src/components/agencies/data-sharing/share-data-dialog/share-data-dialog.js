@@ -4,7 +4,6 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import CloseIcon from "@material-ui/icons/Close";
 
 import AuthService from "./../../../../services/auth.service";
@@ -20,6 +19,9 @@ class ShareDataDialog extends Component {
 
   chooseAgency = (agency) => {
     const { onChangeAgency } = this.props;
+    delete agency.boardings;
+    delete agency.violations;
+
     this.setState({ chosenAgency: agency });
     onChangeAgency(agency);
   };
@@ -34,7 +36,10 @@ class ShareDataDialog extends Component {
             <h2 className="title dialog-title">
               {t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h2>
-            <CloseIcon className="close-icon" onClick={onCancel} />
+            <CloseIcon
+              className="close-icon"
+              onClick={() => onCancel("shareDataDialog")}
+            />
             <h3>{t("DATA_SHARING.MANAGE_SHARED_DATA.SELECT_AGENCY")}</h3>
           </div>
           <div className="standard-view padding-top padding-bottom">
@@ -71,7 +76,7 @@ class ShareDataDialog extends Component {
                 />
               </div>
             </div>
-            <button className="simple-btn" onClick={onCancel}>
+            <button className="simple-btn" onClick={() => onCancel("shareDataDialog")}>
               {t("BUTTONS.CANCEL")}
             </button>
           </div>

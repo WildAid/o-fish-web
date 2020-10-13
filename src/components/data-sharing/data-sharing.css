@@ -9,12 +9,20 @@
     margin: 0 18px;
 }
 
-.form-data .message-icon {
+.form-data .data-sharing-table .table-row:nth-child(even) {
+    background: #f3f5f8;
+}
+
+.new-agency:before {
+    position: absolute;
+    content: "";
+    display: inline-block;
+    top: 5px;
+    left: 0;
     width: 10px;
     height: 10px;
-    margin-right: 5px;
-    border-radius: 30px;
-    background: #e17000;
+    border-radius: 7.5px;
+    background-color: #e17000;
 }
 
 .form-data .white-btn {

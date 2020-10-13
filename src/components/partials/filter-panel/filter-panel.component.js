@@ -154,7 +154,7 @@ class FilterPanel extends Component {
 
   render() {
     const { isFilterPanelShown, filterParts } = this.state;
-    const { options, configuration, t } = this.props;
+    const { options, configuration } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
 
     return (

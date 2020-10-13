@@ -1,5 +1,5 @@
 .global-shared-data .shared-data-dialog.internal {
-  width: 50%;
+  width: 60%;
   max-height: 93%;
   overflow-y: scroll;
 }
@@ -42,13 +42,48 @@
   font-weight: 500;
 }
 
-.global-shared-data .active{
+.global-shared-data .active {
   background-color: #ced9e3;
+}
+
+/* Time Frame */
+.global-shared-data .time-frame .date-picker {
+  margin-right: 10px;
+}
+
+.global-shared-data .time-frame .date-picker label,
+.global-shared-data .time-frame .time-picker label {
+  padding: 10px;
+}
+
+.global-shared-data .time-frame .date-picker,
+.global-shared-data .time-frame .time-picker {
+  background: #f1f1f1;
+  border-radius: 5px 5px 0 0;
+  padding: 10px;
+  width: 115px;
+}
+
+.global-shared-data .time-frame .calendar-to {
+  right: 200px;
+}
+
+.global-shared-data .date-time-row {
+  border-bottom: none;
+}
+
+.global-shared-data .time-frame .date-picker .MuiInputAdornment-root {
+  display: none;
+}
+
+.global-shared-data .time-frame .dialog-checkbox {
+  margin-top: 4px;
+  margin-right: 10px;
 }
 
 /* Table */
 .global-shared-data table {
-  width: 64%;
+  width: 70%;
   margin-left: 18px;
 }
 

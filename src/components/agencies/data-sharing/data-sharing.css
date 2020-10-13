@@ -7,3 +7,10 @@
     color: #dedede;
     padding-right: 50px;
 }
+
+.success-message-box .close-icon {
+    position: absolute;
+    top: 7px;
+    right: 18px;
+    color: #4e926a;
+}

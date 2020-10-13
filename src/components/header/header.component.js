@@ -20,6 +20,7 @@ import {
 import UserPhoto from "./../partials/user-photo/user-photo.component";
 
 import AuthService from "../../services/auth.service";
+import AgencyService from "../../services/agency.service";
 
 import { resetSearch } from "./../../helpers/get-data";
 import storage from "./../../helpers/localStorageData";
@@ -27,11 +28,13 @@ import storage from "./../../helpers/localStorageData";
 import "./header.css";
 
 const authService = AuthService.getInstance();
+const agencyService = AgencyService.getInstance();
 
 class Header extends Component {
   state = {
     activeMenu: "",
     currentUser: null,
+    dataSharingDot: false,
   };
 
   showActiveMenu = (value) => {
@@ -52,19 +55,49 @@ class Header extends Component {
     window.location.href = "/";
   };
 
+  checkNewlySharedAgencies = () => {
+    agencyService
+      .getAgencyByName(this.state.currentUser.agency.name)
+      .then((data) => {
+        const partnerAgencies = data.inboundPartnerAgencies;
+        if (partnerAgencies) {
+          const newlyShared = partnerAgencies.some(
+            (agency) => agency.triaged === false
+          );
+          if (newlyShared) {
+            this.setState({ dataSharingDot: true });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  removeTabDot = () => {
+    this.setState({ dataSharingDot: false });
+  };
+
   componentDidMount() {
     if (this.state.currentUser !== authService.user) {
-      this.setState({ currentUser: { ...authService.user } });
+      this.setState(
+        { currentUser: { ...authService.user } },
+        this.checkNewlySharedAgencies
+      );
     }
     authService.on("user-object-changed", (user) => {
       if (user) {
-        this.setState({ currentUser: { ...user } });
+        this.setState(
+          { currentUser: { ...user } },
+          this.checkNewlySharedAgencies
+        );
       }
     });
   }
 
   render() {
-    const { activeMenu, currentUser } = this.state;
+    const { activeMenu, currentUser, dataSharingDot } = this.state;
+
     const { t } = this.props;
     const isItemShown = currentUser
       ? currentUser.global.admin ||
@@ -227,9 +260,10 @@ class Header extends Component {
                   )}
                   {currentUser.agency.admin && !currentUser.global.admin && (
                     <NavLink
-                      className="nav-menu-item"
+                      className={`nav-menu-item ${dataSharingDot ? "data-sharing-tab" : ""}`}
                       to={DATA_SHARING_PAGE}
                       onMouseLeave={this.navigate}
+                      onClick={this.removeTabDot}
                     >
                       {t("AGENCY_PAGE.DATA_SHARING")}
                     </NavLink>

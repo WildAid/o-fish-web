@@ -126,7 +126,7 @@ class AgencyFormData extends Component {
     const item = menuItems[activeItem];
 
     return (
-      <div className="agency-form-data flex-row full-view">
+      <div className="agency-form-data white-bg box-shadow flex-row full-view">
         <div className="flex-start justify-between form-content-menu">
           <div
             onClick={() => this.changeCurrentTab("activities")}

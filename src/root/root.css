@@ -245,11 +245,6 @@ img.icon {
     outline-color: transparent;
 }
 
-.simple-btn:hover {
-    background: white;
-    border: 1px solid #0a4074;
-}
-
 .grey-btn {
     color: white;
     background-color: #797979;
@@ -284,6 +279,15 @@ img.icon {
 
 .blue-btn .custom-down-arrow {
     margin-left: 8px;
+}
+
+.success-message-box{
+    width: 100%;
+    background: #deefe5;
+    color: #4e926a;
+    border: 1px solid #4e926a;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 /* Table */
