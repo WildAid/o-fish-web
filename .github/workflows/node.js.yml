@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [10.x, 12.x, 14.x]
 
     steps:
     - name: Checkout repository
@@ -35,3 +35,5 @@ jobs:
       
     - name: Test 
       run: npm test
+      env:
+        CI: true
