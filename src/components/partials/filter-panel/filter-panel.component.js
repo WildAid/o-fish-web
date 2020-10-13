@@ -70,6 +70,12 @@ class FilterPanel extends Component {
           }
           //{"$date": item.value};
           break;
+        case "violation":
+          filterObject = {$or: [
+            {"inspection.summary.violations.offence.code": {$regex: item.value, $options: "i"}},
+            {"inspection.summary.violations.offence.explanation": {$regex: item.value, $options: "i"}},
+          ]};
+          break;
         //TODO: Use Other field types
         default:
           filterObject[item.field ? item.field : item.name] = item.value;
