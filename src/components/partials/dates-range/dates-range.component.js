@@ -14,15 +14,49 @@ import { withTranslation } from "react-i18next";
 
 import "./dates-range.css";
 
-export default withTranslation("translation")(
-  class DatesRange extends Component {
-    state = {
-      dateStart: moment().subtract(1, "week").toDate(),
-      dateEnd: moment().endOf("day").toDate(),
-      currentRange: "week",
-      panelShown: false,
-      filterValue: "",
-    };
+export default withTranslation("translation")(class DatesRange extends Component {
+  state = {
+    dateStart: moment().subtract(1, "week").startOf('day').toDate(),
+    dateEnd: moment().endOf('day').toDate(),
+    currentRange: "week",
+    panelShown: false,
+    filterValue: "",
+  };
+
+  dateChanged = (start, end, customRange) => {
+    if (customRange === "today"){
+      start = moment().startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange === "yesterday"){
+      start = moment().subtract(1, 'days').startOf('day').toDate();
+      end =  moment().subtract(1, 'days').endOf('day').toDate();
+    }
+    if (customRange === "week"){
+      start = moment().subtract(1, 'week').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange === "last30"){
+      start = moment().subtract(1, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange === "last60"){
+      start = moment().subtract(2, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (customRange === "last90"){
+      start = moment().subtract(3, 'month').startOf('day').toDate();
+      end =  moment().endOf('day').toDate();
+    }
+    if (new Date(end).valueOf() - new Date(start).valueOf() <= 1000){
+      end = moment(start).add(1, 'minute').toDate();
+    }
+    this.setState({
+      dateStart: start,
+      dateEnd: end,
+      currentRange: customRange ? customRange : "custom"
+    });
+  };
 
     dateChanged = (start, end, customRange) => {
       if (customRange === "today") {

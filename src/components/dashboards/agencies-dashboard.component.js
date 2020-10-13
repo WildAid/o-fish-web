@@ -101,6 +101,7 @@ class AgenciesDashboard extends Component {
 
   render() {
     const { changeFilter, t } = this.props;
+
     const {
       boardings,
       vessels,
@@ -129,7 +130,7 @@ class AgenciesDashboard extends Component {
           <div className="flex-row full-view justify-between align-center margin-top">
             <div className="flex-column margin-bottom">
               <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
-              <div className="font-35">{t("NAVIGATION.AGENCIES")}</div>
+              <div className="font-35">{t("NAVIGATION.AGENCIES_DASHBOARD")}</div>
             </div>
             <DatesRange onFilterChange={changeFilter} />
           </div>

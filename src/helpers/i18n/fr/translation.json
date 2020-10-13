@@ -12,6 +12,7 @@
     "BOARDING_RECORDS": "Rapports d'Inspection",
     "USERS": "Utilisateurs",
     "AGENCIES": "Agences",
+    "AGENCIES_DASHBOARD": "Tableau de Bord Agences",
     "GLOBAL_DASHBOARD": "Tableau de Bord Mondial",
     "BOARDINGS": "Inspections",
     "VESSELS": "Vaisseaux",
@@ -221,7 +222,10 @@
     "DELIVERIES": "Livraisons",
     "ISSUED_TO": "Remis à",
     "CREW_MEMBER": "Membre d'Equipage",
-    "PHOTO": "Photo"
+    "PHOTO": "Photo",
+    "FLAG_STATES": "États du Pavillon",
+    "HOME_PORTS": "Ports d'Origine",
+    "CAPTAINS": "Capitaines"
   },
   "FILTER": {
     "FROM": "A partir de",

@@ -7,11 +7,12 @@
   },
   "NAVIGATION": {
     "MY_DASHBOARD": "My Dashboard",
+    "DASHBOARD": "Dashboards",
     "USER_GROUP": "User Groups",
-    "DASHBOARD": "Dashboard",
     "BOARDING_RECORDS": "Boarding records",
     "USERS": "Users",
     "AGENCIES": "Agencies",
+    "AGENCIES_DASHBOARD": "Agencies Dashboard",
     "GLOBAL_DASHBOARD": "Global Dashboard",
     "BOARDINGS": "Boardings",
     "VESSELS": "Vessels",
@@ -226,7 +227,10 @@
     "DELIVERIES": "Deliveries",
     "ISSUED_TO": "Issued To",
     "CREW_MEMBER": "Crew Member",
-    "PHOTO": "Photo"
+    "PHOTO": "Photo",
+    "FLAG_STATES": "Flag States",
+    "HOME_PORTS": "Home Ports",
+    "CAPTAINS": "Captains"
   },
   "FILTER": {
     "FROM": "From",

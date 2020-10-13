@@ -116,6 +116,7 @@ class FilterPart extends Component {
             >
               cancel
             </Icon>
+            <Icon>expand_more</Icon>
           </div>
         ) : (
           <div className="filter-part-tag">

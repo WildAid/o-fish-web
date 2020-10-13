@@ -187,7 +187,7 @@ class AgencyDataSharing extends Component {
       stopSharingWith,
       currenctAgency,
     } = this.state;
-    const { t, agency } = this.props;
+    const { t } = this.props;
     const succsessMessageShown = inBoundSuccess && outBoundSuccess;
 
     return (

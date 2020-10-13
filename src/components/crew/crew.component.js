@@ -355,7 +355,7 @@ class Crew extends Component {
                           textToHighlight={item.license}
                         />
                       </td>
-                      <td>{item.vessels.slice(0, 4).join(", ")}</td>
+                      <td>{[...new Set(item.vessels)].slice(0, 4).join(",")}</td>
                       <td>
                         {item && item.violations ? item.violations : "N/A"}
                       </td>
