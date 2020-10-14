@@ -6,7 +6,7 @@ const stitchService = StitchService.getInstance();
 const sampleData = {
   date: new Date(),
   time: new Date(),
-  lattitude: "-0.02182981",
+  latitude: "-0.02182981",
   longtitude: "-0.041231987",
   agency: "WildAid",
   vessel:{
