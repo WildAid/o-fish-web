@@ -160,7 +160,7 @@ class DeliveriesPage extends Component {
                   {t("BOARDING_PAGE.ALL_DATES")} 
           <img
               className="icon"
-              src={require("../../../assets/filled-arrow.svg")}
+              src={require("../../assets/filled-arrow.svg")}
               alt="Delete this filter"
             />
                 </div>
