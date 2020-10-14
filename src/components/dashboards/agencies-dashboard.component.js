@@ -34,7 +34,8 @@ class AgenciesDashboard extends Component {
     page: 1,
     searchQuery: "",
     currentFilter: {
-      date: { $gt: moment().subtract(1, "year").toDate() },
+      agency: "",
+      date: { $gt: moment().subtract(7, "day").toDate() },
     },
   };
 
@@ -49,10 +50,10 @@ class AgenciesDashboard extends Component {
     newState.loading = true;
 
     this.setState(newState, () => {
-      const { limit, offset, searchQuery } = this.state;
+      const { limit, offset, searchQuery, currentFilter } = this.state;
 
       agencyService
-        .getAgencies(limit, offset, searchQuery, null)
+        .getAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
           this.setState({
             loading: false,
@@ -71,16 +72,11 @@ class AgenciesDashboard extends Component {
 
   changeFilter = (filter) => {
     let filterObject = {
-      $and: [
-        {
-          date: { $gt: new Date(filter.start) },
-        },
-        {
-          date: { $lte: new Date(filter.end) },
-        },
-      ],
+      ...this.state.currentFilter,
+      date: { $gt: new Date(filter.start), $lte: new Date(filter.end) }
     };
-    this.setState({ currentFilter: filterObject });
+
+    this.loadData({ currentFilter: filterObject });
   };
 
   search = (value) => {
@@ -100,7 +96,7 @@ class AgenciesDashboard extends Component {
   }
 
   render() {
-    const { changeFilter, t } = this.props;
+    const { t } = this.props;
 
     const {
       boardings,
@@ -132,7 +128,7 @@ class AgenciesDashboard extends Component {
               <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
               <div className="font-35">{t("NAVIGATION.AGENCIES_DASHBOARD")}</div>
             </div>
-            <DatesRange onFilterChange={changeFilter} />
+            <DatesRange onFilterChange={this.changeFilter} />
           </div>
         </div>
         {!loading ? (
