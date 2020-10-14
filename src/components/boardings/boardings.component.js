@@ -256,7 +256,13 @@ class Boardings extends Component {
           </button>
         </div>
         <div className="flex-row align-center standard-view">
-          <div>{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
+          <div>{t("BOARDING_PAGE.ALL_DATES")} 
+          <img
+              className="icon"
+              src={require("../../../assets/filled-arrow.svg")}
+              alt="Delete this filter"
+            />
+          </div>
           <div className="flex-row align-center show-map-handler">
             <input
               className="map-handler"
