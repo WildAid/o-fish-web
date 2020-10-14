@@ -343,43 +343,19 @@ class UserEditor extends Component {
                 )}
                 {showingOptions.role && (
                   <Fragment>
-                    <FormControl className="form-input">
-                      <InputLabel id="role-label">
-                        {t("CREATE_USER_PAGE.ROLE")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="role-label"
-                        onChange={(e) => {
-                          this.setState({ disabled: isValid });
-                          setFieldValue("adminType", e.target.value);
-                        }}
-                        value={values.adminType}
-                      >
-                        {authService.userRole === "global" ? (
-                          <MenuItem value="global">
-                            <em>{t("ADMINS.GLOBAL")}</em>
-                          </MenuItem>
-                        ) : (
-                          ""
-                        )}
-                        {authService.userRole === "global" ||
-                        authService.userRole === "agency" ? (
-                          <MenuItem value="agency">
-                            <em>{t("ADMINS.AGENCY")}</em>
-                          </MenuItem>
-                        ) : (
-                          ""
-                        )}
-                        <MenuItem value="group">
-                          <em>{t("ADMINS.GROUP")}</em>
-                        </MenuItem>
-                        <MenuItem value="field">
-                          <em>{t("ADMINS.FIELD")}</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                    <div className="error-messages">{t(errors.adminType)}</div>
+                    <TextField
+                      label={t("CREATE_USER_PAGE.ROLE")}
+                      name="adminType"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue("adminType", e.target.value)}
+                      type="text"
+                      value={values.adminType}
+                      InputProps={{
+                        readOnly: true,
+                        disableUnderline: true,
+                      }}
+                    />
                     <FormControl className="form-input">
                       <InputLabel id="agency-label">
                         {t("TABLE.AGENCY")}
@@ -408,23 +384,19 @@ class UserEditor extends Component {
                         )}
                       </Select>
                     </FormControl>
-                    <FormControl className="form-input">
-                      <InputLabel id="group-label">
-                        {t("CREATE_USER_PAGE.USER_GROUP")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="group-label"
-                        onChange={(e) =>
-                          setFieldValue("userGroup", e.target.value)
-                        }
-                        value={values.userGroup}
-                      >
-                        <MenuItem value="User Group">
-                          <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                    <TextField
+                      label={t("CREATE_USER_PAGE.USER_GROUP")}
+                      name="userGroup"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue("userGroup", e.target.value)}
+                      type="text"
+                      value={values.userGroup}
+                      InputProps={{
+                        readOnly: true,
+                        disableUnderline: true,
+                      }}
+                    />
                   </Fragment>
                 )}
                 <div className="flex-row justify-around align-center margin-top">
