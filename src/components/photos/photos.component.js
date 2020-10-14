@@ -163,13 +163,7 @@ class PhotosPage extends Component {
             </div>
             <div className="flex-row align-center standard-view">
               <div className="margin-right">
-                {t("BOARDING_PAGE.ALL_DATES")} 
-          <img
-              className="icon"
-              src={require("../../assets/filled-arrow.svg")}
-              alt="Delete this filter"
-            />
-              </div>
+                {t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
               <FilterPanel
                 options={{ searchByFilter: true }}
                 configuration={filterConfiguration}

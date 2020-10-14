@@ -98,7 +98,7 @@ export default class FilterPartForRisk extends Component {
           <img
               className="icon"
               src={require("../../../assets/filled-arrow.svg")}
-              alt="Delete this filter"
+              alt="Use/change this filter"
             />
           </div>
           <Icon className="remove-filter-btn" onClick={this.removeFilterPart}>cancel</Icon>
