@@ -193,6 +193,13 @@ class UserEditor extends Component {
     if (!showingOptions) showingOptions = {};
     if (!showingOptions.saveText) showingOptions.saveText = t("BUTTONS.SAVE");
 
+    const hashAdminTypeToRoleName =  {
+      global: t("ADMINS.GLOBAL"),
+      agency:  t("ADMINS.AGENCY"),
+      group: t("ADMINS.GROUP"),
+      field: t("ADMINS.FIELD"),
+    }
+
     const initialValues = user
       ? {
           profilePic: user.profilePic,
@@ -350,40 +357,25 @@ class UserEditor extends Component {
                       onBlur={handleBlur}
                       onChange={(e) => setFieldValue("adminType", e.target.value)}
                       type="text"
-                      value={values.adminType}
+                      value={hashAdminTypeToRoleName[values.adminType]}
                       InputProps={{
                         readOnly: true,
                         disableUnderline: true,
                       }}
                     />
-                    <FormControl className="form-input">
-                      <InputLabel id="agency-label">
-                        {t("TABLE.AGENCY")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="agency-label"
-                        onChange={(e) =>
-                          setFieldValue("agency", e.target.value)
-                        }
-                        value={values.agency}
-                      >
-                        {authService.userRole === "global" ? (
-                          agencies.map((agency, ind) => (
-                            <MenuItem value={agency} key={ind}>
-                              <em>{agency}</em>
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem
-                            value={authService.user.agency.name}
-                            key={0}
-                          >
-                            <em>{authService.user.agency.name}</em>
-                          </MenuItem>
-                        )}
-                      </Select>
-                    </FormControl>
+                    <TextField
+                      label={t("TABLE.AGENCY")}
+                      name="agency"
+                      className="form-input"
+                      onBlur={handleBlur}
+                      onChange={(e) => setFieldValue("agency", e.target.value)}
+                      type="text"
+                      value={values.agency}
+                      InputProps={{
+                        readOnly: true,
+                        disableUnderline: true,
+                      }}
+                    />
                     <TextField
                       label={t("CREATE_USER_PAGE.USER_GROUP")}
                       name="userGroup"
