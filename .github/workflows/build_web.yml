@@ -33,9 +33,6 @@ jobs:
     - name: add config
       run:
            cp src/config.js.tmpl src/config.js
-      script:
-           "sed -i ''  's/realmAppId: ..,/realmAppId: 'wildaidsandbox-mxgfy',/g' src/config.js"
-
       
     - name: Build
       run: npm run build --if-present
