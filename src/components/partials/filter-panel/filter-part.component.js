@@ -128,7 +128,11 @@ class FilterPart extends Component {
               className="show-panel-btn pointer"
               onClick={this.showSearchPanel}
             >
-              &#11206;
+          <img
+              className="icon"
+              src={require("../../../assets/filled-arrow.svg")}
+              alt="Use/change this filter"
+            />
             </div>
             <Icon
               className="remove-filter-btn pointer"

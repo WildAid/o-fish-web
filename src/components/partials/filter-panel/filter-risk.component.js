@@ -94,7 +94,13 @@ export default class FilterPartForRisk extends Component {
         <div className="filter-part-tag">
           <div className="filter-part-name">{title}</div>
           <div className="filter-part-value">{filterValue}</div>
-          <div className="show-panel-btn" onClick={this.showSearchPanel}>&#11206;</div>
+          <div className="show-panel-btn" onClick={this.showSearchPanel}>
+          <img
+              className="icon"
+              src={require("../../../assets/filled-arrow.svg")}
+              alt="Use/change this filter"
+            />
+          </div>
           <Icon className="remove-filter-btn" onClick={this.removeFilterPart}>cancel</Icon>
         </div>
       </div>

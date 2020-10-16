@@ -26,19 +26,6 @@ class ManageSharedDataByGlobalAdmin extends Component {
     endDate: moment().endOf("day").toDate(),
   };
 
-  componentDidMount() {
-    const { isDataManaging, agency } = this.props;
-    this.setState({
-      chooseDate: isDataManaging
-    });
-    if (isDataManaging) {
-      this.setState({
-        startDate: agency.fromDate,
-        endDate: agency.toDate,
-      });
-    }
-  }
-
   setActiveTab = (ind) => {
     this.setState({ activeTabIndex: ind });
   };
@@ -68,14 +55,25 @@ class ManageSharedDataByGlobalAdmin extends Component {
     chooseDate ? onSave(startDate, endDate) : onSave(null, null);
   };
 
+  componentDidMount() {
+    const { isDataManaging, agency } = this.props;
+    this.setState({
+      chooseDate: isDataManaging,
+    });
+    if (isDataManaging) {
+      this.setState({
+        startDate: agency.fromDate,
+        endDate: agency.toDate,
+      });
+    }
+  }
+  
   render() {
     const {
       t,
       onCancel,
       isDataManaging,
-      agency: {
-        name
-      }
+      agency: { name },
     } = this.props;
     const {
       activeTabIndex,

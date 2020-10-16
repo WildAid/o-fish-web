@@ -32,8 +32,8 @@ export const boardingInformation = [
             key: "longtitude",
           },
           {
-            subItemName: "BOARDING_PAGE.VIEW_BOARDING.LATTITUDE",
-            key: "lattitude",
+            subItemName: "BOARDING_PAGE.VIEW_BOARDING.LATITUDE",
+            key: "latitude",
           },
         ],
       },

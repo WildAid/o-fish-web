@@ -113,6 +113,13 @@ const filterConfiguration = {
       title: "Captain name",
     },
   ],
+  Violations: [
+    {
+      name: "violation",
+      title: "Violation",
+      type: "violation"
+    },
+  ]
 };
 
 class Vessels extends Component {
