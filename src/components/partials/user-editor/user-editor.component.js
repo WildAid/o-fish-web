@@ -229,6 +229,8 @@ class UserEditor extends Component {
           userGroup: "",
         };
 
+    const isAgencyOrGlobal = ["agency", "global"].includes(authService.userRole);
+
     return (
       <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
         {!isLoaded ? (
@@ -350,45 +352,143 @@ class UserEditor extends Component {
                 )}
                 {showingOptions.role && (
                   <Fragment>
-                    <TextField
-                      label={t("CREATE_USER_PAGE.ROLE")}
-                      name="adminType"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("adminType", e.target.value)}
-                      type="text"
-                      value={hashAdminTypeToRoleName[values.adminType]}
-                      InputProps={{
-                        readOnly: true,
-                        disableUnderline: true,
-                      }}
-                    />
-                    <TextField
-                      label={t("TABLE.AGENCY")}
-                      name="agency"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("agency", e.target.value)}
-                      type="text"
-                      value={values.agency}
-                      InputProps={{
-                        readOnly: true,
-                        disableUnderline: true,
-                      }}
-                    />
-                    <TextField
-                      label={t("CREATE_USER_PAGE.USER_GROUP")}
-                      name="userGroup"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("userGroup", e.target.value)}
-                      type="text"
-                      value={values.userGroup}
-                      InputProps={{
-                        readOnly: true,
-                        disableUnderline: true,
-                      }}
-                    />
+                    {
+                      isAgencyOrGlobal ? (
+                        <React.Fragment>
+                          <FormControl className="form-input">
+                            <InputLabel id="role-label">
+                              {t("CREATE_USER_PAGE.ROLE")}
+                            </InputLabel>
+                            <Select
+                              readOnly={!!showingOptions.readOnly}
+                              labelId="role-label"
+                              onChange={(e) => {
+                                this.setState({ disabled: isValid });
+                                setFieldValue("adminType", e.target.value);
+                              }}
+                              value={values.adminType}
+                            >
+                              {authService.userRole === "global" ? (
+                                <MenuItem value="global">
+                                  <em>{t("ADMINS.GLOBAL")}</em>
+                                </MenuItem>
+                              ) : (
+                                ""
+                              )}
+                              {authService.userRole === "global" ||
+                              authService.userRole === "agency" ? (
+                                <MenuItem value="agency">
+                                  <em>{t("ADMINS.AGENCY")}</em>
+                                </MenuItem>
+                              ) : (
+                                ""
+                              )}
+                              <MenuItem value="group">
+                                <em>{t("ADMINS.GROUP")}</em>
+                              </MenuItem>
+                              <MenuItem value="field">
+                                <em>{t("ADMINS.FIELD")}</em>
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                          <div className="error-messages">{t(errors.adminType)}</div>
+                        </React.Fragment>
+                      ) :(
+                        <TextField
+                          label={t("CREATE_USER_PAGE.ROLE")}
+                          name="adminType"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue("adminType", e.target.value)}
+                          type="text"
+                          value={hashAdminTypeToRoleName[values.adminType]}
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                        />
+                      )
+                    }
+                    {
+                      isAgencyOrGlobal ? (
+                        <FormControl className="form-input">
+                          <InputLabel id="agency-label">
+                            {t("TABLE.AGENCY")}
+                          </InputLabel>
+                          <Select
+                            readOnly={!!showingOptions.readOnly}
+                            labelId="agency-label"
+                            onChange={(e) =>
+                              setFieldValue("agency", e.target.value)
+                            }
+                            value={values.agency}
+                          >
+                            {authService.userRole === "global" ? (
+                              agencies.map((agency, ind) => (
+                                <MenuItem value={agency} key={ind}>
+                                  <em>{agency}</em>
+                                </MenuItem>
+                              ))
+                            ) : (
+                              <MenuItem
+                                value={authService.user.agency.name}
+                                key={0}
+                              >
+                                <em>{authService.user.agency.name}</em>
+                              </MenuItem>
+                            )}
+                          </Select>
+                        </FormControl>
+                      ) : (                    
+                      <TextField
+                        label={t("TABLE.AGENCY")}
+                        name="agency"
+                        className="form-input"
+                        onBlur={handleBlur}
+                        onChange={(e) => setFieldValue("agency", e.target.value)}
+                        type="text"
+                        value={values.agency}
+                        InputProps={{
+                          readOnly: true,
+                          disableUnderline: true,
+                        }}
+                      />)
+                    }
+                    {
+                      isAgencyOrGlobal ? (
+                        <FormControl className="form-input">
+                          <InputLabel id="group-label">
+                            {t("CREATE_USER_PAGE.USER_GROUP")}
+                          </InputLabel>
+                          <Select
+                            readOnly={!!showingOptions.readOnly}
+                            labelId="group-label"
+                            onChange={(e) =>
+                              setFieldValue("userGroup", e.target.value)
+                            }
+                            value={values.userGroup}
+                          >
+                            <MenuItem value="User Group">
+                              <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                      ) : (
+                        <TextField
+                          label={t("CREATE_USER_PAGE.USER_GROUP")}
+                          name="userGroup"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue("userGroup", e.target.value)}
+                          type="text"
+                          value={values.userGroup}
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                        />
+                      )
+                    }
                   </Fragment>
                 )}
                 <div className="flex-row justify-around align-center margin-top">
