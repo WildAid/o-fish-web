@@ -95,6 +95,7 @@
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
     "AGENCY_ADMINS": "Agency Admins",
     "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
+    "AGENCY_SUCCESS_UPDATE_MESSAGE": "Shared data updated successfully",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
       "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",

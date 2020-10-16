@@ -26,6 +26,19 @@ class ManageSharedDataByGlobalAdmin extends Component {
     endDate: moment().endOf("day").toDate(),
   };
 
+  componentDidMount() {
+    const { isDataManaging, agency } = this.props;
+    this.setState({
+      chooseDate: isDataManaging
+    });
+    if (isDataManaging) {
+      this.setState({
+        startDate: agency.fromDate,
+        endDate: agency.toDate,
+      });
+    }
+  }
+
   setActiveTab = (ind) => {
     this.setState({ activeTabIndex: ind });
   };
@@ -56,7 +69,14 @@ class ManageSharedDataByGlobalAdmin extends Component {
   };
 
   render() {
-    const { t, onCancel, isDataManaging, agencyName } = this.props;
+    const {
+      t,
+      onCancel,
+      isDataManaging,
+      agency: {
+        name
+      }
+    } = this.props;
     const {
       activeTabIndex,
       chooseDate,
@@ -75,7 +95,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
               {isDataManaging
                 ? t(
                     "DATA_SHARING.MANAGE_SHARED_DATA.MANAGE_DATA_SHARING_WITH",
-                    { agency: agencyName }
+                    { agency: name }
                   )
                 : t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h1>
@@ -94,7 +114,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
-                  defaultChecked
+                  defaultChecked={!isDataManaging}
                   onChange={() => this.setState({ chooseDate: false })}
                 />
                 <span className="checkmark"></span>
@@ -104,6 +124,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
+                  defaultChecked={isDataManaging}
                   onChange={() =>
                     this.setState({
                       chooseDate: true,
@@ -172,6 +193,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                         <input
                           className="dialog-checkbox"
                           type="checkbox"
+                          defaultChecked={!isEndDate && !endDate}
                           onChange={() => {
                             if (endDate) {
                               this.setState({

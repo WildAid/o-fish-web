@@ -108,7 +108,7 @@ class FilterPart extends Component {
         )}
         {partType === "risk" ? (
           <div className="filter-part-tag">
-            <div className="filter-part-name">{t("TABLE.RISK")}</div>
+            <div className="filter-part-name">{t("TABLE.RISK")}:</div>
             <RiskIcon safetyLevel={value} />
             <Icon
               className="remove-filter-btn pointer"
