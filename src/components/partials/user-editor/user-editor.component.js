@@ -229,7 +229,8 @@ class UserEditor extends Component {
           userGroup: "",
         };
 
-    const isAgencyOrGlobal = ["agency", "global"].includes(authService.userRole);
+    const isAgencyAdmin = authService.userRole === "agency"
+    const isGlobalAdmin = authService.userRole === "global"
 
     return (
       <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
@@ -353,7 +354,7 @@ class UserEditor extends Component {
                 {showingOptions.role && (
                   <Fragment>
                     {
-                      isAgencyOrGlobal ? (
+                      (isAgencyAdmin || isGlobalAdmin) ? (
                         <React.Fragment>
                           <FormControl className="form-input">
                             <InputLabel id="role-label">
@@ -393,7 +394,7 @@ class UserEditor extends Component {
                           </FormControl>
                           <div className="error-messages">{t(errors.adminType)}</div>
                         </React.Fragment>
-                      ) :(
+                      ) : (
                         <TextField
                           label={t("CREATE_USER_PAGE.ROLE")}
                           name="adminType"
@@ -410,7 +411,7 @@ class UserEditor extends Component {
                       )
                     }
                     {
-                      isAgencyOrGlobal ? (
+                      isGlobalAdmin ? (
                         <FormControl className="form-input">
                           <InputLabel id="agency-label">
                             {t("TABLE.AGENCY")}
@@ -455,7 +456,7 @@ class UserEditor extends Component {
                       />)
                     }
                     {
-                      isAgencyOrGlobal ? (
+                      (isAgencyAdmin || isGlobalAdmin) ? (
                         <FormControl className="form-input">
                           <InputLabel id="group-label">
                             {t("CREATE_USER_PAGE.USER_GROUP")}
