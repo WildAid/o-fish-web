@@ -229,8 +229,8 @@ class UserEditor extends Component {
           userGroup: "",
         };
 
-    const isAgencyAdmin = authService.userRole === "agency"
-    const isGlobalAdmin = authService.userRole === "global"
+    const isAgencyAdmin = authService.userRole === "agency";
+    const isGlobalAdmin = authService.userRole === "global";
 
     return (
       <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
