@@ -164,6 +164,7 @@
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",
+    "ADD_NEW_USER": "Add New User",
     "MANAGE_SHARED_DATA": "Manage Shared Data"
   },
   "TABLE": {
