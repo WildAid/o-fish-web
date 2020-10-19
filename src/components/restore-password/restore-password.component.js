@@ -1,9 +1,107 @@
-import React, { memo } from "react";
+import React, { Component } from "react";
+import { Formik, Form } from "formik";
+import { withTranslation } from "react-i18next";
+import { TextField } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 
-const RestorePassword = () => {
-  return (
-    <div>Restore password page (no designs yet)</div>
-  );
-};
+import AuthService from "../../services/auth.service";
 
-export default memo(RestorePassword);
+import history from "../../root/root.history";
+
+import "../login/login.css";
+
+import { HOME_PAGE, GLOBAL_AGENCIES_PAGE, CHARTS_PAGE } from "../../root/root.constants";
+
+const authService = AuthService.getInstance();
+
+class RestorePassword extends Component {
+  state = {
+    error: null,
+    loading: false,
+  };
+
+  handleLogin = (values) => {
+    this.setState({
+      loading: true,
+    });
+    authService
+      .authenticate(values.login, values.password)
+      .then(() => {
+        this.setState({
+          loading: false,
+        });
+        authService.userRole === "global"
+          ? history.push(GLOBAL_AGENCIES_PAGE)
+          : authService.userRole === "agency"
+          ? history.push(CHARTS_PAGE.replace(":id",authService.user.agency.name))
+          : history.push(HOME_PAGE);
+      })
+      .catch((error) => {
+        this.setState({
+          error: error.message,
+          loading: false,
+        });
+      });
+  };
+
+  render() {
+    const { error, loading } = this.state;
+    const { t } = this.props;
+
+    return (
+      <div className="flex-row justify-center align-center login-box">
+        <div className="white-bg box-shadow login">
+          <div className="flex-column justify-center align-center">
+            <div className="login-logo-img">
+              <img
+                className="full-view"
+                src={require("../../assets/login-logo.png")}
+                alt="no logo"
+              />
+            </div>
+            <Formik
+              initialValues={{ login: "", password: "" }}
+              onSubmit={this.handleLogin}
+              render={({
+                touched,
+                errors,
+                values,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                setFieldValue,
+              }) => (
+                <Form
+                  className="flex-column justify-around login-form"
+                  onSubmit={handleSubmit}
+                >
+                  <strong>Enter your user account's email address and we will send you a password reset link.</strong>
+                  <TextField
+                    label={t("LOGIN_PAGE.EMAIL_USERNAME")}
+                    name="login"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("login", e.target.value)}
+                    type="text"
+                    value={values.login}
+                  />
+                  <div className="flex-row align-center justify-center btn-box">
+                    {loading ? (
+                      <div>{t("LOADING.LOGGIN_IN")}</div>
+                    ) : (
+                      <button className="blue-btn" type="submit">
+                        Send password reset email
+                      </button>
+                    )}
+                  </div>
+                </Form>
+              )}
+            />
+            {error && <div className="error-messages">{error}</div>}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default withTranslation("translation")(RestorePassword);
