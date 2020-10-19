@@ -176,7 +176,7 @@ class FilterPanel extends Component {
         </div>
         <div className="relative">
         <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
-            <span class="material-icons icon-font">filter_alt</span> { filterParts.length ? `(${filterParts.length})` : "" }
+            <span className="material-icons icon-font">filter_alt</span> { filterParts.length ? `(${filterParts.length})` : "" }
           </div>
           <div
             className={

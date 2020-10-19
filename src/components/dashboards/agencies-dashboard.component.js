@@ -55,6 +55,8 @@ class AgenciesDashboard extends Component {
       agencyService
         .getAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
+
+          console.log(data);
           this.setState({
             loading: false,
             agencies: data.agencies,
