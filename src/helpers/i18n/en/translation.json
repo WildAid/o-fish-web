@@ -91,7 +91,7 @@
     "BOARDINGS_TO": "To",
     "WHO_CAN_ACCESS_DATA": "Who can access this data",
     "SHARING_DATA_WITH": "Agencies sharing data with {{agency}}",
-    "FOLLOWING_AGENCIES": "{{agency}} sharing data with the following agencies",
+    "FOLLOWING_AGENCIES": "{{agency}} is sharing boarding data with the following agencies",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
     "AGENCY_ADMINS": "Agency admins",
     "MANAGE_SHARED_DATA": {
@@ -316,4 +316,3 @@
     "REQUIRED": "This field is required"
   }
 }
-
