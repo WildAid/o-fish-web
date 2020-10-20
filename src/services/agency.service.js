@@ -34,7 +34,6 @@ export default class AgencyService {
   }
 
   getAgencies(limit, offset, searchQuery, currentFilter) {
-    console.log(limit, offset);
     return stitchService.client.callFunction("getAgencies", [
       limit,
       offset,

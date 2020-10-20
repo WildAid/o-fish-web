@@ -10,6 +10,10 @@ import { VIEW_CREW_PAGE } from "../root/root.constants.js";
 // import StitchService from "./../services/stitch.service";
 // const stitchService = StitchService.getInstance();
 
+import AgencyService from "./../services/agency.service";
+
+const agencyService = AgencyService.getInstance();
+
 export const getViolations = (arr) => {
   if (!Array.isArray(arr) || !arr.length) return "No violations";
 
@@ -233,4 +237,20 @@ export const getCountryCode = (countryName) => {
   );
   if (!countryCode) return "";
   return countryCode.code;
+};
+
+export const getSharedAgenciesList = async (name, user) => {
+  const agency = await agencyService.getAgencyByName(name);
+
+  if (user.agency.admin) {
+    return agency.inboundPartnerAgencies
+      ? [...agency.inboundPartnerAgencies.map((item) => item.name), name]
+      : [name];
+  } else {
+    const agencies = agency.inboundPartnerAgencies
+      .filter((item) => (item.agencyWideAccess ? item.name : ""))
+      .map((el) => el.name);
+      
+    return [...agencies, name];
+  }
 };

@@ -31,8 +31,8 @@ class ManageSharedDataByGlobalAdmin extends Component {
   };
 
   disableCalendarIfEndDate = () => {
-    const { isEndDate, isToDateShown } = this.state;
-    if (!isEndDate) {
+    const { isEndDate, isToDateShown, endDate } = this.state;
+    if (!isEndDate && endDate) {
       this.setState({ isToDateShown: !isToDateShown });
     }
   };
@@ -67,7 +67,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
       });
     }
   }
-  
+
   render() {
     const {
       t,
@@ -175,7 +175,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                           onChange={(date) => this.handleDateChanging("", date)}
                           onError={console.log}
                           format="yyyy/MM/DD"
-                          disabled={isEndDate}
+                          disabled={isEndDate || !endDate}
                         />
                         <TimePicker
                           className="time-picker"
@@ -184,7 +184,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                           label="Time"
                           value={endDate}
                           onChange={(date) => this.handleDateChanging("", date)}
-                          disabled={isEndDate}
+                          disabled={isEndDate || !endDate}
                         />
                       </div>
                       <div className="flex-row align-center padding-left">

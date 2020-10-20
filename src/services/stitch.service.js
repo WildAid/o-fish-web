@@ -87,21 +87,23 @@ export default class StitchService {
       .db(config.database));
   }
 
-  getVesselsWithFacet(limit, offset, search, filter) {
+  getVesselsWithFacet(limit, offset, search, filter, agenciesToShareData) {
     return this._localStitchClient.callFunction("searchFacetByVessels", [
       limit,
       offset,
       search,
       filter,
+      agenciesToShareData
     ]);
   }
 
-  getCrewsWithFacet(limit, offset, search, filter) {
+  getCrewsWithFacet(limit, offset, search, filter, agenciesToShareData) {
     return this._localStitchClient.callFunction("searchFacetByCrews", [
       limit,
       offset,
       search,
       filter,
+      agenciesToShareData
     ]);
   }
 

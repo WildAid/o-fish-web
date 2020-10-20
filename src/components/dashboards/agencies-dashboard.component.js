@@ -47,7 +47,7 @@ class AgenciesDashboard extends Component {
 
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
-console.log(limit, offset, searchQuery, currentFilter);
+
       agencyService
         .getAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {

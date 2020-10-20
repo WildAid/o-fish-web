@@ -29,7 +29,7 @@ class AgencyDataSharing extends Component {
     isDataManaging: true,
     currentAgency: "",
     manageSharingTo: "",
-    notArchivePartnerAgencies: "",
+    activePartnerAgencies: "",
     archivePartnerAgencies: "",
     partnerAgenciesLoading: true,
   };
@@ -65,7 +65,7 @@ class AgencyDataSharing extends Component {
     });
 
     const [
-      notArchivePartnerAgencies,
+      activePartnerAgencies,
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
 
@@ -80,7 +80,7 @@ class AgencyDataSharing extends Component {
             ...agency,
             outboundPartnerAgencies,
           },
-          notArchivePartnerAgencies,
+          activePartnerAgencies,
           archivePartnerAgencies,
         });
       })
@@ -139,7 +139,7 @@ class AgencyDataSharing extends Component {
     };
 
     const [
-      notArchivePartnerAgencies,
+      activePartnerAgencies,
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
 
@@ -149,7 +149,7 @@ class AgencyDataSharing extends Component {
         this.setState({
           outBoundSuccess: true,
           currentAgency: agencyThatSharingData,
-          notArchivePartnerAgencies,
+          activePartnerAgencies,
           archivePartnerAgencies,
         })
       )
@@ -202,14 +202,14 @@ class AgencyDataSharing extends Component {
       const dateComparisonFn = (agency) =>
         moment(agency.toDate).isBefore(moment());
 
-      let notArchivePartnerAgencies = outboundPartnerAgencies.filter(
+      let activePartnerAgencies = outboundPartnerAgencies.filter(
         (agency) => !dateComparisonFn(agency)
       );
       let archivePartnerAgencies = outboundPartnerAgencies.filter((agency) =>
         dateComparisonFn(agency)
       );
 
-      return [notArchivePartnerAgencies, archivePartnerAgencies];
+      return [activePartnerAgencies, archivePartnerAgencies];
     }
   };
 
@@ -250,18 +250,18 @@ class AgencyDataSharing extends Component {
     agencyService
       .getAgencyByName(agency.name)
       .then((data) => {
-        let notArchivePartnerAgencies, archivePartnerAgencies;
+        let activePartnerAgencies, archivePartnerAgencies;
 
         if (data.outboundPartnerAgencies) {
           [
-            notArchivePartnerAgencies,
+            activePartnerAgencies,
             archivePartnerAgencies,
           ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
         }
         this.setState({
           partnerAgenciesLoading: false,
           currentAgency: data,
-          notArchivePartnerAgencies,
+          activePartnerAgencies,
           archivePartnerAgencies,
         });
       })
@@ -282,7 +282,7 @@ class AgencyDataSharing extends Component {
       isDataManaging,
       currentAgency,
       manageSharingTo,
-      notArchivePartnerAgencies,
+      activePartnerAgencies,
       archivePartnerAgencies,
       partnerAgenciesLoading,
     } = this.state;
@@ -360,9 +360,9 @@ class AgencyDataSharing extends Component {
                   </thead>
                   <tbody>
                     {currentAgency &&
-                    notArchivePartnerAgencies &&
-                    notArchivePartnerAgencies.length ? (
-                      notArchivePartnerAgencies.map((item, ind) => (
+                    activePartnerAgencies &&
+                    activePartnerAgencies.length ? (
+                      activePartnerAgencies.map((item, ind) => (
                         <tr className="table-row row-body" key={ind}>
                           <td>
                             <div className="flex-row align-center">
@@ -422,9 +422,8 @@ class AgencyDataSharing extends Component {
                 </table>
               </div>
               {currentAgency &&
-                (!notArchivePartnerAgencies ||
-                  (notArchivePartnerAgencies &&
-                    !notArchivePartnerAgencies.length)) && (
+                (!activePartnerAgencies ||
+                  (activePartnerAgencies && !activePartnerAgencies.length)) && (
                   <div className="flex-row justify-center">
                     <button
                       className="blue-btn"
