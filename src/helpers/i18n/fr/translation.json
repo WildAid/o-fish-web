@@ -94,6 +94,7 @@
     "FOLLOWING_AGENCIES": "",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "",
     "AGENCY_ADMINS": "",
+    "AGENCY_SUCCESS_UPDATE_MESSAGE": "",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "",
       "MANAGE_DATA_SHARING_WITH": "",
@@ -113,7 +114,8 @@
       "RESULT_OF_VIOLATION": "",
       "VIOLATION_ISSUED_TO": "",
       "SELECT_AGENCY": ""
-    }
+    },
+    "PREVIOUSLY_SHARED_DATA": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
@@ -191,7 +193,8 @@
     "CREATE_USER": "Créer un Utilisateur",
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",
     "MANAGE_SHARED_DATA": "",
-    "STOP_SHARING": ""
+    "STOP_SHARING": "",
+    "SEE_SHARED_DATA": ""
   },
   "TABLE": {
     "ADDRESS": "Adresse",
