@@ -12,7 +12,7 @@ import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
 
 import AgencyFormData from "../form-data/form-data.js"
-import AgencyDataSharing from "../data-sharing/data-sharing.js"
+import AgencyDataSharing from "../data-sharing/data-sharing.js";
 import UserPhoto from "../../partials/user-photo/user-photo.component";
 import Highlighter from "react-highlight-words";
 
@@ -23,13 +23,14 @@ const authService = AuthService.getInstance();
 
 class ViewAgency extends Component {
   state = {
-    agencyInfo: {
+    agencyAdditionalInfo: {
       officers: [],
       catches: [],
       violations: [],
     },
+    agency: {},
     activeTab: 1,
-    loading: false
+    loading: false,
   };
 
   handleChangeTab = (newTab) => {
@@ -50,11 +51,9 @@ class ViewAgency extends Component {
       agencyService
         .getAgency(id)
         .then((data) => {
-
           const agencyInfo = { ...data, ...this.state.agencyInfo };
-
           this.setState({
-            agencyInfo,
+            agency: data,
             loading: false,
           });
         })
@@ -75,12 +74,12 @@ class ViewAgency extends Component {
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <div className="flex-row justify-between standard-view border-bottom agency-header">
+        <div className="flex-row justify-between standard-view agency-header">
           <div className="flex-column">
             {loading ? (
               t("LOADING.LOADING")
             ) : (
-                <Fragment>
+]                <Fragment>
                   <div className="item-label">{t("TABLE.AGENCY")}</div>
                   <div className="item-name">{agencyInfo.agency}</div>
                   <div className="font-16">{agencyInfo.description}</div>
@@ -107,7 +106,7 @@ class ViewAgency extends Component {
                 </Fragment>
               )}
           </div>
-          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agencyInfo._id)}>
+          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agency._id)}>
             <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>
@@ -247,12 +246,12 @@ class ViewAgency extends Component {
               </div>
             )}
             {2 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
+              <div className="full-view agency-tab-content">
                 <AgencyFormData agency={agencyInfo}></AgencyFormData>
               </div>
             )}
             {3 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
+              <div className="full-view agency-tab-content">
                 <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
               </div>
             )}

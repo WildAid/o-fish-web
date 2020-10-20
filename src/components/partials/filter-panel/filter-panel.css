@@ -12,6 +12,13 @@
   transition-timing-function: ease-in-out;
 }
 
+.icon-radius{
+  border-radius: 8px;
+}
+ .icon-font{
+   font-size: 15px;
+ }
+
 .filter-panel.invisible {
   height: 0;
   overflow-y: hidden;

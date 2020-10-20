@@ -60,7 +60,7 @@
       "VIEW_BOARDING": "Voir Inspection",
       "BOARDING": "Inspection",
       "LAST_MODIFIED": "Dernière Modification le ",
-      "LATTITUDE": "Latitude",
+      "LATITUDE": "Latitude",
       "LONGTITUDE": "Longitude",
       "STATUS": "Nom du Vaisseau",
       "DELIVERY_DATE": "Dernière Date de Livraison",
@@ -87,8 +87,33 @@
   },
   "DATA_SHARING": {
     "SHARED_DATA": "",
+    "BOARDINGS_FROM": "",
+    "BOARDINGS_TO": "",
     "WHO_CAN_ACCESS_DATA": "",
-    "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}"
+    "SHARING_DATA_WITH": "",
+    "FOLLOWING_AGENCIES": "",
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "",
+    "AGENCY_ADMINS": "",
+    "MANAGE_SHARED_DATA": {
+      "SHARE_BOARDING_DATA": "",
+      "MANAGE_DATA_SHARING_WITH": "",
+      "CHOOSE_DATA_TO_SHARE": "",
+      "TIME_FRAME": "",
+      "CHOOSE_DATES": "",
+      "BOARDING_DATA": "",
+      "DATA": "",
+      "FIELD": "",
+      "GENERAL_BOARDING_INFORMATION": "",
+      "OFFICER_NAME": "",
+      "AGENCY_INFO": "",
+      "DATA_ACCESS": "",
+      "READ_ACCESS": "",
+      "FLAG_STATE": "",
+      "ELECTRINIC_SYSTEM": "",
+      "RESULT_OF_VIOLATION": "",
+      "VIOLATION_ISSUED_TO": "",
+      "SELECT_AGENCY": ""
+    }
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
@@ -102,7 +127,9 @@
       "DESCRIPTION": "",
       "SITE": "",
       "EMAIL": ""
-    }
+    },
+    "STOP_SHARING_DATA_WITH_AGENCY": "",
+    "NO_NEW_DATA_WILL_BE_SHARED_WITH_THIS_AGENCY": ""
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "Voir Activité"
@@ -163,7 +190,8 @@
     "CREATE_REPORT": "Créer un Rapport d'Activité",
     "CREATE_USER": "Créer un Utilisateur",
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",
-    "MANAGE_SHARED_DATA": ""
+    "MANAGE_SHARED_DATA": "",
+    "STOP_SHARING": ""
   },
   "TABLE": {
     "ADDRESS": "Adresse",
@@ -194,7 +222,10 @@
     "DELIVERIES": "Livraisons",
     "ISSUED_TO": "Remis à",
     "CREW_MEMBER": "Membre d'Equipage",
-    "PHOTO": "Photo"
+    "PHOTO": "Photo",
+    "FLAG_STATES": "États du Pavillon",
+    "HOME_PORTS": "Ports d'Origine",
+    "CAPTAINS": "Capitaines"
   },
   "FILTER": {
     "FROM": "A partir de",
@@ -231,7 +262,7 @@
         "NAME": "Risques"
       }
     },
-    "DATES_RANGE":{
+    "DATES_RANGE": {
       "RANGE": "Plage de Dates",
       "LAST7DAYS": "7 derniers jours",
       "LAST30DAYS": "30 derniers jours",
@@ -246,13 +277,13 @@
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Espèce",
-    "FISHERIES" : "Pêcheries",
-    "CATCHES" : "Prises",
-    "ACTIVITIES" : "Activités",
-    "GEAR" : "Equipement",
-    "ADD_SPECIE" : "Ajouter une espèce",
-    "ADD_ANOTHER" : "Ajouter unne autre"
+    "SPECIES": "Espèce",
+    "FISHERIES": "Pêcheries",
+    "CATCHES": "Prises",
+    "ACTIVITIES": "Activités",
+    "GEAR": "Equipement",
+    "ADD_SPECIE": "Ajouter une espèce",
+    "ADD_ANOTHER": "Ajouter unne autre"
   },
   "ADMINS": {
     "GLOBAL": "",
@@ -264,7 +295,7 @@
     "NOT_AUTHENTICATED": "Non-authentifié",
     "NO_BOARDINGS": "Pas d'Inspections trouvées",
     "NO_AGENCIES": "Pas d'Agences trouvées",
-    "NO_OFFICERS":"Pas d'Agents trouvée",
+    "NO_OFFICERS": "Pas d'Agents trouvée",
     "NO_CATCHES": "Pas de Prises trouvées",
     "NO_VESSELS": "Pas de Vaisseaux trouvés",
     "NO_CREW": "Pas d'Equipage trouvé",
@@ -274,7 +305,9 @@
     "NO_VIOLATIONS": "Pas d'Infractions trouvées",
     "NO_PHOTOS": "Pas de Photos trouvées",
     "NO_NOTES": "Pas de Remarques trouvées",
-    "NO_LICENSE": "Pas de numéros de brevet trouvés"
+    "NO_LICENSE": "Pas de numéros de brevet trouvés",
+    "NO_END_DATE": "",
+    "NO_START_DATE": ""
   },
   "VALIDATION": {
     "REQUIRED": "Ce champ est obligatoire"

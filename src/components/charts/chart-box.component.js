@@ -8,7 +8,7 @@ import "./chart-box.css";
 const stitchService = StitchService.getInstance();
 
 const sdk = new ChartsEmbedSDK({
-  baseUrl: stitchService.chartsConfig.baseUrl
+  baseUrl: stitchService.chartsConfig.baseUrl,
 });
 
 // when using npm:
@@ -39,7 +39,7 @@ export default function ChartBox({ options, className }) {
       setFilter(options.filter);
       renderChart(boxId, options);
     }
-  });
+  }, [boxId, filter, options, options.filter, setFilter]);
 
   return <div id={boxId} className={`chart-box ${className}`}></div>;
 }

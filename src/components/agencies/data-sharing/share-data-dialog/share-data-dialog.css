@@ -1,0 +1,16 @@
+.dialog-agency-name {
+    margin: 60px 0 50px;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.dialog-text {
+    margin: 0 72px 37px 71px;
+    font-size: 15px;
+}
+
+.arrow-right {
+    width: 15px;
+    height: 10px;
+    margin-left: 5px;
+}

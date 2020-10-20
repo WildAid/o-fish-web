@@ -35,9 +35,9 @@ class BasicInfoSection extends Component {
           </div>
           <div className="flex-row justify-between">
             <TextField
-              label={t("BOARDING_PAGE.VIEW_BOARDING.LATTITUDE")}
+              label={t("BOARDING_PAGE.VIEW_BOARDING.LATITUDE")}
               className="half-row-view"
-              name="lattitude"
+              name="latitude"
               value={location[1]}
             />
             <TextField

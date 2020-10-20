@@ -48,9 +48,9 @@ class UserEditor extends Component {
 
   handleChangePassword = () => {
     if (this.props.onChangePassword) {
-      this.props.onChangePassword()
+      this.props.onChangePassword();
     }
-  }
+  };
 
   saveUser = (values) => {
     const { userId } = this.props;
@@ -155,7 +155,7 @@ class UserEditor extends Component {
   };
 
   validate = (values) => {
-    return required(values, "adminType");
+    return {...required(values, "adminType") , ...required(values, "email")};
   };
 
   componentDidMount() {
@@ -193,6 +193,13 @@ class UserEditor extends Component {
     if (!showingOptions) showingOptions = {};
     if (!showingOptions.saveText) showingOptions.saveText = t("BUTTONS.SAVE");
 
+    const hashAdminTypeToRoleName =  {
+      global: t("ADMINS.GLOBAL"),
+      agency:  t("ADMINS.AGENCY"),
+      group: t("ADMINS.GROUP"),
+      field: t("ADMINS.FIELD"),
+    }
+
     const initialValues = user
       ? {
           profilePic: user.profilePic,
@@ -209,11 +216,21 @@ class UserEditor extends Component {
           firstName: "",
           lastName: "",
           password: "",
-          agency: authService.userRole === "global" ? "" : authService.user.agency.name,
-          adminType: authService.userRole === "global" || authService.userRole === "agency" ? "" : checkUserRole(authService.user),
+          agency:
+            authService.userRole === "global"
+              ? ""
+              : authService.user.agency.name,
+          adminType:
+            authService.userRole === "global" ||
+            authService.userRole === "agency"
+              ? ""
+              : checkUserRole(authService.user),
           email: "",
           userGroup: "",
         };
+
+    const isAgencyAdmin = authService.userRole === "agency";
+    const isGlobalAdmin = authService.userRole === "global";
 
     return (
       <div className="flex-column align-center standard-view white-bg box-shadow relative user-editor-form">
@@ -243,76 +260,76 @@ class UserEditor extends Component {
                     onData={this.imageUploaded}
                   />
                 </div>
-                  <div className="flex-row justify-between">
+                <div className="flex-row justify-between">
+                  <TextField
+                    label={t("CREATE_USER_PAGE.FIRST_NAME")}
+                    name="firstName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("firstName", e.target.value)}
+                    type="text"
+                    value={values.firstName}
+                  />
+                  <TextField
+                    label={t("CREATE_USER_PAGE.LAST_NAME")}
+                    name="lastName"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("lastName", e.target.value)}
+                    type="text"
+                    value={values.lastName}
+                  />
+                </div>
+                <div className="flex-column">
+                  <TextField
+                    label={t("CREATE_AGENCY_PAGE.EMAIL")}
+                    name="email"
+                    type="text"
+                    className="form-input"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      this.setState({ disabled: isValid });
+                      setFieldValue("email", e.target.value);
+                    }}
+                    value={values.email}
+                  />
+                  <div className="error-messages">{t(errors.email)}</div>
+                  {showingOptions.changePassword && (
+                    <div className="password-line flex-row justify-between">
+                      <TextField
+                        label={t("LOGIN_PAGE.PASSWORD")}
+                        name="password"
+                        type="password"
+                        className="form-input"
+                        onBlur={handleBlur}
+                        onChange={(e) =>
+                          setFieldValue("password", e.target.value)
+                        }
+                        value="******************"
+                        InputProps={{ readOnly: true }}
+                      />
+                      <button
+                        type="button"
+                        className="white-btn"
+                        onClick={this.handleChangePassword}
+                      >
+                        {t("BUTTONS.CHANGE_PASSWORD")}
+                      </button>
+                    </div>
+                  )}
+                  {showingOptions.newPassword && (
                     <TextField
-                      label={t("CREATE_USER_PAGE.FIRST_NAME")}
-                      name="firstName"
+                      label={t("LOGIN_PAGE.PASSWORD")}
+                      name="password"
                       className="form-input"
+                      type="password"
                       onBlur={handleBlur}
                       onChange={(e) =>
-                        setFieldValue("firstName", e.target.value)
+                        setFieldValue("password", e.target.value)
                       }
-                      type="text"
-                      value={values.firstName}
-                      />
-                    <TextField
-                      label={t("CREATE_USER_PAGE.LAST_NAME")}
-                      name="lastName"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) =>
-                        setFieldValue("lastName", e.target.value)
-                      }
-                      type="text"
-                      value={values.lastName}
-                      />
-                  </div>
-                  <div className="flex-column">
-                    <TextField
-                      label={t("CREATE_AGENCY_PAGE.EMAIL")}
-                      name="email"
-                      type="text"
-                      className="form-input"
-                      onBlur={handleBlur}
-                      onChange={(e) => setFieldValue("email", e.target.value)}
-                      value={values.email}
-                      />
-                    {showingOptions.changePassword && (
-                      <div className="password-line flex-row justify-between">
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          type="password"
-                          className="form-input"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value="******************"
-                          InputProps={{ readOnly: true }}
-                          />
-                        <button
-                          type="button"
-                          className="white-btn"
-                          onClick={this.handleChangePassword}
-                        >
-                          {t("BUTTONS.CHANGE_PASSWORD")}
-                        </button>
-                      </div>
-                    )}
-                    {showingOptions.newPassword && (
-                        <TextField
-                          label={t("LOGIN_PAGE.PASSWORD")}
-                          name="password"
-                          className="form-input"
-                          type="password"
-                          onBlur={handleBlur}
-                          onChange={(e) =>
-                            setFieldValue("password", e.target.value)
-                          }
-                          value={values.password}
-                        />
-                    )}
+                      value={values.password}
+                    />
+                  )}
                 </div>
                 {showingOptions.active && (
                   <FormControl className="form-input">
@@ -336,72 +353,143 @@ class UserEditor extends Component {
                 )}
                 {showingOptions.role && (
                   <Fragment>
-                    <FormControl className="form-input">
-                      <InputLabel id="role-label">
-                        {t("CREATE_USER_PAGE.ROLE")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="role-label"
-                        onChange={(e) => {
-                          this.setState({ disabled: isValid });
-                          setFieldValue("adminType", e.target.value);
-                        }}
-                        value={values.adminType}
-                      >
-                        {authService.userRole === "global" ? <MenuItem value="global">
-                          <em>{t("ADMINS.GLOBAL")}</em>
-                        </MenuItem> : ""}
-                        {authService.userRole === "global" || authService.userRole === "agency"  ? <MenuItem value="agency">
-                          <em>{t("ADMINS.AGENCY")}</em>
-                        </MenuItem>: ""}
-                        <MenuItem value="group">
-                          <em>{t("ADMINS.GROUP")}</em>
-                        </MenuItem>
-                        <MenuItem value="field">
-                          <em>{t("ADMINS.FIELD")}</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                    <div className="error-messages">{t(errors.adminType)}</div>
-                    <FormControl className="form-input">
-                      <InputLabel id="agency-label">
-                        {t("TABLE.AGENCY")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="agency-label"
-                        onChange={(e) =>
-                          setFieldValue("agency", e.target.value)
-                        }
+                    {
+                      (isAgencyAdmin || isGlobalAdmin) ? (
+                        <React.Fragment>
+                          <FormControl className="form-input">
+                            <InputLabel id="role-label">
+                              {t("CREATE_USER_PAGE.ROLE")}
+                            </InputLabel>
+                            <Select
+                              readOnly={!!showingOptions.readOnly}
+                              labelId="role-label"
+                              onChange={(e) => {
+                                this.setState({ disabled: isValid });
+                                setFieldValue("adminType", e.target.value);
+                              }}
+                              value={values.adminType}
+                            >
+                              {authService.userRole === "global" ? (
+                                <MenuItem value="global">
+                                  <em>{t("ADMINS.GLOBAL")}</em>
+                                </MenuItem>
+                              ) : (
+                                ""
+                              )}
+                              {authService.userRole === "global" ||
+                              authService.userRole === "agency" ? (
+                                <MenuItem value="agency">
+                                  <em>{t("ADMINS.AGENCY")}</em>
+                                </MenuItem>
+                              ) : (
+                                ""
+                              )}
+                              <MenuItem value="group">
+                                <em>{t("ADMINS.GROUP")}</em>
+                              </MenuItem>
+                              <MenuItem value="field">
+                                <em>{t("ADMINS.FIELD")}</em>
+                              </MenuItem>
+                            </Select>
+                          </FormControl>
+                          <div className="error-messages">{t(errors.adminType)}</div>
+                        </React.Fragment>
+                      ) : (
+                        <TextField
+                          label={t("CREATE_USER_PAGE.ROLE")}
+                          name="adminType"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue("adminType", e.target.value)}
+                          type="text"
+                          value={hashAdminTypeToRoleName[values.adminType]}
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                        />
+                      )
+                    }
+                    {
+                      isGlobalAdmin ? (
+                        <FormControl className="form-input">
+                          <InputLabel id="agency-label">
+                            {t("TABLE.AGENCY")}
+                          </InputLabel>
+                          <Select
+                            readOnly={!!showingOptions.readOnly}
+                            labelId="agency-label"
+                            onChange={(e) =>
+                              setFieldValue("agency", e.target.value)
+                            }
+                            value={values.agency}
+                          >
+                            {authService.userRole === "global" ? (
+                              agencies.map((agency, ind) => (
+                                <MenuItem value={agency} key={ind}>
+                                  <em>{agency}</em>
+                                </MenuItem>
+                              ))
+                            ) : (
+                              <MenuItem
+                                value={authService.user.agency.name}
+                                key={0}
+                              >
+                                <em>{authService.user.agency.name}</em>
+                              </MenuItem>
+                            )}
+                          </Select>
+                        </FormControl>
+                      ) : (                    
+                      <TextField
+                        label={t("TABLE.AGENCY")}
+                        name="agency"
+                        className="form-input"
+                        onBlur={handleBlur}
+                        onChange={(e) => setFieldValue("agency", e.target.value)}
+                        type="text"
                         value={values.agency}
-                      >
-                        {authService.userRole === "global" ? agencies.map((agency, ind) => (
-                          <MenuItem value={agency} key={ind}>
-                            <em>{agency}</em>
-                          </MenuItem>
-                        )) : (<MenuItem value={authService.user.agency.name} key={0}>
-                          <em>{authService.user.agency.name}</em>
-                        </MenuItem>)}
-                      </Select>
-                    </FormControl>
-                    <FormControl className="form-input">
-                      <InputLabel id="group-label">
-                        {t("CREATE_USER_PAGE.USER_GROUP")}
-                      </InputLabel>
-                      <Select
-                        readOnly={!!showingOptions.readOnly}
-                        labelId="group-label"
-                        onChange={(e) =>
-                          setFieldValue("userGroup", e.target.value)
-                        }
-                        value={values.userGroup}
-                      >
-                        <MenuItem value="User Group">
-                          <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                        InputProps={{
+                          readOnly: true,
+                          disableUnderline: true,
+                        }}
+                      />)
+                    }
+                    {
+                      (isAgencyAdmin || isGlobalAdmin) ? (
+                        <FormControl className="form-input">
+                          <InputLabel id="group-label">
+                            {t("CREATE_USER_PAGE.USER_GROUP")}
+                          </InputLabel>
+                          <Select
+                            readOnly={!!showingOptions.readOnly}
+                            labelId="group-label"
+                            onChange={(e) =>
+                              setFieldValue("userGroup", e.target.value)
+                            }
+                            value={values.userGroup}
+                          >
+                            <MenuItem value="User Group">
+                              <em>{t("CREATE_USER_PAGE.USER_GROUP")}</em>
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                      ) : (
+                        <TextField
+                          label={t("CREATE_USER_PAGE.USER_GROUP")}
+                          name="userGroup"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue("userGroup", e.target.value)}
+                          type="text"
+                          value={values.userGroup}
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                        />
+                      )
+                    }
                   </Fragment>
                 )}
                 <div className="flex-row justify-around align-center margin-top">

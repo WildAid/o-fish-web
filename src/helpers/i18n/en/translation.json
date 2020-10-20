@@ -60,7 +60,7 @@
       "VIEW_BOARDING": "View Boarding",
       "BOARDING": "Boarding",
       "LAST_MODIFIED": "Last Modified on",
-      "LATTITUDE": "Lattitude",
+      "LATITUDE": "Latitude",
       "LONGTITUDE": "Longtitude",
       "STATUS": "Vessel Name",
       "DELIVERY_DATE": "Last Date of delivery",
@@ -87,8 +87,35 @@
   },
   "DATA_SHARING": {
     "SHARED_DATA": "Shared Data",
+    "BOARDINGS_FROM": "Boardings From",
+    "BOARDINGS_TO": "To",
     "WHO_CAN_ACCESS_DATA": "Who can access this data",
-    "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}"
+    "SHARING_DATA_WITH": "Agencies sharing data with {{agency}}",
+    "FOLLOWING_AGENCIES": "{{agency}} is sharing boarding data with the following agencies",
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
+    "AGENCY_ADMINS": "Agency Admins",
+    "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
+    "MANAGE_SHARED_DATA": {
+      "SHARE_BOARDING_DATA": "Share Boarding Data",
+      "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
+      "CHOOSE_DATA_TO_SHARE": "Choose data to share",
+      "TIME_FRAME": "Time Frame",
+      "CHOOSE_DATES": "Choose dates",
+      "BOARDING_DATA": "Boarding Data",
+      "DATA": "Data",
+      "FIELD": "Field",
+      "GENERAL_BOARDING_INFORMATION": "General Boarding Information",
+      "OFFICER_NAME": "Officer name",
+      "AGENCY_INFO": "Agency Information",
+      "DATA_ACCESS": "Data access",
+      "READ_ACCESS": "Read Access",
+      "FLAG_STATE": "Flag State",
+      "ELECTRINIC_SYSTEM": "Electronic Monitoring System",
+      "RESULT_OF_VIOLATION": "Result of Violation",
+      "VIOLATION_ISSUED_TO": "Violation Issued To",
+      "SELECT_AGENCY": "Select an agency to share boarding data with",
+      "NO_END_DATE": "No end date or time"
+    }
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
@@ -102,7 +129,9 @@
       "DESCRIPTION": "Description",
       "SITE": "Website",
       "EMAIL": "Contact Email"
-    }
+    },
+    "STOP_SHARING_DATA_WITH_AGENCY": "Stop Sharing Data with Agency?",
+    "NO_NEW_DATA_WILL_BE_SHARED_WITH_THIS_AGENCY": "No new data will be shared with this agency. This agency will still have access to previously shared data."
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "See Activity"
@@ -166,6 +195,9 @@
     "UPDATE_USER": "Update User",
     "ADD_NEW_USER": "Add New User",
     "MANAGE_SHARED_DATA": "Manage Shared Data"
+    "SHARE_DATA": "Share Data",
+    "STOP_SHARING": "Stop Sharing",
+    "CHOOSE_DATA": "Choose data"
   },
   "TABLE": {
     "ADDRESS": "Address",
@@ -196,7 +228,10 @@
     "DELIVERIES": "Deliveries",
     "ISSUED_TO": "Issued To",
     "CREW_MEMBER": "Crew Member",
-    "PHOTO": "Photo"
+    "PHOTO": "Photo",
+    "FLAG_STATES": "Flag States",
+    "HOME_PORTS": "Home Ports",
+    "CAPTAINS": "Captains"
   },
   "FILTER": {
     "FROM": "From",
@@ -233,7 +268,7 @@
         "NAME": "Risks"
       }
     },
-    "DATES_RANGE":{
+    "DATES_RANGE": {
       "RANGE": "Date Range",
       "LAST7DAYS": "Last 7 days",
       "LAST30DAYS": "Last 30 days",
@@ -248,13 +283,13 @@
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Species",
-    "FISHERIES" : "Fisheries",
-    "CATCHES" : "Catches",
-    "ACTIVITIES" : "Activities",
-    "GEAR" : "Gear",
-    "ADD_SPECIE" : "Add specie",
-    "ADD_ANOTHER" : "Add another"
+    "SPECIES": "Species",
+    "FISHERIES": "Fisheries",
+    "CATCHES": "Catches",
+    "ACTIVITIES": "Activities",
+    "GEAR": "Gear",
+    "ADD_SPECIE": "Add specie",
+    "ADD_ANOTHER": "Add another"
   },
   "ADMINS": {
     "GLOBAL": "Global Admin",
@@ -267,7 +302,7 @@
     "NOT_UNAUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
-    "NO_OFFICERS":"No officers found",
+    "NO_OFFICERS": "No officers found",
     "NO_CATCHES": "No catches found",
     "NO_VESSELS": "No vessels found",
     "NO_CREW": "No crew members found",
@@ -277,7 +312,9 @@
     "NO_VIOLATIONS": "No violations found",
     "NO_PHOTOS": "No photos found",
     "NO_NOTES": "No notes found",
-    "NO_LICENSE": "No license number found"
+    "NO_LICENSE": "No license number found",
+    "NO_END_DATE": "No end date",
+    "NO_START_DATE": "No start date"
   },
   "VALIDATION": {
     "REQUIRED": "This field is required"

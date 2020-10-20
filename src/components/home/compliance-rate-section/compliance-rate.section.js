@@ -50,7 +50,9 @@ class ComplianceRateSection extends Component{
     }
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section">
+        <div className="flex-row justify-between align-center full-view border-bottom gray-bg">
         <h2 className="chart-name">{t("HOME_PAGE.COMPLIANCE_RATE")}</h2>
+        </div>
         <div className="flex-row justify-between align-stretch full-view lg-chart">
           <div className="half-row-view">
             <div className="align-stretch md-chart compliance-rate-value ">
