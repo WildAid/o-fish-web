@@ -96,6 +96,7 @@
     "AGENCY_ADMINS": "Agency admins",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
+      "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
       "CHOOSE_DATA_TO_SHARE": "Choose data to share",
       "TIME_FRAME": "Time Frame",
       "CHOOSE_DATES": "Choose dates",
