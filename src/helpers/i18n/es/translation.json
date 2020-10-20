@@ -88,7 +88,8 @@
   "DATA_SHARING": {
     "SHARED_DATA": "Datos Compartidos",
     "WHO_CAN_ACCESS_DATA": "Quién puede acceder a estos datos",
-    "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}"
+    "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}",
+    "PREVIOUSLY_SHARED_DATA": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Datos de Formulario",
@@ -164,7 +165,8 @@
     "CREATE_REPORT": "Crear Informe de Actividad",
     "CREATE_USER": "Crear Usuario",
     "UPDATE_USER": "Actualizar Usuario",
-    "MANAGE_SHARED_DATA": "Administrar Datos Compartidos"
+    "MANAGE_SHARED_DATA": "Administrar Datos Compartidos",
+    "SEE_SHARED_DATA": ""
   },
   "TABLE": {
     "ADDRESS": "Dirección",

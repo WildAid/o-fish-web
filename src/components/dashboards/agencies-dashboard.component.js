@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-import moment from "moment";
 import Pagination from "@material-ui/lab/Pagination";
 
 import DatesRange from "./../partials/dates-range/dates-range.component";
@@ -33,10 +32,7 @@ class AgenciesDashboard extends Component {
     loading: true,
     page: 1,
     searchQuery: "",
-    currentFilter: {
-      agency: "",
-      date: { $gt: moment().subtract(7, "day").toDate() },
-    },
+    currentFilter: {},
   };
 
   handlePageChange = (e, page) => {
@@ -51,12 +47,10 @@ class AgenciesDashboard extends Component {
 
     this.setState(newState, () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
-
+console.log(limit, offset, searchQuery, currentFilter);
       agencyService
         .getAgencies(limit, offset, searchQuery, currentFilter)
         .then((data) => {
-
-          console.log(data);
           this.setState({
             loading: false,
             agencies: data.agencies,

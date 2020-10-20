@@ -116,7 +116,8 @@
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
       "NO_END_DATE": "No end date or time"
-    }
+    },
+    "PREVIOUSLY_SHARED_DATA": "Previously Shared Data"
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
@@ -197,7 +198,8 @@
     "SHARE_DATA": "Share Data",
     "STOP_SHARING": "Stop Sharing",
     "MANAGE_SHARED_DATA": "Manage Shared Data",
-    "CHOOSE_DATA": "Choose data"
+    "CHOOSE_DATA": "Choose data",
+    "SEE_SHARED_DATA": "See Shared Data"
   },
   "TABLE": {
     "ADDRESS": "Address",

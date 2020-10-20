@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 import CloseIcon from "@material-ui/icons/Close";
@@ -6,6 +6,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import ShareDataDialog from "./share-data-dialog/share-data-dialog";
 import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
 import StopSharingDialog from "./stop-sharing-dialog/stop-sharing-dialog";
+import ArchiveData from "./archive-data/archive-data";
+import LoadingPanel from "../../partials/loading-panel/loading-panel.component";
 
 import AgencyService from "./../../../services/agency.service";
 
@@ -25,9 +27,11 @@ class AgencyDataSharing extends Component {
     inBoundSuccess: false,
     outBoundSuccess: false,
     isDataManaging: true,
-    stopSharingWith: "",
-    currenctAgency: "",
+    currentAgency: "",
     manageSharingTo: "",
+    notArchivePartnerAgencies: "",
+    archivePartnerAgencies: "",
+    partnerAgenciesLoading: true,
   };
 
   showDialog = (dialogName, manageSharingTo = "", isDataManaging = false) => {
@@ -50,18 +54,35 @@ class AgencyDataSharing extends Component {
 
   stopSharing = (agency) => {
     let { _id, outboundPartnerAgencies } = agency;
-    const { stopSharingWith } = this.state;
+    const { manageSharingTo } = this.state;
 
     outboundPartnerAgencies = outboundPartnerAgencies.map((agency) => {
-      if (agency.name === stopSharingWith) {
-        agency.toDate = moment().toDate();
+      if (agency.name === manageSharingTo.name) {
+        agency.toDate = moment().subtract("seconds", 1).toDate();
       }
+
       return agency;
     });
+
+    const [
+      notArchivePartnerAgencies,
+      archivePartnerAgencies,
+    ] = this.filterArchiveAgencies(outboundPartnerAgencies);
+
     agencyService
       .updateAgency(_id, {
         ...agency,
         outboundPartnerAgencies,
+      })
+      .then(() => {
+        this.setState({
+          currentAgency: {
+            ...agency,
+            outboundPartnerAgencies,
+          },
+          notArchivePartnerAgencies,
+          archivePartnerAgencies,
+        });
       })
       .catch((error) => console.error(error));
 
@@ -75,7 +96,7 @@ class AgencyDataSharing extends Component {
 
   saveDialog = (startDate, endDate) => {
     let {
-      currenctAgency,
+      currentAgency,
       agencyToShareWith,
       isDataManaging,
       manageSharingTo,
@@ -89,13 +110,13 @@ class AgencyDataSharing extends Component {
       toDate: endDate ? moment(endDate).toDate() : null,
     };
 
-    if (currenctAgency.outboundPartnerAgencies) {
-      const selectedAgencyExist = currenctAgency.outboundPartnerAgencies.find(
+    if (currentAgency.outboundPartnerAgencies) {
+      const selectedAgencyExist = currentAgency.outboundPartnerAgencies.find(
         (agency) => agency.name === selectedAgency.name
       );
 
       if (selectedAgencyExist) {
-        outboundPartnerAgencies = currenctAgency.outboundPartnerAgencies.map(
+        outboundPartnerAgencies = currentAgency.outboundPartnerAgencies.map(
           (sharedWithAgency) => {
             if (sharedWithAgency.name === selectedAgency.name) {
               return outboundPartnerAgency;
@@ -105,7 +126,7 @@ class AgencyDataSharing extends Component {
         );
       } else {
         outboundPartnerAgencies = [
-          ...currenctAgency.outboundPartnerAgencies,
+          ...currentAgency.outboundPartnerAgencies,
           outboundPartnerAgency,
         ];
       }
@@ -113,16 +134,23 @@ class AgencyDataSharing extends Component {
       outboundPartnerAgencies = [outboundPartnerAgency];
     }
     const agencyThatSharingData = {
-      ...currenctAgency,
+      ...currentAgency,
       outboundPartnerAgencies,
     };
+
+    const [
+      notArchivePartnerAgencies,
+      archivePartnerAgencies,
+    ] = this.filterArchiveAgencies(outboundPartnerAgencies);
 
     agencyService
       .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
       .then(() =>
         this.setState({
           outBoundSuccess: true,
-          currenctAgency: agencyThatSharingData,
+          currentAgency: agencyThatSharingData,
+          notArchivePartnerAgencies,
+          archivePartnerAgencies,
         })
       )
       .catch((error) => {
@@ -133,7 +161,7 @@ class AgencyDataSharing extends Component {
 
     if (agencyToShareWith && !isDataManaging) {
       const inboundPartnerAgencies = [
-        { name: currenctAgency.name, triaged: false, agencyWideAccess: false },
+        { name: currentAgency.name, triaged: false, agencyWideAccess: false },
       ];
 
       const agencyThatGetsData = agencyToShareWith.inboundPartnerAgencies
@@ -169,6 +197,41 @@ class AgencyDataSharing extends Component {
     this.setState({ inBoundSuccess: false, outBoundSuccess: false });
   };
 
+  filterArchiveAgencies = (outboundPartnerAgencies) => {
+    if (outboundPartnerAgencies) {
+      const dateComparisonFn = (agency) =>
+        moment(agency.toDate).isBefore(moment());
+
+      let notArchivePartnerAgencies = outboundPartnerAgencies.filter(
+        (agency) => !dateComparisonFn(agency)
+      );
+      let archivePartnerAgencies = outboundPartnerAgencies.filter((agency) =>
+        dateComparisonFn(agency)
+      );
+
+      return [notArchivePartnerAgencies, archivePartnerAgencies];
+    }
+  };
+
+  filterSharedAgencies = (agencies, currentAgency) => {
+    const { outboundPartnerAgencies } = currentAgency;
+
+    if (currentAgency) {
+      let availableAgencies = agencies.filter((agency) => {
+        const shared = outboundPartnerAgencies
+          ? outboundPartnerAgencies.find(
+              (partnerAgency) => partnerAgency.name === agency.name
+            )
+          : null;
+        return (
+          !shared && agency.name !== currentAgency.name && agency.name !== ""
+        );
+      });
+
+      return availableAgencies;
+    }
+  };
+
   componentDidMount() {
     const { limit, offset } = this.state;
     const { agency } = this.props;
@@ -184,9 +247,27 @@ class AgencyDataSharing extends Component {
         console.error(error);
       });
 
-    this.setState({
-      currenctAgency: agency,
-    });
+    agencyService
+      .getAgencyByName(agency.name)
+      .then((data) => {
+        let notArchivePartnerAgencies, archivePartnerAgencies;
+
+        if (data.outboundPartnerAgencies) {
+          [
+            notArchivePartnerAgencies,
+            archivePartnerAgencies,
+          ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
+        }
+        this.setState({
+          partnerAgenciesLoading: false,
+          currentAgency: data,
+          notArchivePartnerAgencies,
+          archivePartnerAgencies,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -199,135 +280,65 @@ class AgencyDataSharing extends Component {
       outBoundSuccess,
       agencyToShareWith,
       isDataManaging,
-      currenctAgency,
+      currentAgency,
       manageSharingTo,
+      notArchivePartnerAgencies,
+      archivePartnerAgencies,
+      partnerAgenciesLoading,
     } = this.state;
     const { t } = this.props;
-    const succsessMessageShown = inBoundSuccess && outBoundSuccess;
+    const successMessageShown = inBoundSuccess && outBoundSuccess;
     const updateMessageShown = !inBoundSuccess && outBoundSuccess;
 
     return (
-      <div className="padding-bottom flex-column align-center form-data">
-        {succsessMessageShown && (
-          <div className="full-view flex-row margin-bottom justify-between">
-            <div className="flex-row justify-between relative success-message-box">
-              <div>
-                {t("DATA_SHARING.AGENCY_SUCCESS_MESSAGE", {
-                  agency: agencyToShareWith.name,
-                })}
+      <Fragment>
+        <div className="padding-bottom flex-column align-center form-data">
+          {successMessageShown && (
+            <div className="full-view flex-row margin-bottom justify-between">
+              <div className="flex-row justify-between relative success-message-box">
+                <div>
+                  {t("DATA_SHARING.AGENCY_SUCCESS_MESSAGE", {
+                    agency: agencyToShareWith.name,
+                  })}
+                </div>
+                <CloseIcon
+                  className="close-icon"
+                  onClick={this.removeSuccessMsg}
+                />
               </div>
-              <CloseIcon
-                className="close-icon"
-                onClick={this.removeSuccessMsg}
-              />
             </div>
-          </div>
-        )}
-        {updateMessageShown && (
-          <div className="full-view flex-row margin-bottom justify-between">
-            <div className="flex-row justify-between relative success-message-box">
-              <div>{t("DATA_SHARING.AGENCY_SUCCESS_UPDATE_MESSAGE")}</div>
-              <CloseIcon
-                className="close-icon"
-                onClick={this.removeSuccessMsg}
-              />
+          )}
+          {updateMessageShown && (
+            <div className="full-view flex-row margin-bottom justify-between">
+              <div className="flex-row justify-between relative success-message-box">
+                <div>{t("DATA_SHARING.AGENCY_SUCCESS_UPDATE_MESSAGE")}</div>
+                <CloseIcon
+                  className="close-icon"
+                  onClick={this.removeSuccessMsg}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        <div className="full-view white-bg box-shadow">
-          <div className="flex-row justify-between align-center">
-            <div className="flex-column">
-              <div className="header-name">{t("DATA_SHARING.SHARED_DATA")}</div>
-              {currenctAgency &&
-                currenctAgency.outboundPartnerAgencies &&
-                currenctAgency.outboundPartnerAgencies.length && (
-                  <div className="padding-left padding-bottom">
-                    {t("DATA_SHARING.FOLLOWING_AGENCIES", {
-                      agency: currenctAgency ? currenctAgency.name : "",
-                    })}
+          )}
+
+          {partnerAgenciesLoading ? (
+            <LoadingPanel />
+          ) : (
+            <div className="full-view white-bg box-shadow">
+              <div className="flex-row justify-between align-center">
+                <div className="flex-column">
+                  <div className="header-name">
+                    {t("DATA_SHARING.SHARED_DATA")}
                   </div>
-                )}
-            </div>
-            <button
-              className="blue-btn"
-              onClick={() => this.showDialog("shareDataDialog")}
-            >
-              {t("BUTTONS.SHARE_DATA")}
-            </button>
-          </div>
-          <div className="flex-row align-center margin-bottom full-view">
-            <table className="data-sharing-table custom-table">
-              <thead>
-                <tr className="row-head border-bottom">
-                  <td>{t("TABLE.AGENCY")}</td>
-                  <td>{t("DATA_SHARING.BOARDINGS_FROM")}</td>
-                  <td>{t("DATA_SHARING.BOARDINGS_TO")}</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {currenctAgency &&
-                currenctAgency.outboundPartnerAgencies &&
-                currenctAgency.outboundPartnerAgencies.length ? (
-                  currenctAgency.outboundPartnerAgencies.map((item, ind) => (
-                    <tr className="table-row row-body" key={ind}>
-                      <td>
-                        <div className="flex-row align-center">{item.name}</div>
-                      </td>
-                      <td>
-                        {item.fromDate
-                          ? `${moment(item.fromDate).format("L")} ${moment(
-                              item.fromDate
-                            ).format("LT")}`
-                          : t("WARNINGS.NO_START_DATE")}
-                      </td>
-                      <td>
-                        {item.toDate
-                          ? `${moment(item.toDate).format("L")} ${moment(
-                              item.toDate
-                            ).format("LT")}`
-                          : t("WARNINGS.NO_END_DATE")}
-                      </td>
-                      <td>
-                        <div
-                          className="pointer white-btn"
-                          onClick={() =>
-                            this.showDialog("manageDialogDisplayed", item, true)
-                          }
-                        >
-                          {t("BUTTONS.MANAGE_SHARED_DATA")}
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          className="blue-color pointer"
-                          onClick={() =>
-                            this.showDialog("stopSharingDialog", item)
-                          }
-                        >
-                          {t("BUTTONS.STOP_SHARING")}
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5">
-                      <div className="flex-row justify-center padding-top no-sharing-data">
-                        {t("DATA_SHARING.SHARING_DATA_WITH_ZERO_AGENCIES")}
+                  {currentAgency &&
+                    currentAgency.outboundPartnerAgencies &&
+                    currentAgency.outboundPartnerAgencies.length && (
+                      <div className="padding-left padding-bottom">
+                        {t("DATA_SHARING.FOLLOWING_AGENCIES", {
+                          agency: currentAgency ? currentAgency.name : "",
+                        })}
                       </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-          {currenctAgency &&
-            (!currenctAgency.outboundPartnerAgencies ||
-              (currenctAgency.outboundPartnerAgencies &&
-                !currenctAgency.outboundPartnerAgencies.length)) && (
-              <div className="flex-row justify-center">
+                    )}
+                </div>
                 <button
                   className="blue-btn"
                   onClick={() => this.showDialog("shareDataDialog")}
@@ -335,32 +346,124 @@ class AgencyDataSharing extends Component {
                   {t("BUTTONS.SHARE_DATA")}
                 </button>
               </div>
-            )}
-          {shareDataDialog && (
-            <ShareDataDialog
-              agencies={agencies}
-              onSubmit={this.showManagePopup}
-              onChangeAgency={this.onChangeAgency}
-              onCancel={() => this.cancelDialog("shareDataDialog", true)}
-            />
-          )}
-          {manageDialogDisplayed && (
-            <ManageSharedDataByGlobalAdmin
-              onCancel={() => this.cancelDialog("manageDialogDisplayed")}
-              onSave={this.saveDialog}
-              isDataManaging={isDataManaging}
-              agency={manageSharingTo}
-            />
-          )}
-          {stopSharingDialog && (
-            <StopSharingDialog
-              agencyName={manageSharingTo.name}
-              onSubmit={() => this.stopSharing(currenctAgency)}
-              onCancel={() => this.cancelDialog("stopSharingDialog")}
-            />
+
+              <div className="flex-row align-center margin-bottom full-view">
+                <table className="data-sharing-table custom-table">
+                  <thead>
+                    <tr className="row-head border-bottom">
+                      <td>{t("TABLE.AGENCY")}</td>
+                      <td>{t("DATA_SHARING.BOARDINGS_FROM")}</td>
+                      <td>{t("DATA_SHARING.BOARDINGS_TO")}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentAgency &&
+                    notArchivePartnerAgencies &&
+                    notArchivePartnerAgencies.length ? (
+                      notArchivePartnerAgencies.map((item, ind) => (
+                        <tr className="table-row row-body" key={ind}>
+                          <td>
+                            <div className="flex-row align-center">
+                              {item.name}
+                            </div>
+                          </td>
+                          <td>
+                            {item.fromDate
+                              ? `${moment(item.fromDate).format("L")} ${moment(
+                                  item.fromDate
+                                ).format("LT")}`
+                              : t("WARNINGS.NO_START_DATE")}
+                          </td>
+                          <td>
+                            {item.toDate
+                              ? `${moment(item.toDate).format("L")} ${moment(
+                                  item.toDate
+                                ).format("LT")}`
+                              : t("WARNINGS.NO_END_DATE")}
+                          </td>
+                          <td>
+                            <div
+                              className="pointer white-btn"
+                              onClick={() =>
+                                this.showDialog(
+                                  "manageDialogDisplayed",
+                                  item,
+                                  true
+                                )
+                              }
+                            >
+                              {t("BUTTONS.MANAGE_SHARED_DATA")}
+                            </div>
+                          </td>
+                          <td>
+                            <div
+                              className="blue-color pointer"
+                              onClick={() =>
+                                this.showDialog("stopSharingDialog", item)
+                              }
+                            >
+                              {t("BUTTONS.STOP_SHARING")}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">
+                          <div className="flex-row justify-center padding-top no-sharing-data">
+                            {t("DATA_SHARING.SHARING_DATA_WITH_ZERO_AGENCIES")}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {currentAgency &&
+                (!notArchivePartnerAgencies ||
+                  (notArchivePartnerAgencies &&
+                    !notArchivePartnerAgencies.length)) && (
+                  <div className="flex-row justify-center">
+                    <button
+                      className="blue-btn"
+                      onClick={() => this.showDialog("shareDataDialog")}
+                    >
+                      {t("BUTTONS.SHARE_DATA")}
+                    </button>
+                  </div>
+                )}
+              {shareDataDialog && (
+                <ShareDataDialog
+                  agencies={this.filterSharedAgencies(agencies, currentAgency)}
+                  onSubmit={this.showManagePopup}
+                  onChangeAgency={this.onChangeAgency}
+                  onCancel={() => this.cancelDialog("shareDataDialog", true)}
+                />
+              )}
+              {manageDialogDisplayed && (
+                <ManageSharedDataByGlobalAdmin
+                  onCancel={() => this.cancelDialog("manageDialogDisplayed")}
+                  onSave={this.saveDialog}
+                  isDataManaging={isDataManaging}
+                  agency={manageSharingTo}
+                />
+              )}
+              {stopSharingDialog && (
+                <StopSharingDialog
+                  agencyName={manageSharingTo.name}
+                  onSubmit={() => this.stopSharing(currentAgency)}
+                  onCancel={() => this.cancelDialog("stopSharingDialog")}
+                />
+              )}
+            </div>
           )}
         </div>
-      </div>
+        {archivePartnerAgencies && !!archivePartnerAgencies.length && (
+          <ArchiveData archiveAgencies={archivePartnerAgencies} />
+        )}
+      </Fragment>
     );
   }
 }
