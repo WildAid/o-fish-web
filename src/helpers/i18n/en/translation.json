@@ -90,11 +90,17 @@
     "BOARDINGS_FROM": "Boardings From",
     "BOARDINGS_TO": "To",
     "WHO_CAN_ACCESS_DATA": "Who can access this data",
-    "SHARING_DATA_WITH": "{{agency}} sharing data with {{sharingAgency}}",
-    "FOLLOWING_AGENCIES": "{{agency}} sharing data with the following agencies",
+    "SHARING_DATA_WITH": "Agencies sharing data with {{agency}}",
+    "FOLLOWING_AGENCIES": "{{agency}} is sharing boarding data with the following agencies",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
+<<<<<<< HEAD
     "AGENCY_ADMINS": "Agency admins",
     "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
+=======
+    "AGENCY_ADMINS": "Agency Admins",
+    "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
+    "AGENCY_SUCCESS_UPDATE_MESSAGE": "Shared data updated successfully",
+>>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
       "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
@@ -115,7 +121,12 @@
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
       "NO_END_DATE": "No end date or time"
+<<<<<<< HEAD
     }
+=======
+    },
+    "PREVIOUSLY_SHARED_DATA": "Previously Shared Data"
+>>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
@@ -196,7 +207,8 @@
     "SHARE_DATA": "Share Data",
     "STOP_SHARING": "Stop Sharing",
     "MANAGE_SHARED_DATA": "Manage Shared Data",
-    "CHOOSE_DATA": "Choose data"
+    "CHOOSE_DATA": "Choose data",
+    "SEE_SHARED_DATA": "See Shared Data"
   },
   "TABLE": {
     "ADDRESS": "Address",
