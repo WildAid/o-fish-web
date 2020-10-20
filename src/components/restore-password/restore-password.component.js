@@ -1,29 +1,22 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
-import { TextField } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
+import { TextField, Box } from "@material-ui/core";
 
-import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
-
-import history from "../../root/root.history";
 
 import "./restore-password.component.css";
 
-import { HOME_PAGE, GLOBAL_AGENCIES_PAGE, CHARTS_PAGE } from "../../root/root.constants";
-
-const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
-
 
 class RestorePassword extends Component {
   state = {
     error: null,
     loading: false,
+    success: false,
   };
 
-  handleLogin = (values) => {
+  handleReset = (values) => {
     this.setState({
       loading: true,
     });
@@ -31,11 +24,9 @@ class RestorePassword extends Component {
       .resetPasswordEmail(values.login).then(()=>{
         this.setState({
           loading: false,
+          success: true,
         });
       })
-    //       ? history.push(CHARTS_PAGE.replace(":id",authService.user.agency.name))
-    //       : history.push(HOME_PAGE);
-    //   })
       .catch((error) => {
         this.setState({
           error: error.message,
@@ -45,7 +36,7 @@ class RestorePassword extends Component {
   };
 
   render() {
-    const { error, loading } = this.state;
+    const { error, loading, success } = this.state;
     const { t } = this.props;
 
     return (
@@ -60,8 +51,8 @@ class RestorePassword extends Component {
               />
             </div>
             <Formik
-              initialValues={{ login: "", password: "" }}
-              onSubmit={this.handleLogin}
+              initialValues={{ login: "" }}
+              onSubmit={this.handleReset}
               render={({
                 touched,
                 errors,
@@ -75,9 +66,11 @@ class RestorePassword extends Component {
                   className="flex-column justify-around login-form"
                   onSubmit={handleSubmit}
                 >
-                  <strong>Enter your user account's email address and we will send you a password reset link.</strong>
+                  <Box fontWeight="fontWeightBold">
+                    Enter your user account's email address and we will send you a password reset link.
+                  </Box>
                   <TextField
-                    label={t("LOGIN_PAGE.EMAIL_USERNAME")}
+                    label="Email"
                     name="login"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
@@ -85,8 +78,10 @@ class RestorePassword extends Component {
                     value={values.login}
                   />
                   <div className="flex-row align-center justify-center btn-box">
-                    {loading ? (
-                      <div>{t("LOADING.LOGGIN_IN")}</div>
+                    {success ? (
+                      <div>A password reset link has been sent to your email.</div>
+                    ) : loading ? (
+                      <div>Sending password reset email...</div>
                     ) : (
                       <button className="blue-btn" type="submit">
                         Send password reset email

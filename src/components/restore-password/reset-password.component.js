@@ -2,18 +2,15 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
 
 import history from "../../root/root.history";
 
-import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
 import "./restore-password.component.css";
 
 import { LOGIN_PAGE } from "../../root/root.constants";
 
-const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
 
 class ResetPassword extends Component {
@@ -22,18 +19,20 @@ class ResetPassword extends Component {
     loading: false,
   };
 
-  handleLogin = (values) => {
+  handleResetPassword = (values) => {
     this.setState({
       loading: true,
+      error: null,
     });
     const url = window.location.hash.slice(window.location.hash.indexOf('?'));
     const params = new URLSearchParams(url);
 
     const token = params.get("token");
     const tokenId = params.get("tokenId");
-    const newPassword = values.password;
 
-    userService
+    if(values.password === values.confirmPassword) {
+      const newPassword = values.password; 
+      userService
       .resetPassword(token, tokenId, newPassword)
       .then(() => {
         this.setState({
@@ -47,6 +46,12 @@ class ResetPassword extends Component {
           loading: false,
         });
       });
+    } else {
+      this.setState({
+        error: "Passwords do not match. Please try again!",
+        loading: false,
+      });
+    }
   };
 
   render() {
@@ -65,8 +70,8 @@ class ResetPassword extends Component {
               />
             </div>
             <Formik
-              initialValues={{ login: "", password: "" }}
-              onSubmit={this.handleLogin}
+              initialValues={{ password: "", confirmPassword: "" }}
+              onSubmit={this.handleResetPassword}
               render={({
                 touched,
                 errors,
@@ -90,7 +95,7 @@ class ResetPassword extends Component {
                     value={values.password}
                   />
                   <TextField
-                    label="Confirm new password"
+                    label="Re-enter New Password"
                     name="confirm-password"
                     onBlur={handleBlur}
                     onChange={(e) =>
@@ -101,7 +106,7 @@ class ResetPassword extends Component {
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
-                      <div>{t("LOADING.LOGGIN_IN")}</div>
+                      <div>Setting up new password...</div>
                     ) : (
                       <button className="blue-btn" type="submit">
                         Change password
