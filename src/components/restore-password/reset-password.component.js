@@ -4,20 +4,19 @@ import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 
+import history from "../../root/root.history";
+
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
-import history from "../../root/root.history";
-
 import "./restore-password.component.css";
 
-import { HOME_PAGE, GLOBAL_AGENCIES_PAGE, CHARTS_PAGE } from "../../root/root.constants";
+import { LOGIN_PAGE } from "../../root/root.constants";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
 
-
-class RestorePassword extends Component {
+class ResetPassword extends Component {
   state = {
     error: null,
     loading: false,
@@ -27,15 +26,21 @@ class RestorePassword extends Component {
     this.setState({
       loading: true,
     });
+    const url = window.location.hash.slice(window.location.hash.indexOf('?'));
+    const params = new URLSearchParams(url);
+
+    const token = params.get("token");
+    const tokenId = params.get("tokenId");
+    const newPassword = values.password;
+
     userService
-      .resetPasswordEmail(values.login).then(()=>{
+      .resetPassword(token, tokenId, newPassword)
+      .then(() => {
         this.setState({
           loading: false,
         });
+        history.push(LOGIN_PAGE);
       })
-    //       ? history.push(CHARTS_PAGE.replace(":id",authService.user.agency.name))
-    //       : history.push(HOME_PAGE);
-    //   })
       .catch((error) => {
         this.setState({
           error: error.message,
@@ -75,21 +80,31 @@ class RestorePassword extends Component {
                   className="flex-column justify-around login-form"
                   onSubmit={handleSubmit}
                 >
-                  <strong>Enter your user account's email address and we will send you a password reset link.</strong>
+                  <strong>Please enter your new password.</strong>
                   <TextField
-                    label={t("LOGIN_PAGE.EMAIL_USERNAME")}
-                    name="login"
+                    label="New Password"
+                    name="password"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("login", e.target.value)}
-                    type="text"
-                    value={values.login}
+                    onChange={(e) => setFieldValue("password", e.target.value)}
+                    type="password"
+                    value={values.password}
+                  />
+                  <TextField
+                    label="Confirm new password"
+                    name="confirm-password"
+                    onBlur={handleBlur}
+                    onChange={(e) =>
+                      setFieldValue("confirmPassword", e.target.value)
+                    }
+                    type="password"
+                    value={values.confirmPassword}
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
                       <div>{t("LOADING.LOGGIN_IN")}</div>
                     ) : (
                       <button className="blue-btn" type="submit">
-                        Send password reset email
+                        Change password
                       </button>
                     )}
                   </div>
@@ -104,4 +119,4 @@ class RestorePassword extends Component {
   }
 }
 
-export default withTranslation("translation")(RestorePassword);
+export default withTranslation("translation")(ResetPassword);
