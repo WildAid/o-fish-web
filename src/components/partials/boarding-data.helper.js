@@ -188,12 +188,12 @@ export default class BoardingDataHelper {
     return Object.keys(collection);
   }
 
-  getCrewName(license) {
+  getCrewName(item) {
     let name;
     this.boardings.forEach((boarding) => {
       if (boarding.crew && boarding.crew.length) {
         for (let crew of boarding.crew) {
-          if (crew.license === license) {
+          if (crew.license === item || crew.name === item) {
             name = crew.name;
           }
         }

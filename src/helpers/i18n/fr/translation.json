@@ -96,6 +96,7 @@
     "AGENCY_ADMINS": "AGENCY ADMINS",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "SHARE BOARD DATA",
+      "MANAGE_DATA_SHARING_WITH": "MANAGE DATA SHARING WITH",
       "CHOOSE_DATA_TO_SHARE": "CHOOSE DATA TO SHARE",
       "TIME_FRAME": "TIME FRAME",
       "CHOOSE_DATES": "CHOOSE DATES",
@@ -113,6 +114,7 @@
       "VIOLATION_ISSUED_TO": "VIOLATION ISSUED TO",
       "SELECT_AGENCY": "SELECT AGENCY"
     }
+    "PREVIOUSLY_SHARED_DATA": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
@@ -194,6 +196,7 @@
     "STOP_SHARING": "Arrêter de Partager",
     "MANAGE_SHARED_DATA": "Gérer des Données Partagées",
     "CHOOSE_DATA": "Choisir des Données"
+    "SEE_SHARED_DATA": "SEE SHARED DATA"
   },
   "TABLE": {
     "ADDRESS": "Adresse",

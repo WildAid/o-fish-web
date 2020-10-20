@@ -168,59 +168,61 @@ class DataSharing extends Component {
                 {agency &&
                   t("DATA_SHARING.SHARING_DATA_WITH", { agency: agency.name })}
               </div>
-              <table className="data-sharing-table custom-table">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.AGENCY")}</td>
-                    <td>{t("DATA_SHARING.WHO_CAN_ACCESS_DATA")}</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {agency &&
-                  agency.inboundPartnerAgencies &&
-                  agency.inboundPartnerAgencies.length ? (
-                    agency.inboundPartnerAgencies.map((item, ind) => (
-                      <tr className="row-body " key={ind}>
-                        <td>
-                          <div
-                            className={`flex-row align-center relative ${
-                              item.triaged ? "" : "new-agency padding-left"
-                            }`}
-                          >
-                            {item.name}
-                          </div>
-                        </td>
-                        <td>
-                          {rightsLoader && item.name === sharingAgencyName ? (
-                            <LoadingPanel />
-                          ) : item.agencyWideAccess ? (
-                            t("NAVIGATION.ALL_USERS")
-                          ) : (
-                            t("DATA_SHARING.AGENCY_ADMINS")
-                          )}
-                        </td>
-                        <td>
-                          <div
-                            className="pointer white-btn"
-                            onClick={() => this.showDialog(item)}
-                          >
-                            {t("BUTTONS.MANAGE_SHARED_DATA")}
+              <div className="flex-row align-center margin-bottom full-view">
+                <table className="data-sharing-table custom-table">
+                  <thead>
+                    <tr className="table-row row-head border-bottom">
+                      <td>{t("TABLE.AGENCY")}</td>
+                      <td>{t("DATA_SHARING.WHO_CAN_ACCESS_DATA")}</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {agency &&
+                    agency.inboundPartnerAgencies &&
+                    agency.inboundPartnerAgencies.length ? (
+                      agency.inboundPartnerAgencies.map((item, ind) => (
+                        <tr className="row-body table-row" key={ind}>
+                          <td>
+                            <div
+                              className={`flex-row align-center relative ${
+                                item.triaged ? "" : "new-agency padding-left"
+                              }`}
+                            >
+                              {item.name}
+                            </div>
+                          </td>
+                          <td>
+                            {rightsLoader && item.name === sharingAgencyName ? (
+                              <LoadingPanel />
+                            ) : item.agencyWideAccess ? (
+                              t("NAVIGATION.ALL_USERS")
+                            ) : (
+                              t("DATA_SHARING.AGENCY_ADMINS")
+                            )}
+                          </td>
+                          <td>
+                            <div
+                              className="pointer white-btn"
+                              onClick={() => this.showDialog(item)}
+                            >
+                              {t("BUTTONS.MANAGE_SHARED_DATA")}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5">
+                          <div className="flex-row justify-center padding-top padding-bottom no-sharing-data">
+                            {t("DATA_SHARING.SHARING_DATA_WITH_ZERO_AGENCIES")}
                           </div>
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5">
-                        <div className="flex-row justify-center padding-top padding-bottom no-sharing-data">
-                          {t("DATA_SHARING.SHARING_DATA_WITH_ZERO_AGENCIES")}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
             {dialogDisplayed && (
               <ManageSharedDataDialog

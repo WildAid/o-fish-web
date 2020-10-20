@@ -3,7 +3,7 @@ import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router";
 
 import history from "../../root/root.history";
-import { getHighlightedText } from "./../../helpers/get-data";
+import { getHighlightedText, getSharedAgenciesList } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -14,6 +14,7 @@ import BoardingsTable from "./boardings-table/boardings-table.component";
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
+import AuthService from "../../services/auth.service";
 
 import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
@@ -22,6 +23,7 @@ import "./boardings.css";
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
 const boardingService = BoardingService.getInstance();
+const authService = AuthService.getInstance();
 
 const boardingsChartOptions = {
   width: "100%",
@@ -183,15 +185,30 @@ class Boardings extends Component {
     history.push(NEW_BOARDING_PAGE);
   };
 
-  loadData(newState) {
+  loadData = (newState) => {
     newState = newState || {};
     newState.loading = true;
 
-    this.setState(newState, () => {
+    this.setState(newState, async () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
 
+      const isNotGlobalAdmin =
+        authService.user &&
+        authService.user.global &&
+        !authService.user.global.admin;
+
+      const agenciesToShareData = isNotGlobalAdmin
+        ? await getSharedAgenciesList(authService.user.agency.name, authService.user)
+        : null;
+
       boardingService
-        .getBoardingsWithFacet(limit, offset, searchQuery, currentFilter)
+        .getBoardingsWithFacet(
+          limit,
+          offset,
+          searchQuery,
+          currentFilter,
+          agenciesToShareData
+        )
         .then((data) => {
           this.setState({
             loading: false,
@@ -206,7 +223,7 @@ class Boardings extends Component {
           console.error(error);
         });
     });
-  }
+  };
 
   componentDidMount() {
     if (this.props.match.params.filter) {

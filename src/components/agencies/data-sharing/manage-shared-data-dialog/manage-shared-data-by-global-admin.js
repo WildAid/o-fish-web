@@ -31,8 +31,8 @@ class ManageSharedDataByGlobalAdmin extends Component {
   };
 
   disableCalendarIfEndDate = () => {
-    const { isEndDate, isToDateShown } = this.state;
-    if (!isEndDate) {
+    const { isEndDate, isToDateShown, endDate } = this.state;
+    if (!isEndDate && endDate) {
       this.setState({ isToDateShown: !isToDateShown });
     }
   };
@@ -55,8 +55,26 @@ class ManageSharedDataByGlobalAdmin extends Component {
     chooseDate ? onSave(startDate, endDate) : onSave(null, null);
   };
 
+  componentDidMount() {
+    const { isDataManaging, agency } = this.props;
+    this.setState({
+      chooseDate: isDataManaging,
+    });
+    if (isDataManaging) {
+      this.setState({
+        startDate: agency.fromDate,
+        endDate: agency.toDate,
+      });
+    }
+  }
+
   render() {
-    const { t, onCancel, isDataManaging, agencyName } = this.props;
+    const {
+      t,
+      onCancel,
+      isDataManaging,
+      agency: { name },
+    } = this.props;
     const {
       activeTabIndex,
       chooseDate,
@@ -75,7 +93,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
               {isDataManaging
                 ? t(
                     "DATA_SHARING.MANAGE_SHARED_DATA.MANAGE_DATA_SHARING_WITH",
-                    { agency: agencyName }
+                    { agency: name }
                   )
                 : t("DATA_SHARING.MANAGE_SHARED_DATA.SHARE_BOARDING_DATA")}
             </h1>
@@ -94,7 +112,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
-                  defaultChecked
+                  defaultChecked={!isDataManaging}
                   onChange={() => this.setState({ chooseDate: false })}
                 />
                 <span className="checkmark"></span>
@@ -104,6 +122,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
+                  defaultChecked={isDataManaging}
                   onChange={() =>
                     this.setState({
                       chooseDate: true,
@@ -156,7 +175,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                           onChange={(date) => this.handleDateChanging("", date)}
                           onError={console.log}
                           format="yyyy/MM/DD"
-                          disabled={isEndDate}
+                          disabled={isEndDate || !endDate}
                         />
                         <TimePicker
                           className="time-picker"
@@ -165,13 +184,14 @@ class ManageSharedDataByGlobalAdmin extends Component {
                           label="Time"
                           value={endDate}
                           onChange={(date) => this.handleDateChanging("", date)}
-                          disabled={isEndDate}
+                          disabled={isEndDate || !endDate}
                         />
                       </div>
                       <div className="flex-row align-center padding-left">
                         <input
                           className="dialog-checkbox"
                           type="checkbox"
+                          defaultChecked={!isEndDate && !endDate}
                           onChange={() => {
                             if (endDate) {
                               this.setState({

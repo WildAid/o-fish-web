@@ -7,7 +7,8 @@ import { withTranslation } from "react-i18next";
 import {
   getColor,
   getHighlightedText,
-  goCrewViewPage
+  goCrewViewPage,
+  getSharedAgenciesList
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -17,11 +18,13 @@ import SearchResultsFor from "./../partials/search-results-for/search-results-fo
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
+import AuthService from "../../services/auth.service";
 
 import "./crew.css";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
+const authService = AuthService.getInstance();
 
 const filterConfiguration = {
   Risk: [
@@ -116,7 +119,7 @@ const filterConfiguration = {
       field: "captain.lastName",
       title: "Captain name",
     },
-  ]
+  ],
 };
 
 class Crew extends Component {
@@ -134,7 +137,7 @@ class Crew extends Component {
     loading: false,
     currentFilter: null,
     page: 1,
-    mounted: false
+    mounted: false,
   };
 
   search = (value) => {
@@ -160,11 +163,11 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    if (this.props.match.params.filter){
+    if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
-      this.loadData({mounted: true, currentFilter: filter});
+      this.loadData({ mounted: true, currentFilter: filter });
     } else {
-      this.loadData({mounted: true});
+      this.loadData({ mounted: true });
     }
   }
 
@@ -245,13 +248,30 @@ class Crew extends Component {
     );
   }
 
-  loadData(newState) {
+  loadData = (newState) => {
     newState = newState ? newState : {};
     newState.loading = true;
-    this.setState(newState, () => {
+
+    this.setState(newState, async () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
+
+      const isNotGlobalAdmin =
+        authService.user &&
+        authService.user.global &&
+        !authService.user.global.admin;
+
+      const agenciesToShareData = isNotGlobalAdmin
+        ? await getSharedAgenciesList(authService.user.agency.name, authService.user)
+        : null;
+
       stitchService
-        .getCrewsWithFacet(limit, offset, searchQuery, currentFilter)
+        .getCrewsWithFacet(
+          limit,
+          offset,
+          searchQuery,
+          currentFilter,
+          agenciesToShareData
+        )
         .then((data) => {
           const dataSource = searchQuery
             ? this.prepareSearchResultData(data.crew)
@@ -270,7 +290,7 @@ class Crew extends Component {
           console.error(error);
         });
     });
-  }
+  };
 
   render() {
     const {
@@ -281,122 +301,124 @@ class Crew extends Component {
       highlighted,
       searchQuery,
       page,
-      mounted
+      mounted,
     } = this.state;
 
     const { t } = this.props;
 
-    return mounted && (
-      <div className="padding-bottom flex-column align-center">
-        <SearchPanel
-          handler={this.search}
-          value={searchQuery}
-          isAutofill={false}
-        />
-        <div className="flex-row justify-between standard-view">
-          {loading ? (
-            <div className="items-amount">{t("LOADING.LOADING")}</div>
-          ) : (
-            <SearchResultsFor
-              query={searchQuery}
-              total={`${total} ${t("SEARCH.CREW_MEMBERS")} `}
-            />
-          )}
-          <FilterPanel
-            options={{ searchByFilter: true }}
-            configuration={filterConfiguration}
-            onFilterChanged={this.handleFilterChanged}
+    return (
+      mounted && (
+        <div className="padding-bottom flex-column align-center">
+          <SearchPanel
+            handler={this.search}
+            value={searchQuery}
+            isAutofill={false}
           />
-        </div>
-        {crew && crew.length && !loading ? (
-          <Fragment>
-            <div className="table-wrapper">
-              <table className="custom-table">
-                <thead>
-                  <tr className="table-row row-head border-bottom">
-                    <td>{t("TABLE.NAME")}</td>
-                    <td>{t("TABLE.LICENSE_NUMBER")}</td>
-                    <td>{t("TABLE.VESSEL")}</td>
-                    <td>{t("TABLE.VIOLATIONS")}</td>
-                    <td>{t("TABLE.LAST_BOARDED")}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {crew.map((item, ind) => (
-                    <tr
-                      className="table-row row-body"
-                      key={ind}
-                      onClick={() =>
-                        goCrewViewPage(item)
-                      }
-                    >
-                      <td>
-                        <div className="flex-row align-center">
-                          <div className="crew-name">
-                            <Highlighter
-                              highlightClassName="highlighted"
-                              searchWords={highlighted}
-                              autoEscape={true}
-                              textToHighlight={item.name}
-                            />
-                          </div>
-                          {item.rank === "captain" && (
-                            <div className="captain-icon">
-                              {t("TABLE.CAPTAIN").toUpperCase()}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <Highlighter
-                          highlightClassName="highlighted"
-                          searchWords={highlighted}
-                          autoEscape={true}
-                          textToHighlight={item.license}
-                        />
-                      </td>
-                      <td>{[...new Set(item.vessels)].slice(0, 4).join(",")}</td>
-                      <td>
-                        {item && item.violations ? item.violations : "N/A"}
-                      </td>
-                      <td>
-                        <div className="flex-row">
-                          <div className="delivery-date">
-                            {moment(item.date).format("LLL")}
-                          </div>
-                          <div
-                            className="risk-icon"
-                            style={{
-                              background: `${getColor(
-                                (item.safetyLevel && item.safetyLevel.level
-                                  ? item.safetyLevel.level.toLowerCase()
-                                  : item.safetyLevel
-                                ).toLowerCase()
-                              )}`,
-                            }}
-                          ></div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {total > limit && (
-              <Pagination
-                page={page}
-                count={Math.ceil(total / limit)}
-                shape="rounded"
-                onChange={this.handlePageChange}
+          <div className="flex-row justify-between standard-view">
+            {loading ? (
+              <div className="items-amount">{t("LOADING.LOADING")}</div>
+            ) : (
+              <SearchResultsFor
+                query={searchQuery}
+                total={`${total} ${t("SEARCH.CREW_MEMBERS")} `}
               />
             )}
-          </Fragment>
-        ) : loading ? (
-          <LoadingPanel></LoadingPanel>
-        ) : (
-          t("WARNINGS.NO_CREW")
-        )}
-      </div>
+            <FilterPanel
+              options={{ searchByFilter: true }}
+              configuration={filterConfiguration}
+              onFilterChanged={this.handleFilterChanged}
+            />
+          </div>
+          {crew && crew.length && !loading ? (
+            <Fragment>
+              <div className="table-wrapper">
+                <table className="custom-table">
+                  <thead>
+                    <tr className="table-row row-head border-bottom">
+                      <td>{t("TABLE.NAME")}</td>
+                      <td>{t("TABLE.LICENSE_NUMBER")}</td>
+                      <td>{t("TABLE.VESSEL")}</td>
+                      <td>{t("TABLE.VIOLATIONS")}</td>
+                      <td>{t("TABLE.LAST_BOARDED")}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {crew.map((item, ind) => (
+                      <tr
+                        className="table-row row-body"
+                        key={ind}
+                        onClick={() => goCrewViewPage(item)}
+                      >
+                        <td>
+                          <div className="flex-row align-center">
+                            <div className="crew-name">
+                              <Highlighter
+                                highlightClassName="highlighted"
+                                searchWords={highlighted}
+                                autoEscape={true}
+                                textToHighlight={item.name}
+                              />
+                            </div>
+                            {item.rank === "captain" && (
+                              <div className="captain-icon">
+                                {t("TABLE.CAPTAIN").toUpperCase()}
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <Highlighter
+                            highlightClassName="highlighted"
+                            searchWords={highlighted}
+                            autoEscape={true}
+                            textToHighlight={item.license}
+                          />
+                        </td>
+                        <td>
+                          {[...new Set(item.vessels)].slice(0, 4).join(",")}
+                        </td>
+                        <td>
+                          {item && item.violations ? item.violations : "N/A"}
+                        </td>
+                        <td>
+                          <div className="flex-row">
+                            <div className="delivery-date">
+                              {moment(item.date).format("LLL")}
+                            </div>
+                            <div
+                              className="risk-icon"
+                              style={{
+                                background: `${getColor(
+                                  (item.safetyLevel && item.safetyLevel.level
+                                    ? item.safetyLevel.level.toLowerCase()
+                                    : item.safetyLevel
+                                  ).toLowerCase()
+                                )}`,
+                              }}
+                            ></div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {total > limit && (
+                <Pagination
+                  page={page}
+                  count={Math.ceil(total / limit)}
+                  shape="rounded"
+                  onChange={this.handlePageChange}
+                />
+              )}
+            </Fragment>
+          ) : loading ? (
+            <LoadingPanel></LoadingPanel>
+          ) : (
+            t("WARNINGS.NO_CREW")
+          )}
+        </div>
+      )
     );
   }
 }
