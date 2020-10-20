@@ -79,7 +79,7 @@ class ViewAgency extends Component {
             {loading ? (
               t("LOADING.LOADING")
             ) : (
-]                <Fragment>
+                <Fragment>
                   <div className="item-label">{t("TABLE.AGENCY")}</div>
                   <div className="item-name">{agencyInfo.agency}</div>
                   <div className="font-16">{agencyInfo.description}</div>
