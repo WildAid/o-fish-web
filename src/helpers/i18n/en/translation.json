@@ -114,7 +114,7 @@
       "ELECTRONIC_SYSTEM": "Electronic Monitoring System",
       "RESULT_OF_VIOLATION": "Result of Violation",
       "VIOLATION_ISSUED_TO": "Violation Issued To",
-      "SELECT_AGENCY": "Select an agency to share boarding data with"
+      "SELECT_AGENCY": "Select an agency to share boarding data with",
       "NO_END_DATE": "No end date or time"
     },
     "PREVIOUSLY_SHARED_DATA": "Previously Shared Data"
