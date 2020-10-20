@@ -28,10 +28,7 @@ class BasicInfoSection extends Component {
         <section className="box-shadow padding white-bg margin-top">
           <h3>{t("FILTER.MAIN.BOARDING_INFO.LOCATION")}</h3>
           <div className="chart-container">
-            <ChartBox
-              options={boardingChartOptions}
-              className="with-map"
-            />
+            <ChartBox options={boardingChartOptions} className="with-map" />
           </div>
           <div className="flex-row justify-between">
             <TextField
@@ -41,7 +38,7 @@ class BasicInfoSection extends Component {
               value={location[1]}
             />
             <TextField
-              label={t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
+              label={t("BOARDING_PAGE.VIEW_BOARDING.LONGITUDE")}
               className="half-row-view"
               name="time"
               value={location[0]}

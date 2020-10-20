@@ -61,7 +61,7 @@
       "BOARDING": "Embarque",
       "LAST_MODIFIED": "Última Modificación el",
       "LATITUDE": "Latitud",
-      "LONGTITUDE": "Longitud",
+      "LONGITUDE": "Longitud",
       "STATUS": "Nombre del barco",
       "DELIVERY_DATE": "Última fecha de entrega",
       "LICENSE_NUMBER": "Número de licencia",
@@ -135,7 +135,7 @@
     "SEE_ALL_RESULTS": "Ver todos los resultados de '{{searchQuery}}'"
   },
   "LOADING": {
-    "LOGGIN_IN": "Iniciando sesión...",
+    "LOGGING_IN": "Iniciando sesión...",
     "LOADING": "Cargando..."
   },
   "BUTTONS": {
@@ -236,7 +236,7 @@
         "NAME": "Riesgos"
       }
     },
-    "DATES_RANGE":{
+    "DATES_RANGE": {
       "RANGE": "Rango de Fechas",
       "LAST7DAYS": "Últimos 7 días",
       "LAST30DAYS": "Últimos 30 días",
@@ -251,13 +251,13 @@
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Especies",
-    "FISHERIES" : "Pesca",
-    "CATCHES" : "Capturas",
-    "ACTIVITIES" : "Actividades",
-    "GEAR" : "Equipo",
-    "ADD_SPECIE" : "Añadir especie",
-    "ADD_ANOTHER" : "Añadir otro"
+    "SPECIES": "Especies",
+    "FISHERIES": "Pesca",
+    "CATCHES": "Capturas",
+    "ACTIVITIES": "Actividades",
+    "GEAR": "Equipo",
+    "ADD_SPECIE": "Añadir especie",
+    "ADD_ANOTHER": "Añadir otro"
   },
   "ADMINS": {
     "GLOBAL": "Administrador Global",
@@ -270,7 +270,7 @@
     "NOT_UNAUTHORIZED": "No estás autorizado",
     "NO_BOARDINGS": "No se encontraron embarques",
     "NO_AGENCIES": "No se encontraron agencias",
-    "NO_OFFICERS":"No se encontraron oficiales",
+    "NO_OFFICERS": "No se encontraron oficiales",
     "NO_CATCHES": "No se encontraron capturas",
     "NO_VESSELS": "No se encontraron embarcaciones",
     "NO_CREW": "No se encontraron miembros de la tripulación",

@@ -94,8 +94,10 @@
     "FOLLOWING_AGENCIES": "{{agency}} sharing data with the following agencies",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
     "AGENCY_ADMINS": "Agency admins",
+    "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
+      "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
       "CHOOSE_DATA_TO_SHARE": "Choose data to share",
       "TIME_FRAME": "Time Frame",
       "CHOOSE_DATES": "Choose dates",
@@ -111,7 +113,8 @@
       "ELECTRONIC_SYSTEM": "Electronic Monitoring System",
       "RESULT_OF_VIOLATION": "Result of Violation",
       "VIOLATION_ISSUED_TO": "Violation Issued To",
-      "SELECT_AGENCY": "Select an agency to share boarding data with"
+      "SELECT_AGENCY": "Select an agency to share boarding data with",
+      "NO_END_DATE": "No end date or time"
     }
   },
   "AGENCY_PAGE": {
