@@ -12,10 +12,9 @@ import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
 
 import AgencyFormData from "../form-data/form-data.js"
-import AgencyDataSharing from "../data-sharing/data-sharing.js"
+import AgencyDataSharing from "../data-sharing/data-sharing.js";
 import UserPhoto from "../../partials/user-photo/user-photo.component";
 import Highlighter from "react-highlight-words";
-
 
 import "./view-agency.css";
 
@@ -255,7 +254,7 @@ class ViewAgency extends Component {
             )}
             {2 === activeTab && (
               <div className="full-view agency-tab-content">
-                <AgencyFormData agency={agency} />
+                <AgencyFormData agency={agencyInfo}></AgencyFormData>
               </div>
             )}
             {3 === activeTab && (

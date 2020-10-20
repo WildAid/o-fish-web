@@ -193,9 +193,10 @@
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",
+    "ADD_NEW_USER": "Add New User",
+    "MANAGE_SHARED_DATA": "Manage Shared Data",
     "SHARE_DATA": "Share Data",
     "STOP_SHARING": "Stop Sharing",
-    "MANAGE_SHARED_DATA": "Manage Shared Data",
     "CHOOSE_DATA": "Choose data"
   },
   "TABLE": {
