@@ -57,7 +57,7 @@ class FieldDashboard extends Component {
         .getBoardingsWithFacet(limit, offset, searchQuery, {
           ...currentFilter,
           "reportingOfficer.email": authService.user.email,
-        })
+        }, null)
         .then((data) => {
           agencyService.getStats(searchQuery, {
             ...currentFilter,
