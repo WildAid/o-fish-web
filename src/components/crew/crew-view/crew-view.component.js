@@ -51,12 +51,14 @@ class CrewViewPage extends Component {
 
   componentDidMount() {
     const filter = JSON.parse(this.props.match.params.filter);
-    const isCaptain =  filter["captain.license"] !== undefined;
-    let licenseNumber;
+    const isCaptain =  filter["captain.license"] !== undefined || filter["captain.name"] !== undefined;
+    let licenseNumber, captainName, crewName;
     if (isCaptain){
       licenseNumber = filter["captain.license"]
+      captainName = filter["captain.name"]
     } else {
       licenseNumber = filter["crew.license"];
+      crewName = filter["crew.name"]
     }
     this.setState({ loading: true }, () => {
       overviewService
@@ -73,8 +75,8 @@ class CrewViewPage extends Component {
             notes: dataHelper.getNotes(licenseNumber),
             captainName: dataHelper.getCaptainName(licenseNumber),
             crewName: isCaptain ?
-              dataHelper.getCaptainName(licenseNumber):
-              dataHelper.getCrewName(licenseNumber),
+              dataHelper.getCaptainName(licenseNumber || captainName):
+              dataHelper.getCrewName(licenseNumber || crewName),
             photos: dataHelper.getPhotos(licenseNumber),
           };
 
