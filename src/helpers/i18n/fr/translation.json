@@ -90,7 +90,7 @@
     "BOARDINGS_FROM": "BOARDINGS FROM",
     "BOARDINGS_TO": "À",
     "WHO_CAN_ACCESS_DATA": "Qui peut accéder aux données",
-    "SHARING_DATA_WITH": "{{agency}} informe {{sharingAgency}}",
+    "SHARING_DATA_WITH": "Agences partagent des données avec {{agency}}",
     "FOLLOWING_AGENCIES": "FOLLOWING AGENCIES",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "SHARING DATA WITH ZERO AGENCIES",
     "AGENCY_ADMINS": "AGENCY ADMINS",
