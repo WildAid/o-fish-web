@@ -70,6 +70,12 @@ class FilterPanel extends Component {
           }
           //{"$date": item.value};
           break;
+        case "violation":
+          filterObject = {$or: [
+            {"inspection.summary.violations.offence.code": {$regex: item.value, $options: "i"}},
+            {"inspection.summary.violations.offence.explanation": {$regex: item.value, $options: "i"}},
+          ]};
+          break;
         //TODO: Use Other field types
         default:
           filterObject[item.field ? item.field : item.name] = item.value;
@@ -148,7 +154,7 @@ class FilterPanel extends Component {
 
   render() {
     const { isFilterPanelShown, filterParts } = this.state;
-    const { options, configuration, t } = this.props;
+    const { options, configuration } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
 
     return (
@@ -169,15 +175,8 @@ class FilterPanel extends Component {
           ))}
         </div>
         <div className="relative">
-          <div className="filter-btn blue-btn" onClick={this.showFilter}>
-            {options && options.buttonTitle
-              ? options.buttonTitle
-              : t("FILTER.FILTER")}
-            <img
-              className="custom-down-arrow"
-              src={require("../../../assets/angle-arrow-down.svg")}
-              alt="no arrow img"
-            />
+        <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
+            <span class="material-icons icon-font">filter_alt</span> { filterParts.length ? `(${filterParts.length})` : "" }
           </div>
           <div
             className={

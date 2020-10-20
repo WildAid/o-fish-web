@@ -16,6 +16,7 @@ import AgencyDataSharing from "../data-sharing/data-sharing.js"
 import UserPhoto from "../../partials/user-photo/user-photo.component";
 import Highlighter from "react-highlight-words";
 
+
 import "./view-agency.css";
 
 const agencyService = AgencyService.getInstance();
@@ -23,13 +24,14 @@ const authService = AuthService.getInstance();
 
 class ViewAgency extends Component {
   state = {
-    agencyInfo: {
+    agencyAdditionalInfo: {
       officers: [],
       catches: [],
       violations: [],
     },
+    agency: {},
     activeTab: 1,
-    loading: false
+    loading: false,
   };
 
   handleChangeTab = (newTab) => {
@@ -50,11 +52,8 @@ class ViewAgency extends Component {
       agencyService
         .getAgency(id)
         .then((data) => {
-
-          const agencyInfo = { ...data, ...this.state.agencyInfo };
-
           this.setState({
-            agencyInfo,
+            agency: data,
             loading: false,
           });
         })
@@ -65,49 +64,57 @@ class ViewAgency extends Component {
   }
 
   render() {
-    const { agencyInfo, activeTab, loading, isFocused, total, limit, page } = this.state;
+    const { agencyAdditionalInfo, agency, activeTab, loading, isFocused, total, limit, page } = this.state;
 
     const { t } = this.props;
     const isGlobalAdmin = authService.user.global.admin;
     const isAgencyAdmin = authService.user.agency.admin;
-    const isFieldOfficer =
-      !authService.user.global.admin && !authService.user.agency.admin;
+    const isFieldOfficer =!authService.user.global.admin && !authService.user.agency.admin;
+    
+    const status = agency.active ? "active" : "inactive";
 
     return (
       <div className="padding-bottom flex-column align-center">
-        <div className="flex-row justify-between standard-view border-bottom agency-header">
+        <div className="flex-row justify-between standard-view agency-header">
           <div className="flex-column">
             {loading ? (
               t("LOADING.LOADING")
             ) : (
-                <Fragment>
-                  <div className="item-label">{t("TABLE.AGENCY")}</div>
-                  <div className="item-name">{agencyInfo.agency}</div>
-                  <div className="font-16">{agencyInfo.description}</div>
-                  <div className="flex-row agency-box">
-                    <div className="agency-box-img">
-                      <img
-                        className="icon"
-                        src={require("../../../assets/site-icon.png")}
-                        alt="no logo"
-                      />
-                    </div>
-                    {agencyInfo.site}
+              <Fragment>
+                <div className="blue-color font-16">
+                  {t("NAVIGATION.AGENCIES")}
+                </div>
+                <div className="flex-row align-center">
+                  <div className="agency-name">{agency.name}</div>
+                  <div className={`status-icon ${status}-status-icon`}>
+                    {status}
                   </div>
-                  <div className="flex-row agency-box">
-                    <div className="agency-box-img">
-                      <img
-                        className="icon"
-                        src={require("../../../assets/email-icon.png")}
-                        alt="no logo"
-                      />
-                    </div>
-                    {agencyInfo.email}
+                </div>
+                <div className="font-16">{agency.description}</div>
+                <div className="flex-row agency-box">
+                  <div className="agency-box-img">
+                    <img
+                      className="icon"
+                      src={require("../../../assets/site-icon.png")}
+                      alt="no logo"
+                    />
                   </div>
-                </Fragment>
-              )}
+                  {agency.site}
+                </div>
+                <div className="flex-row agency-box">
+                  <div className="agency-box-img">
+                    <img
+                      className="icon"
+                      src={require("../../../assets/email-icon.png")}
+                      alt="no logo"
+                    />
+                  </div>
+                  {agency.email}
+                </div>
+              </Fragment>
+            )}
           </div>
-          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agencyInfo._id)}>
+          <NavLink to={EDIT_AGENCIES_PAGE.replace(":id", agency._id)}>
             <button className="blue-btn">{t("BUTTONS.EDIT_AGENCY")}</button>
           </NavLink>
         </div>
@@ -141,7 +148,7 @@ class ViewAgency extends Component {
                 <div className="flex-row align-center justify-between agency-info-box">
 
                   <div className="table-name margin-left">
-                    {`${agencyInfo.officers.length} ${t("TABLE.OFFICERS")}`}
+                    {`${agencyAdditionalInfo.officers.length} ${t("TABLE.OFFICERS")}`}
                   </div>
 
                   <div className="flex-row align-center justify-between">
@@ -171,7 +178,7 @@ class ViewAgency extends Component {
                     </NavLink>
                   </div>
                 </div>
-                {agencyInfo.officers ? (
+                {agencyAdditionalInfo.officers ? (
                   <div className="margin-left margin-right">
                     <div className="margin-bottom">
                     <table className="custom-table">
@@ -184,7 +191,7 @@ class ViewAgency extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {agencyInfo.officers.map((officer, ind) => {
+                        {agencyAdditionalInfo.officers.map((officer, ind) => {
                           const status = officer.active ? "active" : "inactive";
                           return (
                             <tr className="table-row" key={ind}>
@@ -247,13 +254,13 @@ class ViewAgency extends Component {
               </div>
             )}
             {2 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
-                <AgencyFormData agency={agencyInfo}></AgencyFormData>
+              <div className="full-view agency-tab-content">
+                <AgencyFormData agency={agency} />
               </div>
             )}
             {3 === activeTab && (
-              <div className="full-view white-bg box-shadow agency-tab-content">
-                <AgencyDataSharing agency={agencyInfo}></AgencyDataSharing>
+              <div className="full-view agency-tab-content">
+                <AgencyDataSharing agency={agency} />
               </div>
             )}
           </div>

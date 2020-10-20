@@ -1,0 +1,288 @@
+{
+  "LOGIN_PAGE": {
+    "LOGIN": "Iniciar sesión",
+    "FORGOT_PASSWORD": "¿Olvidó la Contraseña?",
+    "EMAIL_USERNAME": "Email/Usuario:",
+    "PASSWORD": "Contraseña"
+  },
+  "NAVIGATION": {
+    "MY_DASHBOARD": "Mi Panel",
+    "DASHBOARD": "Paneles",
+    "USER_GROUP": "Grupos de Usuarios",
+    "BOARDING_RECORDS": "Registros de embarque",
+    "USERS": "Usuarios",
+    "AGENCIES": "Agencias",
+    "AGENCIES_DASHBOARD": "Panel Agencia",
+    "GLOBAL_DASHBOARD": "Panel Global",
+    "BOARDINGS": "Embarques",
+    "VESSELS": "Barcos",
+    "CREW": "Tripulación",
+    "ALL_USERS": "Todos Los Usuarios",
+    "ADD_NEW_USER": "Añadir Usuario",
+    "ALL_AGENCIES": "Todas las Agencias",
+    "CREATE_NEW_AGENCY": "Añadir Agencia",
+    "ACCOUNT": "Mi Cuenta",
+    "LOG_OUT": "Cerrar sesión"
+  },
+  "HOME_PAGE": {
+    "DASHBOARD": "Panel",
+    "MY_BOARDINGS": "Mis Embarques",
+    "MY_ACTIVITY": "Mi Actividad",
+    "OVERVIEW": "Resumen de",
+    "COMPLIANCE_RATE": "Índice de Cumplimiento",
+    "OFFICER_PATROL_HOURS": "Horas de Patrulla de Oficiales",
+    "DAYS": "Días",
+    "HOURS": "Horas"
+  },
+  "CREATE_AGENCY_PAGE": {
+    "NEW_AGENCY": "Nueva Agencia",
+    "EMAIL": "E-mail",
+    "SITE": "Sitio"
+  },
+  "CREATE_USER_PAGE": {
+    "USER": "Usuario",
+    "NEW_USER": "Nuevo Usuario",
+    "FIRST_NAME": "Nombre",
+    "LAST_NAME": "Apellidos",
+    "ROLE": "Rol",
+    "USER_GROUP": "Grupo",
+    "ACTIVE": "Activo",
+    "INACTIVE": "Inactivo",
+    "PERMISSIONS": "Permisos",
+    "PROFILE_INFO": "Información del Perfil",
+    "SETTINGS": "Ajustes"
+  },
+  "BOARDING_PAGE": {
+    "RECORDS_FOUND": "Resultados",
+    "MAP": "Mapa",
+    "ALL_DATES": "Todas las fechas",
+    "VIEW_BOARDING": {
+      "VIEW_BOARDING": "Ver Embarque",
+      "BOARDING": "Embarque",
+      "LAST_MODIFIED": "Última Modificación el",
+      "LATITUDE": "Latitud",
+      "LONGTITUDE": "Longitud",
+      "STATUS": "Nombre del barco",
+      "DELIVERY_DATE": "Última fecha de entrega",
+      "LICENSE_NUMBER": "Número de licencia",
+      "PHOTOS": "Fotos",
+      "NOTES": "Notas",
+      "ACTIVITY": "Actividad",
+      "FISHERY": "Pesca",
+      "GEAR": "Equipo"
+    },
+    "EDIT_BOARDING": {
+      "BASIC_INFO": "Información Básica",
+      "INLINE_DATE_PICKER": "Selector de fechas",
+      "TIME_PICKER": "Selector de tiempo",
+      "ELECTRONIC_INFO": "Información Electrónica",
+      "TYPE": "Tipo",
+      "REGISTRY_NUMBER": "Número de Registro",
+      "SEIZURES": "Decomisos"
+    },
+    "VERSION_CONTROL": {
+      "REVISION_HISTORY": "Historial de Revisiones",
+      "AMOUNT": "Importe"
+    }
+  },
+  "DATA_SHARING": {
+    "SHARED_DATA": "Datos Compartidos",
+    "WHO_CAN_ACCESS_DATA": "Quién puede acceder a estos datos",
+    "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}"
+  },
+  "AGENCY_PAGE": {
+    "FORM_DATA": "Datos de Formulario",
+    "DATA_SHARING": "Uso Compartido de Datos",
+    "PREFERED_NATIONALITIES": "Nacionalidades Preferidas",
+    "EDIT_AGENCY": {
+      "STATUS": "Estado",
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo",
+      "NAME": "Nombre de Agencia",
+      "DESCRIPTION": "Descripción",
+      "SITE": "Sitio Web",
+      "EMAIL": "Email de Contacto"
+    }
+  },
+  "USERS_PAGE": {
+    "SEE_ACTIVITY": "Ver Actividad"
+  },
+  "PROFILE_PAGE": {
+    "EDIT_USER": "Editar Usuario"
+  },
+  "CHANGE_PASSWORD": {
+    "CHANGE_PASSWORD": "Cambiar Contraseña",
+    "OLD_PASSWORD": "Contraseña Anterior",
+    "NEW_PASSWORD": "Nueva Contraseña",
+    "CONFIRM_NEW_PASSWORD": "Confirmar Nueva Contraseña",
+    "CONTAINS_NUMBER": "Debe contener un número (0-9)",
+    "CONTAINS_UPPER": "Debe contener una letra mayúscula (A-Z)",
+    "CONTAINS_LOWER": "Debe contener una letra minúscula (a-z)",
+    "AT_LEAST_SIX_CHARS": "Longitud mínima de 6 caracteres",
+    "CONFIRM_PASSWORD_ERROR": "Las contraseñas no coinciden.",
+    "SUCCESS": "La contraseña se cambió correctamente"
+  },
+  "SEARCH": {
+    "FILTER_SEARCH": "Buscar",
+    "ALL": "Todo",
+    "REPORTS": "Informes",
+    "CREW_MEMBERS": "Miembros de La Tripulación",
+    "SEE_RESULTS": "Ver todos los resultados de",
+    "SEARCH_RESULTS": "Resultados de",
+    "RECORDS_OF_VESSELS": "Registros de embarcaciones",
+    "CAPTAINS_AND_CREW": "Capitanes y Tripulación",
+    "CATCHES": "Capturas",
+    "SEE_ALL_RESULTS": "Ver todos los resultados de '{{searchQuery}}'"
+  },
+  "LOADING": {
+    "LOGGIN_IN": "Iniciando sesión...",
+    "LOADING": "Cargando..."
+  },
+  "BUTTONS": {
+    "ADD": "Añadir",
+    "ADD_ITEMS": "Añadir elementos",
+    "APPLY": "Aplicar",
+    "CLOSE": "Cerrar",
+    "CANCEL": "Cancelar",
+    "EDIT": "Editar",
+    "SAVE": "Guardar",
+    "VIEW": "Ver",
+    "DELETE": "eliminar",
+    "SEARCH": "Buscar",
+    "CHANGE_PASSWORD": "Cambiar Contraseña",
+    "NEW_BOARDING": "Nuevo Embarque",
+    "SEE_ACTIVITY": "Ver Actividad",
+    "SEE_ALL": "Ver todo",
+    "SEE_FULL_NOTE": "Ver nota completa",
+    "SEE_MORE": "Ver más {{item}}",
+    "EDIT_BOARDING": "Editar Embarque",
+    "SAVE_BOARDING": "Guardar Embarque",
+    "EDIT_AGENCY": "Editar Información de Agencia",
+    "ADD_SPECIES": "Añadir especies",
+    "ADD_CREW": "Añadir miembro de tripulación",
+    "ADD_CUTCH": "Añadir captura",
+    "CREATE_REPORT": "Crear Informe de Actividad",
+    "CREATE_USER": "Crear Usuario",
+    "UPDATE_USER": "Actualizar Usuario",
+    "MANAGE_SHARED_DATA": "Administrar Datos Compartidos"
+  },
+  "TABLE": {
+    "ADDRESS": "Dirección",
+    "DATE": "Fecha",
+    "TIME": "Tiempo",
+    "VESSEL": "Barco",
+    "PERMIT_NUMBER": "Número de Permiso",
+    "CAPTAIN": "Capitán",
+    "VIOLATIONS": "Infracciones",
+    "BOARDED_BY": "Embarcado Por",
+    "HOME_PORT": "Puerto de Origen",
+    "LAST_BOARDED": "Último Embarque",
+    "RISK": "Riesgo",
+    "LICENSE_NUMBER": "Número de Licencia",
+    "AGENCY": "Agencia",
+    "NAME": "Nombre",
+    "USER_TYPE": "Tipo de Usuario",
+    "DATE_ADDED": "Fecha de Alta",
+    "STATUS": "Estado",
+    "DESCRIPTION": "Descripción",
+    "OFFICERS": "Oficiales",
+    "CITATIONS": "Citaciones",
+    "WARNINGS": "Advertencias",
+    "VIOLATION": "Infracción",
+    "RESULT": "Resultado",
+    "NOTE": "Notas",
+    "BUSINESS": "Empresa",
+    "DELIVERIES": "Entregas",
+    "ISSUED_TO": "Entregado A",
+    "CREW_MEMBER": "Miembro de La Tripulación",
+    "PHOTO": "Foto",
+    "PERMIT_NUMBERS": "Número de Permiso",
+    "FLAG_STATES": "Abanderamiento",
+    "HOME_PORTS": "Puertos de Origen",
+    "CAPTAINS": "Capitanes"
+  },
+  "FILTER": {
+    "FROM": "Desde",
+    "TO": "Hasta",
+    "FILTER": "Filtro",
+    "MAIN": {
+      "RISK": {
+        "RED": "Rojo",
+        "GREEN": "Verde",
+        "AMBER": "Ámbar"
+      },
+      "BOARDING_INFO": {
+        "NAME": "Información de Embarque",
+        "DATE_FROM": "Fecha desde",
+        "DATE_TO": "Fechas hasta",
+        "LOCATION": "Ubicación"
+      },
+      "VESSEL_INFO": {
+        "NAME": "Información del Barco",
+        "NATIONALITY": "Nacionalidad"
+      },
+      "LAST_DELIVERY": {
+        "NAME": "Última Entrega",
+        "BUSINESS": "Empresa"
+      },
+      "CATCH": {
+        "NAME": "Captura",
+        "SPECIES": "Especies",
+        "WEIGHT": "Peso",
+        "COUNT": "Recuento",
+        "UNITS": "Unidades"
+      },
+      "RISKS": {
+        "NAME": "Riesgos"
+      }
+    },
+    "DATES_RANGE":{
+      "RANGE": "Rango de Fechas",
+      "LAST7DAYS": "Últimos 7 días",
+      "LAST30DAYS": "Últimos 30 días",
+      "LAST60DAYS": "Últimos 60 días",
+      "LAST90DAYS": "Últimos 90 días",
+      "TODAY": "Hoy",
+      "YESTERDAY": "Ayer",
+      "CUSTOM": "Intervalo de fechas personalizado"
+    },
+    "HOME_PAGE": {
+      "DATE_TIME": "Fecha y Hora"
+    }
+  },
+  "CUSTOM_MENU": {
+    "SPECIES" : "Especies",
+    "FISHERIES" : "Pesca",
+    "CATCHES" : "Capturas",
+    "ACTIVITIES" : "Actividades",
+    "GEAR" : "Equipo",
+    "ADD_SPECIE" : "Añadir especie",
+    "ADD_ANOTHER" : "Añadir otro"
+  },
+  "ADMINS": {
+    "GLOBAL": "Administrador Global",
+    "AGENCY": "Administrador de La Agencia",
+    "GROUP": "Administrador del Grupo",
+    "FIELD": "Oficial de Campo"
+  },
+  "WARNINGS": {
+    "NOT_AUTHENTICATED": "No estás autenticado",
+    "NOT_UNAUTHORIZED": "No estás autorizado",
+    "NO_BOARDINGS": "No se encontraron embarques",
+    "NO_AGENCIES": "No se encontraron agencias",
+    "NO_OFFICERS":"No se encontraron oficiales",
+    "NO_CATCHES": "No se encontraron capturas",
+    "NO_VESSELS": "No se encontraron embarcaciones",
+    "NO_CREW": "No se encontraron miembros de la tripulación",
+    "NO_USERS": "No se encontraron usuarios",
+    "NO_PERMIT_NUMBER": "No se encontró el número de permiso",
+    "NO_DELIVERIES": "No se encontraron entregas",
+    "NO_VIOLATIONS": "No se encontraron infracciones",
+    "NO_PHOTOS": "No se encontraron fotos",
+    "NO_NOTES": "No se encontraron notas",
+    "NO_LICENSE": "No se encontró el número de licencia"
+  },
+  "VALIDATION": {
+    "REQUIRED": "Este campo es obligatorio"
+  }
+}

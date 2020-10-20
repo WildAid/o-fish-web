@@ -1,5 +1,3 @@
-//@flow
-
 import Root from "./root.component";
 
 import Login from "../components/login/login.component";
@@ -19,7 +17,7 @@ import Profile from "../components/profile/profile.component";
 import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
 import NotesPage from "../components/notes/notes.component";
-import DeliveriesPage from "../components/deliverires/deliverires.component";
+import DeliveriesPage from "../components/deliveries/deliveries.component";
 
 //Boardings sub components
 import BoardingsMain from "../components/boardings/boardings.routes-render";

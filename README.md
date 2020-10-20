@@ -4,7 +4,7 @@ The [WildAid Marine Program](https://marine.wildaid.org/) works to protect vulne
 
 O-FISH (Officer Fishery Information Sharing Hub) is a multi-platform application that enables officers to browse and record boarding report data from their mobile devices.
 
-<BR><BR>Developers are expected to follow the <A HREF="https://www.mongodb.com/community-code-of-conduct">MongoDB Community Code of Conduct</A> guidelines.
+Developers are expected to follow the <A HREF="https://www.mongodb.com/community-code-of-conduct">MongoDB Community Code of Conduct</A> guidelines.
 
 This repo implements the O-FISH web app.
 
@@ -12,16 +12,17 @@ Details on installing all applications making up the solution can be found [here
 
 ## Prerequisites
 
-This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://wildaid.github.io/contribute/sandbox.html) or [build your own foundation](http://wildaid.github.io/build).
+This is the Web app for O-FISH. To build and use the app, you must [use the sandbox realm-app-id](https://bit.ly/ofishsandbox) or [build your own foundation](http://wildaid.github.io/build).
 
-Setting up MongoDB Charts is optional, but places where charts should be will show errors if you don't - other functionality will be unaffected.<BR>
+Setting up MongoDB Charts is optional, but places where charts should be will show errors if you don't - other functionality will be unaffected.
 
-`Node.js` must be installed.<BR>
+`Node.js` must be installed.
 
 ## Building and running the app:
 
-1. From the top-level directory (where this README file lives) run:<BR>
+1. From the top-level directory (where this README file lives) run:
 `npm install`
+1. Copy `src/config.js.tmpl` to `src/config.js`
 1. Set your configuration data in `src/config.js` (leave the `chartId` values as they are if you haven't set up [MongoDB Charts](https://www.mongodb.com/products/charts) for the sample data - if you have then you can get the ids from the Charts UI):
 ```js
 module.exports = {
@@ -58,7 +59,7 @@ module.exports = {
 
 ## Code and architecture highlights:
 
-This application uses React and is based on the React Services Architecture rather than Redux (if interested in why, read [Dan Abramov's (Co-author of Redux) opinion on the topic](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367).
+This application uses React and is based on the React Services Architecture rather than Redux. If you are interested in why, read [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367) from Dan Abramov (co-author of Redux).
 
 All services use as a singleton object. There is no dependency injection needed because there is no service inheritance.
 
@@ -71,7 +72,7 @@ Found in `/src/services`. Here you will find all of the basic interaction with t
 Connect MongoDB Realm - `stitch.service.js`:
 
 ```js
-get client() {
+  get client() {
     return this._localStitchClient;//For use the stitch client from another services
   }
 
@@ -180,4 +181,3 @@ const chartOptions = {
 The code for each page is in `/src`.
 
 Common components are in `/src/partials`.
-
