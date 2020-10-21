@@ -120,7 +120,6 @@
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
     "DATA_SHARING": "Data Sharing",
-    "PREFERED_NATIONALITIES": "Prefered Nationatities",
     "EDIT_AGENCY": {
       "STATUS": "Status",
       "ACTIVE": "Active",
@@ -189,7 +188,7 @@
     "EDIT_AGENCY": "Edit Agency Information",
     "ADD_SPECIES": "Add species",
     "ADD_CREW": "Add crew member",
-    "ADD_CUTCH": "Add catch",
+    "ADD_CATCH": "Add catch",
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",
@@ -298,7 +297,7 @@
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Not authenticated",
-    "NOT_UNAUTHORIZED": "Not authorized",
+    "NOT_AUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
     "NO_OFFICERS": "No officers found",
