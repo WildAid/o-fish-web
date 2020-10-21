@@ -95,27 +95,48 @@ class AgencyDataSharing extends Component {
   };
 
   saveDialog = (startDate, endDate) => {
-    let {
+    const {
       currentAgency,
       agencyToShareWith,
       isDataManaging,
       manageSharingTo,
     } = this.state;
+
     let outboundPartnerAgencies = [];
     const selectedAgency = manageSharingTo || agencyToShareWith;
 
+    // const outboundPartnerAgency = {
+    //   name: selectedAgency.name,
+    //   fromDate: startDate ? moment(startDate).toDate() : null,
+    //   toDate: endDate ? moment(endDate).toDate() : null,
+    // };
+
     const outboundPartnerAgency = {
       name: selectedAgency.name,
-      fromDate: startDate ? moment(startDate).toDate() : null,
-      toDate: endDate ? moment(endDate).toDate() : null,
+      dates: [],
     };
 
+    if (startDate && endDate) {
+      outboundPartnerAgency.dates.push({
+        fromDate: moment(startDate).toDate(),
+        toDate: moment(endDate).toDate(),
+      });
+    } else if (startDate && !endDate) {
+      outboundPartnerAgency.dates.push({
+        fromDate: moment(startDate).toDate(),
+      });
+    } else if (!startDate && endDate) {
+      outboundPartnerAgency.dates.push({
+        toDate: moment(endDate).toDate(),
+      });
+    }
+
     if (currentAgency.outboundPartnerAgencies) {
-      const selectedAgencyExist = currentAgency.outboundPartnerAgencies.find(
+      const selectedAgencyExists = currentAgency.outboundPartnerAgencies.find(
         (agency) => agency.name === selectedAgency.name
       );
 
-      if (selectedAgencyExist) {
+      if (selectedAgencyExists) {
         outboundPartnerAgencies = currentAgency.outboundPartnerAgencies.map(
           (sharedWithAgency) => {
             if (sharedWithAgency.name === selectedAgency.name) {
@@ -133,6 +154,7 @@ class AgencyDataSharing extends Component {
     } else {
       outboundPartnerAgencies = [outboundPartnerAgency];
     }
+
     const agencyThatSharingData = {
       ...currentAgency,
       outboundPartnerAgencies,
@@ -143,21 +165,21 @@ class AgencyDataSharing extends Component {
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
 
-    agencyService
-      .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
-      .then(() =>
-        this.setState({
-          outBoundSuccess: true,
-          currentAgency: agencyThatSharingData,
-          activePartnerAgencies,
-          archivePartnerAgencies,
-        })
-      )
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
+console.log(agencyThatSharingData);
+    // agencyService
+    //   .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
+    //   .then(() =>
+    //     this.setState({
+    //       outBoundSuccess: true,
+    //       activePartnerAgencies,
+    //       archivePartnerAgencies,
+    //     })
+    //   )
+    //   .catch((error) => {
+    //     error.message
+    //       ? this.setState({ error: `${error.name}: ${error.message}` })
+    //       : this.setState({ error: "An unexpected error occurred!" });
+    //   });
 
     if (agencyToShareWith && !isDataManaging) {
       const inboundPartnerAgencies = [
@@ -177,14 +199,14 @@ class AgencyDataSharing extends Component {
             inboundPartnerAgencies,
           };
 
-      agencyService
-        .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
-        .then(() => this.setState({ inBoundSuccess: true }))
-        .catch((error) => {
-          error.message
-            ? this.setState({ error: `${error.name}: ${error.message}` })
-            : this.setState({ error: "An unexpected error occurred!" });
-        });
+      // agencyService
+      //   .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
+      //   .then(() => this.setState({ inBoundSuccess: true }))
+      //   .catch((error) => {
+      //     error.message
+      //       ? this.setState({ error: `${error.name}: ${error.message}` })
+      //       : this.setState({ error: "An unexpected error occurred!" });
+      //   });
     }
     this.cancelDialog("manageDialogDisplayed", false);
   };
