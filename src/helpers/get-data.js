@@ -243,11 +243,11 @@ export const getSharedAgenciesList = async (name, user) => {
   const agency = await agencyService.getAgencyByName(name);
 
   if (user.agency.admin) {
-    return agency.inboundPartnerAgencies
-      ? [...agency.inboundPartnerAgencies.map((item) => item.name), name]
+    return user.agency.inboundPartnerAgencies
+      ? [...user.agency.inboundPartnerAgencies.map((item) => item.name), name]
       : [name];
   } else {
-    const agencies = agency.inboundPartnerAgencies
+    const agencies = user.agency.inboundPartnerAgencies
       .filter((item) => (item.agencyWideAccess ? item.name : ""))
       .map((el) => el.name);
       
