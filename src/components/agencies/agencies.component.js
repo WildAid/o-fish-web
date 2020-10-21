@@ -258,7 +258,7 @@ class AgenciesMain extends React.Component {
       </div>
     ) : (
       <div className="flex-row padding-top justify-center">
-        {t("WARNINGS.NOT_UNAUTHORIZED")}
+        {t("WARNINGS.NOT_AUTHORIZED")}
       </div>
     );
   }
