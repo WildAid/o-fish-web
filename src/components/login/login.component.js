@@ -12,7 +12,11 @@ import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
 import "./login.css";
 
-import { HOME_PAGE, GLOBAL_AGENCIES_PAGE, CHARTS_PAGE } from "../../root/root.constants";
+import {
+  HOME_PAGE,
+  GLOBAL_AGENCIES_PAGE,
+  CHARTS_PAGE,
+} from "../../root/root.constants";
 
 const authService = AuthService.getInstance();
 
@@ -35,7 +39,9 @@ class Login extends Component {
         authService.userRole === "global"
           ? history.push(GLOBAL_AGENCIES_PAGE)
           : authService.userRole === "agency"
-          ? history.push(CHARTS_PAGE.replace(":id",authService.user.agency.name))
+          ? history.push(
+              CHARTS_PAGE.replace(":id", authService.user.agency.name)
+            )
           : history.push(HOME_PAGE);
       })
       .catch((error) => {
@@ -95,7 +101,7 @@ class Login extends Component {
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
-                      <div>{t("LOADING.LOGGIN_IN")}</div>
+                      <div>{t("LOADING.LOGGING_IN")}</div>
                     ) : (
                       <button className="blue-btn" type="submit">
                         {t("LOGIN_PAGE.LOGIN")}
