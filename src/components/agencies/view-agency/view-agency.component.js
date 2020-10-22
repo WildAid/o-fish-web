@@ -254,7 +254,7 @@ class ViewAgency extends Component {
             )}
             {2 === activeTab && (
               <div className="full-view agency-tab-content">
-                <AgencyFormData agency={agencyInfo}></AgencyFormData>
+                <AgencyFormData agency={agency} />
               </div>
             )}
             {3 === activeTab && (
