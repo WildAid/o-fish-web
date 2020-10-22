@@ -93,14 +93,9 @@
     "SHARING_DATA_WITH": "Agencies sharing data with {{agency}}",
     "FOLLOWING_AGENCIES": "{{agency}} is sharing boarding data with the following agencies",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
-<<<<<<< HEAD
     "AGENCY_ADMINS": "Agency admins",
     "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
-=======
-    "AGENCY_ADMINS": "Agency Admins",
-    "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
     "AGENCY_SUCCESS_UPDATE_MESSAGE": "Shared data updated successfully",
->>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
       "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
@@ -121,17 +116,12 @@
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
       "NO_END_DATE": "No end date or time"
-<<<<<<< HEAD
-    }
-=======
     },
     "PREVIOUSLY_SHARED_DATA": "Previously Shared Data"
->>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
     "DATA_SHARING": "Data Sharing",
-    "PREFERRED_NATIONALITIES": "Preferred Nationalities",
     "EDIT_AGENCY": {
       "STATUS": "Status",
       "ACTIVE": "Active",
@@ -310,7 +300,7 @@
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Not authenticated",
-    "NOT_UNAUTHORIZED": "Not authorized",
+    "NOT_AUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
     "NO_OFFICERS": "No officers found",

@@ -118,7 +118,6 @@
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
     "DATA_SHARING": "Partage de Données",
-    "PREFERRED_NATIONALITIES": "Nationalités préférées",
     "EDIT_AGENCY": {
       "STATUS": "Statut",
       "ACTIVE": "Actif",
@@ -187,7 +186,7 @@
     "EDIT_AGENCY": "Modifier Données sur l'Agence",
     "ADD_SPECIES": "Ajouter une Espèce",
     "ADD_CREW": "Ajouter un membre d'équipage",
-    "ADD_CATCH": "Ajouter une Saisie",
+    "ADD_CATCH": "Ajouter une saisie",
     "CREATE_REPORT": "Créer un Rapport d'Activité",
     "CREATE_USER": "Créer un Utilisateur",
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",

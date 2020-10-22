@@ -29,7 +29,7 @@ jobs:
         
     - name: Install dependencies
       run: npm install
-      script:
+
     - name: add config
       run:
            cp src/config.js.tmpl src/config.js
