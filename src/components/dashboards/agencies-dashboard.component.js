@@ -32,7 +32,7 @@ class AgenciesDashboard extends Component {
     loading: true,
     page: 1,
     searchQuery: "",
-    currentFilter: {},
+    currentFilter: null,
   };
 
   handlePageChange = (e, page) => {
