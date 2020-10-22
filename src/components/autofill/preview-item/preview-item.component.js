@@ -56,7 +56,7 @@ const PreviewItem = ({
         </div>
         <div>
           <div className="flex-row font-16">
-            <Link to={searchResultsLink}>
+            <Link className="preview-item-results-link" to={searchResultsLink}>
               <Highlighter
                 highlightClassName="highlighted"
                 searchWords={searchWords}
