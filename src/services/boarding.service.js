@@ -9,53 +9,53 @@ const sampleData = {
   latitude: "-0.02182981",
   longtitude: "-0.041231987",
   agency: "WildAid",
-  vessel:{
-    name: '',
-    permitNumber: '',
-    homePort: '',
-    nationality: '',
+  vessel: {
+    name: "",
+    permitNumber: "",
+    homePort: "",
+    nationality: "",
     lastDelivery: {
-      date: '',
-      business: '',
-      location: ''
+      date: "",
+      business: "",
+      location: "",
     },
   },
-  captain:{
+  captain: {
     name: "",
-    license: ""
+    license: "",
   },
-  crew:[
+  crew: [
     {
       name: "",
       id: "",
-      photoID:"",
-      license:""
-    }
+      photoID: "",
+      license: "",
+    },
   ],
-  inspection:{
+  inspection: {
     activity: {
-      name: ""
+      name: "",
     },
     fishery: {
-      name: ""
+      name: "",
     },
     gearType: {
-      name: ""
+      name: "",
     },
     summary: {
       safetyLevel: "amber",
       violations: [
         {
           description: "Arrest of Norby Beauman",
-          disposition:"Arrest"
+          disposition: "Arrest",
         },
         {
           description: "Warning to Bob Beauman",
-          disposition:"Warning"
-        }
+          disposition: "Warning",
+        },
       ],
       seizures: {
-        text: ""
+        text: "",
       },
     },
     actualCatch: [
@@ -63,25 +63,25 @@ const sampleData = {
         fish: "tuna",
         unit: "kg",
         weight: 0.23,
-        count:12
-      }
+        count: 12,
+      },
     ],
     risk: {
-      type: "warning"
+      type: "warning",
     },
     notes: [
       {
-        note: "Norby Beauman"
-      }
-    ]
+        note: "Norby Beauman",
+      },
+    ],
   },
   reportingOfficer: {
     agency: "WildAid",
     name: {
       first: "",
-      last: ""
-    }
-  }
+      last: "",
+    },
+  },
 };
 
 export default class BoardingService {
@@ -97,37 +97,57 @@ export default class BoardingService {
   }
 
   getBoardingById(id) {
-    if (id.length !== 24){
+    if (id.length !== 24) {
       throw new Error("Incorrect ID");
     }
 
     const objectId = new BSON.ObjectId(id);
 
-    return stitchService.database.collection("BoardingReports").findOne({_id: objectId});
+    return stitchService.database
+      .collection("BoardingReports")
+      .findOne({ _id: objectId });
   }
 
-  updateBoarding(object){
-    if (object._id){
+  updateBoarding(object) {
+    if (object._id) {
       object._id = new BSON.ObjectId(object._id);
-      return stitchService.database.collection("BoardingReports").updateOne({
-        _id : object._id
-      }, object);
+      return stitchService.database.collection("BoardingReports").updateOne(
+        {
+          _id: object._id,
+        },
+        object
+      );
     } else {
-      return stitchService.database.collection("BoardingReports").insertOne(object);
+      return stitchService.database
+        .collection("BoardingReports")
+        .insertOne(object);
     }
   }
 
   getBoardings(limit, offset, filter) {
-    return stitchService.client.callFunction("getBoardings", [limit, offset, filter]);
+    return stitchService.client.callFunction("getBoardings", [
+      limit,
+      offset,
+      filter,
+    ]);
   }
 
-  getBoardingsWithFacet(limit, offset, search, filter) {
-    return stitchService.client.callFunction("searchFacetByBoardings", [limit, offset, search, filter]);
+  getBoardingsWithFacet(limit, offset, search, filter, agenciesToShareData) {
+    return stitchService.client.callFunction("searchFacetByBoardings", [
+      limit,
+      offset,
+      search,
+      filter,
+      agenciesToShareData,
+    ]);
   }
 
-  getChangeHistory(boardingId){
+  getChangeHistory(boardingId) {
     const objectId = new BSON.ObjectId(boardingId);
-    const result = stitchService.database.collection("ChangeHistory").find({"originalDocument._id": objectId}).toArray();
+    const result = stitchService.database
+      .collection("ChangeHistory")
+      .find({ "originalDocument._id": objectId })
+      .toArray();
     return result;
   }
 }
