@@ -132,20 +132,13 @@ export default class BoardingService {
     ]);
   }
 
-<<<<<<< HEAD
-  getBoardingsWithFacet(limit, offset, search, filter) {
-=======
   getBoardingsWithFacet(limit, offset, search, filter, agenciesToShareData) {
->>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
     return stitchService.client.callFunction("searchFacetByBoardings", [
       limit,
       offset,
       search,
       filter,
-<<<<<<< HEAD
-=======
       agenciesToShareData,
->>>>>>> 1451ad4311a7afe779c4f466ca9a5d7a19093d8d
     ]);
   }
 
