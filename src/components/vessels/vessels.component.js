@@ -10,7 +10,8 @@ import {
   getColor,
   getHighlightedText,
   goToPageWithFilter,
-  getCountryCode
+  getCountryCode,
+  getSharedAgenciesList
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -21,6 +22,7 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
+import AuthService from "../../services/auth.service";
 
 import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
 
@@ -28,6 +30,7 @@ import "./vessels.css";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
+const authService = AuthService.getInstance();
 
 const filterConfiguration = {
   Risk: [
@@ -117,9 +120,9 @@ const filterConfiguration = {
     {
       name: "violation",
       title: "Violation",
-      type: "violation"
+      type: "violation",
     },
-  ]
+  ],
 };
 
 class Vessels extends Component {
@@ -165,14 +168,24 @@ class Vessels extends Component {
     });
   };
 
-  loadData(newState) {
+  loadData = (newState) => {
     newState = newState || {};
     newState.loading = true;
 
-    this.setState(newState, () => {
+    this.setState(newState, async () => {
       const { limit, offset, searchQuery, currentFilter } = this.state;
+
+      const isNotGlobalAdmin =
+        authService.user &&
+        authService.user.global &&
+        !authService.user.global.admin;
+
+      const agenciesToShareData = isNotGlobalAdmin
+        ? await getSharedAgenciesList(authService.user.agency.name, authService.user)
+        : null;
+
       stitchService
-        .getVesselsWithFacet(limit, offset, searchQuery, currentFilter)
+        .getVesselsWithFacet(limit, offset, searchQuery, currentFilter, agenciesToShareData)
         .then((data) => {
           this.setState({
             loading: false,
@@ -287,9 +300,7 @@ class Vessels extends Component {
                                 {item.nationality &&
                                   !getCode(item.nationality) && (
                                     <Flag
-                                      code={getCountryCode(
-                                        item.nationality
-                                      )}
+                                      code={getCountryCode(item.nationality)}
                                     />
                                   )}
                                 {item.nationality &&
@@ -303,7 +314,13 @@ class Vessels extends Component {
                           </td>
                           <td>
                             {item.homePort
-                              ? Array.from(new Set(item.homePort.filter((port => port !== "")).slice(0, 4))).join(", ")
+                              ? Array.from(
+                                  new Set(
+                                    item.homePort
+                                      .filter((port) => port !== "")
+                                      .slice(0, 4)
+                                  )
+                                ).join(", ")
                               : "N/A"}
                           </td>
                           <td>

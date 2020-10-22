@@ -88,12 +88,12 @@
   "DATA_SHARING": {
     "SHARED_DATA": "Datos Compartidos",
     "WHO_CAN_ACCESS_DATA": "Quién puede acceder a estos datos",
-    "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}"
+    "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}",
+    "PREVIOUSLY_SHARED_DATA": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Datos de Formulario",
     "DATA_SHARING": "Uso Compartido de Datos",
-    "PREFERED_NATIONALITIES": "Nacionalidades Preferidas",
     "EDIT_AGENCY": {
       "STATUS": "Estado",
       "ACTIVE": "Activo",
@@ -160,11 +160,12 @@
     "EDIT_AGENCY": "Editar Información de Agencia",
     "ADD_SPECIES": "Añadir especies",
     "ADD_CREW": "Añadir miembro de tripulación",
-    "ADD_CUTCH": "Añadir captura",
+    "ADD_CATCH": "Añadir captura",
     "CREATE_REPORT": "Crear Informe de Actividad",
     "CREATE_USER": "Crear Usuario",
     "UPDATE_USER": "Actualizar Usuario",
-    "MANAGE_SHARED_DATA": "Administrar Datos Compartidos"
+    "MANAGE_SHARED_DATA": "Administrar Datos Compartidos",
+    "SEE_SHARED_DATA": ""
   },
   "TABLE": {
     "ADDRESS": "Dirección",
@@ -267,7 +268,7 @@
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "No estás autenticado",
-    "NOT_UNAUTHORIZED": "No estás autorizado",
+    "NOT_AUTHORIZED": "No estás autorizado",
     "NO_BOARDINGS": "No se encontraron embarques",
     "NO_AGENCIES": "No se encontraron agencias",
     "NO_OFFICERS":"No se encontraron oficiales",

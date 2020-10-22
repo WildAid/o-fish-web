@@ -95,6 +95,7 @@
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
     "AGENCY_ADMINS": "Agency Admins",
     "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
+    "AGENCY_SUCCESS_UPDATE_MESSAGE": "Shared data updated successfully",
     "MANAGE_SHARED_DATA": {
       "SHARE_BOARDING_DATA": "Share Boarding Data",
       "MANAGE_DATA_SHARING_WITH": "Manage Data Sharing with {{agency}}",
@@ -115,12 +116,12 @@
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
       "NO_END_DATE": "No end date or time"
-    }
+    },
+    "PREVIOUSLY_SHARED_DATA": "Previously Shared Data"
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Form Data",
     "DATA_SHARING": "Data Sharing",
-    "PREFERED_NATIONALITIES": "Prefered Nationatities",
     "EDIT_AGENCY": {
       "STATUS": "Status",
       "ACTIVE": "Active",
@@ -189,7 +190,7 @@
     "EDIT_AGENCY": "Edit Agency Information",
     "ADD_SPECIES": "Add species",
     "ADD_CREW": "Add crew member",
-    "ADD_CUTCH": "Add catch",
+    "ADD_CATCH": "Add catch",
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",
@@ -197,7 +198,9 @@
     "MANAGE_SHARED_DATA": "Manage Shared Data",
     "SHARE_DATA": "Share Data",
     "STOP_SHARING": "Stop Sharing",
-    "CHOOSE_DATA": "Choose data"
+    "MANAGE_SHARED_DATA": "Manage Shared Data",
+    "CHOOSE_DATA": "Choose data",
+    "SEE_SHARED_DATA": "See Shared Data"
   },
   "TABLE": {
     "ADDRESS": "Address",
@@ -299,7 +302,7 @@
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Not authenticated",
-    "NOT_UNAUTHORIZED": "Not authorized",
+    "NOT_AUTHORIZED": "Not authorized",
     "NO_BOARDINGS": "No boardings found",
     "NO_AGENCIES": "No agencies found",
     "NO_OFFICERS": "No officers found",
