@@ -56,12 +56,33 @@ class AgencyDataSharing extends Component {
     let { _id, outboundPartnerAgencies } = agency;
     const { manageSharingTo } = this.state;
 
-    outboundPartnerAgencies = outboundPartnerAgencies.map((agency) => {
-      if (agency.name === manageSharingTo.name) {
-        agency.toDate = moment().subtract("seconds", 1).toDate();
+    outboundPartnerAgencies = outboundPartnerAgencies.map((item) => {
+      const newAgency = { name: item.name, dates: [] };
+      if (item.name === manageSharingTo.name) {
+        const newDates = item.dates.map((el) => {
+          if (
+            (!manageSharingTo.fromDate &&
+              !el.fromDate &&
+              !manageSharingTo.toDate &&
+              !el.toDate) ||
+            (!manageSharingTo.fromDate &&
+              el.fromDate &&
+              !manageSharingTo.toDate &&
+              el.toDate) ||
+            (manageSharingTo.fromDate &&
+              !el.fromDate &&
+              manageSharingTo.toDate &&
+              !el.toDate) ||
+            (manageSharingTo.fromDate === el.fromDate &&
+              manageSharingTo.toDate === el.toDate)
+          ) {
+            el.toDate = moment().subtract("seconds", 1).toDate();
+          }
+          return el;
+        });
+        newAgency.dates = newDates;
       }
-
-      return agency;
+      return newAgency;
     });
 
     const [
@@ -69,22 +90,22 @@ class AgencyDataSharing extends Component {
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
 
-    agencyService
-      .updateAgency(_id, {
-        ...agency,
-        outboundPartnerAgencies,
-      })
-      .then(() => {
-        this.setState({
-          currentAgency: {
-            ...agency,
-            outboundPartnerAgencies,
-          },
-          activePartnerAgencies,
-          archivePartnerAgencies,
-        });
-      })
-      .catch((error) => console.error(error));
+    // agencyService
+    //   .updateAgency(_id, {
+    //     ...agency,
+    //     outboundPartnerAgencies,
+    //   })
+    //   .then(() => {
+    //     this.setState({
+    //       currentAgency: {
+    //         ...agency,
+    //         outboundPartnerAgencies,
+    //       },
+    //       activePartnerAgencies,
+    //       archivePartnerAgencies,
+    //     });
+    //   })
+    //   .catch((error) => console.error(error));
 
     this.cancelDialog("stopSharingDialog");
   };
@@ -107,25 +128,8 @@ class AgencyDataSharing extends Component {
 
     const outboundPartnerAgency = {
       name: selectedAgency.name,
-      dates: [],
+      dates: selectedAgency.dates || [],
     };
-
-    if (startDate && endDate) {
-      outboundPartnerAgency.dates.push({
-        fromDate: moment(startDate).toDate(),
-        toDate: moment(endDate).toDate(),
-      });
-    } else if (startDate && !endDate) {
-      outboundPartnerAgency.dates.push({
-        fromDate: moment(startDate).toDate(),
-      });
-    } else if (!startDate && endDate) {
-      outboundPartnerAgency.dates.push({
-        toDate: moment(endDate).toDate(),
-      });
-    } else if (!startDate && !endDate) {
-      outboundPartnerAgency.dates.push({});
-    }
 
     if (currentAgency.outboundPartnerAgencies) {
       const selectedAgencyExists = currentAgency.outboundPartnerAgencies.find(
@@ -134,29 +138,70 @@ class AgencyDataSharing extends Component {
 
       if (selectedAgencyExists) {
         outboundPartnerAgencies = currentAgency.outboundPartnerAgencies.map(
-          (sharedWithAgency) => {
-            if (sharedWithAgency.name === selectedAgency.name) {
-              if (startDate && endDate) {
-                sharedWithAgency.dates.push({
-                  fromDate: moment(startDate).toDate(),
-                  toDate: moment(endDate).toDate(),
-                });
-              } else if (startDate && !endDate) {
-                sharedWithAgency.dates.push({
-                  fromDate: moment(startDate).toDate(),
-                });
-              } else if (!startDate && endDate) {
-                sharedWithAgency.dates.push({
-                  toDate: moment(endDate).toDate(),
-                });
-              } else if (!startDate && !endDate) {
-                sharedWithAgency.dates.push({});
-              }
+          (item) => {
+            if (item.name === selectedAgency.name) {
+              let isDataManaging = false;
+              let newDates = item.dates.map((el) => {
+                if (
+                  (selectedAgency.fromDate === el.fromDate &&
+                    selectedAgency.toDate === el.toDate) ||
+                  (!selectedAgency.fromDate &&
+                    !el.fromDate &&
+                    !selectedAgency.toDate &&
+                    !el.toDate)
+                ) {
+                  if (startDate && endDate) {
+                    el.fromDate = moment(startDate).toDate();
+                    el.toDate = moment(endDate).toDate();
+                  } else if (startDate && !endDate) {
+                    el.fromDate = moment(startDate).toDate();
+                    delete el.toDate;
+                  } else if (!startDate && endDate) {
+                    el.toDate = moment(endDate).toDate();
+                    delete el.startDate;
+                  } else if (!startDate && !endDate) {
+                    delete el.fromDate;
+                    delete el.toDate;
+                  }
+                  isDataManaging = true;
+                }
+
+                return el;
+              });
+              console.log(isDataManaging);
+              item.dates = isDataManaging
+                ? newDates
+                : endDate && startDate
+                ? [
+                    ...newDates,
+                    {
+                      toDate: moment(endDate).toDate(),
+                      fromDate: moment(startDate).toDate(),
+                    },
+                  ]
+                : [...newDates, {}];
             }
-            return sharedWithAgency;
+            return item;
           }
         );
       } else {
+        if (startDate && endDate) {
+          outboundPartnerAgency.dates.push({
+            fromDate: moment(startDate).toDate(),
+            toDate: moment(endDate).toDate(),
+          });
+        } else if (startDate && !endDate) {
+          outboundPartnerAgency.dates.push({
+            fromDate: moment(startDate).toDate(),
+          });
+        } else if (!startDate && endDate) {
+          outboundPartnerAgency.dates.push({
+            toDate: moment(endDate).toDate(),
+          });
+        } else if (!startDate && !endDate) {
+          outboundPartnerAgency.dates.push({});
+        }
+
         outboundPartnerAgencies = [
           ...currentAgency.outboundPartnerAgencies,
           outboundPartnerAgency,
@@ -175,21 +220,22 @@ class AgencyDataSharing extends Component {
       activePartnerAgencies,
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
-    console.log(activePartnerAgencies, archivePartnerAgencies);
-    agencyService
-      .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
-      .then(() =>
-        this.setState({
-          outBoundSuccess: true,
-          activePartnerAgencies,
-          archivePartnerAgencies,
-        })
-      )
-      .catch((error) => {
-        error.message
-          ? this.setState({ error: `${error.name}: ${error.message}` })
-          : this.setState({ error: "An unexpected error occurred!" });
-      });
+
+    console.log(agencyThatSharingData.outboundPartnerAgencies);
+    // agencyService
+    //   .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
+    //   .then(() =>
+    //     this.setState({
+    //       outBoundSuccess: true,
+    //       activePartnerAgencies,
+    //       archivePartnerAgencies,
+    //     })
+    //   )
+    //   .catch((error) => {
+    //     error.message
+    //       ? this.setState({ error: `${error.name}: ${error.message}` })
+    //       : this.setState({ error: "An unexpected error occurred!" });
+    //   });
 
     if (agencyToShareWith && !isDataManaging) {
       const inboundPartnerAgencies = [
@@ -209,14 +255,14 @@ class AgencyDataSharing extends Component {
             inboundPartnerAgencies,
           };
 
-      agencyService
-        .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
-        .then(() => this.setState({ inBoundSuccess: true }))
-        .catch((error) => {
-          error.message
-            ? this.setState({ error: `${error.name}: ${error.message}` })
-            : this.setState({ error: "An unexpected error occurred!" });
-        });
+      // agencyService
+      //   .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
+      //   .then(() => this.setState({ inBoundSuccess: true }))
+      //   .catch((error) => {
+      //     error.message
+      //       ? this.setState({ error: `${error.name}: ${error.message}` })
+      //       : this.setState({ error: "An unexpected error occurred!" });
+      //   });
     }
     this.cancelDialog("manageDialogDisplayed", false);
   };
@@ -231,28 +277,29 @@ class AgencyDataSharing extends Component {
 
   filterArchiveAgencies = (outboundPartnerAgencies) => {
     if (outboundPartnerAgencies) {
-      const agencies = outboundPartnerAgencies.map((el) => {
+      let agencies = [];
+      outboundPartnerAgencies.map((el) => {
         if (el.dates.length === 1) {
-          return {
+          agencies.push({
             name: el.name,
             fromDate: el.dates[0].fromDate || "",
             toDate: el.dates[0].toDate || "",
-          };
+          });
         } else if (!el.dates.length) {
-          return {
+          agencies.push({
             name: el.name,
             fromDate: "",
             toDate: "",
-          };
+          });
         } else {
-          const datesOfOneAgency = el.dates.map((item) => {
-            return {
+          el.dates.map((item) => {
+            agencies.push({
               name: el.name,
               fromDate: item.fromDate || "",
               toDate: item.toDate || "",
-            };
+            });
           });
-          return datesOfOneAgency;
+          return "";
         }
       });
 
@@ -363,7 +410,7 @@ class AgencyDataSharing extends Component {
     const { t } = this.props;
     const successMessageShown = inBoundSuccess && outBoundSuccess;
     const updateMessageShown = !inBoundSuccess && outBoundSuccess;
-console.log(activePartnerAgencies);
+
     return (
       <Fragment>
         <div className="padding-bottom flex-column align-center form-data">
@@ -475,7 +522,11 @@ console.log(activePartnerAgencies);
                             <div
                               className="blue-color pointer"
                               onClick={() =>
-                                this.showDialog("stopSharingDialog", item)
+                                this.showDialog("stopSharingDialog", {
+                                  name: item.name,
+                                  fromDate: item.fromDate,
+                                  toDate: item.toDate,
+                                })
                               }
                             >
                               {t("BUTTONS.STOP_SHARING")}

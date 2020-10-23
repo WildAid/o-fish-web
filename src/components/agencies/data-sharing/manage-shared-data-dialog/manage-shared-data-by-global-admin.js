@@ -52,13 +52,13 @@ class ManageSharedDataByGlobalAdmin extends Component {
     const { chooseDate, startDate, endDate } = this.state;
     const { onSave } = this.props;
 
-    chooseDate ? onSave(startDate, endDate) : onSave(null, null);
+    chooseDate ? onSave(startDate, endDate) : onSave();
   };
 
   componentDidMount() {
     const { isDataManaging, agency } = this.props;
     this.setState({
-      chooseDate: isDataManaging,
+      chooseDate: isDataManaging && (!!agency.fromDate || !!agency.toDate),
     });
     if (isDataManaging) {
       this.setState({
@@ -112,7 +112,7 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
-                  defaultChecked={!isDataManaging}
+                  checked={!chooseDate}
                   onChange={() => this.setState({ chooseDate: false })}
                 />
                 <span className="checkmark"></span>
@@ -122,11 +122,12 @@ class ManageSharedDataByGlobalAdmin extends Component {
                 <input
                   type="radio"
                   name="radio"
-                  defaultChecked={isDataManaging}
+                  checked={chooseDate}
                   onChange={() =>
                     this.setState({
                       chooseDate: true,
                       startDate: moment().subtract(1, "week").toDate(),
+                      endDate: moment().endOf("day").toDate()
                     })
                   }
                 />
