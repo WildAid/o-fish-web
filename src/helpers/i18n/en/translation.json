@@ -61,7 +61,7 @@
       "BOARDING": "Boarding",
       "LAST_MODIFIED": "Last Modified on",
       "LATITUDE": "Latitude",
-      "LONGTITUDE": "Longtitude",
+      "LONGITUDE": "Longitude",
       "STATUS": "Vessel Name",
       "DELIVERY_DATE": "Last Date of delivery",
       "LICENSE_NUMBER": "License Number",
@@ -93,7 +93,7 @@
     "SHARING_DATA_WITH": "Agencies sharing data with {{agency}}",
     "FOLLOWING_AGENCIES": "{{agency}} is sharing boarding data with the following agencies",
     "SHARING_DATA_WITH_ZERO_AGENCIES": "Sharing Data with 0 agencies",
-    "AGENCY_ADMINS": "Agency Admins",
+    "AGENCY_ADMINS": "Agency admins",
     "AGENCY_SUCCESS_MESSAGE": "Data shared with {{agency}} successfully",
     "AGENCY_SUCCESS_UPDATE_MESSAGE": "Shared data updated successfully",
     "MANAGE_SHARED_DATA": {
@@ -111,7 +111,7 @@
       "DATA_ACCESS": "Data access",
       "READ_ACCESS": "Read Access",
       "FLAG_STATE": "Flag State",
-      "ELECTRINIC_SYSTEM": "Electronic Monitoring System",
+      "ELECTRONIC_SYSTEM": "Electronic Monitoring System",
       "RESULT_OF_VIOLATION": "Result of Violation",
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
@@ -165,7 +165,7 @@
     "SEE_ALL_RESULTS": "See all results for '{{searchQuery}}'"
   },
   "LOADING": {
-    "LOGGIN_IN": "Logging in...",
+    "LOGGING_IN": "Logging in...",
     "LOADING": "Loading..."
   },
   "BUTTONS": {
@@ -177,7 +177,7 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "VIEW": "View",
-    "DELETE": "delete",
+    "DELETE": "Delete",
     "SEARCH": "Search",
     "CHANGE_PASSWORD": "Change Password",
     "NEW_BOARDING": "New Boarding",

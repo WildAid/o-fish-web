@@ -41,7 +41,10 @@ class BasicInfoSection extends Component {
     });
     if (this.props.onChange) {
       const { dataObject } = this.props;
-      dataObject.location =  [new BSON.Double(parseFloat(long)), new BSON.Double(parseFloat(lat))];
+      dataObject.location = [
+        new BSON.Double(parseFloat(long)),
+        new BSON.Double(parseFloat(lat)),
+      ];
       this.props.onChange(dataObject);
     }
   };
@@ -105,10 +108,7 @@ class BasicInfoSection extends Component {
         <section className="box-shadow padding white-bg margin-top">
           <h3>{t("FILTER.MAIN.BOARDING_INFO.LOCATION")}</h3>
           <div className="chart-container">
-            <ChartBox
-              options={boardingChartOptions}
-              className="with-map"
-            />
+            <ChartBox options={boardingChartOptions} className="with-map" />
           </div>
           <br />
           <div className="flex-row justify-between">
@@ -118,22 +118,16 @@ class BasicInfoSection extends Component {
               className="half-row-view"
               value={location[1]}
               onChange={(event) => {
-                this.handleLocationChange(
-                  location[0],
-                  event.target.value
-                );
+                this.handleLocationChange(location[0], event.target.value);
               }}
             />
             <TextField
               id="longitudeField"
-              label={t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
+              label={t("BOARDING_PAGE.VIEW_BOARDING.LONGITUDE")}
               className="half-row-view"
               value={location[0]}
               onChange={(event) => {
-                this.handleLocationChange(
-                  event.target.value,
-                  location[1]
-                );
+                this.handleLocationChange(event.target.value, location[1]);
               }}
             />
           </div>

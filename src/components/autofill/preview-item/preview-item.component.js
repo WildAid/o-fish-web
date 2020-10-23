@@ -8,6 +8,8 @@ import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 import TextViewer from "../../partials/text-viewer/text-viewer";
 
 import "../autofill.css";
+import { Link } from "react-router-dom";
+import { BOARDINGS_PAGE, CREW_PAGE, VESSELS_PAGE } from "../../../root/root.constants";
 
 const PreviewItem = ({
   item,
@@ -16,8 +18,20 @@ const PreviewItem = ({
   previewName,
   subText,
   searchWords,
-  t
+  t,
 }) => {
+  let searchResultsLink = "#" 
+  switch(itemName){
+    case "BOARDINGS": searchResultsLink = BOARDINGS_PAGE.replace(":filter", null)
+    break;
+    case "VESSELS": searchResultsLink = VESSELS_PAGE.replace(":filter", null)
+    break;
+    case "CREW MEMBERS": searchResultsLink = CREW_PAGE.replace(":filter", null)
+    break;
+    default: searchResultsLink="#"
+    break;
+  }
+  
   if (!item) return;
 
   const isBoardings = itemName === "BOARDINGS";
@@ -42,12 +56,14 @@ const PreviewItem = ({
         </div>
         <div>
           <div className="flex-row font-16">
-            <Highlighter
-              highlightClassName="highlighted"
-              searchWords={searchWords}
-              autoEscape={true}
-              textToHighlight={name}
-            />
+            <Link className="preview-item-results-link" to={searchResultsLink}>
+              <Highlighter
+                highlightClassName="highlighted"
+                searchWords={searchWords}
+                autoEscape={true}
+                textToHighlight={name}
+              />
+            </Link>
             {isBoardings && (
               <div className="margin-left">
                 <RiskIcon

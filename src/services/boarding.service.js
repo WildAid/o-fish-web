@@ -7,7 +7,7 @@ const sampleData = {
   date: new Date(),
   time: new Date(),
   latitude: "-0.02182981",
-  longtitude: "-0.041231987",
+  longitude: "-0.041231987",
   agency: "WildAid",
   vessel: {
     name: "",
