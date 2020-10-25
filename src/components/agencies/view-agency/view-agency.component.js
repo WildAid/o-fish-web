@@ -10,6 +10,7 @@ import { checkUserType,goToPage } from "../../../helpers/get-data";
 
 import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
+import BoardingService from "../../../services/boarding.service";
 
 import AgencyFormData from "../form-data/form-data.js"
 import AgencyDataSharing from "../data-sharing/data-sharing.js";
@@ -20,6 +21,7 @@ import "./view-agency.css";
 
 const agencyService = AgencyService.getInstance();
 const authService = AuthService.getInstance();
+const boardingService = BoardingService.getInstance(); 
 
 class ViewAgency extends Component {
   state = {
@@ -46,14 +48,29 @@ class ViewAgency extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-
     this.setState({ loading: true }, () => {
       agencyService
         .getAgency(id)
         .then((data) => {
           this.setState({
             agency: data,
-            loading: false,
+          });
+
+          boardingService.getBoardingsWithFacet(50,0,null,{"agency":data.name}).then((userData)=>{
+              const officers = userData.boardings.reduce((res,item)=>{
+                if(!res.email.includes(item.reportingOfficer.email)){
+                  res.email.push(item.reportingOfficer.email);
+                  res.officers.push(item.reportingOfficer);
+                }
+                return res;
+              },{email:[],officers:[]}).officers;
+
+            this.setState({
+              agencyAdditionalInfo:{"officers": officers},
+              loading: false,
+            }); 
+          }).catch((error) => {
+            console.error(error);
           });
         })
         .catch((error) => {
@@ -64,7 +81,6 @@ class ViewAgency extends Component {
 
   render() {
     const { agencyAdditionalInfo, agency, activeTab, loading, isFocused, total, limit, page } = this.state;
-
     const { t } = this.props;
     const isGlobalAdmin = authService.user.global.admin;
     const isAgencyAdmin = authService.user.agency.admin;
@@ -190,7 +206,7 @@ class ViewAgency extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {agencyAdditionalInfo.officers.map((officer, ind) => {
+                        { agencyAdditionalInfo.officers.map((officer, ind) => {
                           const status = officer.active ? "active" : "inactive";
                           return (
                             <tr className="table-row" key={ind}>
@@ -216,7 +232,7 @@ class ViewAgency extends Component {
                                       : "N/A"
                                   : officer.userGroup}
                               </td>
-                              <td>{checkUserType(officer)}</td>
+                              <td>{(officer.global || officer.agency) ? checkUserType(officer) : "N/A"}</td>
                               {isFieldOfficer && !isGlobalAdmin && (
                                 <td>{officer.email}</td>
                               )}
@@ -225,7 +241,7 @@ class ViewAgency extends Component {
                                   {status}
                                 </div>
                               </td>
-                              {isAgencyAdmin && (
+                              {isAgencyAdmin && officer._id && (
                                 <td>
                                   <div
                                     className="pointer see-all"
