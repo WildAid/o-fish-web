@@ -82,8 +82,7 @@ class AgenciesMain extends React.Component {
       }
       if (agencyWithOfficers) {
         agency.officers = Array.from(new Set(agencyWithOfficers.officers))
-          .slice(0, 3)
-          .join(", ");
+          .length;
       }
       return agency;
     });
