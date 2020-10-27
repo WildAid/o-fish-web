@@ -10,7 +10,7 @@ import { checkUserType,goToPage } from "../../../helpers/get-data";
 
 import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
-import BoardingService from "../../../services/boarding.service";
+import UserService from "../../../services/user.service";
 
 import AgencyFormData from "../form-data/form-data.js"
 import AgencyDataSharing from "../data-sharing/data-sharing.js";
@@ -21,7 +21,7 @@ import "./view-agency.css";
 
 const agencyService = AgencyService.getInstance();
 const authService = AuthService.getInstance();
-const boardingService = BoardingService.getInstance(); 
+const userService = UserService.getInstance();
 
 class ViewAgency extends Component {
   state = {
@@ -42,7 +42,6 @@ class ViewAgency extends Component {
   };
 
   goEditUser = (id) => {
-    //TODO: Use router!
     goToPage(EDIT_USER_PAGE, id);
   };
 
@@ -56,22 +55,13 @@ class ViewAgency extends Component {
             agency: data,
           });
 
-          boardingService.getBoardingsWithFacet(50,0,null,{"agency":data.name}).then((userData)=>{
-              const officers = userData.boardings.reduce((res,item)=>{
-                if(!res.email.includes(item.reportingOfficer.email)){
-                  res.email.push(item.reportingOfficer.email);
-                  res.officers.push(item.reportingOfficer);
-                }
-                return res;
-              },{email:[],officers:[]}).officers;
-
+          userService.getUsers(50,0,null).then((userData)=>{
             this.setState({
-              agencyAdditionalInfo:{"officers": officers},
+              agencyAdditionalInfo:{"officers": userData.users},
               loading: false,
-            }); 
-          }).catch((error) => {
-            console.error(error);
+            });
           });
+
         })
         .catch((error) => {
           console.error(error);
