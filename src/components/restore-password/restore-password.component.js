@@ -37,7 +37,6 @@ class RestorePassword extends Component {
 
   render() {
     const { error, loading, success } = this.state;
-
     return (
       <div className="flex-row justify-center align-center login-box">
         <div className="white-bg box-shadow login">

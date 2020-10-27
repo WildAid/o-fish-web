@@ -54,3 +54,26 @@
     height: 50px;
     margin-right: 10px;
 }
+
+.officer-search-panel {
+    width: 450px;
+    background: inherit;
+    border:1px solid #ececec;
+    border-radius: 5px;
+}
+
+.officer-search-panel .search-icon {
+    margin:auto 5px;
+  }
+
+.officer-search-panel-input {
+    outline: none;
+    border: none;
+    margin:8px auto;
+    flex-grow: 1;
+}
+
+.officer-table-border-width {
+    border-width: 3px;
+}
+
