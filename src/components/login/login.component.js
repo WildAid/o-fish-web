@@ -64,7 +64,7 @@ class Login extends Component {
               <img
                 className="full-view"
                 src={require("../../assets/login-logo.png")}
-                alt="no logo"
+                alt="WildAid O-Fish. Powered by MongoDB."
               />
             </div>
             <Formik
