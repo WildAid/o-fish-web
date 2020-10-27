@@ -1,31 +1,44 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
-import { TextField, Box } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+
+import history from "../../root/root.history";
 
 import UserService from "../../services/user.service";
 
 import "./restore-password.component.css";
 
+import { LOGIN_PAGE } from "../../root/root.constants";
+
 const userService = UserService.getInstance();
 
-class RestorePassword extends Component {
+class ResetPassword extends Component {
   state = {
     error: null,
     loading: false,
-    success: false,
   };
 
-  handleReset = (values) => {
+  handleResetPassword = (values) => {
     this.setState({
       loading: true,
+      error: null,
     });
-    userService
-      .resetPasswordEmail(values.login).then(()=>{
+    const url = window.location.hash.slice(window.location.hash.indexOf('?'));
+    const params = new URLSearchParams(url);
+
+    const token = params.get("token");
+    const tokenId = params.get("tokenId");
+
+    if(values.password === values.confirmPassword) {
+      const newPassword = values.password; 
+      userService
+      .resetPassword(token, tokenId, newPassword)
+      .then(() => {
         this.setState({
           loading: false,
-          success: true,
         });
+        history.push(LOGIN_PAGE);
       })
       .catch((error) => {
         this.setState({
@@ -33,10 +46,16 @@ class RestorePassword extends Component {
           loading: false,
         });
       });
+    } else {
+      this.setState({
+        error: "Passwords do not match. Please try again!",
+        loading: false,
+      });
+    }
   };
 
   render() {
-    const { error, loading, success } = this.state;
+    const { error, loading } = this.state;
     const { t } = this.props;
 
     return (
@@ -51,8 +70,8 @@ class RestorePassword extends Component {
               />
             </div>
             <Formik
-              initialValues={{ login: "" }}
-              onSubmit={this.handleReset}
+              initialValues={{ password: "", confirmPassword: "" }}
+              onSubmit={this.handleResetPassword}
               render={({
                 touched,
                 errors,
@@ -66,25 +85,31 @@ class RestorePassword extends Component {
                   className="flex-column justify-around login-form"
                   onSubmit={handleSubmit}
                 >
-                  <Box fontWeight="fontWeightBold">
-                    Enter your user account's email address and we will send you a password reset link.
-                  </Box>
+                  <strong>Please enter your new password.</strong>
                   <TextField
-                    label="Email"
-                    name="login"
+                    label="New Password"
+                    name="password"
                     onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("login", e.target.value)}
-                    type="text"
-                    value={values.login}
+                    onChange={(e) => setFieldValue("password", e.target.value)}
+                    type="password"
+                    value={values.password}
+                  />
+                  <TextField
+                    label="Re-enter New Password"
+                    name="confirm-password"
+                    onBlur={handleBlur}
+                    onChange={(e) =>
+                      setFieldValue("confirmPassword", e.target.value)
+                    }
+                    type="password"
+                    value={values.confirmPassword}
                   />
                   <div className="flex-row align-center justify-center btn-box">
-                    {success ? (
-                      <div>A password reset link has been sent to your email.</div>
-                    ) : loading ? (
-                      <div>Sending password reset email...</div>
+                    {loading ? (
+                      <div>Setting up new password...</div>
                     ) : (
                       <button className="blue-btn" type="submit">
-                        Send password reset email
+                        Change password
                       </button>
                     )}
                   </div>
@@ -99,4 +124,4 @@ class RestorePassword extends Component {
   }
 }
 
-export default withTranslation("translation")(RestorePassword);
+export default withTranslation("translation")(ResetPassword);

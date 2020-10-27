@@ -13,6 +13,7 @@ import AgenciesDashboard from "./../components/dashboards/agencies-dashboard.com
 import Forms from "../components/forms/forms.component";
 import SearchResults from "../components/search-results/search-results.component";
 import RestorePassword from "../components/restore-password/restore-password.component";
+import ResetPassword from "../components/restore-password/reset-password.component";
 import Profile from "../components/profile/profile.component";
 import ViolationsPage from "../components/violations/violations.component";
 import PhotosPage from "../components/photos/photos.component";
@@ -58,6 +59,7 @@ import {
   FORMS_PAGE,
   SEARCH_RESULTS_PAGE,
   RESTORE_PASSWORD_PAGE,
+  RESET_PASSWORD_PAGE,
   PROFILE_PAGE,
   VIOLATIONS_PAGE,
   PHOTOS_PAGE,
@@ -296,6 +298,11 @@ const routes = [
   {
     path: RESTORE_PASSWORD_PAGE,
     component: RestorePassword,
+    exact: false,
+  },
+  {
+    path: RESET_PASSWORD_PAGE,
+    component: ResetPassword,
     exact: false,
   },
   {

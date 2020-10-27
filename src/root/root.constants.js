@@ -13,6 +13,7 @@ export const NOTES_PAGE = "/notes/:filter";
 export const DELIVERIES_PAGE = "/deliveries/:filter";
 export const SEARCH_RESULTS_PAGE = "/search_results";
 export const RESTORE_PASSWORD_PAGE = "/restore_password";
+export const RESET_PASSWORD_PAGE = "/reset_password";
 export const CHARTS_PAGE = "/agency_charts/:id";
 
 //Boardings subroutes
