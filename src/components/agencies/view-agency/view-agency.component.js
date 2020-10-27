@@ -54,8 +54,7 @@ class ViewAgency extends Component {
           this.setState({
             agency: data,
           });
-
-          userService.getUsers(50,0,null).then((userData)=>{
+          userService.getUsers(50,0,null,{"agency.name":data.name}).then((userData)=>{
             this.setState({
               agencyAdditionalInfo:{"officers": userData.users},
               loading: false,
