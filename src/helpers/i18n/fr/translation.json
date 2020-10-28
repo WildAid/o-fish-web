@@ -83,6 +83,17 @@
     "VERSION_CONTROL": {
       "REVISION_HISTORY": "Historique des Révisions",
       "AMOUNT": "Nombre"
+    },
+    "NEW_BOARDING": {
+      "DIRECTION": "",
+      "DEGREES": "",
+      "MINUTES": "",
+      "SECONDS": "",
+      "NO_ELECTRONIC_SYSTEM": "",
+      "NO_NOTES": "",
+      "NO_CATCH": "",
+      "NO_VIOLATIONS": "",
+      "NONE": ""
     }
   },
   "DATA_SHARING": {
@@ -110,7 +121,7 @@
       "DATA_ACCESS": "",
       "READ_ACCESS": "",
       "FLAG_STATE": "",
-      "ELECTRINIC_SYSTEM": "",
+      "ELECTRONIC_SYSTEM": "",
       "RESULT_OF_VIOLATION": "",
       "VIOLATION_ISSUED_TO": "",
       "SELECT_AGENCY": ""
@@ -193,7 +204,12 @@
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",
     "MANAGE_SHARED_DATA": "",
     "STOP_SHARING": "",
-    "SEE_SHARED_DATA": ""
+    "SEE_SHARED_DATA": "",
+    "ADD_MONITORING_SYSTEM": "",
+    "ADD_NOTES": "",
+    "ADD_VIOLATION": "",
+    "SAVE_AND_SUBMIT": "",
+    "SAVE_AS_DRAFT": ""
   },
   "TABLE": {
     "ADDRESS": "Adresse",

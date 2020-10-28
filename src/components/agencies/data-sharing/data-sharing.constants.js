@@ -75,7 +75,7 @@ export const boardingInformation = [
         ],
       },
       {
-        itemName: "DATA_SHARING.MANAGE_SHARED_DATA.ELECTRINIC_SYSTEM",
+        itemName: "DATA_SHARING.MANAGE_SHARED_DATA.ELECTRONIC_SYSTEM",
         subItems: [
           { subItemName: "BOARDING_PAGE.EDIT_BOARDING.TYPE", key: "" },
           {

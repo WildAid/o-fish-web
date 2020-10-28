@@ -83,6 +83,17 @@
     "VERSION_CONTROL": {
       "REVISION_HISTORY": "Historial de Revisiones",
       "AMOUNT": "Importe"
+    },
+    "NEW_BOARDING": {
+      "DIRECTION": "Direction",
+      "DEGREES": "Degrees",
+      "MINUTES": "Minutes",
+      "SECONDS": "Seconds",
+      "NO_ELECTRONIC_SYSTEM": "No Electronic Monitoring System",
+      "NO_NOTES": "No Notes",
+      "NO_CATCH": "No Catch",
+      "NO_VIOLATIONS": "No Violations",
+      "NONE": "None"
     }
   },
   "DATA_SHARING": {
@@ -165,7 +176,12 @@
     "CREATE_USER": "Crear Usuario",
     "UPDATE_USER": "Actualizar Usuario",
     "MANAGE_SHARED_DATA": "Administrar Datos Compartidos",
-    "SEE_SHARED_DATA": ""
+    "SEE_SHARED_DATA": "",
+    "ADD_MONITORING_SYSTEM": "",
+    "ADD_NOTES": "",
+    "ADD_VIOLATION": "",
+    "SAVE_AND_SUBMIT": "",
+    "SAVE_AS_DRAFT": ""
   },
   "TABLE": {
     "ADDRESS": "Dirección",
@@ -237,7 +253,7 @@
         "NAME": "Riesgos"
       }
     },
-    "DATES_RANGE":{
+    "DATES_RANGE": {
       "RANGE": "Rango de Fechas",
       "LAST7DAYS": "Últimos 7 días",
       "LAST30DAYS": "Últimos 30 días",
@@ -252,13 +268,13 @@
     }
   },
   "CUSTOM_MENU": {
-    "SPECIES" : "Especies",
-    "FISHERIES" : "Pesca",
-    "CATCHES" : "Capturas",
-    "ACTIVITIES" : "Actividades",
-    "GEAR" : "Equipo",
-    "ADD_SPECIE" : "Añadir especie",
-    "ADD_ANOTHER" : "Añadir otro"
+    "SPECIES": "Especies",
+    "FISHERIES": "Pesca",
+    "CATCHES": "Capturas",
+    "ACTIVITIES": "Actividades",
+    "GEAR": "Equipo",
+    "ADD_SPECIE": "Añadir especie",
+    "ADD_ANOTHER": "Añadir otro"
   },
   "ADMINS": {
     "GLOBAL": "Administrador Global",
@@ -271,7 +287,7 @@
     "NOT_AUTHORIZED": "No estás autorizado",
     "NO_BOARDINGS": "No se encontraron embarques",
     "NO_AGENCIES": "No se encontraron agencias",
-    "NO_OFFICERS":"No se encontraron oficiales",
+    "NO_OFFICERS": "No se encontraron oficiales",
     "NO_CATCHES": "No se encontraron capturas",
     "NO_VESSELS": "No se encontraron embarcaciones",
     "NO_CREW": "No se encontraron miembros de la tripulación",

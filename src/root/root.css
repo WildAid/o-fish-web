@@ -81,6 +81,10 @@ table {
     padding: 18px;
 }
 
+.padding-25 {
+    padding: 25px;
+}
+
 .padding-bottom {
     padding-bottom: 18px;
 }
@@ -129,6 +133,14 @@ table {
     width: 47%;
 }
 
+.third-row-view {
+    width: 31%;
+}
+
+.quarter-row-view {
+    width: 23%;
+}
+
 .items-amount {
     font-size: 25px;
     font-weight: 500;
@@ -159,6 +171,14 @@ table {
 
 .font-16 {
     font-size: 16px;
+}
+
+.font-17 {
+    font-size: 17px;
+}
+
+.font-32 {
+    font-size: 32px;
 }
 
 .font-35 {
@@ -414,4 +434,34 @@ thead td {
 
 .grey-color {
     color: #9ca4ab;
+}
+
+.risk-green {
+    background-color: #ecf4ef;
+    color: #008537;
+}
+
+.risk-red {
+    background-color: #fcf2f2;
+    color: #960b0b;
+}
+
+.risk-amber {
+    background-color: #fff9eb;
+    color: #634703;
+}
+
+.active-green {
+    background-color: #008537;
+    color: #ecf4ef;
+}
+
+.active-red {
+    background-color: #cf2222;
+    color: #fcf2f2;
+}
+
+.active-amber {
+    background-color: #ffbf22;
+    color: #fff9eb;
 }
