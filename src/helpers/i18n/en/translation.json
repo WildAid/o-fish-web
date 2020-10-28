@@ -83,6 +83,17 @@
     "VERSION_CONTROL": {
       "REVISION_HISTORY": "Revision History",
       "AMOUNT": "Amount"
+    },
+    "NEW_BOARDING": {
+      "DIRECTION": "Direction",
+      "DEGREES": "Degrees",
+      "MINUTES": "Minutes",
+      "SECONDS": "Seconds",
+      "NO_ELECTRONIC_SYSTEM": "No Electronic Monitoring System",
+      "NO_NOTES": "No Notes",
+      "NO_CATCH": "No Catch",
+      "NO_VIOLATIONS": "No Violations",
+      "NONE": "None"
     }
   },
   "DATA_SHARING": {
@@ -111,7 +122,7 @@
       "DATA_ACCESS": "Data access",
       "READ_ACCESS": "Read Access",
       "FLAG_STATE": "Flag State",
-      "ELECTRINIC_SYSTEM": "Electronic Monitoring System",
+      "ELECTRONIC_SYSTEM": "Electronic Monitoring System",
       "RESULT_OF_VIOLATION": "Result of Violation",
       "VIOLATION_ISSUED_TO": "Violation Issued To",
       "SELECT_AGENCY": "Select an agency to share boarding data with",
@@ -198,7 +209,12 @@
     "STOP_SHARING": "Stop Sharing",
     "MANAGE_SHARED_DATA": "Manage Shared Data",
     "CHOOSE_DATA": "Choose data",
-    "SEE_SHARED_DATA": "See Shared Data"
+    "SEE_SHARED_DATA": "See Shared Data",
+    "ADD_MONITORING_SYSTEM": "Add electronic monitoring system",
+    "ADD_NOTES": "Add Note",
+    "ADD_VIOLATION": "Add Violation",
+    "SAVE_AND_SUBMIT": "Save and Submit",
+    "SAVE_AS_DRAFT": "Save as Draft"
   },
   "TABLE": {
     "ADDRESS": "Address",

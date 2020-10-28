@@ -23,6 +23,8 @@ import DeliveriesPage from "../components/deliveries/deliveries.component";
 import BoardingsMain from "../components/boardings/boardings.routes-render";
 import BoardingEditPage from "../components/boardings/boarding-edit/boarding-edit.component";
 import BoardingViewPage from "../components/boardings/boarding-view/boarding-view.component";
+import BoardingNewPage from "../components/boardings/boarding-new/boarding-new.component";
+
 //Crew sub components
 import CrewMain from "../components/crew/crew.routes-render";
 import CrewViewPage from "../components/crew/crew-view/crew-view.component";
@@ -163,6 +165,11 @@ const routes = [
         exact: true,
       },
       {
+        path: NEW_BOARDING_PAGE,
+        component: BoardingNewPage,
+        exact: true,
+      },
+      {
         path: VIEW_BOARDING_PAGE,
         component: BoardingViewPage,
         exact: true,
@@ -172,11 +179,7 @@ const routes = [
         component: BoardingEditPage,
         exact: true,
       },
-      {
-        path: NEW_BOARDING_PAGE,
-        component: BoardingEditPage,
-        exact: true,
-      },
+      
     ],
   },
   {

@@ -190,7 +190,11 @@ export const pageWithFilterURL = (path, filter) => {
 };
 
 export const goToPageWithFilter = (path, filter) => {
-  history.push(path.replace(":filter", JSON.stringify(filter)));
+  if (filter) {
+    history.push(path.replace(":filter", JSON.stringify(filter)));
+  } else {
+    history.push(path);
+  }
 };
 
 export const goCrewViewPage = (item) => {
@@ -250,7 +254,7 @@ export const getSharedAgenciesList = async (name, user) => {
     const agencies = agency.inboundPartnerAgencies
       .filter((item) => (item.agencyWideAccess ? item.name : ""))
       .map((el) => el.name);
-      
+
     return [...agencies, name];
   }
 };

@@ -1,0 +1,70 @@
+.new-boarding .white-btn {
+  margin-right: 15px;
+}
+
+.new-boarding .blue-btn {
+  margin-right: 0;
+}
+
+.new-boarding .nav-menu {
+  width: auto;
+  top: 100%;
+  right: 0;
+}
+
+.new-boarding .nav-link {
+  width: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  font-weight: normal;
+  color: #0a4074;  
+}
+
+.new-boarding .table-name {
+  padding: 25px;
+  background-color: #fbfbfb;
+}
+
+.new-boarding .item-name {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.new-boarding .last-date-delivery {
+  margin-top: 0;
+}
+
+.new-boarding .add-btn,
+.risk-btn {
+  padding: 10px 15px;
+  margin: 0;
+  border-radius: 25px;
+  outline: none;
+}
+
+.risk-btn {
+  border: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.checkbox-wrapper {
+  position: absolute;
+  top: 30%;
+  right: 0;
+}
+
+.checkbox {
+  margin: 0 10px 0;
+}
+
+.MuiInputLabel-asterisk {
+  color: #b31818;
+  font-weight: 700;
+}
+
+.blank-section {
+  height: 800px;
+}
