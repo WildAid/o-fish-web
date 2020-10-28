@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 import TextViewer from "../text-viewer/text-viewer";
 
 import "./item-info.css";
+import { Link } from "react-router-dom";
 
 const ItemInfo = ({
   name,
@@ -15,8 +16,10 @@ const ItemInfo = ({
   nameIcon,
   searchWords,
   label,
-  t
+  t,
+  itemInfoLink
 }) => {
+  debugger;
   return (
     <div className="flex-row item-info">
       <div className="padding-right icon-img">
@@ -30,12 +33,14 @@ const ItemInfo = ({
         <div className="flex-column">
           <div className="flex-row align-center">
             <div className="item-info-name">
+            <Link className="item-info-link " to={itemInfoLink}>
               <Highlighter
                 highlightClassName="highlighted"
                 searchWords={searchWords || []}
                 autoEscape={true}
                 textToHighlight={name}
               />
+              </Link>
             </div>
             {nameIcon && <div className="captain-icon">{t("TABLE.CAPTAIN").toUpperCase()}</div>}
           </div>
