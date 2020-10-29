@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import PhotosOverview from "./../../../partials/overview-pages/photo-overview/photo-overview.component";
+//import PhotosOverview from "./../../../partials/overview-pages/photo-overview/photo-overview.component";
 
 class ViolationsSection extends Component {
   constructor(props){
