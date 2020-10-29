@@ -25,3 +25,8 @@
     margin-top: 5px;
     padding-right: 40px;
 }
+
+.preview-item-results-link {
+    text-decoration: none;
+    color: inherit;
+}

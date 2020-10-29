@@ -58,6 +58,12 @@ export default class UserService {
     );
   }
 
+  resetPasswordEmail(email) {
+    return stitchService.client.auth
+      .getProviderClient(UserPasswordAuthProviderClient.factory)
+      .sendResetPasswordEmail(email);
+  }
+
   resetPasswordRequest(email, password) {
     return stitchService.client.auth
       .getProviderClient(UserPasswordAuthProviderClient.factory)

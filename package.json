@@ -31,7 +31,7 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-router-query-params": "^1.0.4",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.4",
     "react-world-flags": "^1.4.0",
     "typescript": "^3.7.0"
   },

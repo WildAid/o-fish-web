@@ -61,7 +61,7 @@
       "BOARDING": "Embarque",
       "LAST_MODIFIED": "Última Modificación el",
       "LATITUDE": "Latitud",
-      "LONGTITUDE": "Longitud",
+      "LONGITUDE": "Longitud",
       "STATUS": "Nombre del barco",
       "DELIVERY_DATE": "Última fecha de entrega",
       "LICENSE_NUMBER": "Número de licencia",
@@ -146,7 +146,7 @@
     "SEE_ALL_RESULTS": "Ver todos los resultados de '{{searchQuery}}'"
   },
   "LOADING": {
-    "LOGGIN_IN": "Iniciando sesión...",
+    "LOGGING_IN": "Iniciando sesión...",
     "LOADING": "Cargando..."
   },
   "BUTTONS": {

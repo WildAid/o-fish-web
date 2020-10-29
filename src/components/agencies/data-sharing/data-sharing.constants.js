@@ -28,8 +28,8 @@ export const boardingInformation = [
         itemName: "FILTER.MAIN.BOARDING_INFO.LOCATION",
         subItems: [
           {
-            subItemName: "BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE",
-            key: "longtitude",
+            subItemName: "BOARDING_PAGE.VIEW_BOARDING.LONGITUDE",
+            key: "longitude",
           },
           {
             subItemName: "BOARDING_PAGE.VIEW_BOARDING.LATITUDE",

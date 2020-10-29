@@ -2,47 +2,43 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
-
-import AuthService from "../../services/auth.service";
 
 import history from "../../root/root.history";
 
-import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
+import UserService from "../../services/user.service";
 
-import "./login.css";
+import "./restore-password.component.css";
 
-import {
-  HOME_PAGE,
-  GLOBAL_AGENCIES_PAGE,
-  CHARTS_PAGE,
-} from "../../root/root.constants";
+import { LOGIN_PAGE } from "../../root/root.constants";
 
-const authService = AuthService.getInstance();
+const userService = UserService.getInstance();
 
-class Login extends Component {
+class ResetPassword extends Component {
   state = {
     error: null,
     loading: false,
   };
 
-  handleLogin = (values) => {
+  handleResetPassword = (values) => {
     this.setState({
       loading: true,
+      error: null,
     });
-    authService
-      .authenticate(values.login, values.password)
+    const url = window.location.hash.slice(window.location.hash.indexOf('?'));
+    const params = new URLSearchParams(url);
+
+    const token = params.get("token");
+    const tokenId = params.get("tokenId");
+
+    if(values.password === values.confirmPassword) {
+      const newPassword = values.password; 
+      userService
+      .resetPassword(token, tokenId, newPassword)
       .then(() => {
         this.setState({
           loading: false,
         });
-        authService.userRole === "global"
-          ? history.push(GLOBAL_AGENCIES_PAGE)
-          : authService.userRole === "agency"
-          ? history.push(
-              CHARTS_PAGE.replace(":id", authService.user.agency.name)
-            )
-          : history.push(HOME_PAGE);
+        history.push(LOGIN_PAGE);
       })
       .catch((error) => {
         this.setState({
@@ -50,11 +46,16 @@ class Login extends Component {
           loading: false,
         });
       });
+    } else {
+      this.setState({
+        error: "Passwords do not match. Please try again!",
+        loading: false,
+      });
+    }
   };
 
   render() {
     const { error, loading } = this.state;
-    const { t } = this.props;
 
     return (
       <div className="flex-row justify-center align-center login-box">
@@ -68,8 +69,8 @@ class Login extends Component {
               />
             </div>
             <Formik
-              initialValues={{ login: "", password: "" }}
-              onSubmit={this.handleLogin}
+              initialValues={{ password: "", confirmPassword: "" }}
+              onSubmit={this.handleResetPassword}
               render={({
                 touched,
                 errors,
@@ -83,40 +84,37 @@ class Login extends Component {
                   className="flex-column justify-around login-form"
                   onSubmit={handleSubmit}
                 >
+                  <strong>Please enter your new password.</strong>
                   <TextField
-                    label={t("LOGIN_PAGE.EMAIL_USERNAME")}
-                    name="login"
-                    onBlur={handleBlur}
-                    onChange={(e) => setFieldValue("login", e.target.value)}
-                    type="text"
-                    value={values.login}
-                  />
-                  <TextField
-                    label={`${t("LOGIN_PAGE.PASSWORD")}:`}
+                    label="New Password"
                     name="password"
-                    type="password"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("password", e.target.value)}
+                    type="password"
                     value={values.password}
+                  />
+                  <TextField
+                    label="Re-enter New Password"
+                    name="confirm-password"
+                    onBlur={handleBlur}
+                    onChange={(e) =>
+                      setFieldValue("confirmPassword", e.target.value)
+                    }
+                    type="password"
+                    value={values.confirmPassword}
                   />
                   <div className="flex-row align-center justify-center btn-box">
                     {loading ? (
-                      <div>{t("LOADING.LOGGING_IN")}</div>
+                      <div>Setting up new password...</div>
                     ) : (
                       <button className="blue-btn" type="submit">
-                        {t("LOGIN_PAGE.LOGIN")}
+                        Change password
                       </button>
                     )}
                   </div>
                 </Form>
               )}
             />
-            <NavLink
-              className="forgot-password-link"
-              to={RESTORE_PASSWORD_PAGE}
-            >
-              {t("LOGIN_PAGE.FORGOT_PASSWORD")}
-            </NavLink>
             {error && <div className="error-messages">{error}</div>}
           </div>
         </div>
@@ -125,4 +123,4 @@ class Login extends Component {
   }
 }
 
-export default withTranslation("translation")(Login);
+export default withTranslation("translation")(ResetPassword);

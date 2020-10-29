@@ -7,8 +7,8 @@
   },
   "NAVIGATION": {
     "MY_DASHBOARD": "Mon Tableau de Bord",
-    "USER_GROUP": "",
     "DASHBOARD": "Tableau de Bord",
+    "USER_GROUP": "Groupe d'Utilisateurs",
     "BOARDING_RECORDS": "Rapports d'Inspection",
     "USERS": "Utilisateurs",
     "AGENCIES": "Agences",
@@ -26,13 +26,13 @@
   },
   "HOME_PAGE": {
     "DASHBOARD": "Tableau de Bord",
-    "MY_BOARDINGS": "",
-    "MY_ACTIVITY": "",
+    "MY_BOARDINGS": "Mes Inspections",
+    "MY_ACTIVITY": "Mon Activité",
     "OVERVIEW": "Aperçu pour",
     "COMPLIANCE_RATE": "Taux de Conformité",
     "OFFICER_PATROL_HOURS": "Heures de Patrouille",
-    "DAYS": "",
-    "HOURS": ""
+    "DAYS": "Jours",
+    "HOURS": "Heures"
   },
   "CREATE_AGENCY_PAGE": {
     "NEW_AGENCY": "Nouvelle Agence",
@@ -45,7 +45,7 @@
     "FIRST_NAME": "Prénom",
     "LAST_NAME": "Nom de Famille",
     "ROLE": "Fonction",
-    "USER_GROUP": "Groupe",
+    "USER_GROUP": "Groupe d'Utilisateurs",
     "ACTIVE": "Actif",
     "INACTIVE": "Inactif",
     "PERMISSIONS": "Permissions",
@@ -59,9 +59,9 @@
     "VIEW_BOARDING": {
       "VIEW_BOARDING": "Voir Inspection",
       "BOARDING": "Inspection",
-      "LAST_MODIFIED": "Dernière Modification le ",
+      "LAST_MODIFIED": "Dernière Modification le",
       "LATITUDE": "Latitude",
-      "LONGTITUDE": "Longitude",
+      "LONGITUDE": "Longitude",
       "STATUS": "Nom du Vaisseau",
       "DELIVERY_DATE": "Dernière Date de Livraison",
       "LICENSE_NUMBER": "Numéro de Brevet",
@@ -97,51 +97,49 @@
     }
   },
   "DATA_SHARING": {
-    "SHARED_DATA": "",
-    "BOARDINGS_FROM": "",
-    "BOARDINGS_TO": "",
-    "WHO_CAN_ACCESS_DATA": "",
-    "SHARING_DATA_WITH": "",
-    "FOLLOWING_AGENCIES": "",
-    "SHARING_DATA_WITH_ZERO_AGENCIES": "",
-    "AGENCY_ADMINS": "",
-    "AGENCY_SUCCESS_UPDATE_MESSAGE": "",
+    "SHARED_DATA": "Données Partagées",
+    "BOARDINGS_FROM": "BOARDINGS FROM",
+    "BOARDINGS_TO": "À",
+    "WHO_CAN_ACCESS_DATA": "Qui peut accéder aux données",
+    "SHARING_DATA_WITH": "Agences partagent des données avec {{agency}}",
+    "FOLLOWING_AGENCIES": "FOLLOWING AGENCIES",
+    "SHARING_DATA_WITH_ZERO_AGENCIES": "SHARING DATA WITH ZERO AGENCIES",
+    "AGENCY_ADMINS": "AGENCY ADMINS",
     "MANAGE_SHARED_DATA": {
-      "SHARE_BOARDING_DATA": "",
-      "MANAGE_DATA_SHARING_WITH": "",
-      "CHOOSE_DATA_TO_SHARE": "",
-      "TIME_FRAME": "",
-      "CHOOSE_DATES": "",
-      "BOARDING_DATA": "",
-      "DATA": "",
-      "FIELD": "",
-      "GENERAL_BOARDING_INFORMATION": "",
-      "OFFICER_NAME": "",
-      "AGENCY_INFO": "",
-      "DATA_ACCESS": "",
-      "READ_ACCESS": "",
-      "FLAG_STATE": "",
-      "ELECTRONIC_SYSTEM": "",
-      "RESULT_OF_VIOLATION": "",
-      "VIOLATION_ISSUED_TO": "",
-      "SELECT_AGENCY": ""
-    },
-    "PREVIOUSLY_SHARED_DATA": ""
+      "SHARE_BOARDING_DATA": "SHARE BOARD DATA",
+      "MANAGE_DATA_SHARING_WITH": "MANAGE DATA SHARING WITH",
+      "CHOOSE_DATA_TO_SHARE": "CHOOSE DATA TO SHARE",
+      "TIME_FRAME": "TIME FRAME",
+      "CHOOSE_DATES": "CHOOSE DATES",
+      "BOARDING_DATA": "BOARDING DATA",
+      "DATA": "Données",
+      "FIELD": "FIELD",
+      "GENERAL_BOARDING_INFORMATION": "GENERAL BOARDING INFORMATION",
+      "OFFICER_NAME": "Nom d'Officier",
+      "AGENCY_INFO": "Information de l'Agence",
+      "DATA_ACCESS": "Accès aux données",
+      "READ_ACCESS": "READ ACCESS",
+      "FLAG_STATE": "FLAG STATE",
+      "ELECTRONIC_SYSTEM": "ELECTRONIC SYSTEM",
+      "RESULT_OF_VIOLATION": "RESULT OF VIOLATION",
+      "VIOLATION_ISSUED_TO": "VIOLATION ISSUED TO",
+      "SELECT_AGENCY": "SELECT AGENCY"
+    }
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Informations",
-    "DATA_SHARING": "",
+    "DATA_SHARING": "Partage de Données",
     "EDIT_AGENCY": {
-      "STATUS": "",
-      "ACTIVE": "",
-      "INACTIVE": "",
-      "NAME": "",
-      "DESCRIPTION": "",
-      "SITE": "",
-      "EMAIL": ""
+      "STATUS": "Statut",
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif",
+      "NAME": "Nom d'Agence",
+      "DESCRIPTION": "Description",
+      "SITE": "Site",
+      "EMAIL": "E-mail où on peut joindre [qqn]"
     },
-    "STOP_SHARING_DATA_WITH_AGENCY": "",
-    "NO_NEW_DATA_WILL_BE_SHARED_WITH_THIS_AGENCY": ""
+    "STOP_SHARING_DATA_WITH_AGENCY": "STOP SHARING DATA WITH AGENCY",
+    "NO_NEW_DATA_WILL_BE_SHARED_WITH_THIS_AGENCY": "NO NEW DATA WILL BE SHARED WITH THIS AGENCY"
   },
   "USERS_PAGE": {
     "SEE_ACTIVITY": "Voir Activité"
@@ -174,7 +172,7 @@
     "SEE_ALL_RESULTS": "Voir tous les résultats pour '{{searchQuery}}'"
   },
   "LOADING": {
-    "LOGGIN_IN": "Connexion en cours",
+    "LOGGING_IN": "Connexion en cours",
     "LOADING": "Chargement en cours"
   },
   "BUTTONS": {
@@ -185,9 +183,10 @@
     "CANCEL": "Annuler",
     "EDIT": "Modifier",
     "SAVE": "Sauvegarder",
+    "VIEW": "Voir",
     "DELETE": "Effacer",
     "SEARCH": "Recherche",
-    "CHANGE_PASSWORD": "Changer de Mot de Passe",
+    "CHANGE_PASSWORD": "Changer le Mot de Passe",
     "NEW_BOARDING": "Nouvelle Inspection",
     "SEE_ACTIVITY": "Voir Activité",
     "SEE_ALL": "Tout Voir",
@@ -202,14 +201,11 @@
     "CREATE_REPORT": "Créer un Rapport d'Activité",
     "CREATE_USER": "Créer un Utilisateur",
     "UPDATE_USER": "Mise à Jour de l'Utilisateur",
-    "MANAGE_SHARED_DATA": "",
-    "STOP_SHARING": "",
-    "SEE_SHARED_DATA": "",
-    "ADD_MONITORING_SYSTEM": "",
-    "ADD_NOTES": "",
-    "ADD_VIOLATION": "",
-    "SAVE_AND_SUBMIT": "",
-    "SAVE_AS_DRAFT": ""
+    "SHARE_DATA": "Partager des Données",
+    "STOP_SHARING": "Arrêter de Partager",
+    "MANAGE_SHARED_DATA": "Gérer des Données Partagées",
+    "CHOOSE_DATA": "Choisir des Données",
+    "SEE_SHARED_DATA": "SEE SHARED DATA"
   },
   "TABLE": {
     "ADDRESS": "Adresse",
@@ -227,7 +223,7 @@
     "AGENCY": "Agence",
     "NAME": "Nom",
     "USER_TYPE": "Type d'Utilisateur",
-    "DATE_ADDED": "",
+    "DATE_ADDED": "DATE ADDED",
     "STATUS": "Statut",
     "DESCRIPTION": "Description",
     "OFFICERS": "Agents",
@@ -304,13 +300,14 @@
     "ADD_ANOTHER": "Ajouter unne autre"
   },
   "ADMINS": {
-    "GLOBAL": "",
-    "AGENCY": "",
-    "GROUP": "",
-    "FIELD": ""
+    "GLOBAL": "GLOBAL",
+    "AGENCY": "AGENCY",
+    "GROUP": "GROUP",
+    "FIELD": "FIELD"
   },
   "WARNINGS": {
     "NOT_AUTHENTICATED": "Non-authentifié",
+    "NOT_UNAUTHORIZED": "NOT UNAUTHORIZED",
     "NO_BOARDINGS": "Pas d'Inspections trouvées",
     "NO_AGENCIES": "Pas d'Agences trouvées",
     "NO_OFFICERS": "Pas d'Agents trouvée",
@@ -324,8 +321,8 @@
     "NO_PHOTOS": "Pas de Photos trouvées",
     "NO_NOTES": "Pas de Remarques trouvées",
     "NO_LICENSE": "Pas de numéros de brevet trouvés",
-    "NO_END_DATE": "",
-    "NO_START_DATE": ""
+    "NO_END_DATE": "Pas de date de fin",
+    "NO_START_DATE": "Pas de date de début"
   },
   "VALIDATION": {
     "REQUIRED": "Ce champ est obligatoire"
