@@ -385,17 +385,6 @@ class Crew extends Component {
                             <div className="delivery-date">
                               {moment(item.date).format("LLL")}
                             </div>
-                            <div
-                              className="risk-icon"
-                              style={{
-                                background: `${getColor(
-                                  (item.safetyLevel && item.safetyLevel.level
-                                    ? item.safetyLevel.level.toLowerCase()
-                                    : item.safetyLevel
-                                  ).toLowerCase()
-                                )}`,
-                              }}
-                            ></div>
                           </div>
                         </td>
                       </tr>
