@@ -99,7 +99,9 @@ export default withTranslation("translation")(ViolationsSection);
 //            </div>
 //          </div>
 //          <div className="row">
+       // DO NOT USE INLINE CSS LIKE style=
 //            <TextField label="Violation:" style={{width: "45%"}} name="description" value={item.description} className="half-row" onChange={e => this.setFieldValue("description", e.target.value)}/>
+       // DO NOT USE INLINE CSS LIKE style=
 //            <TextField label="Result of violation:" style={{width: "45%"}} name="disposition"  className="half-row" value={item.disposition} onChange={e => this.setFieldValue("disposition", e.target.value)}/>
 //          </div>
 //      </section>
@@ -110,7 +112,9 @@ export default withTranslation("translation")(ViolationsSection);
 //    const values = this.state.data;
 //    return (
 //        <div class='violations-section section'>
+       // DO NOT USE INLINE CSS LIKE style=
 //          <div className="row" style={{margin: 0, padding: "10px 2em"}}>
+       // DO NOT USE INLINE CSS LIKE style=
 //            <h2 style={{marginTop: 0}}>Violations</h2>
 //            <div className="add-link">
 //              <Button onClick={this.addNew}>

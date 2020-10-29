@@ -8,11 +8,8 @@ class RisksSection extends Component {
 
     return (
       <div className="basic-info-section section">
-        <div
-          className="row left-aligned"
-          style={{ width: "60%", margin: 0, padding: "10px 2em" }}
-        >
-          <h2 style={{ marginTop: 0 }}>{t("FILTER.MAIN.RISKS.NAME")}</h2>
+        <div className="row left-aligned">
+          <h2>{t("FILTER.MAIN.RISKS.NAME")}</h2>
         </div>
         <section>
           <h3>{t("TABLE.RISK")}</h3>
@@ -20,15 +17,14 @@ class RisksSection extends Component {
             <Button
               className="green-button"
               variant="contained"
-              style={{ width: "27%" }}
               color="green"
-            >
+            >  //TODO: width may need to be 27% but don't use inline css
               {t("FILTER.MAIN.RISK.GREEN")}
             </Button>
-            <Button variant="outlined" style={{ width: "27%" }} color="olive">
+            <Button variant="outlined" color="olive"> //TODO: width may need to be 27% but don't use inline css
               {t("FILTER.MAIN.RISK.AMBER")}
             </Button>
-            <Button variant="outlined" style={{ width: "27%" }} color="red">
+            <Button variant="outlined" color="red"> //TODO: width may need to be 27% but don't use inline css
               {t("FILTER.MAIN.RISK.RED")}
             </Button>
           </div>
