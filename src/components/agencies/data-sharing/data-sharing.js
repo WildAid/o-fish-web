@@ -85,6 +85,54 @@ class AgencyDataSharing extends Component {
       return newAgency;
     });
 
+    // outboundPartnerAgencies = currentAgency.outboundPartnerAgencies.map(
+    //   (item) => {
+    //     if (item.name === selectedAgency.name) {
+    //       let isDataManaging = false;
+    //       let newDates = item.dates.map((el) => {
+    //         if (
+    //           (selectedAgency.fromDate === el.fromDate &&
+    //             selectedAgency.toDate === el.toDate) ||
+    //           (!selectedAgency.fromDate &&
+    //             !el.fromDate &&
+    //             !selectedAgency.toDate &&
+    //             !el.toDate)
+    //         ) {
+    //           if (startDate && endDate) {
+    //             el.fromDate = moment(startDate).toDate();
+    //             el.toDate = moment(endDate).toDate();
+    //           } else if (startDate && !endDate) {
+    //             el.fromDate = moment(startDate).toDate();
+    //             delete el.toDate;
+    //           } else if (!startDate && endDate) {
+    //             el.toDate = moment(endDate).toDate();
+    //             delete el.startDate;
+    //           } else if (!startDate && !endDate) {
+    //             delete el.fromDate;
+    //             delete el.toDate;
+    //           }
+    //           isDataManaging = true;
+    //         }
+
+    //         return el;
+    //       });
+    //       console.log(isDataManaging);
+    //       item.dates = isDataManaging
+    //         ? newDates
+    //         : endDate && startDate
+    //         ? [
+    //             ...newDates,
+    //             {
+    //               toDate: moment(endDate).toDate(),
+    //               fromDate: moment(startDate).toDate(),
+    //             },
+    //           ]
+    //         : [...newDates, {}];
+    //     }
+    //     return item;
+    //   }
+    // );
+
     const [
       activePartnerAgencies,
       archivePartnerAgencies,
@@ -132,7 +180,7 @@ class AgencyDataSharing extends Component {
     };
 
     if (currentAgency.outboundPartnerAgencies) {
-      const selectedAgencyExists = currentAgency.outboundPartnerAgencies.find(
+      const selectedAgencyExists = currentAgency.outboundPartnerAgencies.some(
         (agency) => agency.name === selectedAgency.name
       );
 
@@ -168,7 +216,6 @@ class AgencyDataSharing extends Component {
 
                 return el;
               });
-              console.log(isDataManaging);
               item.dates = isDataManaging
                 ? newDates
                 : endDate && startDate
@@ -208,6 +255,22 @@ class AgencyDataSharing extends Component {
         ];
       }
     } else {
+      if (startDate && endDate) {
+        outboundPartnerAgency.dates.push({
+          fromDate: moment(startDate).toDate(),
+          toDate: moment(endDate).toDate(),
+        });
+      } else if (startDate && !endDate) {
+        outboundPartnerAgency.dates.push({
+          fromDate: moment(startDate).toDate(),
+        });
+      } else if (!startDate && endDate) {
+        outboundPartnerAgency.dates.push({
+          toDate: moment(endDate).toDate(),
+        });
+      } else if (!startDate && !endDate) {
+        outboundPartnerAgency.dates.push({});
+      }
       outboundPartnerAgencies = [outboundPartnerAgency];
     }
 
@@ -220,22 +283,22 @@ class AgencyDataSharing extends Component {
       activePartnerAgencies,
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
+    agencyService
+      .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
+      .then(() => {
+        this.getCurrentAgency(currentAgency);
 
-    console.log(agencyThatSharingData.outboundPartnerAgencies);
-    // agencyService
-    //   .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
-    //   .then(() =>
-    //     this.setState({
-    //       outBoundSuccess: true,
-    //       activePartnerAgencies,
-    //       archivePartnerAgencies,
-    //     })
-    //   )
-    //   .catch((error) => {
-    //     error.message
-    //       ? this.setState({ error: `${error.name}: ${error.message}` })
-    //       : this.setState({ error: "An unexpected error occurred!" });
-    //   });
+        this.setState({
+          outBoundSuccess: true,
+          activePartnerAgencies,
+          archivePartnerAgencies,
+        });
+      })
+      .catch((error) => {
+        error.message
+          ? this.setState({ error: `${error.name}: ${error.message}` })
+          : this.setState({ error: "An unexpected error occurred!" });
+      });
 
     if (agencyToShareWith && !isDataManaging) {
       const inboundPartnerAgencies = [
@@ -255,14 +318,14 @@ class AgencyDataSharing extends Component {
             inboundPartnerAgencies,
           };
 
-      // agencyService
-      //   .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
-      //   .then(() => this.setState({ inBoundSuccess: true }))
-      //   .catch((error) => {
-      //     error.message
-      //       ? this.setState({ error: `${error.name}: ${error.message}` })
-      //       : this.setState({ error: "An unexpected error occurred!" });
-      //   });
+      agencyService
+        .updateAgency(agencyThatGetsData._id, agencyThatGetsData)
+        .then(() => this.setState({ inBoundSuccess: true }))
+        .catch((error) => {
+          error.message
+            ? this.setState({ error: `${error.name}: ${error.message}` })
+            : this.setState({ error: "An unexpected error occurred!" });
+        });
     }
     this.cancelDialog("manageDialogDisplayed", false);
   };
@@ -319,23 +382,27 @@ class AgencyDataSharing extends Component {
     }
   };
 
-  filterSharedAgencies = (agencies, currentAgency) => {
-    const { outboundPartnerAgencies } = currentAgency;
-
-    if (currentAgency) {
-      let availableAgencies = agencies.filter((agency) => {
-        const shared = outboundPartnerAgencies
-          ? outboundPartnerAgencies.find(
-              (partnerAgency) => partnerAgency.name === agency.name
-            )
-          : null;
-        return (
-          !shared && agency.name !== currentAgency.name && agency.name !== ""
-        );
+  getCurrentAgency = (agency) => {
+    agencyService
+      .getAgencyByName(agency.name)
+      .then((data) => {
+        let activePartnerAgencies, archivePartnerAgencies;
+        if (data.outboundPartnerAgencies) {
+          [
+            activePartnerAgencies,
+            archivePartnerAgencies,
+          ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
+        }
+        this.setState({
+          partnerAgenciesLoading: false,
+          currentAgency: data,
+          activePartnerAgencies,
+          archivePartnerAgencies,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-
-      return availableAgencies;
-    }
   };
 
   componentDidMount() {
@@ -369,26 +436,7 @@ class AgencyDataSharing extends Component {
         console.error(error);
       });
 
-    agencyService
-      .getAgencyByName(agency.name)
-      .then((data) => {
-        let activePartnerAgencies, archivePartnerAgencies;
-        if (data.outboundPartnerAgencies) {
-          [
-            activePartnerAgencies,
-            archivePartnerAgencies,
-          ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
-        }
-        this.setState({
-          partnerAgenciesLoading: false,
-          currentAgency: data,
-          activePartnerAgencies,
-          archivePartnerAgencies,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.getCurrentAgency(agency);
   }
 
   render() {
