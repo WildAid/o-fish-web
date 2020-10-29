@@ -11,14 +11,13 @@ class CatchSection extends Component {
         props.dataObject.inspection.actualCatch &&
         Array.isArray(props.dataObject.inspection.actualCatch)
           ? props.dataObject.inspection.actualCatch
-          : [],
+          : [{'fish': 'N/A', 'number': '', 'weight': '', 'unit': ''}],
     };
   }
 
   render() {
     const { t } = this.props;
     const { data } = this.state;
-
     return (
       <div className="flex-column">
         <div className="item-name margin-left margin-top margin-bottom">
@@ -40,7 +39,7 @@ class CatchSection extends Component {
                   <td>{item.number}</td>
                   <td>{`${item.weight} ${item.unit}`}</td>
                 </tr>
-              ))}
+              ))} 
             </tbody>
           </table>
         </div>

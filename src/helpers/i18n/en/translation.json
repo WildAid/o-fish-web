@@ -162,6 +162,7 @@
     "RECORDS_OF_VESSELS": "Records of Vessels",
     "CAPTAINS_AND_CREW": "Captains & Crew",
     "CATCHES": "Catches",
+    "VIOLATIONS": "Violations",
     "SEE_ALL_RESULTS": "See all results for '{{searchQuery}}'"
   },
   "LOADING": {
@@ -266,6 +267,13 @@
         "WEIGHT": "Weight",
         "COUNT": "Count",
         "UNITS": "Units"
+      },
+      "VIOLATIONS": {
+        "VIOLATION": "Violation",
+        "RESULT": "Result of Violation",
+        "WHO": "Issued to",
+        "PHOTOS": "Photos",
+        "NOTES": "Notes"
       },
       "RISKS": {
         "NAME": "Risks"

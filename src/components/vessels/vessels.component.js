@@ -7,7 +7,6 @@ import { getCode } from "country-list";
 import Flag from "react-world-flags";
 
 import {
-  getColor,
   getHighlightedText,
   goToPageWithFilter,
   getCountryCode,
@@ -328,17 +327,6 @@ class Vessels extends Component {
                               <div className="delivery-date">
                                 {moment(item.date).format("LLL")}
                               </div>
-                              <div
-                                className="risk-icon"
-                                style={{
-                                  background: `${getColor(
-                                    (item.safetyLevel && item.safetyLevel.level
-                                      ? item.safetyLevel.level.toLowerCase()
-                                      : item.safetyLevel
-                                    ).toLowerCase()
-                                  )}`,
-                                }}
-                              ></div>
                               <RiskIcon
                                 safetyLevel={
                                   item.safetyLevel && item.safetyLevel.level

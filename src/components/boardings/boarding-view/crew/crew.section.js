@@ -59,7 +59,7 @@ class CrewSection extends Component {
               </tr>
             </thead>
             <tbody>
-              {crew.map((item, ind) => (
+              {crew ? crew.map((item, ind) => (
                 <tr
                   className="table-row row-body"
                   key={ind}
@@ -72,7 +72,7 @@ class CrewSection extends Component {
                     {item.attachments && item.attachments.notes ? item.attachments.notes[0] : "N/A"}
                   </td>
                 </tr>
-              ))}
+              )) : <tr className="table-row row-body"><td>N/A</td></tr> }
             </tbody>
           </table>
         </div>
