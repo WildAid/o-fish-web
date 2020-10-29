@@ -5,7 +5,6 @@ import Highlighter from "react-highlight-words";
 import { withTranslation } from "react-i18next";
 
 import {
-  getColor,
   getHighlightedText,
   goCrewViewPage,
   getSharedAgenciesList

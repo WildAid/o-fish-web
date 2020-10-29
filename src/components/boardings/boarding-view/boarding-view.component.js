@@ -9,8 +9,8 @@ import CatchSection from "./catch/catch.section";
 import VersionControlPanel from "../version-control/version-control.panel";
 
 //TODO: Fix the modules to correctly view
-/*import ViolationsSection from './violations/violations.section';
-import SeizuresSection from './seizures/seizures.section';
+import ViolationsSection from './violations/violations.section';
+/* import SeizuresSection from './seizures/seizures.section';
 import RisksSection from './risks/risks.section';
 import NotesSection from './notes/notes.section';*/
 
@@ -104,6 +104,7 @@ class BoardingViewPage extends Component {
             <CrewSection dataObject={boarding} />
             <ActivitySection dataObject={boarding} />
             <CatchSection dataObject={boarding} />
+            <ViolationsSection dataObject={boarding}></ViolationsSection>
           </div>
         ) : (
           <div className="items-amount">{t("LOADING.LOADING")}</div>
@@ -115,7 +116,6 @@ class BoardingViewPage extends Component {
 
 //TODO: Use this sections when implemented
 //<SeizuresSection dataObject={this.state.dataObject}></SeizuresSection>
-//<ViolationsSection dataObject={this.state.dataObject}></ViolationsSection>
 //<RisksSection dataObject={this.state.dataObject}></RisksSection>
 //<NotesSection dataObject={this.state.dataObject}></NotesSection>
 export default withTranslation("translation")(BoardingViewPage);

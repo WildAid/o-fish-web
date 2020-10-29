@@ -7,7 +7,6 @@ import { getCode } from "country-list";
 import Flag from "react-world-flags";
 
 import {
-  getColor,
   getHighlightedText,
   goToPageWithFilter,
   getCountryCode,
