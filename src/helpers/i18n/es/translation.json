@@ -83,13 +83,25 @@
     "VERSION_CONTROL": {
       "REVISION_HISTORY": "Historial de Revisiones",
       "AMOUNT": "Importe"
+    },
+    "NEW_BOARDING": {
+      "DIRECTION": "Direction",
+      "DEGREES": "Degrees",
+      "MINUTES": "Minutes",
+      "SECONDS": "Seconds",
+      "NO_ELECTRONIC_SYSTEM": "No Electronic Monitoring System",
+      "NO_NOTES": "No Notes",
+      "NO_CATCH": "No Catch",
+      "NO_VIOLATIONS": "No Violations",
+      "NONE": "None"
     }
   },
   "DATA_SHARING": {
     "SHARED_DATA": "Datos Compartidos",
     "WHO_CAN_ACCESS_DATA": "Quién puede acceder a estos datos",
     "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}",
-    "PREVIOUSLY_SHARED_DATA": ""
+    "PREVIOUSLY_SHARED_DATA": "",
+    "DATA_PREVIOUSLY_SHARED_WITH": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Datos de Formulario",
@@ -165,7 +177,12 @@
     "CREATE_USER": "Crear Usuario",
     "UPDATE_USER": "Actualizar Usuario",
     "MANAGE_SHARED_DATA": "Administrar Datos Compartidos",
-    "SEE_SHARED_DATA": ""
+    "SEE_SHARED_DATA": "",
+    "ADD_MONITORING_SYSTEM": "",
+    "ADD_NOTES": "",
+    "ADD_VIOLATION": "",
+    "SAVE_AND_SUBMIT": "",
+    "SAVE_AS_DRAFT": ""
   },
   "TABLE": {
     "ADDRESS": "Dirección",

@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import { withRouter } from "react-router";
 
-import history from "../../root/root.history";
-import { getHighlightedText, getSharedAgenciesList } from "./../../helpers/get-data";
+import {
+  getHighlightedText,
+  getSharedAgenciesList,
+  goToPageWithFilter
+} from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 import FilterPanel from "./../partials/filter-panel/filter-panel.component";
@@ -140,7 +143,7 @@ class Boardings extends Component {
     limit: 50,
     offset: 0,
     isMapShown: true,
-    currentFilter: null,
+    currentFilter: {},
     searchQuery:
       searchService.searchResults && searchService.searchResults.query
         ? searchService.searchResults.query
@@ -182,7 +185,8 @@ class Boardings extends Component {
   };
 
   goNewBoarding = (boarding) => {
-    history.push(NEW_BOARDING_PAGE);
+    goToPageWithFilter(NEW_BOARDING_PAGE)
+    // history.push(NEW_BOARDING_PAGE);
   };
 
   loadData = (newState) => {
@@ -198,7 +202,10 @@ class Boardings extends Component {
         !authService.user.global.admin;
 
       const agenciesToShareData = isNotGlobalAdmin
-        ? await getSharedAgenciesList(authService.user.agency.name, authService.user)
+        ? await getSharedAgenciesList(
+            authService.user.agency.name,
+            authService.user
+          )
         : null;
 
       boardingService

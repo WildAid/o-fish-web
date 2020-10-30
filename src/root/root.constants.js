@@ -3,6 +3,7 @@ export const LOGIN_PAGE = "/login";
 export const HOME_PAGE = "/home";
 export const USERS_PAGE = "/users";
 export const AGENCIES_PAGE = "/agencies";
+export const BOARDINGS_PAGE = "/boardings";
 export const GLOBAL_AGENCIES_PAGE = "/global_agencies";
 export const FORMS_PAGE = "/forms";
 export const DATA_SHARING_PAGE = "/data_sharing";
@@ -17,8 +18,6 @@ export const RESET_PASSWORD_PAGE = "/reset_password";
 export const CHARTS_PAGE = "/agency_charts/:id";
 
 //Boardings subroutes
-export const FIND_USERS_PAGE = "/boardings/find_users";
-export const BOARDINGS_PAGE = "/boardings/:filter";
 export const NEW_BOARDING_PAGE = "/boardings/new";
 export const EDIT_BOARDING_PAGE = "/boardings/edit/:id";
 export const VIEW_BOARDING_PAGE = "/boardings/view/:id";

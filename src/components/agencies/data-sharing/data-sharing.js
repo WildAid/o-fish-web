@@ -6,6 +6,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import ShareDataDialog from "./share-data-dialog/share-data-dialog";
 import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
 import StopSharingDialog from "./stop-sharing-dialog/stop-sharing-dialog";
+import SeeSharedDataDialog from "./see-shared-data-dialog/see-shared-data-dialog";
+
 import ArchiveData from "./archive-data/archive-data";
 import LoadingPanel from "../../partials/loading-panel/loading-panel.component";
 
@@ -20,6 +22,7 @@ class AgencyDataSharing extends Component {
     shareDataDialog: false,
     manageDialogDisplayed: false,
     stopSharingDialog: false,
+    seeSharedDataDialog: false,
     agencies: [],
     agencyToShareWith: "",
     limit: 100,
@@ -56,12 +59,25 @@ class AgencyDataSharing extends Component {
     let { _id, outboundPartnerAgencies } = agency;
     const { manageSharingTo } = this.state;
 
-    outboundPartnerAgencies = outboundPartnerAgencies.map((agency) => {
-      if (agency.name === manageSharingTo.name) {
-        agency.toDate = moment().subtract("seconds", 1).toDate();
+    outboundPartnerAgencies = outboundPartnerAgencies.map((item) => {
+      const newAgency = { name: item.name, dates: item.dates || [] };
+      if (item.name === manageSharingTo.name) {
+        const newDates = item.dates.map((el) => {
+          if (
+            (manageSharingTo.fromDate === el.fromDate &&
+              manageSharingTo.toDate === el.toDate) ||
+            (!manageSharingTo.fromDate &&
+              !el.fromDate &&
+              !manageSharingTo.toDate &&
+              !el.toDate)
+          ) {
+            el.toDate = moment().subtract("seconds", 1).toDate();
+          }
+          return el;
+        });
+        newAgency.dates = newDates;
       }
-
-      return agency;
+      return newAgency;
     });
 
     const [
@@ -95,44 +111,115 @@ class AgencyDataSharing extends Component {
   };
 
   saveDialog = (startDate, endDate) => {
-    let {
+    const {
       currentAgency,
       agencyToShareWith,
       isDataManaging,
       manageSharingTo,
     } = this.state;
+
     let outboundPartnerAgencies = [];
     const selectedAgency = manageSharingTo || agencyToShareWith;
 
     const outboundPartnerAgency = {
       name: selectedAgency.name,
-      fromDate: startDate ? moment(startDate).toDate() : null,
-      toDate: endDate ? moment(endDate).toDate() : null,
+      dates: selectedAgency.dates || [],
     };
 
     if (currentAgency.outboundPartnerAgencies) {
-      const selectedAgencyExist = currentAgency.outboundPartnerAgencies.find(
+      const selectedAgencyExists = currentAgency.outboundPartnerAgencies.some(
         (agency) => agency.name === selectedAgency.name
       );
 
-      if (selectedAgencyExist) {
+      if (selectedAgencyExists) {
         outboundPartnerAgencies = currentAgency.outboundPartnerAgencies.map(
-          (sharedWithAgency) => {
-            if (sharedWithAgency.name === selectedAgency.name) {
-              return outboundPartnerAgency;
+          (item) => {
+            if (item.name === selectedAgency.name) {
+              let isDataManaging = false;
+              let newDates = item.dates.map((el) => {
+                if (
+                  (selectedAgency.fromDate === el.fromDate &&
+                    selectedAgency.toDate === el.toDate) ||
+                  (!selectedAgency.fromDate &&
+                    !el.fromDate &&
+                    !selectedAgency.toDate &&
+                    !el.toDate)
+                ) {
+                  if (startDate && endDate) {
+                    el.fromDate = moment(startDate).toDate();
+                    el.toDate = moment(endDate).toDate();
+                  } else if (startDate && !endDate) {
+                    el.fromDate = moment(startDate).toDate();
+                    delete el.toDate;
+                  } else if (!startDate && endDate) {
+                    el.toDate = moment(endDate).toDate();
+                    delete el.startDate;
+                  } else if (!startDate && !endDate) {
+                    delete el.fromDate;
+                    delete el.toDate;
+                  }
+                  isDataManaging = true;
+                }
+                return el;
+              });
+              item.dates = isDataManaging
+                ? newDates
+                : endDate && startDate
+                ? [
+                    ...newDates,
+                    {
+                      toDate: moment(endDate).toDate(),
+                      fromDate: moment(startDate).toDate(),
+                    },
+                  ]
+                : [...newDates, {}];
             }
-            return sharedWithAgency;
+            return item;
           }
         );
       } else {
+        if (startDate && endDate) {
+          outboundPartnerAgency.dates.push({
+            fromDate: moment(startDate).toDate(),
+            toDate: moment(endDate).toDate(),
+          });
+        } else if (startDate && !endDate) {
+          outboundPartnerAgency.dates.push({
+            fromDate: moment(startDate).toDate(),
+          });
+        } else if (!startDate && endDate) {
+          outboundPartnerAgency.dates.push({
+            toDate: moment(endDate).toDate(),
+          });
+        } else if (!startDate && !endDate) {
+          outboundPartnerAgency.dates.push({});
+        }
+
         outboundPartnerAgencies = [
           ...currentAgency.outboundPartnerAgencies,
           outboundPartnerAgency,
         ];
       }
     } else {
+      if (startDate && endDate) {
+        outboundPartnerAgency.dates.push({
+          fromDate: moment(startDate).toDate(),
+          toDate: moment(endDate).toDate(),
+        });
+      } else if (startDate && !endDate) {
+        outboundPartnerAgency.dates.push({
+          fromDate: moment(startDate).toDate(),
+        });
+      } else if (!startDate && endDate) {
+        outboundPartnerAgency.dates.push({
+          toDate: moment(endDate).toDate(),
+        });
+      } else if (!startDate && !endDate) {
+        outboundPartnerAgency.dates.push({});
+      }
       outboundPartnerAgencies = [outboundPartnerAgency];
     }
+
     const agencyThatSharingData = {
       ...currentAgency,
       outboundPartnerAgencies,
@@ -142,17 +229,17 @@ class AgencyDataSharing extends Component {
       activePartnerAgencies,
       archivePartnerAgencies,
     ] = this.filterArchiveAgencies(outboundPartnerAgencies);
-
     agencyService
       .updateAgency(agencyThatSharingData._id, agencyThatSharingData)
-      .then(() =>
+      .then(() => {
+        this.getCurrentAgency(currentAgency);
+
         this.setState({
           outBoundSuccess: true,
-          currentAgency: agencyThatSharingData,
           activePartnerAgencies,
           archivePartnerAgencies,
-        })
-      )
+        });
+      })
       .catch((error) => {
         error.message
           ? this.setState({ error: `${error.name}: ${error.message}` })
@@ -199,37 +286,66 @@ class AgencyDataSharing extends Component {
 
   filterArchiveAgencies = (outboundPartnerAgencies) => {
     if (outboundPartnerAgencies) {
-      const dateComparisonFn = (agency) =>
-        moment(agency.toDate).isBefore(moment());
+      let agencies = [];
 
-      let activePartnerAgencies = outboundPartnerAgencies.filter(
+      outboundPartnerAgencies.map((el) => {
+        if (!el.dates.length) {
+          agencies.push({
+            name: el.name,
+            fromDate: "",
+            toDate: "",
+          });
+        } else {
+          el.dates.map((item) => {
+            agencies.push({
+              name: el.name,
+              fromDate: item.fromDate || "",
+              toDate: item.toDate || "",
+            });
+            return "";
+          });
+        }
+        return "";
+      });
+
+      const dateComparisonFn = (agency) => {
+        if (agency && agency.toDate) {
+          return moment(agency.toDate).isBefore(moment());
+        }
+      };
+
+      let activePartnerAgencies = agencies.filter(
         (agency) => !dateComparisonFn(agency)
       );
-      let archivePartnerAgencies = outboundPartnerAgencies.filter((agency) =>
+
+      let archivePartnerAgencies = agencies.filter((agency) =>
         dateComparisonFn(agency)
       );
-
       return [activePartnerAgencies, archivePartnerAgencies];
     }
   };
 
-  filterSharedAgencies = (agencies, currentAgency) => {
-    const { outboundPartnerAgencies } = currentAgency;
-
-    if (currentAgency) {
-      let availableAgencies = agencies.filter((agency) => {
-        const shared = outboundPartnerAgencies
-          ? outboundPartnerAgencies.find(
-              (partnerAgency) => partnerAgency.name === agency.name
-            )
-          : null;
-        return (
-          !shared && agency.name !== currentAgency.name && agency.name !== ""
-        );
+  getCurrentAgency = (agency) => {
+    agencyService
+      .getAgencyByName(agency.name)
+      .then((data) => {
+        let activePartnerAgencies, archivePartnerAgencies;
+        if (data.outboundPartnerAgencies) {
+          [
+            activePartnerAgencies,
+            archivePartnerAgencies,
+          ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
+        }
+        this.setState({
+          partnerAgenciesLoading: false,
+          currentAgency: data,
+          activePartnerAgencies,
+          archivePartnerAgencies,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-
-      return availableAgencies;
-    }
   };
 
   componentDidMount() {
@@ -247,27 +363,7 @@ class AgencyDataSharing extends Component {
         console.error(error);
       });
 
-    agencyService
-      .getAgencyByName(agency.name)
-      .then((data) => {
-        let activePartnerAgencies, archivePartnerAgencies;
-
-        if (data.outboundPartnerAgencies) {
-          [
-            activePartnerAgencies,
-            archivePartnerAgencies,
-          ] = this.filterArchiveAgencies(data.outboundPartnerAgencies);
-        }
-        this.setState({
-          partnerAgenciesLoading: false,
-          currentAgency: data,
-          activePartnerAgencies,
-          archivePartnerAgencies,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.getCurrentAgency(agency);
   }
 
   render() {
@@ -275,6 +371,7 @@ class AgencyDataSharing extends Component {
       shareDataDialog,
       manageDialogDisplayed,
       stopSharingDialog,
+      seeSharedDataDialog,
       agencies,
       inBoundSuccess,
       outBoundSuccess,
@@ -401,7 +498,11 @@ class AgencyDataSharing extends Component {
                             <div
                               className="blue-color pointer"
                               onClick={() =>
-                                this.showDialog("stopSharingDialog", item)
+                                this.showDialog("stopSharingDialog", {
+                                  name: item.name,
+                                  fromDate: item.fromDate,
+                                  toDate: item.toDate,
+                                })
                               }
                             >
                               {t("BUTTONS.STOP_SHARING")}
@@ -435,7 +536,7 @@ class AgencyDataSharing extends Component {
                 )}
               {shareDataDialog && (
                 <ShareDataDialog
-                  agencies={this.filterSharedAgencies(agencies, currentAgency)}
+                  agencies={agencies}
                   onSubmit={this.showManagePopup}
                   onChangeAgency={this.onChangeAgency}
                   onCancel={() => this.cancelDialog("shareDataDialog", true)}
@@ -456,11 +557,20 @@ class AgencyDataSharing extends Component {
                   onCancel={() => this.cancelDialog("stopSharingDialog")}
                 />
               )}
+              {seeSharedDataDialog && (
+                <SeeSharedDataDialog
+                  onCancel={() => this.cancelDialog("seeSharedDataDialog")}
+                  agency={manageSharingTo}
+                />
+              )}
             </div>
           )}
         </div>
         {archivePartnerAgencies && !!archivePartnerAgencies.length && (
-          <ArchiveData archiveAgencies={archivePartnerAgencies} />
+          <ArchiveData
+            archiveAgencies={archivePartnerAgencies}
+            showDialog={this.showDialog}
+          />
         )}
       </Fragment>
     );

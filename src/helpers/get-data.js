@@ -190,7 +190,11 @@ export const pageWithFilterURL = (path, filter) => {
 };
 
 export const goToPageWithFilter = (path, filter) => {
-  history.push(path.replace(":filter", JSON.stringify(filter)));
+  if (filter) {
+    history.push(path.replace(":filter", JSON.stringify(filter)));
+  } else {
+    history.push(path);
+  }
 };
 
 export const goCrewViewPage = (item) => {
