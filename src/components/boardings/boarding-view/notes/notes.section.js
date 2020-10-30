@@ -1,29 +1,48 @@
 import React, { Component } from "react";
-import {TextField} from '@material-ui/core';
+import { withTranslation } from "react-i18next";
 
-export default class NotesSection extends Component {
-
-  getItems(values){
-    let itemNo = 1;
-    return (values.map(item => (
-      <section>
-          <h3>Note {itemNo++}</h3>
-          <div className="row">
-            <TextField label="Note:" nname="note" value={item.note} className="half-row" onChange={e => this.setFieldValue("note", e.target.value)}/>
-          </div>
-      </section>
-    )))
+class NotesSection extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: props.count,
+      data:
+        Array.isArray(props.dataObject.notes)
+          ? props.dataObject.notes
+          : [],
+    };
   }
+
 
   render() {
-    const values = this.props.dataObject.notes;
+    const { t } = this.props;
+    const { data } = this.state;
     return (
-      <div class='notes-section section'>
-        <div className="row left-aligned" >
-          <h2>Notes</h2>
+      <div className="flex-column">
+        <div className="item-name margin-left margin-top margin-bottom">
+          {t("BOARDING_PAGE.VIEW_BOARDING.NOTES")}
         </div>
-        {this.getItems(values)}
+        <div className="table-wrapper">
+          <table className="custom-table">
+            <thead>
+              <tr className="table-row row-head border-bottom">
+                <td>{t("TABLE.NOTE")}</td>
+                <td>{t("BOARDING_PAGE.VIEW_BOARDING.PHOTOS")}</td>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, ind) => (
+                <tr className="table-row row-body" key={ind}>
+                  <td>{item.note}</td>
+                  <td>{item.photoIDs}</td>
+                </tr>
+              ))} 
+            </tbody>
+          </table>
+        </div>
       </div>
-    )
+    );
   }
 }
+
+export default withTranslation("translation")(NotesSection);
