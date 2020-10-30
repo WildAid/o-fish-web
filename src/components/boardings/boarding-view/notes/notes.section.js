@@ -9,7 +9,7 @@ class NotesSection extends Component {
       data:
         Array.isArray(props.dataObject.notes)
           ? props.dataObject.notes
-          : [],
+          : [{note: 'N/A', photoIDs: ['N/A']}],
     };
   }
 
@@ -34,7 +34,10 @@ class NotesSection extends Component {
               {data.map((item, ind) => (
                 <tr className="table-row row-body" key={ind}>
                   <td>{item.note}</td>
-                  <td>{item.photoIDs}</td>
+                  <td>{item.photoIDs
+                    ? item.photoIDs
+                    : 'N/A'}
+                  </td>
                 </tr>
               ))} 
             </tbody>
