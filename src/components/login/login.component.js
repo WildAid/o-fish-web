@@ -85,6 +85,7 @@ class Login extends Component {
                 >
                   <TextField
                     label={t("LOGIN_PAGE.EMAIL_USERNAME")}
+                    inputProps={{'aria-label': `${t("LOGIN_PAGE.EMAIL_USERNAME")}:`}}
                     name="login"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
@@ -93,6 +94,7 @@ class Login extends Component {
                   />
                   <TextField
                     label={`${t("LOGIN_PAGE.PASSWORD")}:`}
+                    inputProps={{'aria-label': `${t("LOGIN_PAGE.PASSWORD")}:`}}
                     name="password"
                     type="password"
                     onBlur={handleBlur}
