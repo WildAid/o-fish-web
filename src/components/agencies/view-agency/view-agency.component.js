@@ -27,6 +27,7 @@ class ViewAgency extends Component {
   state = {
     agencyAdditionalInfo: {
       officers: [],
+      allOfficers: [],
       catches: [],
       violations: [],
     },
@@ -45,6 +46,16 @@ class ViewAgency extends Component {
     goToPage(EDIT_USER_PAGE, id);
   };
 
+  searchOfficers = (event)=>{
+    const searchQuery = event.target.value.toLowerCase();
+    const { agencyAdditionalInfo } = this.state;
+     event.target.value.length === 0 ? this.setState({
+       agencyAdditionalInfo:{ "officers": agencyAdditionalInfo.allOfficers,"allOfficers":agencyAdditionalInfo.allOfficers }
+     }) :this.setState({ 
+       agencyAdditionalInfo:{ "officers": agencyAdditionalInfo.officers.filter((officer)=>officer.email.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.first.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.last.toLowerCase().indexOf(searchQuery) !== -1),"allOfficers":agencyAdditionalInfo.allOfficers}
+     }); 
+    }
+
   componentDidMount() {
     const { id } = this.props.match.params;
     this.setState({ loading: true }, () => {
@@ -55,8 +66,9 @@ class ViewAgency extends Component {
             agency: data,
           });
           userService.getUsers(50,0,null,{"agency.name":data.name}).then((userData)=>{
+            console.log(userData.users);
             this.setState({
-              agencyAdditionalInfo:{"officers": userData.users},
+              agencyAdditionalInfo:{"officers": userData.users,"allOfficers":userData.users},
               loading: false,
             });
           });
@@ -164,7 +176,7 @@ class ViewAgency extends Component {
                         className="search-field officer-search-panel-input"
                         type="search"
                         placeholder={`${t("SEARCH.FILTER_SEARCH")} O-FISH`}
-                        onChange={this.setSearch}
+                        onChange={this.searchOfficers}
                         onFocus={() => this.setState({ isFocused: true })}
                       ></input>
                     </div>
