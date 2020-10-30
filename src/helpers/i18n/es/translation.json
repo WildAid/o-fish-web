@@ -100,7 +100,8 @@
     "SHARED_DATA": "Datos Compartidos",
     "WHO_CAN_ACCESS_DATA": "Quién puede acceder a estos datos",
     "SHARING_DATA_WITH": "{{agency}} comparte datos con {{sharingAgency}}",
-    "PREVIOUSLY_SHARED_DATA": ""
+    "PREVIOUSLY_SHARED_DATA": "",
+    "DATA_PREVIOUSLY_SHARED_WITH": ""
   },
   "AGENCY_PAGE": {
     "FORM_DATA": "Datos de Formulario",

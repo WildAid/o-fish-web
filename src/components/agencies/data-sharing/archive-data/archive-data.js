@@ -4,7 +4,7 @@ import moment from "moment";
 
 import "./archive-data.css";
 
-const ArchiveData = ({ t, archiveAgencies }) => {
+const ArchiveData = ({ t, archiveAgencies, showDialog }) => {
   return (
     <div className="padding-bottom flex-column align-center form-data archive-table">
       <div className="full-view white-bg box-shadow">
@@ -48,7 +48,16 @@ const ArchiveData = ({ t, archiveAgencies }) => {
                         : t("WARNINGS.NO_END_DATE")}
                     </td>
                     <td>
-                      <div className="pointer white-btn">
+                      <div
+                        className="pointer white-btn"
+                        onClick={() =>
+                          showDialog("seeSharedDataDialog", {
+                            name: item.name,
+                            fromDate: item.fromDate,
+                            toDate: item.toDate,
+                          })
+                        }
+                      >
                         {t("BUTTONS.SEE_SHARED_DATA")}
                       </div>
                     </td>

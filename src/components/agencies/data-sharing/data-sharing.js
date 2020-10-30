@@ -6,6 +6,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import ShareDataDialog from "./share-data-dialog/share-data-dialog";
 import ManageSharedDataByGlobalAdmin from "./manage-shared-data-dialog/manage-shared-data-by-global-admin";
 import StopSharingDialog from "./stop-sharing-dialog/stop-sharing-dialog";
+import SeeSharedDataDialog from "./see-shared-data-dialog/see-shared-data-dialog";
+
 import ArchiveData from "./archive-data/archive-data";
 import LoadingPanel from "../../partials/loading-panel/loading-panel.component";
 
@@ -20,6 +22,7 @@ class AgencyDataSharing extends Component {
     shareDataDialog: false,
     manageDialogDisplayed: false,
     stopSharingDialog: false,
+    seeSharedDataDialog: false,
     agencies: [],
     agencyToShareWith: "",
     limit: 100,
@@ -368,6 +371,7 @@ class AgencyDataSharing extends Component {
       shareDataDialog,
       manageDialogDisplayed,
       stopSharingDialog,
+      seeSharedDataDialog,
       agencies,
       inBoundSuccess,
       outBoundSuccess,
@@ -553,11 +557,20 @@ class AgencyDataSharing extends Component {
                   onCancel={() => this.cancelDialog("stopSharingDialog")}
                 />
               )}
+              {seeSharedDataDialog && (
+                <SeeSharedDataDialog
+                  onCancel={() => this.cancelDialog("seeSharedDataDialog")}
+                  agency={manageSharingTo}
+                />
+              )}
             </div>
           )}
         </div>
         {archivePartnerAgencies && !!archivePartnerAgencies.length && (
-          <ArchiveData archiveAgencies={archivePartnerAgencies} />
+          <ArchiveData
+            archiveAgencies={archivePartnerAgencies}
+            showDialog={this.showDialog}
+          />
         )}
       </Fragment>
     );
