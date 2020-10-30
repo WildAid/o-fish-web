@@ -64,7 +64,7 @@ class Login extends Component {
               <img
                 className="full-view"
                 src={require("../../assets/login-logo.png")}
-                alt="no logo"
+                alt="WildAid O-Fish. Powered by MongoDB."
               />
             </div>
             <Formik
@@ -85,6 +85,7 @@ class Login extends Component {
                 >
                   <TextField
                     label={t("LOGIN_PAGE.EMAIL_USERNAME")}
+                    inputProps={{'aria-label': `${t("LOGIN_PAGE.EMAIL_USERNAME")}:`}}
                     name="login"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
@@ -93,6 +94,7 @@ class Login extends Component {
                   />
                   <TextField
                     label={`${t("LOGIN_PAGE.PASSWORD")}:`}
+                    inputProps={{'aria-label': `${t("LOGIN_PAGE.PASSWORD")}:`}}
                     name="password"
                     type="password"
                     onBlur={handleBlur}
