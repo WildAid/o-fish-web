@@ -11,7 +11,8 @@ import {
   getHighlightedText,
   goToPageWithFilter,
   getCountryCode,
-  getSharedAgenciesList
+  getSharedAgenciesList,
+  goVesselViewPage
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -202,17 +203,6 @@ class Vessels extends Component {
     });
   }
 
-  goVesselsViewPage(item) {
-    const filter = {};
-    if (item.permitNumber) {
-      filter["vessel.permitNumber"] = item.permitNumber;
-    }
-    if (item.vessel) {
-      filter["vessel.name"] = item.vessel;
-    }
-    goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
-  }
-
   componentDidMount() {
     if (this.props.match.params.filter) {
       const filter = JSON.parse(this.props.match.params.filter);
@@ -279,7 +269,7 @@ class Vessels extends Component {
                         <tr
                           className="table-row row-body"
                           key={ind}
-                          onClick={() => this.goVesselsViewPage(item)}
+                          onClick={() => goVesselViewPage(item)}
                         >
                           <td>
                             <Highlighter

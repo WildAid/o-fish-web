@@ -4,43 +4,17 @@ import { NavLink } from "react-router-dom";
 
 import ItemInfo from "../../partials/item-info/item-info";
 
-import { CREW_PAGE, VIEW_CREW_PAGE } from "../../../root/root.constants.js";
+import { CREW_PAGE } from "../../../root/root.constants.js";
 
 import "../search-results.css";
 
-// FIXME: move to get-data and DRY with goCrewViewPage
-export const getVesselViewPageLinkWithFilter = (crew) => {
-  const filter = {};
-  if (crew.isCaptain || crew.rank === "captain") {
-    if (crew.license) {
-      filter["captain.license"] = crew.license;
-    }
-    if (crew.name) {
-      filter["captain.name"] = crew.name;
-    }
-  } else {
-    if (crew.license) {
-      filter["crew.license"] = crew.license;
-    }
-    if (crew.name) {
-      filter["crew.name"] = crew.name;
-    }
-  }
-
-  // FIXME: DRY with goToPageWithFilter
-  return VIEW_CREW_PAGE.replace(":filter", JSON.stringify(filter))
-};
+import { getCrewViewPageWithFilter } from '../../../helpers/get-data'
 
 class FoundCrew extends Component {
   render() {
     const { crewList, total, searchWords } = this.props;
 
     const crew = crewList[0];
-
-    console.log(crew)
-    // TODO: get other attributes from query to formulate proper query for link
-    // license is undefined -> need this from query
-    // { name, rank } is defined
 
     return (
       <div className="standard-view">
@@ -67,7 +41,7 @@ class FoundCrew extends Component {
                 mainText={crew.vessels.slice(0, 3).join(", ")}
                 subText="Vessels"
                 label="Crew Member"
-                itemInfoLink={getVesselViewPageLinkWithFilter(crew)}
+                itemInfoLink={getCrewViewPageWithFilter(crew)}
               />
               <div className="btn-wrapper"></div>
             </div>

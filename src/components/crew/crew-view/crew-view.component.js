@@ -13,10 +13,9 @@ import OverviewService from "./../../../services/overview.service";
 
 import SeeLink from "../../partials/see-all-link/see-all-link";
 
-import { goToPageWithFilter } from "./../../../helpers/get-data";
+import { goToPageWithFilter, goVesselViewPage } from "./../../../helpers/get-data";
 
 import {
-  VIEW_VESSEL_PAGE,
   VESSELS_PAGE
 } from "../../../root/root.constants.js";
 
@@ -36,17 +35,6 @@ class CrewViewPage extends Component {
     violations: [],
     crewName: "N/A",
     captainName: "",
-  };
-
-  goVesselViewPage = (vessel) => {
-    const filter = {};
-    if (vessel.permitNumber) {
-      filter["vessel.permitNumber"] = vessel.permitNumber;
-    }
-    if (vessel.name) {
-      vessel["vessel.name"] = vessel.name;
-    }
-    goToPageWithFilter(VIEW_VESSEL_PAGE, filter);
   };
 
   componentDidMount() {
@@ -137,7 +125,7 @@ class CrewViewPage extends Component {
                           <tr
                             key={ind}
                             className="table-row row-body"
-                            onClick={() => this.goVesselViewPage(vessel)}
+                            onClick={() => goVesselViewPage(vessel)}
                           >
                             <td>{vessel.name}</td>
                             <td>{vessel.permitNumber}</td>

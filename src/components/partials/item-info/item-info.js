@@ -19,7 +19,6 @@ const ItemInfo = ({
   t,
   itemInfoLink
 }) => {
-  debugger;
   return (
     <div className="flex-row item-info">
       <div className="padding-right icon-img">
