@@ -8,9 +8,13 @@ import { CREW_PAGE } from "../../../root/root.constants.js";
 
 import "../search-results.css";
 
+import { getCrewViewPageWithFilter } from '../../../helpers/get-data'
+
 class FoundCrew extends Component {
   render() {
     const { crewList, total, searchWords } = this.props;
+
+    const crew = crewList[0];
 
     return (
       <div className="standard-view">
@@ -30,13 +34,14 @@ class FoundCrew extends Component {
           <div className="items-list">
             <div className="flex-row align-center border-bottom padding">
               <ItemInfo
-                name={crewList[0].name}
+                name={crew.name}
                 searchWords={searchWords}
-                nameIcon={crewList[0].rank === "captain"}
+                nameIcon={crew.rank === "captain"}
                 icon="crew"
-                mainText={crewList[0].vessels.slice(0, 3).join(", ")}
+                mainText={crew.vessels.slice(0, 3).join(", ")}
                 subText="Vessels"
                 label="Crew Member"
+                itemInfoLink={getCrewViewPageWithFilter(crew)}
               />
               <div className="btn-wrapper"></div>
             </div>

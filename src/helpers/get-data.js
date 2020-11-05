@@ -4,7 +4,7 @@ import SearchService from "./../services/search.service";
 
 import history from "../root/root.history";
 
-import { VIEW_CREW_PAGE } from "../root/root.constants.js";
+import { VIEW_CREW_PAGE, VIEW_VESSEL_PAGE } from "../root/root.constants.js";
 
 //TODO Show pics in Users list
 // import StitchService from "./../services/stitch.service";
@@ -197,26 +197,6 @@ export const goToPageWithFilter = (path, filter) => {
   }
 };
 
-export const goCrewViewPage = (item) => {
-  const filter = {};
-  if (item.isCaptain || item.rank === "captain") {
-    if (item.license) {
-      filter["captain.license"] = item.license;
-    }
-    if (item.name) {
-      filter["captain.name"] = item.name;
-    }
-  } else {
-    if (item.license) {
-      filter["crew.license"] = item.license;
-    }
-    if (item.name) {
-      filter["crew.name"] = item.name;
-    }
-  }
-  goToPageWithFilter(VIEW_CREW_PAGE, filter);
-};
-
 export const bufferToBase64 = (buffer) => {
   var binary = "";
   var bytes = new Uint8Array(buffer);
@@ -259,4 +239,48 @@ export const getSharedAgenciesList = async (name, user) => {
       return [...agencies, name];
     }
   }
+};
+
+export const getVesselViewPageWithFilter = (vessel) => {
+  const filter = {};
+  if (vessel.permitNumber) {
+    filter["vessel.permitNumber"] = vessel.permitNumber;
+  }
+
+  const vesselName = vessel.name || vessel.vessel;
+
+  if (vesselName) {
+    filter["vessel.name"] = vesselName;
+  }
+
+  return VIEW_VESSEL_PAGE.replace(":filter", JSON.stringify(filter))
+}
+
+export const goVesselViewPage = (vessel) => {
+  history.push(getVesselViewPageWithFilter(vessel))
+};
+
+export const getCrewViewPageWithFilter = (crew) => {
+  const filter = {};
+  if (crew.isCaptain || crew.rank === "captain") {
+    if (crew.license) {
+      filter["captain.license"] = crew.license;
+    }
+    if (crew.name) {
+      filter["captain.name"] = crew.name;
+    }
+  } else {
+    if (crew.license) {
+      filter["crew.license"] = crew.license;
+    }
+    if (crew.name) {
+      filter["crew.name"] = crew.name;
+    }
+  }
+
+  return VIEW_CREW_PAGE.replace(":filter", JSON.stringify(filter))
+};
+
+export const goCrewViewPage = (crew) => {
+  history.push(getCrewViewPageWithFilter(crew))
 };

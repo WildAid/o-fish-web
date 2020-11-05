@@ -8,9 +8,18 @@ import { VESSELS_PAGE } from "../../../root/root.constants.js";
 
 import "../search-results.css";
 
+import { getVesselViewPageWithFilter } from "../../../helpers/get-data"
+
 class FoundVessels extends Component {
   render() {
     const { vesselsList, total, searchWords } = this.props;
+
+    const firstVessel = vesselsList[0];
+
+    const vessel = {
+      ...firstVessel,
+      name: firstVessel._id,
+    };
 
     return (
       <div className="standard-view">
@@ -28,12 +37,13 @@ class FoundVessels extends Component {
           <div className="items-list">
             <div className="flex-row align-center border-bottom padding">
               <ItemInfo
-                name={vesselsList[0]._id}
+                name={vessel.name}
                 icon="vessel"
                 mainText={vesselsList[0].catches.slice(0, 3).join(", ")}
                 subText="Catches"
                 label="Vessel"
                 searchWords={searchWords}
+                itemInfoLink={getVesselViewPageWithFilter(vessel)}
               />
             </div>
           </div>

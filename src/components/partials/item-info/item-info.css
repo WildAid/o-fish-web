@@ -13,3 +13,7 @@
   padding-right: 5px;
 }
 
+.item-info-link {
+  text-decoration: none;
+  color: inherit;
+}
