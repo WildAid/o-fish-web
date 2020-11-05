@@ -15,7 +15,6 @@ class FoundVessels extends Component {
     const { vesselsList, total, searchWords } = this.props;
 
     const firstVessel = vesselsList[0];
-    firstVessel.name = firstVessel._id
 
     const vessel = {
       ...firstVessel,

@@ -9,7 +9,6 @@ import Flag from "react-world-flags";
 import {
   getColor,
   getHighlightedText,
-  goToPageWithFilter,
   getCountryCode,
   getSharedAgenciesList,
   goVesselViewPage
@@ -24,8 +23,6 @@ import RiskIcon from "../partials/risk-icon/risk-icon.component";
 import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import AuthService from "../../services/auth.service";
-
-import { VIEW_VESSEL_PAGE } from "../../root/root.constants";
 
 import "./vessels.css";
 
