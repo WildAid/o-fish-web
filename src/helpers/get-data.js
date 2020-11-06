@@ -285,15 +285,12 @@ export const goCrewViewPage = (crew) => {
   history.push(getCrewViewPageWithFilter(crew))
 };
 
-// refactored from goToPage
 export const getBoardingViewPage = (boardingId) => {
   let path = VIEW_BOARDING_PAGE;
   path = path.replace(":id", boardingId);
-  path = path.replace(":filter", "null"); 
   return path;
 }
 
-// refactored from goToPage
 export const goBoardingViewPage = (boardingId) => {
   history.push(getBoardingViewPage(boardingId));
 }
