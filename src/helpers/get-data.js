@@ -4,7 +4,7 @@ import SearchService from "./../services/search.service";
 
 import history from "../root/root.history";
 
-import { VIEW_CREW_PAGE, VIEW_VESSEL_PAGE } from "../root/root.constants.js";
+import { VIEW_CREW_PAGE, VIEW_VESSEL_PAGE, VIEW_BOARDING_PAGE } from "../root/root.constants.js";
 
 //TODO Show pics in Users list
 // import StitchService from "./../services/stitch.service";
@@ -284,3 +284,16 @@ export const getCrewViewPageWithFilter = (crew) => {
 export const goCrewViewPage = (crew) => {
   history.push(getCrewViewPageWithFilter(crew))
 };
+
+// refactored from goToPage
+export const getBoardingViewPage = (boardingId) => {
+  let path = VIEW_BOARDING_PAGE;
+  path = path.replace(":id", boardingId);
+  path = path.replace(":filter", "null"); 
+  return path;
+}
+
+// refactored from goToPage
+export const goBoardingViewPage = (boardingId) => {
+  history.push(getBoardingViewPage(boardingId));
+}
