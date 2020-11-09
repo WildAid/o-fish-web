@@ -2,10 +2,9 @@ import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
-import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goBoardingViewPage, goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import {
-  VIEW_BOARDING_PAGE,
   VIOLATIONS_PAGE,
 } from "../../../../root/root.constants.js";
 
@@ -47,7 +46,7 @@ const ViolationsOverview = ({ t, filter, violations }) => (
                 <td>{moment(violation.boardingDate).format("L")}</td>
                 <td
                   onClick={() =>
-                    goToPage(VIEW_BOARDING_PAGE, violation.boardingId)
+                    goBoardingViewPage(violation.boardingId)
                   }
                 >
                   <SeeLink

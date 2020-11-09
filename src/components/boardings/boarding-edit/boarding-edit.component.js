@@ -23,9 +23,7 @@ import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 import AuthService from "./../../../services/auth.service";
 import BoardingService from "./../../../services/boarding.service";
 
-import history from "../../../root/root.history";
-
-import { VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
+import { goBoardingViewPage } from "../../../helpers/get-data"
 
 import "./boardings-edit.css";
 
@@ -62,11 +60,9 @@ class BoardingEditPage extends Component {
     this.validateSchema();
     boardingService.updateBoarding(this.dataObject).then((result) => {
       if (this.state.isNew) {
-        history.push(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
+        goBoardingViewPage(result.insertedId);
       } else {
-        history.push(
-          VIEW_BOARDING_PAGE.replace(":id", this.state.dataObject._id)
-        );
+        goBoardingViewPage(this.state.dataObject._id);
       }
     });
   };

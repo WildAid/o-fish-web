@@ -7,9 +7,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import ChartBox from "../../charts/chart-box.component";
 import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
-import { goToPage } from "./../../../helpers/get-data";
-
-import { VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
+import { goBoardingViewPage } from "./../../../helpers/get-data";
 
 import StitchService from "./../../../services/stitch.service";
 
@@ -66,7 +64,7 @@ class BoardingsTable extends Component {
                 <tr
                   className="table-row row-body"
                   key={ind}
-                  onClick={() => goToPage(VIEW_BOARDING_PAGE, item._id)}
+                  onClick={() => goBoardingViewPage(item._id)}
                 >
                   <td> {moment(item.date).format("L")}</td>
                   <td> {moment(item.date).format("LT")}</td>

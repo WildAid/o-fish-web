@@ -2,13 +2,12 @@ import React, { memo, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
-import { goToPage, goToPageWithFilter } from "./../../../../helpers/get-data";
+import { goBoardingViewPage, goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
 import RiskIcon from "../../../partials/risk-icon/risk-icon.component";
 
 import {
-  VIEW_BOARDING_PAGE,
   BOARDINGS_PAGE,
 } from "../../../../root/root.constants.js";
 
@@ -43,7 +42,7 @@ const BoardingsOverview = ({ t, boardings, filter }) => (
                   key={ind}
                   className="table-row row-body"
                   onClick={() =>
-                    goToPage(VIEW_BOARDING_PAGE, boarding.id)
+                    goBoardingViewPage(boarding.id)
                   }
                 >
                   <td>{moment(boarding.date).format("L")}</td>
