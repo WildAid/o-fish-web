@@ -28,6 +28,7 @@ class FieldDashboard extends Component {
     highlighted: [],
     loading: true,
     page: 1,
+    days: 7,
     currentFilter: {
       date: { $gt: moment().subtract(1, "year").toDate() },
     },
@@ -91,7 +92,8 @@ class FieldDashboard extends Component {
         },
       ],
     };
-    this.loadData({ currentFilter: filterObject })
+    let days = Math.round(moment.duration(moment(filter.end).diff(filter.start)).asDays());
+    this.loadData({ currentFilter: filterObject, days: days})
   };
 
   componentDidMount() {
@@ -141,7 +143,9 @@ class FieldDashboard extends Component {
           </div>
           <div className="flex-row justify-around">
             <div className="flex-column align-center field-item">
-              <div className="field-number">5</div>
+              <div className="field-number">
+              {this.state.days}
+              </div>
               <div className="item-label">
                 {t("HOME_PAGE.DAYS").toUpperCase()}
               </div>
