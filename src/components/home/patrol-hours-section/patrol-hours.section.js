@@ -16,20 +16,20 @@ const chartOptions = {
 };
 
 const filterConfiguration = {
-  "Date & Time": [
-    {
-      name: "date",
-      title: "Date",
-      type: "date",
-    },
-  ],
-  Agency: [
-    {
-      name: "agency",
-      title: "Name",
-      partTitle: "Agency",
-    },
-  ],
+//  "Date & Time": [
+//    {
+//      name: "date",
+//      title: "Date",
+//      type: "date",
+//    },
+//  ],
+//  Agency: [
+//    {
+//      name: "agency",
+//      title: "Name",
+//      partTitle: "Agency",
+//    },
+//  ],
 };
 
 class PatrolHoursSection extends Component {
@@ -43,9 +43,9 @@ class PatrolHoursSection extends Component {
   render() {
     const { t, filter } = this.props;
 
-    if (filter && this.state.filter === ""){
-      chartOptions.filter = filter;
-    }
+//    if (filter && this.state.filter === ""){
+//      chartOptions.filter = filter;
+//    }
 
     return (
       <section className="flex-column justify-start align-start standard-view white-bg box-shadow margin-bottom charts-section patrol-hours-section">
@@ -54,7 +54,8 @@ class PatrolHoursSection extends Component {
           <FilterPanel
             options={{ useChartsSyntax: true }}
             configuration={filterConfiguration}
-            onFilterChanged={(value) => this.filterChanged(value)}
+            // we cannot filter this because it uses an aggregation in the data source
+            //onFilterChanged={(value) => this.filterChanged(value)}
           />
         </div>
         <div className="flex-row justify-between align-stretch full-view lg-chart">
