@@ -42,7 +42,7 @@ class PatrolHoursSection extends Component {
 
   render() {
     const { t, filter } = this.props;
-
+    console.info(filter);
 //    if (filter && this.state.filter === ""){
 //      chartOptions.filter = filter;
 //    }
