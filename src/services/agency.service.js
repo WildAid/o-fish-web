@@ -33,6 +33,14 @@ export default class AgencyService {
     ]);
   }
 
+  getTime(searchQuery, currentFilter) {
+    return stitchService.client.callFunction("getDashboardTime", [
+      searchQuery,
+      currentFilter,
+    ]);
+  }
+
+
   getAgencies(limit, offset, searchQuery, currentFilter) {
     return stitchService.client.callFunction("getAgencies", [
       limit,

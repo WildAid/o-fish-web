@@ -21,6 +21,7 @@ class FieldDashboard extends Component {
   state = {
     boardings: [],
     stats: {warnings: 0, citations: 0},
+    time: {days: 0, hours: 0},
     total: 0,
     limit: 50,
     offset: 0,
@@ -50,6 +51,22 @@ class FieldDashboard extends Component {
   loadData(newState) {
     newState = newState || {};
     newState.loading = true;
+
+    this.setState(newState, () => {
+      const { currentFilter, searchQuery } = this.state;
+          agencyService.getTime(searchQuery, {
+            ...currentFilter,
+            "reportingOfficer.email": authService.user.email,
+          }).then((data1)=>{
+            this.setState({
+              loading: false,
+              time: data1,
+            });
+          })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
 
     this.setState(newState, () => {
       const { limit, offset, currentFilter, searchQuery } = this.state;
@@ -108,7 +125,8 @@ class FieldDashboard extends Component {
       highlighted,
       page,
       loading,
-      stats
+      stats,
+      time
     } = this.state;
     const { user } = authService;
 
@@ -141,13 +159,13 @@ class FieldDashboard extends Component {
           </div>
           <div className="flex-row justify-around">
             <div className="flex-column align-center field-item">
-              <div className="field-number">5</div>
+              <div className="field-number">{Number(Math.round(time.days+'e1')+'e-1')}</div>
               <div className="item-label">
                 {t("HOME_PAGE.DAYS").toUpperCase()}
               </div>
             </div>
             <div className="flex-column align-center field-item">
-              <div className="field-number">105</div>
+              <div className="field-number">{Number(Math.round(time.hours+'e1')+'e-1')}</div>
               <div className="item-label">
                 {t("HOME_PAGE.HOURS").toUpperCase()}
               </div>
