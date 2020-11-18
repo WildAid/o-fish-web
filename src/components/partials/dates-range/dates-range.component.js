@@ -33,19 +33,19 @@ export default withTranslation("translation")(class DatesRange extends Component
       end =  moment().subtract(1, 'days').endOf('day').toDate();
     }
     if (customRange === "week"){
-      start = moment().subtract(1, 'week').startOf('day').toDate();
+      start = moment().subtract(6, 'day').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
     if (customRange === "last30"){
-      start = moment().subtract(1, 'month').startOf('day').toDate();
+      start = moment().subtract(29, 'day').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
     if (customRange === "last60"){
-      start = moment().subtract(2, 'month').startOf('day').toDate();
+      start = moment().subtract(59, 'day').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
     if (customRange === "last90"){
-      start = moment().subtract(3, 'month').startOf('day').toDate();
+      start = moment().subtract(89, 'day').startOf('day').toDate();
       end =  moment().endOf('day').toDate();
     }
     if (new Date(end).valueOf() - new Date(start).valueOf() <= 1000){
@@ -57,41 +57,6 @@ export default withTranslation("translation")(class DatesRange extends Component
       currentRange: customRange ? customRange : "custom"
     });
   };
-
-    dateChanged = (start, end, customRange) => {
-      if (customRange === "today") {
-        start = moment().startOf("day").toDate();
-        end = moment().endOf("day").toDate();
-      }
-      if (customRange === "yesterday") {
-        start = moment().subtract(1, "days").startOf("day").toDate();
-        end = moment().subtract(1, "days").endOf("day").toDate();
-      }
-      if (customRange === "week") {
-        start = moment().subtract(1, "week").startOf("day").toDate();
-        end = moment().endOf("day").toDate();
-      }
-      if (customRange === "last30") {
-        start = moment().subtract(1, "month").startOf("day").toDate();
-        end = moment().endOf("day").toDate();
-      }
-      if (customRange === "last60") {
-        start = moment().subtract(2, "month").startOf("day").toDate();
-        end = moment().endOf("day").toDate();
-      }
-      if (customRange === "last90") {
-        start = moment().subtract(3, "month").startOf("day").toDate();
-        end = moment().endOf("day").toDate();
-      }
-      if (new Date(end).valueOf() - new Date(start).valueOf() <= 1000) {
-        end = moment(start).add(1, "minute").toDate();
-      }
-      this.setState({
-        dateStart: start,
-        dateEnd: end,
-        currentRange: customRange ? customRange : "custom",
-      });
-    };
 
     getFilterValue = () => {
       return {
