@@ -34,9 +34,10 @@ class CustomSelect extends Component {
 
   componentDidMount() {
     const currPath = this.props.match.path.match(/[a-zA-Z]+/g)[0];
+    const currPathWithCase = currPath.charAt(0).toUpperCase() + currPath.slice(1)
     this.setState({
-      selected: currPath === "home" ? "All" : currPath,
-    });
+      selected: SEARCH_OPTIONS.find( ({ name }) => name === currPathWithCase ) ? currPathWithCase: "All",
+});
   }
 
   render() {
