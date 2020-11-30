@@ -10,8 +10,8 @@
     "@material-ui/pickers": "~3.2.8",
     "@mongodb-js/charts-embed-dom": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^7.2.1",
     "country-list": "^2.2.0",
     "country-region-data": "^1.6.0",
     "formik": "^2.1.4",
@@ -31,18 +31,21 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-router-query-params": "^1.0.4",
-    "react-scripts": "3.4.4",
+    "react-scripts": "^4.0.0",
     "react-world-flags": "^1.4.0",
     "typescript": "^3.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
