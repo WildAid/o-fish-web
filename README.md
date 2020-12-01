@@ -181,3 +181,8 @@ const chartOptions = {
 The code for each page is in `/src`.
 
 Common components are in `/src/partials`.
+
+# Testing
+
+- Quick examples of React-Testing-Library tests in `src/examples`
+- Read TESTS.md for detailed how-tos, setup, and test structure
