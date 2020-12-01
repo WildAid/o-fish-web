@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { render } from '@testing-library/react'
 import { I18nextProvider } from "react-i18next";
 import i18next from "./helpers/i18n/index";
+import userEvent from '@testing-library/user-event'
 
 const AllTheProviders = ({ children }) => {
   return (
@@ -21,6 +22,7 @@ const customRender = (ui, options) =>
 
 // re-export everything
 export * from '@testing-library/react'
+export { userEvent }
 
 // override render method
 export { customRender as render }
