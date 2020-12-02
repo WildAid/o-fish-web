@@ -20,17 +20,17 @@ import Magic from './magic.component'
 
 jest.mock('./sampleFunctions', () => ({
     __esModule: true,
-    default: () => 42, 
-    someNamedFunction: () => 43
+    default: () => 43, 
+    someNamedFunction: () => 44
 }))
 
-describe.only('Magic2', () => {
+describe.only('Magic', () => {
     test('renders', async () => {
         render(<Magic base={100} />)
     
         expect(screen.getByText("Jest mocking examples")).toBeInTheDocument();
-        expect(screen.getByText(/number.*42/)).toBeInTheDocument();
         expect(screen.getByText(/number.*43/)).toBeInTheDocument();
+        expect(screen.getByText(/number.*44/)).toBeInTheDocument();
         // screen.debug()
     })
 })

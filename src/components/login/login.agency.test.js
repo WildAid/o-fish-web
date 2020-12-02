@@ -18,7 +18,7 @@ const mockLoginSuccess = jest.fn()
 
 jest.mock('../../services/auth.service', () => ({
     getInstance: jest.fn().mockImplementationOnce(() => ({
-        // FIXME: find a way to mock this dynamically between tests
+        // FIXME: find a way to mock the userRole dynamically between tests in the same file
         userRole: "agency",
         user: {
             agency: {

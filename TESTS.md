@@ -1,8 +1,7 @@
 # UI tests
 
-## Quick reference
+## Quick examples:
 
-**Examples**:
 - Basic example: `src/examples/hello`
 - Async example: `src/examples/async`
 - Mocking examples: `src/examples/mocking`
@@ -11,7 +10,7 @@
 
 ## Running the tests
 
-Run Jest in "watch" mode, automatic reruns of uncommitted files as you change them
+Run Jest in "watch" mode, running new and changed files as you edit them
 ```
 npm test
 ```
@@ -65,9 +64,9 @@ import { render, screen, userEvent } from '../testUtils'
   </I18nextProvider>
 ```
 
-- **`BrowserRouter`** is used to allow some tests to change history. In tests, assert new path on `global.window.location.pathname`
+- **`BrowserRouter`** is used to allow some tests to change history. In tests, you can assert current URL on `global.window.location.pathname`.
 
-    - > See `login.common.test.js` for an example
+    > See `login.common.test.js` for an example
 
 **`setupTests.js`**
 - Test config file for Create-React-App. It contains global setup that needs to run before the tests.
@@ -167,8 +166,6 @@ Jest provides many options to mock anything: ES6 modules, 3rd party libraries (e
 
 We can mock a module by having a similarly named file in a `__mocks__` folder adjacent to the module to mock.
 
-> See `src/examples/mocking/magic.test.js` for this example
-
 ```
 __mocks__/
     sampleFunctions.js
@@ -184,13 +181,14 @@ jest.mock('./sampleFunctions')
 render(<Magic base={100} />)
 ```
 
-The `import` inside `Magic` will get the mock, not the original `sampleFunctions.js`
+The `import` inside `Magic` will get the one inside `__mocks__` folder, not the original `sampleFunctions.js`
+
+> See `src/examples/mocking/magic.test.js` for this example
+
 
 **Manual user module mocks**
 
-> See `src/examples/mocking/magic2.test.js` for this example
-
-We can also mock a module by providing the implementation directly to `jest.mock`.
+We can also mock a module by providing the mock implementation directly to `jest.mock`.
 
 Note that `__esModule: true` is needed for ES6 imports (import, export).
 
@@ -204,23 +202,44 @@ jest.mock('./sampleFunctions2', () => ({
 render(<Magic base={100} />)
 ```
 
+> See `src/examples/mocking/magic2.test.js` for this example
+
 **Mocking node modules**
 
-See this: [mocking node modules](https://jestjs.io/docs/en/manual-mocks#mocking-node-modules)
+See [Jest docs: mocking node modules](https://jestjs.io/docs/en/manual-mocks#mocking-node-modules)
 
 **Manipulating mocked methods**
 
-For any of the mocking techniques above, you can use Jest's mock functions instead to manipulate mocked methods. This way, you can do things to the mocks like spy, reset, replace, etc.
+You can also use Jest's mock function `jest.fn()` to manipulate mocked methods. 
+This way, you can do things to the mocks like spy, reset, replace, etc.
+
+Note that variables accessed inside a mock must be prefixed with "mock"
 
 ```js
-jest.mock('./someFunction', () => ({
+const mockDefaultFunction = jest.fn()
+const mockNamedFunction = jest.fn()
+
+jest.mock('./sampleFunctions', () => ({
     __esModule: true,
-    default: jest.fn().mockReturnValue(42),
-    someFunction: jest.fn().mockImplementation(() => console.log("hey"))
+    default: () => mockDefaultFunction(),
+    someNamedFunction: () => mockNamedFunction()
 }))
+...
+mockDefaultFunction.mockReturnValue(42)
+mockNamedFunction.mockImplementation(() => {
+    console.log("hey I'm a mock")
+    return 43;
+})
+...
+render(<Magic base={100} />)
+...
+expect(mockDefaultFunction).toHaveBeenCalled()
+expect(mockNamedFunction).toHaveBeenCalled()
 ```
 
 For details: [Mock Functions](https://jestjs.io/docs/en/mock-function-api#mockfnmockreturnvaluevalue)
+
+> See `src/examples/mocking/magic3.test.js` for this example
 
 ### Miscellaneous
 

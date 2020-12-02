@@ -38,7 +38,7 @@ const mockAuthenticate = (login, password) => {
 
 jest.mock('../../services/auth.service', () => ({
     getInstance: jest.fn().mockImplementationOnce(() => ({
-        // FIXME: find a way to mock this dynamically between tests
+        // FIXME: find a way to mock the userRole dynamically between tests in the same file
         userRole: "field", // Field Officer or Group Admin,
         authenticate: (login, password) => mockAuthenticate(login, password),
         agency: {
@@ -127,7 +127,6 @@ describe('Login success', () => {
 
 describe('Forgot password', () => {
     test('Links to restore_password page', async() => {
-        
         render(<Login />);
 
         const forgotPasswordLink = screen.getByRole('link', {name: forgotPassword })
