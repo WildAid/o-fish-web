@@ -97,8 +97,6 @@ Jest is a config-free testing framework that allows us to write simple and idiom
 
 RTL integrates very well with Jest, and both come out-of-the-box with Create React App.
 
-We also added `jest-dom` that provides custom matchers, such as `.toBeInTheDocument()`
-
 ## Writing tests
 
 ### RTL queries and assertions
@@ -252,6 +250,12 @@ For details: [Mock Functions](https://jestjs.io/docs/en/mock-function-api#mockfn
 - companion library for RTL that simulates user interactions in the browser better than `fireEvent`
 - click, type, hover, tab, paste, etc 
 - More info: [user-event Github](https://github.com/testing-library/user-event)
+
+`jest-dom`
+- companion library that provides custom matchers for checking the state of the DOM more declaratively
+- some custom matchers: `toBeInTheDocument()`, `toContainElement()`, `toHaveTextContent()`, `toHaveStyle()`, etc
+- e.g. `expect(screen.getByText('Success')).toBeInTheDocument()`
+- More info: [Jest dom](https://github.com/testing-library/jest-dom)
 
 ## Cheatsheets
 
