@@ -2,38 +2,26 @@ import React from 'react';
 import Login from './login.component';
 import { render, screen, waitFor, userEvent } from '../../testUtils'
 
-import { HOME_PAGE } from "../../root/root.constants";
+import history from "../../root/root.history"
 
-import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
+import { HOME_PAGE, RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
-import i18next from "../../helpers/i18n/index";
-
-const MOCK_CORRECT_USERNAME = "user@example.com"
-const MOCK_CORRECT_PASSWORD = "password"
-const MOCK_INCORRECT_USERNAME = "blah"
-const MOCK_INCORRECT_PASSWORD= "blah"
-
-const loginLabel = i18next.t("LOGIN_PAGE.EMAIL_USERNAME")
-const passwordLabel = i18next.t("LOGIN_PAGE.PASSWORD")
-const loginButton = i18next.t("LOGIN_PAGE.LOGIN")
-const forgotPassword = i18next.t("LOGIN_PAGE.FORGOT_PASSWORD")
+import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, MOCK_INCORRECT_USERNAME,
+    MOCK_INCORRECT_PASSWORD, LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, FORGOT_PASSWORD
+} from "./test.helper"
 
 // --- mock AuthService ---
 const mockLoginSuccess = jest.fn()
 const mockLoginFailed = jest.fn()
 
 const mockAuthenticate = (login, password) => {
-    return new Promise((resolve, reject) => {
-        if (login === MOCK_CORRECT_USERNAME && password === MOCK_CORRECT_PASSWORD) {
-            mockLoginSuccess();
-            resolve()
-        } else {
-            mockLoginFailed()
-            reject({
-                message: "invalid username/password"
-            })
-        }
-    })
+    if (login === MOCK_CORRECT_USERNAME && password === MOCK_CORRECT_PASSWORD) {
+        mockLoginSuccess()
+        return Promise.resolve()
+    } else {
+        mockLoginFailed()
+        return Promise.reject({message: "invalid username/password"})
+    }
 }
 
 jest.mock('../../services/auth.service', () => ({
@@ -47,23 +35,17 @@ jest.mock('../../services/auth.service', () => ({
     }))
 }))
 
-// --- mock history ---
-const mockHistory = jest.fn()
-jest.mock('../../root/root.history', () => ({
-    push: (location) => {
-        mockHistory(location)
-    } 
-}))
+jest.mock("../../root/root.history")
 
 describe('Login form UI', () => {
     test('renders initial form', () => {
         render(<Login />);
     
         expect(screen.getByAltText(/WildAid.*MongoDB/)).toBeInTheDocument();
-        expect(screen.getByText(loginLabel)).toBeInTheDocument();
-        expect(screen.getByText(`${passwordLabel}:`)).toBeInTheDocument();
-        expect(screen.getByText(loginButton)).toBeInTheDocument();
-        expect(screen.getByText(forgotPassword)).toBeInTheDocument();
+        expect(screen.getByText(LOGIN_LABEL)).toBeInTheDocument();
+        expect(screen.getByText(`${PASSWORD_LABEL}:`)).toBeInTheDocument();
+        expect(screen.getByText(LOGIN_BUTTON)).toBeInTheDocument();
+        expect(screen.getByText(FORGOT_PASSWORD)).toBeInTheDocument();
     });
 })
 
@@ -109,18 +91,18 @@ describe('Login success', () => {
 
         // screen.debug(loginInput)
 
-        userEvent.type(screen.getByLabelText(`${loginLabel}:`), MOCK_CORRECT_USERNAME)
+        userEvent.type(screen.getByLabelText(`${LOGIN_LABEL}:`), MOCK_CORRECT_USERNAME)
         expect(await screen.findByDisplayValue(MOCK_CORRECT_USERNAME)).toBeInTheDocument()
 
-        userEvent.type(screen.getByLabelText(`${passwordLabel}:`), MOCK_CORRECT_PASSWORD)
+        userEvent.type(screen.getByLabelText(`${PASSWORD_LABEL}:`), MOCK_CORRECT_PASSWORD)
         expect(await screen.findByDisplayValue(MOCK_CORRECT_PASSWORD)).toBeInTheDocument()
 
         // NOTE: buttons have default role="button" even if not set
-        userEvent.click(screen.getByRole('button', { name: loginButton }))
+        userEvent.click(screen.getByRole('button', { name: LOGIN_BUTTON }))
 
         // ASSERT redirect
         await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-        expect(mockHistory).toHaveBeenCalledWith(HOME_PAGE)
+        expect(history.push).toHaveBeenCalledWith(HOME_PAGE)
     });
 })
 
@@ -129,7 +111,7 @@ describe('Forgot password', () => {
     test('Links to restore_password page', async() => {
         render(<Login />);
 
-        const forgotPasswordLink = screen.getByRole('link', {name: forgotPassword })
+        const forgotPasswordLink = screen.getByRole('link', {name: FORGOT_PASSWORD })
         expect(forgotPasswordLink.getAttribute("href")).toEqual(RESTORE_PASSWORD_PAGE)
 
         userEvent.click(forgotPasswordLink)

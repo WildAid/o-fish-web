@@ -2,22 +2,19 @@ import React from 'react';
 import Login from './login.component';
 import { render, screen, waitFor, userEvent } from '../../testUtils'
 
+import history from "../../root/root.history"
+
 import { CHARTS_PAGE } from "../../root/root.constants";
 
-import i18next from "../../helpers/i18n/index";
-
-const MOCK_CORRECT_USERNAME = "user@example.com"
-const MOCK_CORRECT_PASSWORD = "password"
-
-const loginLabel = i18next.t("LOGIN_PAGE.EMAIL_USERNAME")
-const passwordLabel = i18next.t("LOGIN_PAGE.PASSWORD")
-const loginButton = i18next.t("LOGIN_PAGE.LOGIN")
+import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, 
+         LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON,
+} from "./test.helper"
 
 // --- mock AuthService ---
 const mockLoginSuccess = jest.fn()
 
 jest.mock('../../services/auth.service', () => ({
-    getInstance: jest.fn().mockImplementationOnce(() => ({
+    getInstance: () => ({
         // FIXME: find a way to mock the userRole dynamically between tests in the same file
         userRole: "agency",
         user: {
@@ -29,33 +26,25 @@ jest.mock('../../services/auth.service', () => ({
             mockLoginSuccess()
             return Promise.resolve()
         },
-    }))
+    })
 }))
 
-// --- mock history ---
-const mockHistory = jest.fn()
-jest.mock('../../root/root.history', () => ({
-    push: (location) => {
-        mockHistory(location)
-    } 
-}))
+jest.mock("../../root/root.history")
 
 describe('Login success', () => {
     test('Successful login of an Agency Admin', async () => {
         render(<Login />);
 
-        userEvent.type(screen.getByLabelText(`${loginLabel}:`), MOCK_CORRECT_USERNAME)
+        userEvent.type(screen.getByLabelText(`${LOGIN_LABEL}:`), MOCK_CORRECT_USERNAME)
         expect(await screen.findByDisplayValue(MOCK_CORRECT_USERNAME)).toBeInTheDocument()
 
-        userEvent.type(screen.getByLabelText(`${passwordLabel}:`), MOCK_CORRECT_PASSWORD)
+        userEvent.type(screen.getByLabelText(`${PASSWORD_LABEL}:`), MOCK_CORRECT_PASSWORD)
         expect(await screen.findByDisplayValue(MOCK_CORRECT_PASSWORD)).toBeInTheDocument()
 
-        // NOTE: buttons have default role="button" even if not set
-        userEvent.click(screen.getByRole('button', { name: loginButton }))
+        userEvent.click(screen.getByRole('button', { name: LOGIN_BUTTON }))
 
-        // ASSERT redirect
-        // NOTE: await waitFor(expect...) is needed after an async operation
+        // ASSERT
         await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-        expect(mockHistory).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"))
+        expect(history.push).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"))
     });
 })
