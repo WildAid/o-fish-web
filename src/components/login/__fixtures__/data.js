@@ -9,11 +9,3 @@ export const LOGIN_LABEL = i18next.t("LOGIN_PAGE.EMAIL_USERNAME")
 export const PASSWORD_LABEL = i18next.t("LOGIN_PAGE.PASSWORD")
 export const LOGIN_BUTTON = i18next.t("LOGIN_PAGE.LOGIN")
 export const FORGOT_PASSWORD = i18next.t("LOGIN_PAGE.FORGOT_PASSWORD")
-
-export const mockUser = {
-    userRole: "global",
-    // authenticate: () => {
-    //     mockLoginSuccess()
-    //     return Promise.resolve()
-    // },
-}
