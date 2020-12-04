@@ -7,44 +7,49 @@ import history from "../../root/root.history"
 import { CHARTS_PAGE } from "../../root/root.constants";
 
 import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, 
-         LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON,
+         LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, 
 } from "./test.helper"
 
-// --- mock AuthService ---
 const mockLoginSuccess = jest.fn()
 
-jest.mock('../../services/auth.service', () => ({
-    getInstance: () => ({
-        // FIXME: find a way to mock the userRole dynamically between tests in the same file
+jest.mock('../../services/auth.service', () => {
+    const user = {
         userRole: "agency",
         user: {
             agency: {
                 name: "test-agency"
             }
         },
-        authenticate: () => {
-            mockLoginSuccess()
-            return Promise.resolve()
-        },
-    })
-}))
+    }
+
+    const authenticate = function() {
+        mockLoginSuccess()
+        return Promise.resolve()
+    }
+
+    return {
+        getInstance: () => ({
+            ...user,
+            authenticate: authenticate,
+        })
+    }
+})
+
 
 jest.mock("../../root/root.history")
 
-describe('Login success', () => {
-    test('Successful login of an Agency Admin', async () => {
-        render(<Login />);
+test('Successful login of an Agency Admin', async () => {
+    render(<Login />);
 
-        userEvent.type(screen.getByLabelText(`${LOGIN_LABEL}:`), MOCK_CORRECT_USERNAME)
-        expect(await screen.findByDisplayValue(MOCK_CORRECT_USERNAME)).toBeInTheDocument()
+    userEvent.type(screen.getByLabelText(`${LOGIN_LABEL}:`), MOCK_CORRECT_USERNAME)
+    expect(await screen.findByDisplayValue(MOCK_CORRECT_USERNAME)).toBeInTheDocument()
 
-        userEvent.type(screen.getByLabelText(`${PASSWORD_LABEL}:`), MOCK_CORRECT_PASSWORD)
-        expect(await screen.findByDisplayValue(MOCK_CORRECT_PASSWORD)).toBeInTheDocument()
+    userEvent.type(screen.getByLabelText(`${PASSWORD_LABEL}:`), MOCK_CORRECT_PASSWORD)
+    expect(await screen.findByDisplayValue(MOCK_CORRECT_PASSWORD)).toBeInTheDocument()
 
-        userEvent.click(screen.getByRole('button', { name: LOGIN_BUTTON }))
+    userEvent.click(screen.getByRole('button', { name: LOGIN_BUTTON }))
 
-        // ASSERT
-        await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-        expect(history.push).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"))
-    });
-})
+    // ASSERT
+    await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
+    expect(history.push).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"))
+});
