@@ -2,9 +2,9 @@
 
 ## Quick examples:
 
-- Basic example: `src/examples/hello`
-- Async example: `src/examples/async`
-- Mocking examples: `src/examples/mocking`
+- Basic example: `src/test-examples/hello`
+- Async example: `src/test-examples/async`
+- Mocking examples: `src/test-examples/mocking`
 - Actual tests for Login, see `src/components/login/login.test.js`
 - [Examples in RTL website](https://testing-library.com/docs/react-testing-library/example-intro)
 
@@ -26,25 +26,36 @@ Jest (by default) runs all files that match this criteria:
 - inside any `__tests__` folder
 - files ending with, or are named `test.js` or `spec.js`
 
-## Co-located tests
+## Test file structure
 
-Tests should be located adjacent to the component they are testing, named `<component>.test.js`, for example:
+Tests should be located adjacent to the component they are testing, in a folder named `__tests__`, named `<component>.test.js`.
+
+`__mocks__/` is an optional folder recognized by Jest for auto-mocking a module. See [Mocks section](#Mocks) section for details
+
+`__fixtures__/` is an optional folder for any shared data between tests
+
 ```
-login/
-    login.component.js
-    login.test.js
+foo/
+    foo.component.js
+    some-module.js
+    __tests__/
+        foo.test.js
+    __fixtures__/
+        data.js
+    __mocks__/
+        some-module.js
 ```
 
 This allows for easy importing of the component under test.
 
 ```js
-import Login from './login.component';
+import Login from '../login.component';
 ...
 ```
 
 ## Config files
 
-**`testUtils.js`**
+**`src/testUtils.js`**
 
 Make sure to import from `./testUtils` rather than from `@testing-library/react`. Everything in RTL and user-event is re-exported in this method.
 
@@ -68,7 +79,7 @@ import { render, screen, userEvent } from '../testUtils'
 
     > See `login.common.test.js` for an example
 
-**`setupTests.js`**
+**`src/setupTests.js`**
 - Test config file for Create-React-App. It contains global setup that needs to run before the tests.
 
 ## React Testing Library (RTL) and Jest
@@ -130,13 +141,13 @@ Then use either of these:
     - [findBy* documentation](https://testing-library.com/docs/dom-testing-library/api-queries#findby)
 - More on [RTL async utilities](https://testing-library.com/docs/dom-testing-library/api-async/)
 ```js
-// src/examples/async/fetchy.test.js
+// src/test-examples/async/fetchy.test.js
 ...
 expect(await screen.findByText("Data:", {}, {timeout: 3000})).toBeInTheDocument();
 ```
 
 ```js
-// src/components/login/login.common.test.js
+// src/components/login/__tests__/login.common.test.js
 userEvent.click(screen.getByRole('button', { name: /log in/i }))
 
 await waitFor(() => expect(mockLoginFailed).toHaveBeenCalled())
@@ -144,7 +155,7 @@ await waitFor(() => expect(mockLoginFailed).toHaveBeenCalled())
 
 ### Spies
 
-Spies are the easiest way to confirm that a function was called, without replacing the implementation (mocks)
+Spies are the easiest way to confirm that a function was called, without replacing the implementation (mocks). Just create a new, unused mock function `jest.fn()`
 
 ```js
 const handleClick = jest.fn()
@@ -160,38 +171,43 @@ expect(handleClick).toHaveBeenCalled()
 
 Jest provides many options to mock anything: ES6 modules, 3rd party libraries (e.g. in `node_modules/`), timers, etc.
 
-**Automatic user module mocks**
+**User mocks with a file**
 
 We can mock a module by having a similarly named file in a `__mocks__` folder adjacent to the module to mock.
 
 ```
+magic.component.js
+sampleFunctions.js
 __mocks__/
     sampleFunctions.js
-sampleFunctions.js
+__tests__/
+    magic.test.js
 ```
 
 ```js
-// magic.test.js
-import Magic from './magic.component'
+// __tests__/magic.test.js
+import Magic from '../magic.component'
 
-jest.mock('./sampleFunctions')
+jest.mock('../sampleFunctions')
 ...
 render(<Magic base={100} />)
 ```
 
 The `import` inside `Magic` will get the one inside `__mocks__` folder, not the original `sampleFunctions.js`
 
-> See `src/examples/mocking/magic.test.js` for this example
+Note that with this, there is no way to spy on calls.
+
+> See `magic.test.js` for this example
 
 
-**Manual user module mocks**
+**User mocks with a module factory**
 
 We can also mock a module by providing the mock implementation directly to `jest.mock`.
 
 Note that `__esModule: true` is needed for ES6 imports (import, export).
 
 ```js
-jest.mock('./sampleFunctions2', () => ({
+jest.mock('../sampleFunctions', () => ({
     __esModule: true,
     default: () => 42, 
     someNamedFunction: () => 43
@@ -200,16 +216,20 @@ jest.mock('./sampleFunctions2', () => ({
 render(<Magic base={100} />)
 ```
 
-> See `src/examples/mocking/magic2.test.js` for this example
+> See `magic2.test.js` for this example
 
 **Mocking node modules**
 
 See [Jest docs: mocking node modules](https://jestjs.io/docs/en/manual-mocks#mocking-node-modules)
 
-**Manipulating mocked methods**
+**Mocking classes**
+
+See [Jest docs: mocking ES6 classes](https://jestjs.io/docs/en/es6-class-mocks)
+
+**Spying and manipulating mocked methods**
 
 You can also use Jest's mock function `jest.fn()` to manipulate mocked methods. 
-This way, you can do things to the mocks like spy, reset, replace, etc.
+This way, you can do things to the mocks like spy on them, reset and replace mock implementation, etc.
 
 Note that variables accessed inside a mock must be prefixed with "mock"
 
@@ -217,7 +237,7 @@ Note that variables accessed inside a mock must be prefixed with "mock"
 const mockDefaultFunction = jest.fn()
 const mockNamedFunction = jest.fn()
 
-jest.mock('./sampleFunctions', () => ({
+jest.mock('../sampleFunctions', () => ({
     __esModule: true,
     default: () => mockDefaultFunction(),
     someNamedFunction: () => mockNamedFunction()
@@ -237,7 +257,7 @@ expect(mockNamedFunction).toHaveBeenCalled()
 
 For details: [Mock Functions](https://jestjs.io/docs/en/mock-function-api#mockfnmockreturnvaluevalue)
 
-> See `src/examples/mocking/magic3.test.js` for this example
+> See `magic3.test.js` for this example
 
 ### Miscellaneous
 

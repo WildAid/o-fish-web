@@ -1,18 +1,18 @@
 import React from 'react';
-import Login from './login.component';
-import { render, screen, waitFor, userEvent } from '../../testUtils'
+import Login from '../login.component';
+import { render, screen, waitFor, userEvent } from '../../../testUtils'
 
-import history from "../../root/root.history"
+import history from "../../../root/root.history"
 
-import { CHARTS_PAGE } from "../../root/root.constants";
+import { CHARTS_PAGE } from "../../../root/root.constants";
 
 import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, 
          LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, 
-} from "./test.helper"
+} from "../__fixtures__/data"
 
 const mockLoginSuccess = jest.fn()
 
-jest.mock('../../services/auth.service', () => {
+jest.mock('../../../services/auth.service', () => {
     const user = {
         userRole: "agency",
         user: {
@@ -36,7 +36,7 @@ jest.mock('../../services/auth.service', () => {
 })
 
 
-jest.mock("../../root/root.history")
+jest.mock("../../../root/root.history")
 
 test('Successful login of an Agency Admin', async () => {
     render(<Login />);

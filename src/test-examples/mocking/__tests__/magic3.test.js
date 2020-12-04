@@ -1,7 +1,7 @@
-import { render, screen } from '../../testUtils'
+import { render, screen } from '../../../testUtils'
 import React from 'react'
 
-import Magic from './magic.component'
+import Magic from '../magic.component'
 
 /*
     === MOCKING EXAMPLE 3 - Spying on implemented module mocks ===
@@ -15,13 +15,13 @@ import Magic from './magic.component'
 const mockDefaultFunction = jest.fn()
 const mockNamedFunction = jest.fn()
 
-jest.mock('./sampleFunctions', () => ({
+jest.mock('../sampleFunctions', () => ({
     __esModule: true,
     default: () => mockDefaultFunction(),
     someNamedFunction: () => mockNamedFunction()
 }))
 
-describe.only('Magic', () => {
+describe('Magic', () => {
     test('renders', async () => {
         // Because we have a jest.fn(), we can replace the mocks return value and/or implementation
         // in this test or in other ones

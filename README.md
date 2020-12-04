@@ -184,5 +184,5 @@ Common components are in `/src/partials`.
 
 # Testing
 
-- Quick examples of React-Testing-Library tests in `src/examples`
+- Quick examples of Jest and React-Testing-Library tests in `src/test-examples/`
 - Read TESTS.md for detailed how-tos, setup, and test structure

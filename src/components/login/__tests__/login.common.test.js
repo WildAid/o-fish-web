@@ -1,14 +1,14 @@
 import React from 'react';
-import Login from './login.component';
-import { render, screen, waitFor, userEvent } from '../../testUtils'
+import Login from '../login.component';
+import { render, screen, waitFor, userEvent } from '../../../testUtils'
 
-import history from "../../root/root.history"
+import history from "../../../root/root.history"
 
-import { HOME_PAGE, RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
+import { HOME_PAGE, RESTORE_PASSWORD_PAGE } from "../../../root/root.constants.js";
 
 import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, MOCK_INCORRECT_USERNAME,
     MOCK_INCORRECT_PASSWORD, LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, FORGOT_PASSWORD
-} from "./test.helper"
+} from "../__fixtures__/data"
 
 // --- mock AuthService ---
 const mockLoginSuccess = jest.fn()
@@ -24,7 +24,7 @@ const mockAuthenticate = (login, password) => {
     }
 }
 
-jest.mock('../../services/auth.service', () => ({
+jest.mock('../../../services/auth.service', () => ({
     getInstance: jest.fn().mockImplementationOnce(() => ({
         // FIXME: find a way to mock the userRole dynamically between tests in the same file
         userRole: "field", // Field Officer or Group Admin,
@@ -35,7 +35,7 @@ jest.mock('../../services/auth.service', () => ({
     }))
 }))
 
-jest.mock("../../root/root.history")
+jest.mock("../../../root/root.history")
 
 describe('Login form UI', () => {
     test('renders initial form', () => {
