@@ -54,7 +54,7 @@ class CustomSelect extends Component {
           <div className="arrow">
             <img
               className="icon"
-              src={require("../../../assets/filled-arrow.svg")}
+              src={require("../../../assets/filled-arrow.svg").default}
               alt="Use/Change this filter"
             />
           </div>

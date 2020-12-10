@@ -117,7 +117,7 @@ class SeeSharedDataDialog extends Component {
                                 <div className="green-mark">
                                   <img
                                     className="full-view"
-                                    src={require("../../../../assets/done-mark.svg")}
+                                    src={require("../../../../assets/done-mark.svg").default}
                                     alt="Use/change this filter"
                                   />
                                 </div>

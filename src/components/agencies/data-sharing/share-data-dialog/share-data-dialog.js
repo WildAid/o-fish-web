@@ -71,7 +71,7 @@ class ShareDataDialog extends Component {
               <div className="arrow-right">
                 <img
                   className="icon"
-                  src={require("../../../../assets/right-arrow.svg")}
+                  src={require("../../../../assets/right-arrow.svg").default}
                   alt="no arrow img"
                 />
               </div>

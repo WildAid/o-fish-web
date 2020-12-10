@@ -175,7 +175,7 @@ class UsersMain extends React.Component {
               {t("FILTER.FILTER")}
               <img
                 className="custom-down-arrow"
-                src={require("../../assets/angle-arrow-down.svg")}
+                src={require("../../assets/angle-arrow-down.svg").default}
                 alt="no arrow img"
               />
             </div>

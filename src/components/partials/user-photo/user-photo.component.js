@@ -59,7 +59,7 @@ class UserPhoto extends Component {
               userPhoto ||
               require(`../../../assets/user${
                 defaultIcon ? "-header" : ""
-              }-icon.png`)
+              }-icon.png`).default
             }
             alt="no user"
           />
