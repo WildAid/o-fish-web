@@ -41,7 +41,7 @@ class FoundBoardings extends Component {
               <div className="icon-img">
                 <img
                   className="full-view"
-                  src={require(`../../../assets/boarding-icon.png`)}
+                  src={require(`../../../assets/boarding-icon.png`).default}
                   alt="no icon"
                 />
               </div>

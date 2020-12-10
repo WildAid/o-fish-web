@@ -111,7 +111,7 @@ class ViewAgency extends Component {
                   <div className="agency-box-img">
                     <img
                       className="icon"
-                      src={require("../../../assets/site-icon.png")}
+                      src={require("../../../assets/site-icon.png").default}
                       alt="no logo"
                     />
                   </div>
@@ -121,7 +121,7 @@ class ViewAgency extends Component {
                   <div className="agency-box-img">
                     <img
                       className="icon"
-                      src={require("../../../assets/email-icon.png")}
+                      src={require("../../../assets/email-icon.png").default}
                       alt="no logo"
                     />
                   </div>

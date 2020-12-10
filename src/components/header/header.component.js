@@ -113,7 +113,7 @@ class Header extends Component {
               <div className="header-logo-img">
                 <img
                   className="icon"
-                  src={require("../../assets/logo.png")}
+                  src={require("../../assets/logo.png").default}
                   alt="no logo"
                 />
               </div>
@@ -137,7 +137,7 @@ class Header extends Component {
                         </div>
                         <img
                           className="custom-down-arrow"
-                          src={require("../../assets/angle-arrow-down.svg")}
+                          src={require("../../assets/angle-arrow-down.svg").default}
                           alt="no arrow img"
                         />
                       </div>
@@ -188,7 +188,7 @@ class Header extends Component {
                       </div>
                       <img
                         className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
+                        src={require("../../assets/angle-arrow-down.svg").default}
                         alt="no arrow img"
                       />
                     </div>
@@ -226,7 +226,7 @@ class Header extends Component {
                       <div className="nav-item">{t("NAVIGATION.USERS")}</div>
                       <img
                         className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg")}
+                        src={require("../../assets/angle-arrow-down.svg").default}
                         alt="no arrow img"
                       />
                     </div>
@@ -287,7 +287,7 @@ class Header extends Component {
                     </div>
                     <img
                       className="custom-down-arrow"
-                      src={require("../../assets/angle-arrow-down.svg")}
+                      src={require("../../assets/angle-arrow-down.svg").default}
                       alt="no arrow img"
                     />
                   </div>

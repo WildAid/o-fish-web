@@ -19,7 +19,7 @@ const ControlButtons = ({t, onCancel, onSave}) => {
 				{t("BUTTONS.SAVE_BOARDING")}
 				<img
 					className="custom-down-arrow"
-					src={require("../../../../assets/angle-arrow-down.svg")}
+					src={require("../../../../assets/angle-arrow-down.svg").default}
 					alt="no arrow img"
 				/>
 				{isMenuShown && (

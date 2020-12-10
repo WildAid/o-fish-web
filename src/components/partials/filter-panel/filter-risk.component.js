@@ -97,7 +97,7 @@ export default class FilterPartForRisk extends Component {
           <div className="show-panel-btn" onClick={this.showSearchPanel}>
           <img
               className="icon"
-              src={require("../../../assets/filled-arrow.svg")}
+              src={require("../../../assets/filled-arrow.svg").default}
               alt="Use/change this filter"
             />
           </div>

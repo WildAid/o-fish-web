@@ -189,7 +189,7 @@ class PhotosPage extends Component {
                         <div className="photo-icon">
                           <img
                             className="icon"
-                            src={require("../../assets/photo-big-icon.png")}
+                            src={require("../../assets/photo-big-icon.png").default}
                             alt="no logo"
                           />
                         </div>

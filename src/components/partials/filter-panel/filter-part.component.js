@@ -130,7 +130,7 @@ class FilterPart extends Component {
             >
           <img
               className="icon"
-              src={require("../../../assets/filled-arrow.svg")}
+              src={require("../../../assets/filled-arrow.svg").default}
               alt="Use/change this filter"
             />
             </div>

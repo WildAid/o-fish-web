@@ -162,7 +162,7 @@ class VesselViewPage extends Component {
                                   <div className="sm-photo-icon">
                                     <img
                                       className="icon"
-                                      src={require("../../../assets/photo-icon.png")}
+                                      src={require("../../../assets/photo-icon.png").default}
                                       alt="no logo"
                                     />
                                   </div>
