@@ -21,10 +21,7 @@ class UserPhoto extends Component {
     this.setState({ loading: true });
     stitchService.getPhoto(imageId).then((pic) => {
       if (pic) {
-        if (pic.pictureURL) {
-          this.setState({ loading: false, userPhoto: pic.pictureURL });
-        } else {
-          if (pic && (pic.picture || pic.photo || pic.thumbNail)) {
+        if (pic && (pic.picture || pic.photo || pic.thumbNail)) {
             pic = pic.thumbNail
               ? pic.thumbNail
               : pic.picture
@@ -34,10 +31,9 @@ class UserPhoto extends Component {
               loading: false,
               userPhoto: "data:image/jpeg;base64," + bufferToBase64(pic.buffer),
             });
-          } else {
+        } else {
             this.setState({ loading: false });
           }
-        }
       } else {
         this.setState({ loading: false });
       }
@@ -47,7 +43,7 @@ class UserPhoto extends Component {
   render() {
     const { userPhoto, loading } = this.state;
     const { defaultIcon } = this.props;
-    
+
     return (
       <div className="user-photo">
         {loading ? (
@@ -59,7 +55,7 @@ class UserPhoto extends Component {
               userPhoto ||
               require(`../../../assets/user${
                 defaultIcon ? "-header" : ""
-              }-icon.png`).default
+              }-icon.svg`).default
             }
             alt="no user"
           />
@@ -70,3 +66,5 @@ class UserPhoto extends Component {
 }
 
 export default UserPhoto;
+
+
