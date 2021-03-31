@@ -8,6 +8,8 @@ Developers are expected to follow the <A HREF="https://www.mongodb.com/community
 
 This repo implements the O-FISH web app.
 
+The details behind the data architecture, schema, and partitioning strategy are described in [Realm Data and Partitioning Strategy Behind the WildAid O-FISH Mobile Apps](https://developer.mongodb.com/how-to/realm-data-architecture-ofish-app).
+
 Details on installing all applications making up the solution can be found [here](http://wildaid.github.io/).
 
 ## Prerequisites
