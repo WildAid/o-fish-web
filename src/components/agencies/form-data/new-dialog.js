@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import ReactFlagsSelect from 'react-flags-select';
 //import css module
-import 'react-flags-select/css/react-flags-select.css';
-
 import "./new-dialog.css";
 
 class NewDialog extends Component {
