@@ -28,13 +28,9 @@ npm test -- --coverage
 
 If you're using VSCode, you can use the "Run and Debug" configs defined in `.vscode/launch.json`.
 
-![VSCode run and debug](https://user-images.githubusercontent.com/14609656/132260390-4c39039e-f0f2-4f65-83e4-a508520cf7ef.png)
-
-To target a specific file, put the relative path in the `args` array in the config.
-
 Demo:
 
-![Debug test on VSCode](https://user-images.githubusercontent.com/14609656/132260445-416b6172-5699-4834-890d-5280dc342877.mov)
+![Debug test on VSCode](https://user-images.githubusercontent.com/14609656/132600734-5f7f9c86-14b3-4b1a-aede-91dfd3827ead.png)
 
 ## Included files
 
