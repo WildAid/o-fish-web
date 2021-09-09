@@ -8,8 +8,8 @@ it("shows Loading and Data", async () => {
     // Default timeout of findBy* queries is 1000ms
     // We can add a timeout in the third parameter object waitForOptions
     expect(await screen.findByText("Loading", {}, { timeout: 3000 })).toBeInTheDocument();
-    screen.debug();
+    // screen.debug();
 
     expect(await screen.findByText("Data:", {}, {timeout: 3000})).toBeInTheDocument();
-    screen.debug();
+    // screen.debug();
 });

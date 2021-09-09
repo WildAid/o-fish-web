@@ -5,7 +5,11 @@
 - Basic example: `src/test-examples/hello`
 - Async example: `src/test-examples/async`
 - Mocking examples: `src/test-examples/mocking`
-- Actual tests for Login, see `src/components/login/login.test.js`
+
+## Actual tests:
+- Login, see `src/components/login/login.test.js`
+- Header, see `src/components/header/__tests__/header.test.js`
+## More examples
 - [Examples in RTL website](https://testing-library.com/docs/react-testing-library/example-intro)
 
 ## Running the tests
@@ -19,6 +23,14 @@ Run with test coverage
 ```
 npm test -- --coverage
 ```
+
+## Debug the tests in VSCode
+
+If you're using VSCode, you can use the "Run and Debug" configs defined in `.vscode/launch.json`.
+
+Demo:
+
+![Debug test on VSCode](https://user-images.githubusercontent.com/14609656/132600734-5f7f9c86-14b3-4b1a-aede-91dfd3827ead.png)
 
 ## Included files
 
@@ -37,6 +49,7 @@ Tests should be located adjacent to the component they are testing, in a folder 
 ```
 foo/
     foo.component.js
+    foo.css
     some-module.js
     __tests__/
         foo.test.js

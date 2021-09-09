@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-/.vscode
+/.vscode/settings.json
 /.eslintcache
 
 # production
