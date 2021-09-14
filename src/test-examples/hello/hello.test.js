@@ -13,7 +13,7 @@ describe('Hello', () => {
     
         // * outputs current HTML of a specific element
         // regex can also be used instead of string
-        screen.debug(screen.getByText(/H[a-z ]*world/i))
+        screen.debug(screen.getByText(/H[a-z]{1,5} world/i))
     });
 
     test('changes language', async () => {
