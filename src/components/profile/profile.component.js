@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
+import history from '../../root/root.history'
 import ChangePasswordDialog from "../partials/change-password-dialog/change-password-dialog.js";
 import UserEditor from "../partials/user-editor/user-editor.component";
 import AuthService from "./../../services/auth.service";
@@ -102,6 +103,7 @@ class Profile extends Component {
             role: true
           }}
           onChangePassword={this.showDialog}
+          onRedirect={() => history.go(-1)}
         />
         {dialogDisplayed && (
           <ChangePasswordDialog onApply={this.dialogClosed} />
