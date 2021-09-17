@@ -13,4 +13,10 @@ export default class AgencyService {
     getAgencyByName() {
         return Promise.resolve(agency1)
     }
+
+    searchAgencies() {
+        return Promise.resolve({
+            agencies: [agency1]
+        })
+    }
 }
