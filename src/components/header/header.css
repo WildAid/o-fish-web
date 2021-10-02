@@ -13,7 +13,7 @@
   border-radius: 5px;
   z-index: 6;
   width: 132px;
-  top: 25px;
+  top: 40px;
   color: black;
 }
 
@@ -39,7 +39,7 @@
 
 .profile-menu {
   width: 142px;
-  top: 47px;
+  top: 40px;
   left: 10px;
 }
 
@@ -69,7 +69,8 @@
 .nav-menu-item {
   color: white;
   text-decoration: none;
-  margin-right: 45px;
+  margin-right: 45px;  
+  height:45px;
 }
 
 .data-sharing-tab {
