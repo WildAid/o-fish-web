@@ -127,11 +127,12 @@ class Header extends Component {
                     </NavLink>
                   )}
                   {isItemShown && (
-                    <div className="relative nav-menu-item">
-                      <div
-                        className="flex-row align-baseline pointer"
-                        onMouseEnter={() => this.showActiveMenu("dashboard")}
-                      >
+                    <div
+                      className="flex-row align-center relative nav-menu-item pointer"
+                      onMouseEnter={() => this.showActiveMenu("dashboard")}
+                      onMouseLeave={() => this.showActiveMenu()}
+                    >
+                      <div className="flex-row">
                         <div className="nav-item">
                           {t("NAVIGATION.DASHBOARD")}
                         </div>
@@ -178,11 +179,12 @@ class Header extends Component {
                       )}
                     </div>
                   )}
-                  <div className="relative nav-menu-item">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onMouseEnter={() => this.showActiveMenu("boarding")}
-                    >
+                  <div
+                    className="flex-row align-center relative nav-menu-item pointer"
+                    onMouseEnter={() => this.showActiveMenu("boarding")}
+                    onMouseLeave={() => this.showActiveMenu()}
+                  >
+                    <div className="flex-row">
                       <div className="nav-item">
                         {t("NAVIGATION.BOARDING_RECORDS")}
                       </div>
@@ -218,11 +220,12 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  <div className="relative nav-menu-item">
-                    <div
-                      className="flex-row align-baseline pointer"
-                      onMouseEnter={() => this.showActiveMenu("users")}
-                    >
+                  <div
+                    className="flex-row align-center relative nav-menu-item pointer"
+                    onMouseEnter={() => this.showActiveMenu("users")}
+                    onMouseLeave={() => this.showActiveMenu()}
+                  >
+                    <div className="flex-row">
                       <div className="nav-item">{t("NAVIGATION.USERS")}</div>
                       <img
                         className="custom-down-arrow"
@@ -249,18 +252,20 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  {(currentUser.global.admin || currentUser.agency.admin) && (
-                    <NavLink
-                      className="nav-menu-item"
-                      to={AGENCIES_PAGE}
-                      onMouseLeave={this.navigate}
-                    >
-                      {t("NAVIGATION.AGENCIES")}
-                    </NavLink>
+                  {(currentUser.global.admin || currentUser.agency.admin) && (                    
+                      <NavLink      
+                        className="flex-row align-center nav-menu-item"                                        
+                        to={AGENCIES_PAGE}
+                        onMouseLeave={this.navigate}
+                      >
+                        {t("NAVIGATION.AGENCIES")}
+                      </NavLink>                                
                   )}
                   {currentUser.agency.admin && !currentUser.global.admin && (
                     <NavLink
-                      className={`nav-menu-item ${dataSharingDot ? "data-sharing-tab" : ""}`}
+                      className={`flex-row align-center nav-menu-item ${
+                        dataSharingDot ? "data-sharing-tab" : ""
+                      }`}
                       to={DATA_SHARING_PAGE}
                       onMouseLeave={this.navigate}
                       onClick={this.removeTabDot}
@@ -269,11 +274,11 @@ class Header extends Component {
                     </NavLink>
                   )}
                 </div>
-                <div
-                  className="relative"
+                <div className="relative nav-menu-item pointer"
                   onMouseEnter={() => this.showActiveMenu("profile")}
+                  onMouseLeave={() => this.showActiveMenu()}
                 >
-                  <div className="flex-row pointer">
+                  <div className="flex-row align-center">
                     <div className="flex-row align-center">
                       <UserPhoto
                         imageId={currentUser ? currentUser.profilePic : null}
