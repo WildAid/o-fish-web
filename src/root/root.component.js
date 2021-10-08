@@ -12,7 +12,7 @@ export default function Root(props){
   return (
     <div className="root">
       <Header />
-      <main>{routes}</main>
+      <main id="main-content">{routes}</main>
     </div>
   );
 }

@@ -108,6 +108,9 @@ class Header extends Component {
     return (
       currentUser && (
         <header className="flex-row align-center justify-center full-view header-top">
+          <a id="skip-to-content-btn" href="#main-content" class="show-on-focus blue-btn">
+            {t("NAVIGATION.SKIP_TO_CONTENT")}
+          </a>
           <div className="flex-row align-center justify-between standard-view">
             <NavLink to={HOME_PAGE}>
               <div className="header-logo-img">

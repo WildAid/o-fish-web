@@ -22,7 +22,8 @@
     "ALL_AGENCIES": "Todas las Agencias",
     "CREATE_NEW_AGENCY": "Añadir Agencia",
     "ACCOUNT": "Mi Cuenta",
-    "LOG_OUT": "Cerrar sesión"
+    "LOG_OUT": "Cerrar sesión",
+    "SKIP_TO_CONTENT": "Saltar al contenido"
   },
   "HOME_PAGE": {
     "DASHBOARD": "Panel",

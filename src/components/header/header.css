@@ -21,7 +21,7 @@
   margin-right: 30px;
 }
 
-.dashboard-menu {
+.dashboard-menu {  
   width: 135px;
 }
 
@@ -88,6 +88,10 @@
   border-radius: 7.5px;
   border: 2px solid #fff;
   background-color: #e17000;
+}
+
+#skip-to-content-btn {
+  left: 0;  
 }
 
 /* Profile */

@@ -22,7 +22,8 @@
     "ALL_AGENCIES": "All Agencies",
     "CREATE_NEW_AGENCY": "Add New Agency",
     "ACCOUNT": "My Account",
-    "LOG_OUT": "Log out"
+    "LOG_OUT": "Log out",
+    "SKIP_TO_CONTENT": "Skip To Content"
   },
   "HOME_PAGE": {
     "DASHBOARD": "Dashboard",
