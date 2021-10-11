@@ -16,6 +16,8 @@ import Magic from '../magic.component'
     the module here
 
     Don't forget the prop `__esModule: true` for ES6 modules (import, export)
+
+    Remove ".skip" below to run this example while testing
 */
 
 jest.mock('../sampleFunctions', () => ({
@@ -24,7 +26,7 @@ jest.mock('../sampleFunctions', () => ({
     someNamedFunction: () => 44
 }))
 
-describe('Magic', () => {
+describe.skip('Magic', () => {
     test('renders', async () => {
         render(<Magic base={100} />)
     

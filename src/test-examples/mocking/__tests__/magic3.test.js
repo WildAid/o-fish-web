@@ -10,6 +10,8 @@ import Magic from '../magic.component'
 
     Variables used inside the mock must be prefixed with "mock",
     e.g. "mockDefaultFunction"
+
+    Remove ".skip" below to run this example while testing
 */
 
 const mockDefaultFunction = jest.fn()
@@ -21,7 +23,7 @@ jest.mock('../sampleFunctions', () => ({
     someNamedFunction: () => mockNamedFunction()
 }))
 
-describe('Magic', () => {
+describe.skip('Magic', () => {
     test('renders', async () => {
         // Because we have a jest.fn(), we can replace the mocks return value and/or implementation
         // in this test or in other ones
