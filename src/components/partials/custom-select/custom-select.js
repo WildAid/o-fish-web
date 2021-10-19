@@ -8,13 +8,13 @@ import { resetSearch } from "./../../../helpers/get-data";
 import "./custom-select.css";
 
 const SEARCH_OPTIONS = [
-  { name: "All", translateKey: "SEARCH.ALL" },
-  { name: "Boardings", translateKey: "NAVIGATION.BOARDINGS" },
-  { name: "Vessels", translateKey: "NAVIGATION.VESSELS" },
-  { name: "Crew", translateKey: "NAVIGATION.CREW" },
-  { name: "Users", translateKey: "NAVIGATION.USERS" },
-  { name: "Agencies", translateKey: "NAVIGATION.AGENCIES" },
-  { name: "Reports", translateKey: "SEARCH.REPORTS" },
+  { name: "All", translateKey: "SEARCH.ALL", path: "home" },
+  { name: "Boardings", translateKey: "NAVIGATION.BOARDINGS", path: "boardings/null" },
+  { name: "Vessels", translateKey: "NAVIGATION.VESSELS", path: "vessels/null" },
+  { name: "Crew", translateKey: "NAVIGATION.CREW", path: "crew/null" },
+  { name: "Users", translateKey: "NAVIGATION.USERS", path: "users" },
+  { name: "Agencies", translateKey: "NAVIGATION.AGENCIES", path: "agencies" },
+  { name: "Reports", translateKey: "SEARCH.REPORTS", path: "reports" },
 ];
 
 class CustomSelect extends Component {
@@ -24,7 +24,7 @@ class CustomSelect extends Component {
   };
 
   setSelected = (option) => {
-    const newPath = option === "All" ? "home" : option.toLowerCase();
+    const newPath = !option ? "home" : option.toLowerCase();
     history.push(`/${newPath}`);
 
     resetSearch();
@@ -65,7 +65,7 @@ class CustomSelect extends Component {
               <div
                 className="option"
                 key={key}
-                onClick={() => this.setSelected(option.name)}
+                onClick={() => this.setSelected(option.path)}
               >
                 {t(option.translateKey)}
               </div>
