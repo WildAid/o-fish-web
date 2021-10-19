@@ -15,11 +15,13 @@ import Magic from '../magic.component'
     **Auto-mocks** allows us to create a mocked version of 
     the module by having a similarly named file in `__mocks__`
     e.g, see `__mocks__/sampleFunctions`
+
+    Remove ".skip" below to run this example while testing
 */
 
 jest.mock('../sampleFunctions')
 
-describe('Magic', () => {
+describe.skip('Magic', () => {
     test('renders', async () => {
         render(<Magic base={100} />)
     

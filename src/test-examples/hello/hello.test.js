@@ -2,7 +2,11 @@ import React from 'react';
 import Hello from './hello.component';
 import { render, screen, userEvent } from '../../testUtils'
 
-describe('Hello', () => {
+/*
+    Remove ".skip" below to run this example while testing
+*/
+
+describe.skip('Hello', () => {
     test('renders', () => {
         render(<Hello name="world" />);
     
