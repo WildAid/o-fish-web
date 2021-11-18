@@ -4,7 +4,7 @@ class UsersActivities extends Component {
   render() {
     return (
       <div className="activities-page">
-        Acticities page
+        Activities page
       </div>
     );
   }
