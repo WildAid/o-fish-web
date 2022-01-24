@@ -19,11 +19,11 @@ class AgencyFormData extends Component {
       activities: { title: "Activities", btn: "Add activity", data: [] },
       species: { title: "Species", btn: "Add species", data: [] },
       gear: { title: "Gear Types", btn: "Add gear type", data: [] },
-      fisheries: { title: "Catches", btn: "Add catch", data: [] },
+      fisheries: { title: "Fisheries", btn: "Add fisheries", data: [] },
       emsTypes: { title: "EMS", btn: "Add EMS", data: [] },
       countryPickerPriorityList: {
         title: "Vessel flags",
-        btn: "Add vessel flag state",
+        btn: "Add preferred vessel flag state",
         data: [],
       },
       violationCodes: { title: "Violation Codes", btn: "Add code", data: [] },
