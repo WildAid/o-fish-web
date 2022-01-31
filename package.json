@@ -30,7 +30,7 @@
     "react-i18next": "11.7.0",
     "react-router-dom": "6.2.1",
     "react-router-query-params": "1.0.4",
-    "react-scripts": "5.0.0",
+    "react-scripts": "4.0.3",
     "react-world-flags": "1.4.0"
   },
   "scripts": {
