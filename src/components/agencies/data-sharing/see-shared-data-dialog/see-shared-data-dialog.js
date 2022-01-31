@@ -47,15 +47,15 @@ class SeeSharedDataDialog extends Component {
                 <div className="padding-top padding-right">
                   {agency.fromDate
                     ? `${moment(agency.fromDate).format("L")} ${moment(
-                        agency.fromDate
-                      ).format("LT")}`
+                      agency.fromDate
+                    ).format("LT")}`
                     : t("WARNINGS.NO_START_DATE")}
                 </div>
                 <div className="padding-top padding-left">
                   {agency.toDate
                     ? `${moment(agency.toDate).format("L")} ${moment(
-                        agency.toDate
-                      ).format("LT")}`
+                      agency.toDate
+                    ).format("LT")}`
                     : t("WARNINGS.NO_END_DATE")}
                 </div>
               </div>
@@ -70,9 +70,8 @@ class SeeSharedDataDialog extends Component {
                 </div>
                 {boardingInformation.map((boarding, ind) => (
                   <div
-                    className={`boarding-details-tab pointer ${
-                      ind === activeTabIndex ? "active" : ""
-                    }`}
+                    className={`boarding-details-tab pointer ${ind === activeTabIndex ? "active" : ""
+                      }`}
                     onClick={() => this.setActiveTab(ind)}
                     key={ind}
                   >

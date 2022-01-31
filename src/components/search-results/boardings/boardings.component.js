@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import { NavLink } from "react-router-dom";
 import moment from "moment";
 
@@ -41,7 +41,7 @@ class FoundBoardings extends Component {
               <div className="icon-img">
                 <img
                   className="full-view"
-                  src={require(`../../../assets/boarding-icon.png`).default}
+                  src={require(`../../../assets/boarding-icon.png`)}
                   alt="no icon"
                 />
               </div>

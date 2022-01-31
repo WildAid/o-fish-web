@@ -24,7 +24,7 @@ const ItemInfo = ({
       <div className="padding-right icon-img">
         <img
           className="full-view"
-          src={require(`../../../assets/${icon}-icon.png`).default}
+          src={require(`../../../assets/${icon}-icon.png`)}
           alt="no icon"
         />
       </div>

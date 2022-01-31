@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../helpers/withRouter";
 import { NavLink } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import Logo from '../../assets/logo.png';
+import AngleArrowDownIcon from "../../assets/angle-arrow-down.svg";
 
 import {
   HOME_PAGE,
@@ -101,14 +103,14 @@ class Header extends Component {
     const { t } = this.props;
     const isItemShown = currentUser
       ? currentUser.global.admin ||
-        currentUser.agency.admin ||
-        (currentUser.global.admin && currentUser.agency.admin)
+      currentUser.agency.admin ||
+      (currentUser.global.admin && currentUser.agency.admin)
       : false;
 
     return (
       currentUser && (
         <header className="flex-row align-center justify-center full-view header-top">
-          <a id="skip-to-content-btn" href="#main-content" class="show-on-focus blue-btn">
+          <a id="skip-to-content-btn" href="#main-content" className="show-on-focus blue-btn">
             {t("NAVIGATION.SKIP_TO_CONTENT")}
           </a>
           <div className="flex-row align-center justify-between standard-view">
@@ -116,7 +118,7 @@ class Header extends Component {
               <div className="header-logo-img">
                 <img
                   className="icon"
-                  src={require("../../assets/logo.png").default}
+                  src={Logo}
                   alt="no logo"
                 />
               </div>
@@ -232,7 +234,7 @@ class Header extends Component {
                       <div className="nav-item">{t("NAVIGATION.USERS")}</div>
                       <img
                         className="custom-down-arrow"
-                        src={require("../../assets/angle-arrow-down.svg").default}
+                        src={AngleArrowDownIcon}
                         alt="no arrow img"
                       />
                     </div>
@@ -255,20 +257,19 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  {(currentUser.global.admin || currentUser.agency.admin) && (                    
-                      <NavLink      
-                        className="flex-row align-center nav-menu-item"                                        
-                        to={AGENCIES_PAGE}
-                        onMouseLeave={this.navigate}
-                      >
-                        {t("NAVIGATION.AGENCIES")}
-                      </NavLink>                                
+                  {(currentUser.global.admin || currentUser.agency.admin) && (
+                    <NavLink
+                      className="flex-row align-center nav-menu-item"
+                      to={AGENCIES_PAGE}
+                      onMouseLeave={this.navigate}
+                    >
+                      {t("NAVIGATION.AGENCIES")}
+                    </NavLink>
                   )}
                   {currentUser.agency.admin && !currentUser.global.admin && (
                     <NavLink
-                      className={`flex-row align-center nav-menu-item ${
-                        dataSharingDot ? "data-sharing-tab" : ""
-                      }`}
+                      className={`flex-row align-center nav-menu-item ${dataSharingDot ? "data-sharing-tab" : ""
+                        }`}
                       to={DATA_SHARING_PAGE}
                       onMouseLeave={this.navigate}
                       onClick={this.removeTabDot}

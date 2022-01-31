@@ -43,7 +43,7 @@ class ChartsPage extends Component {
   };
 
   loadData(newState) {
-    const agencyName = this.props.match.params.id;
+    const agencyName = this.props.router.params.id;
     const datesFilter = {
       ...this.state.datesFilter,
       agency: agencyName

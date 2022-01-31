@@ -45,7 +45,7 @@ class VesselViewPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
+    const filter = JSON.parse(this.props.router.params.filter);
     if (!filter) return;
     this.setState({ loading: true, filter }, () => {
       const permitNumber = filter["vessel.permitNumber"];
@@ -162,7 +162,7 @@ class VesselViewPage extends Component {
                                   <div className="sm-photo-icon">
                                     <img
                                       className="icon"
-                                      src={require("../../../assets/photo-icon.png").default}
+                                      src={require("../../../assets/photo-icon.png")}
                                       alt="no logo"
                                     />
                                   </div>

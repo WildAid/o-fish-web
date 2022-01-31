@@ -20,6 +20,7 @@ import StitchService from "./../../services/stitch.service";
 import AuthService from "../../services/auth.service";
 
 import "./crew.css";
+import withRouter from "../../helpers/withRouter";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
@@ -162,8 +163,8 @@ class Crew extends Component {
   };
 
   componentDidMount() {
-    if (this.props.match.params.filter) {
-      const filter = JSON.parse(this.props.match.params.filter);
+    if (this.props.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
       this.loadData({ mounted: true, currentFilter: filter });
     } else {
       this.loadData({ mounted: true });
@@ -411,4 +412,4 @@ class Crew extends Component {
   }
 }
 
-export default withTranslation("translation")(Crew);
+export default withRouter(withTranslation("translation")(Crew));

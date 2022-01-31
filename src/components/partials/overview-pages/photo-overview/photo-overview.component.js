@@ -32,7 +32,7 @@ const PhotosOverview = ({ t, photos, photosId, filter }) => (
                 {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
                 <img
                   className="icon"
-                  src={require("../../../../assets/photo-big-icon.png").default}
+                  src={require("../../../../assets/photo-big-icon.png")}
                   alt="no logo"
                 />
               </div>

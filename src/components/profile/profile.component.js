@@ -9,6 +9,7 @@ import UserService from "./../../services/user.service";
 import Alert from "@material-ui/lab/Alert";
 
 import "./profile.css";
+import withRouter from "../../helpers/withRouter";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
@@ -66,6 +67,8 @@ class Profile extends Component {
     const { errorMsg, successMsg, dialogDisplayed } = this.state;
     const { t } = this.props;
 
+    console.log(this.props.router);
+
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view ">
@@ -113,4 +116,4 @@ class Profile extends Component {
   }
 }
 
-export default withTranslation("translation")(Profile);
+export default withRouter(withTranslation("translation")(Profile));

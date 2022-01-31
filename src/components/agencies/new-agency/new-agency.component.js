@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
+import withRouter from '../../../helpers/withRouter';
 
 import history from "../../../root/root.history";
 
@@ -123,8 +124,8 @@ class NewAgency extends Component {
                 </button>
                 <button
                   className="white-btn absolute"
-                  type="submit"
-                  // onClick={this.clearForm}
+                  type="button"
+                  onClick={() => this.props.router.navigate("../")}
                 >
                   {t("BUTTONS.CANCEL")}
                 </button>
@@ -141,4 +142,4 @@ class NewAgency extends Component {
   }
 }
 
-export default withTranslation("translation")(NewAgency);
+export default withRouter(withTranslation("translation")(NewAgency));

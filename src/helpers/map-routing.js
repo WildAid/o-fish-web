@@ -1,40 +1,50 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
 
 const authService = AuthService.getInstance();
 
 const mapRouting = (routes) => {
-  return routes.map(route => {
-    if (route.routes && route.routes.length) {
-      route.routes = mapRouting(route.routes);
+  const mappedRoutes = routes.map(route => {
+    const mappedRoute = {
+      path: route.path,
+    }
+    if (route.children && route.children.length) {
+      mappedRoute.children = mapRouting(route.children);
     }
 
-    route.render = props => {
-      const auth = authService.isStitchAuthenticated;
 
-      if (route.auth){
-        if (!auth){
-          return <Redirect to="/login" />;
-        } else {
-          if (!authService.isAuthenticated){
-            authService.reauthenticateUser();
-          }
+    const auth = authService.isStitchAuthenticated;
+
+    if (route.auth) {
+      if (!auth) {
+        mappedRoute.element = <Navigate to="/login" />;
+        return mappedRoute;
+      } else {
+        if (!authService.isAuthenticated) {
+          authService.reauthenticateUser();
         }
       }
+    }
 
-      if (route.redirectTo) return <Redirect to={route.redirectTo} />;
-
-      if (route.routes){
-        return <route.component isLoggedIn={auth} {...props} routes={route.routes}/>;
-      } else {
-        return <route.component isLoggedIn={auth} {...props} />;
-      }
+    if (route.redirectTo) {
+      mappedRoute.element = <Navigate to={route.redirectTo} />;
+      return mappedRoute;
     };
 
-    return route;
+    if (route.children) {
+      mappedRoute.element = <>
+        <route.component isLoggedIn={auth} routes={route.children} />
+        <Outlet />
+      </>;
+      return mappedRoute;
+    } else {
+      mappedRoute.element = <route.component isLoggedIn={auth} />;
+      return mappedRoute;
+    }
   });
+  return mappedRoutes;
 };
 
 export default mapRouting;

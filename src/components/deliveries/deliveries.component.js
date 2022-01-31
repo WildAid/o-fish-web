@@ -115,7 +115,7 @@ class DeliveriesPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
+    const filter = JSON.parse(this.props.router.params.filter);
 
     this.setState({ loading: true, mounted: true, filter: filter }, () => {
       overviewService

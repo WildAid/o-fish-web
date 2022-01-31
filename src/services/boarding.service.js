@@ -85,7 +85,7 @@ const sampleData = {
 };
 
 export default class BoardingService {
-  static serviceInstance: BoardingService = null;
+  static serviceInstance = null;
 
   static sampleData = sampleData;
 

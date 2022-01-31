@@ -28,7 +28,7 @@ class BoardingViewPage extends Component {
   state = { boarding: null, versionsVisible: false };
 
   componentDidMount() {
-    const id = this.props.match.params.id;
+    const id = this.props.router.params.id;
 
     boardingService
       .getBoardingById(id)

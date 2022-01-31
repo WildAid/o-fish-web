@@ -138,7 +138,7 @@ class AgenciesDashboard extends Component {
                   <div className="blue-btn filter-btn">
                     <img
                       className="icon"
-                      src={require("../../assets/filter-icon.png").default}
+                      src={require("../../assets/filter-icon.png")}
                       alt="no logo"
                     />
                   </div>

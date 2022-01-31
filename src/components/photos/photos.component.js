@@ -120,26 +120,26 @@ class PhotosPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
+    const filter = JSON.parse(this.props.router.params.filter);
 
-      this.setState({ loading: true, mounted: true }, () => {
-        const licenseNumber = filter["crew.license"];
+    this.setState({ loading: true, mounted: true }, () => {
+      const licenseNumber = filter["crew.license"];
 
-        overviewService
-          .getBoardingsByFilter(filter)
-          .then((data) => {
-            const dataHelper = new BoardingDataHelper(data);
+      overviewService
+        .getBoardingsByFilter(filter)
+        .then((data) => {
+          const dataHelper = new BoardingDataHelper(data);
 
-            const newState = {
-              loading: false,
-              photos: dataHelper.getPhotos(licenseNumber),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
+          const newState = {
+            loading: false,
+            photos: dataHelper.getPhotos(licenseNumber),
+          };
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   }
 
   render() {
@@ -189,7 +189,7 @@ class PhotosPage extends Component {
                         <div className="photo-icon">
                           <img
                             className="icon"
-                            src={require("../../assets/photo-big-icon.png").default}
+                            src={require("../../assets/photo-big-icon.png")}
                             alt="no logo"
                           />
                         </div>

@@ -6,7 +6,7 @@ import { getRanks, getHighlightedText } from "../helpers/get-data";
 const stitchService = StitchService.getInstance();
 
 export default class SearchService extends EventEmitter {
-  static serviceInstance: SearchService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (SearchService.serviceInstance == null) {

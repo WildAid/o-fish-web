@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import { renderRoutes } from 'react-router-config';
+import React from 'react';
+import { useRoutes } from 'react-router-dom';
+import mapRouting from '../../helpers/map-routing';
+import ErrorBoundary from '../error-boundary/error-boundary.component';
 
-class Vessels extends Component<any> {
-  render() {
-    const { routes } = this.props.route;
+const Vessels = (props) => {
+  const { routes } = props;
+  const mappedRoutes = useRoutes(mapRouting(routes));
 
-    return <div>{renderRoutes(routes)}</div>;
-  }
+  return (<ErrorBoundary>
+    {mappedRoutes}
+  </ErrorBoundary>);
 }
 
 export default Vessels;

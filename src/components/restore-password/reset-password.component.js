@@ -64,7 +64,7 @@ class ResetPassword extends Component {
             <div className="login-logo-img">
               <img
                 className="full-view"
-                src={require("../../assets/login-logo.png").default}
+                src={require("../../assets/login-logo.png")}
                 alt="no logo"
               />
             </div>

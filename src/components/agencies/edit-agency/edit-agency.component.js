@@ -46,7 +46,7 @@ class EditAgency extends Component {
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.router.params;
 
     this.setState({ loading: true }, () => {
       agencyService
@@ -71,19 +71,19 @@ class EditAgency extends Component {
 
     const initialValues = !loading
       ? {
-          active: agencyInfo.active,
-          name: agencyInfo.name,
-          description: agencyInfo.description,
-          site: agencyInfo.site,
-          email: agencyInfo.email,
-        }
+        active: agencyInfo.active,
+        name: agencyInfo.name,
+        description: agencyInfo.description,
+        site: agencyInfo.site,
+        email: agencyInfo.email,
+      }
       : {
-          active: false,
-          name: "",
-          description: "",
-          site: "",
-          email: "",
-        };
+        active: false,
+        name: "",
+        description: "",
+        site: "",
+        email: "",
+      };
 
     return (
       <div className="flex-column align-center padding-top">

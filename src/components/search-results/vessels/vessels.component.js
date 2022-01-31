@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import { NavLink } from "react-router-dom";
 
 import ItemInfo from "../../partials/item-info/item-info";

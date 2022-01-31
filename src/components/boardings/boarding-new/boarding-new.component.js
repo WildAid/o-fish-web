@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import { withTranslation } from "react-i18next";
 
 import history from "../../../root/root.history";
@@ -152,10 +152,10 @@ class BoardingNewPage extends Component {
   };
 
   cancelCreation = () => {
-    history.push(BOARDINGS_PAGE);
+    this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
 
-  createBoarding = () => {};
+  createBoarding = () => { };
 
   render() {
     const { t } = this.props;

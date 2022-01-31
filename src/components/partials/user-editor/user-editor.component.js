@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import moment from "moment";
 import { Formik, Form } from "formik";
-import { TextField } from "@material-ui/core";
+import { capitalize, TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -107,7 +107,7 @@ class UserEditor extends Component {
           })
           .catch((error) => {
             error.message
-              ? this.setState({ error: `${error.name}: ${error.message}` })
+              ? this.setState({ error: `${capitalize(error.message)}` })
               : this.setState({ error: "An unexpected error occurred!" });
           });
       } else {
@@ -121,7 +121,7 @@ class UserEditor extends Component {
           })
           .catch((error) => {
             error.message
-              ? this.setState({ error: `${error.name}: ${error.message}` })
+              ? this.setState({ error: `${capitalize(error.message)}` })
               : this.setState({ error: "An unexpected error occurred!" });
           });
       }
@@ -136,7 +136,7 @@ class UserEditor extends Component {
         })
         .catch((error) => {
           error.message
-            ? this.setState({ error: `${error.name}: ${error.message}` })
+            ? this.setState({ error: `${capitalize(error.message)}` })
             : this.setState({ error: "An unexpected error occurred!" });
         });
     } else {
@@ -155,7 +155,7 @@ class UserEditor extends Component {
   };
 
   validate = (values) => {
-    return {...required(values, "adminType") , ...required(values, "email")};
+    return { ...required(values, "adminType"), ...required(values, "email") };
   };
 
   componentDidMount() {
@@ -178,7 +178,7 @@ class UserEditor extends Component {
           this.setState({ isLoaded: true, user: user });
         })
         .catch((error) => {
-          this.setState({ error: error });
+          this.setState({ error: `${capitalize(error.message)}` });
           console.error(error);
         });
     } else {
@@ -193,41 +193,41 @@ class UserEditor extends Component {
     if (!showingOptions) showingOptions = {};
     if (!showingOptions.saveText) showingOptions.saveText = t("BUTTONS.SAVE");
 
-    const hashAdminTypeToRoleName =  {
+    const hashAdminTypeToRoleName = {
       global: t("ADMINS.GLOBAL"),
-      agency:  t("ADMINS.AGENCY"),
+      agency: t("ADMINS.AGENCY"),
       group: t("ADMINS.GROUP"),
       field: t("ADMINS.FIELD"),
     }
 
     const initialValues = user
       ? {
-          profilePic: user.profilePic,
-          firstName: user.name.first,
-          lastName: user.name.last,
-          password: "",
-          agency: user.agency.name,
-          adminType: checkUserRole(user),
-          email: user.email,
-          userGroup: user.userGroup,
-          realmUserID: user.realmUserID,
-        }
+        profilePic: user.profilePic,
+        firstName: user.name.first,
+        lastName: user.name.last,
+        password: "",
+        agency: user.agency.name,
+        adminType: checkUserRole(user),
+        email: user.email,
+        userGroup: user.userGroup,
+        realmUserID: user.realmUserID,
+      }
       : {
-          firstName: "",
-          lastName: "",
-          password: "",
-          agency:
-            authService.userRole === "global"
-              ? ""
-              : authService.user.agency.name,
-          adminType:
-            authService.userRole === "global" ||
+        firstName: "",
+        lastName: "",
+        password: "",
+        agency:
+          authService.userRole === "global"
+            ? ""
+            : authService.user.agency.name,
+        adminType:
+          authService.userRole === "global" ||
             authService.userRole === "agency"
-              ? ""
-              : checkUserRole(authService.user),
-          email: "",
-          userGroup: "",
-        };
+            ? ""
+            : checkUserRole(authService.user),
+        email: "",
+        userGroup: "",
+      };
 
     const isAgencyAdmin = authService.userRole === "agency";
     const isGlobalAdmin = authService.userRole === "global";
@@ -377,7 +377,7 @@ class UserEditor extends Component {
                                 ""
                               )}
                               {authService.userRole === "global" ||
-                              authService.userRole === "agency" ? (
+                                authService.userRole === "agency" ? (
                                 <MenuItem value="agency">
                                   <em>{t("ADMINS.AGENCY")}</em>
                                 </MenuItem>
@@ -440,20 +440,20 @@ class UserEditor extends Component {
                             )}
                           </Select>
                         </FormControl>
-                      ) : (                    
-                      <TextField
-                        label={t("TABLE.AGENCY")}
-                        name="agency"
-                        className="form-input"
-                        onBlur={handleBlur}
-                        onChange={(e) => setFieldValue("agency", e.target.value)}
-                        type="text"
-                        value={values.agency}
-                        InputProps={{
-                          readOnly: true,
-                          disableUnderline: true,
-                        }}
-                      />)
+                      ) : (
+                        <TextField
+                          label={t("TABLE.AGENCY")}
+                          name="agency"
+                          className="form-input"
+                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue("agency", e.target.value)}
+                          type="text"
+                          value={values.agency}
+                          InputProps={{
+                            readOnly: true,
+                            disableUnderline: true,
+                          }}
+                        />)
                     }
                     {
                       (isAgencyAdmin || isGlobalAdmin) ? (
@@ -509,9 +509,9 @@ class UserEditor extends Component {
           ></Formik>
         )}
         {error && (
-          <div className="flex-row justify-between standard-view">
+          <div className="flex-row justify-between standard-view margin-bottom">
             <div className="flex-row justify-between error-message-box">
-              <div>{error ? error.message : "Unexpected undefined error!"}</div>
+              <div>{error ? error : "Unexpected undefined error!"}</div>
               <Icon className="pointer" onClick={this.removeErrMsg}>
                 close
               </Icon>

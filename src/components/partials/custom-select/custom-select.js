@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import history from "../../../root/root.history";
 
 import { resetSearch } from "./../../../helpers/get-data";
@@ -33,11 +33,11 @@ class CustomSelect extends Component {
   };
 
   componentDidMount() {
-    const currPath = this.props.match.path.match(/[a-zA-Z]+/g)[0];
+    const currPath = this.props.router.location.pathname.match(/[a-zA-Z]+/g)[0];
     const currPathWithCase = currPath.charAt(0).toUpperCase() + currPath.slice(1)
     this.setState({
-      selected: SEARCH_OPTIONS.find( ({ name }) => name === currPathWithCase ) ? currPathWithCase: "All",
-});
+      selected: SEARCH_OPTIONS.find(({ name }) => name === currPathWithCase) ? currPathWithCase : "All",
+    });
   }
 
   render() {
