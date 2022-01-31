@@ -5,7 +5,6 @@ import withRouter from "../../helpers/withRouter";
 import {
   getHighlightedText,
   getSharedAgenciesList,
-  goToPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";

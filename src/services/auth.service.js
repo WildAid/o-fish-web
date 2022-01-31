@@ -5,7 +5,7 @@ import EventEmitter from "events";
 const stitchService = StitchService.getInstance();
 
 export default class AuthService extends EventEmitter {
-  static serviceInstance: AuthService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (AuthService.serviceInstance == null) {
