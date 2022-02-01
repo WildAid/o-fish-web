@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import withRouter from "../../helpers/withRouter";
 import { NavLink } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import Highlighter from "react-highlight-words";
@@ -13,7 +13,6 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 import {
   checkUserType,
   getHighlightedText,
-  goToPage,
 } from "../../helpers/get-data";
 
 import UserService from "./../../services/user.service";
@@ -51,7 +50,7 @@ class UsersMain extends React.Component {
 
   goEditUser = (id) => {
     //TODO: Use router!
-    goToPage(EDIT_USER_PAGE, id);
+    this.props.router.navigate(EDIT_USER_PAGE.replace(":id", id));
   };
 
   search = (value) => {
@@ -138,9 +137,8 @@ class UsersMain extends React.Component {
 
     return (
       <div
-        className={`padding-bottom flex-column align-center users-page ${
-          isAgencyAdmin && !isGlobalAdmin ? "agency-admin" : ""
-        }`}
+        className={`padding-bottom flex-column align-center users-page ${isAgencyAdmin && !isGlobalAdmin ? "agency-admin" : ""
+          }`}
       >
         <SearchPanel
           handler={this.search}
@@ -154,8 +152,8 @@ class UsersMain extends React.Component {
               {loading
                 ? t("LOADING.LOADING")
                 : total
-                ? `${total} ${t("NAVIGATION.USERS")}`
-                : t("WARNINGS.NO_USERS")}
+                  ? `${total} ${t("NAVIGATION.USERS")}`
+                  : t("WARNINGS.NO_USERS")}
             </div>
           </div>
           {(isAgencyAdmin || isGlobalAdmin) && (
@@ -248,8 +246,8 @@ class UsersMain extends React.Component {
                           ? item.group
                             ? item.group.name
                             : item.userGroup
-                            ? item.userGroup.name
-                            : "N/A"
+                              ? item.userGroup.name
+                              : "N/A"
                           : item.userGroup}
                       </td>
                       <td>{checkUserType(item)}</td>

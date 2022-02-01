@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import { withRouter } from "react-router";
+import withRouter from "../../helpers/withRouter";
 
 import {
   getHighlightedText,
   getSharedAgenciesList,
-  goToPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -184,9 +183,8 @@ class Boardings extends Component {
     });
   };
 
-  goNewBoarding = (boarding) => {
-    goToPageWithFilter(NEW_BOARDING_PAGE)
-    // history.push(NEW_BOARDING_PAGE);
+  goNewBoarding = () => {
+    this.props.router.navigate(NEW_BOARDING_PAGE)
   };
 
   loadData = (newState) => {
@@ -203,9 +201,9 @@ class Boardings extends Component {
 
       const agenciesToShareData = isNotGlobalAdmin
         ? await getSharedAgenciesList(
-            authService.user.agency.name,
-            authService.user
-          )
+          authService.user.agency.name,
+          authService.user
+        )
         : null;
 
       boardingService
@@ -233,8 +231,8 @@ class Boardings extends Component {
   };
 
   componentDidMount() {
-    if (this.props.match.params.filter) {
-      const filter = JSON.parse(this.props.match.params.filter);
+    if (this.props.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
       this.loadData({ mounted: true, currentFilter: filter });
     } else {
       this.loadData({ mounted: true });

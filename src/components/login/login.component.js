@@ -3,10 +3,10 @@ import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import withRouter from '../../helpers/withRouter';
 
 import AuthService from "../../services/auth.service";
 
-import history from "../../root/root.history";
 
 import { RESTORE_PASSWORD_PAGE } from "../../root/root.constants.js";
 
@@ -37,12 +37,12 @@ class Login extends Component {
           loading: false,
         });
         authService.userRole === "global"
-          ? history.push(GLOBAL_AGENCIES_PAGE)
+          ? this.props.router.navigate(GLOBAL_AGENCIES_PAGE)
           : authService.userRole === "agency"
-          ? history.push(
+            ? this.props.router.navigate(
               CHARTS_PAGE.replace(":id", authService.user.agency.name)
             )
-          : history.push(HOME_PAGE);
+            : this.props.router.navigate(HOME_PAGE);
       })
       .catch((error) => {
         this.setState({
@@ -52,9 +52,22 @@ class Login extends Component {
       });
   };
 
+  componentDidMount() {
+    if (authService.isAuthenticated) {
+      authService.userRole === "global"
+        ? this.props.router.navigate(GLOBAL_AGENCIES_PAGE)
+        : authService.userRole === "agency"
+          ? this.props.router.navigate(
+            CHARTS_PAGE.replace(":id", authService.user.agency.name)
+          )
+          : this.props.router.navigate(HOME_PAGE);
+    }
+  }
+
   render() {
     const { error, loading } = this.state;
     const { t } = this.props;
+
 
     return (
       <div className="flex-row justify-center align-center login-box">
@@ -85,7 +98,7 @@ class Login extends Component {
                 >
                   <TextField
                     label={t("LOGIN_PAGE.EMAIL_USERNAME")}
-                    inputProps={{'aria-label': `${t("LOGIN_PAGE.EMAIL_USERNAME")}:`}}
+                    inputProps={{ 'aria-label': `${t("LOGIN_PAGE.EMAIL_USERNAME")}:` }}
                     name="login"
                     onBlur={handleBlur}
                     onChange={(e) => setFieldValue("login", e.target.value)}
@@ -94,7 +107,7 @@ class Login extends Component {
                   />
                   <TextField
                     label={`${t("LOGIN_PAGE.PASSWORD")}:`}
-                    inputProps={{'aria-label': `${t("LOGIN_PAGE.PASSWORD")}:`}}
+                    inputProps={{ 'aria-label': `${t("LOGIN_PAGE.PASSWORD")}:` }}
                     name="password"
                     type="password"
                     onBlur={handleBlur}
@@ -127,4 +140,4 @@ class Login extends Component {
   }
 }
 
-export default withTranslation("translation")(Login);
+export default withRouter(withTranslation("translation")(Login));

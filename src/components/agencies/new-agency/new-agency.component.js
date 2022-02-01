@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import { TextField } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
+import withRouter from '../../../helpers/withRouter';
 
-import history from "../../../root/root.history";
 
 import AgencyService from "./../../../services/agency.service";
 import AuthService from "./../../../services/auth.service";
@@ -33,7 +33,7 @@ class NewAgency extends Component {
 
     agencyService
       .createAgency(newAgency)
-      .then(() => history.push("/agencies"))
+      .then(() => this.props.router.navigate("/agencies"))
       .catch((error) => {
         error.message
           ? this.setState({ error: `${error.name}: ${error.message}` })
@@ -123,8 +123,8 @@ class NewAgency extends Component {
                 </button>
                 <button
                   className="white-btn absolute"
-                  type="submit"
-                  // onClick={this.clearForm}
+                  type="button"
+                  onClick={() => this.props.router.navigate("../")}
                 >
                   {t("BUTTONS.CANCEL")}
                 </button>
@@ -141,4 +141,4 @@ class NewAgency extends Component {
   }
 }
 
-export default withTranslation("translation")(NewAgency);
+export default withRouter(withTranslation("translation")(NewAgency));

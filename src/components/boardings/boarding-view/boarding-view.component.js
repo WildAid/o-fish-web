@@ -15,12 +15,12 @@ import NotesSection from './notes/notes.section';
 
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 
-import history from "../../../root/root.history";
 import { EDIT_BOARDING_PAGE } from "../../../root/root.constants.js";
 
 import BoardingService from "./../../../services/boarding.service";
 
 import "./boardings-view.css";
+import withRouter from "../../../helpers/withRouter";
 
 const boardingService = BoardingService.getInstance();
 
@@ -28,7 +28,7 @@ class BoardingViewPage extends Component {
   state = { boarding: null, versionsVisible: false };
 
   componentDidMount() {
-    const id = this.props.match.params.id;
+    const id = this.props.router.params.id;
 
     boardingService
       .getBoardingById(id)
@@ -43,7 +43,7 @@ class BoardingViewPage extends Component {
   }
 
   goEdit = () => {
-    history.push(EDIT_BOARDING_PAGE.replace(":id", this.state.boarding._id));
+    this.props.router.navigate(EDIT_BOARDING_PAGE.replace(":id", this.state.boarding._id));
   };
 
   showVersions = () => {
@@ -116,4 +116,4 @@ class BoardingViewPage extends Component {
 
 //TODO: Use this sections when implemented
 //<SeizuresSection dataObject={this.state.dataObject}></SeizuresSection>
-export default withTranslation("translation")(BoardingViewPage);
+export default withRouter(withTranslation("translation")(BoardingViewPage));

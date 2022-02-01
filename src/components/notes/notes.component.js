@@ -13,6 +13,7 @@ import OverviewService from "./../../services/overview.service";
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
 import "./notes.css";
+import withRouter from "../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -120,7 +121,7 @@ class NotesPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
+    const filter = JSON.parse(this.props.router.params.filter);
     this.setState({ loading: true, mounted: true }, () => {
       const licenseNumber = filter["crew.license"];
 
@@ -204,4 +205,4 @@ class NotesPage extends Component {
   }
 }
 
-export default withTranslation("translation")(NotesPage);
+export default withRouter(withTranslation("translation")(NotesPage));

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
-import withQueryParams from "react-router-query-params";
 
 import BoardingsOverview from "./../../partials/overview-pages/boardings-overview/boardings-overview.component";
 import ViolationsOverview from "./../../partials/overview-pages/violations-overview/violations-overview.component";
@@ -20,6 +19,7 @@ import {
 } from "../../../root/root.constants.js";
 
 import "./crew-view.css";
+import withRouter from "../../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -38,10 +38,10 @@ class CrewViewPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
-    const isCaptain =  filter["captain.license"] !== undefined || filter["captain.name"] !== undefined;
+    const filter = JSON.parse(this.props.router.params.filter);
+    const isCaptain = filter["captain.license"] !== undefined || filter["captain.name"] !== undefined;
     let licenseNumber, captainName, crewName;
-    if (isCaptain){
+    if (isCaptain) {
       licenseNumber = filter["captain.license"]
       captainName = filter["captain.name"]
     } else {
@@ -63,7 +63,7 @@ class CrewViewPage extends Component {
             notes: dataHelper.getNotes(licenseNumber),
             captainName: dataHelper.getCaptainName(licenseNumber),
             crewName: isCaptain ?
-              dataHelper.getCaptainName(licenseNumber || captainName):
+              dataHelper.getCaptainName(licenseNumber || captainName) :
               dataHelper.getCrewName(licenseNumber || crewName),
             photos: dataHelper.getPhotos(licenseNumber),
           };
@@ -89,7 +89,7 @@ class CrewViewPage extends Component {
       crewName,
       captainName,
     } = this.state;
-    const { id } = this.props.match.params;
+    const { id } = this.props.router.params;
     const { t } = this.props;
     const { filter } = this.state;
 
@@ -131,7 +131,7 @@ class CrewViewPage extends Component {
                             <td>{vessel.permitNumber}</td>
                             <td>
                               {vessel.attachements &&
-                              vessel.attachements.photoIDs ? (
+                                vessel.attachements.photoIDs ? (
                                 <div className="flex-column">
                                   <div className="sm-photo-icon">
                                     <img
@@ -152,7 +152,7 @@ class CrewViewPage extends Component {
                             </td>
                             <td>
                               {vessel.attachements &&
-                              !vessel.attachements.notes ? (
+                                !vessel.attachements.notes ? (
                                 <div className="flex-column">
                                   <div className="flex-row">
                                     <div className="note">
@@ -243,6 +243,4 @@ class CrewViewPage extends Component {
   }
 }
 
-export default withQueryParams({
-  stripUnknownKeys: true,
-})(withTranslation("translation")(CrewViewPage));
+export default withRouter(withTranslation("translation")(CrewViewPage));

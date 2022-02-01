@@ -1,12 +1,11 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import withRouter from "../../helpers/withRouter";
 import Pagination from "@material-ui/lab/Pagination";
 import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import SearchPanel from "../partials/search-panel/search-panel.component";
 
-import history from "../../root/root.history";
 
 import {
   getHighlightedText,
@@ -69,7 +68,7 @@ class AgenciesMain extends React.Component {
   };
 
   goTo = (e, path, id) => {
-    history.push(path.replace(":id", id));
+    this.props.router.navigate(path.replace(":id", id));
     e.stopPropagation();
   };
 
@@ -150,8 +149,8 @@ class AgenciesMain extends React.Component {
               {loading
                 ? t("LOADING.LOADING")
                 : total
-                ? `${total} ${t("NAVIGATION.AGENCIES")}`
-                : t("WARNINGS.NO_AGENCIES")}
+                  ? `${total} ${t("NAVIGATION.AGENCIES")}`
+                  : t("WARNINGS.NO_AGENCIES")}
             </div>
           </div>
           {isAdmin && !isAgencyAdmin && (
@@ -199,11 +198,11 @@ class AgenciesMain extends React.Component {
                       onClick={() =>
                         (!authService.user.agency.admin &&
                           authService.user.global.admin) ||
-                        authService.user.global.admin
+                          authService.user.global.admin
                           ? goToPage(VIEW_AGENCIES_PAGE, item._id)
                           : authService.user.agency.name === item.name
-                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
-                          : ""
+                            ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                            : ""
                       }
                     >
                       <td className="blue-color">{item.name}</td>
@@ -215,8 +214,8 @@ class AgenciesMain extends React.Component {
                         </div>
                       </td>
                       {authService.user.agency.admin &&
-                      !authService.user.global.admin &&
-                      authService.user.agency.name === item.name ? (
+                        !authService.user.global.admin &&
+                        authService.user.agency.name === item.name ? (
                         <td
                           className="blue-color"
                           onClick={(e) => {

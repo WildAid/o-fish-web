@@ -2,15 +2,20 @@ import React from 'react';
 import Login from '../login.component';
 import { render, screen, waitFor, userEvent } from '../../../testUtils'
 
-import history from "../../../root/root.history"
-
 import { GLOBAL_AGENCIES_PAGE } from "../../../root/root.constants";
 
-import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, 
+import {
+    MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD,
     LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON
 } from "../__fixtures__/data"
 
-const mockLoginSuccess = jest.fn()
+const mockLoginSuccess = jest.fn();
+const mockedUsedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
 
 jest.mock('../../../services/auth.service', () => ({
     getInstance: () => ({
@@ -22,7 +27,6 @@ jest.mock('../../../services/auth.service', () => ({
     })
 }))
 
-jest.mock("../../../root/root.history")
 
 test('Successful login of a Global Admin', async () => {
     render(<Login />);
@@ -37,5 +41,5 @@ test('Successful login of a Global Admin', async () => {
 
     // ASSERT
     await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-    expect(history.push).toHaveBeenCalledWith(GLOBAL_AGENCIES_PAGE)
+    expect(mockedUsedNavigate).toHaveBeenCalledWith(GLOBAL_AGENCIES_PAGE)
 });

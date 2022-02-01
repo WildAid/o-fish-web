@@ -5,7 +5,7 @@ import { BSON } from "mongodb-stitch-browser-sdk";
 const stitchService = StitchService.getInstance();
 
 export default class UserService {
-  static serviceInstance: UserService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (UserService.serviceInstance == null) {

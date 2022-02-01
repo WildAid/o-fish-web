@@ -4,9 +4,9 @@ import { withTranslation } from "react-i18next";
 import SearchIcon from "@material-ui/icons/Search";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { EDIT_AGENCIES_PAGE, NEW_USER_PAGE,EDIT_USER_PAGE } from "./../../../root/root.constants";
+import { EDIT_AGENCIES_PAGE, NEW_USER_PAGE, EDIT_USER_PAGE } from "./../../../root/root.constants";
 
-import { checkUserType,goToPage } from "../../../helpers/get-data";
+import { checkUserType, goToPage } from "../../../helpers/get-data";
 
 import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
@@ -18,6 +18,7 @@ import UserPhoto from "../../partials/user-photo/user-photo.component";
 import Highlighter from "react-highlight-words";
 
 import "./view-agency.css";
+import withRouter from "../../../helpers/withRouter";
 
 const agencyService = AgencyService.getInstance();
 const authService = AuthService.getInstance();
@@ -46,18 +47,18 @@ class ViewAgency extends Component {
     goToPage(EDIT_USER_PAGE, id);
   };
 
-  searchOfficers = (event)=>{
+  searchOfficers = (event) => {
     const searchQuery = event.target.value.toLowerCase();
     const { agencyAdditionalInfo } = this.state;
-     event.target.value.length === 0 ? this.setState({
-       agencyAdditionalInfo:{ "officers": agencyAdditionalInfo.allOfficers,"allOfficers":agencyAdditionalInfo.allOfficers }
-     }) :this.setState({ 
-       agencyAdditionalInfo:{ "officers": agencyAdditionalInfo.officers.filter((officer)=>officer.email.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.first.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.last.toLowerCase().indexOf(searchQuery) !== -1),"allOfficers":agencyAdditionalInfo.allOfficers}
-     }); 
-    }
+    event.target.value.length === 0 ? this.setState({
+      agencyAdditionalInfo: { "officers": agencyAdditionalInfo.allOfficers, "allOfficers": agencyAdditionalInfo.allOfficers }
+    }) : this.setState({
+      agencyAdditionalInfo: { "officers": agencyAdditionalInfo.officers.filter((officer) => officer.email.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.first.toLowerCase().indexOf(searchQuery) !== -1 || officer.name.last.toLowerCase().indexOf(searchQuery) !== -1), "allOfficers": agencyAdditionalInfo.allOfficers }
+    });
+  }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.router.params;
     this.setState({ loading: true }, () => {
       agencyService
         .getAgency(id)
@@ -65,10 +66,10 @@ class ViewAgency extends Component {
           this.setState({
             agency: data,
           });
-          userService.getUsers(50,0,null,{"agency.name":data.name}).then((userData)=>{
+          userService.getUsers(50, 0, null, { "agency.name": data.name }).then((userData) => {
             console.log(userData.users);
             this.setState({
-              agencyAdditionalInfo:{"officers": userData.users,"allOfficers":userData.users},
+              agencyAdditionalInfo: { "officers": userData.users, "allOfficers": userData.users },
               loading: false,
             });
           });
@@ -85,8 +86,8 @@ class ViewAgency extends Component {
     const { t } = this.props;
     const isGlobalAdmin = authService.user.global.admin;
     const isAgencyAdmin = authService.user.agency.admin;
-    const isFieldOfficer =!authService.user.global.admin && !authService.user.agency.admin;
-    
+    const isFieldOfficer = !authService.user.global.admin && !authService.user.agency.admin;
+
     const status = agency.active ? "active" : "inactive";
 
     return (
@@ -197,74 +198,74 @@ class ViewAgency extends Component {
                 {agencyAdditionalInfo.officers ? (
                   <div className="margin-left margin-right">
                     <div className="margin-bottom">
-                    <table className="custom-table">
-                      <thead>
-                        <tr className="table-row border-bottom officer-table-border-width">
-                          <td>{t("TABLE.NAME")} </td>
-                          <td>{t("CREATE_USER_PAGE.USER_GROUP")}</td>
-                          <td>{t("CREATE_USER_PAGE.ROLE")}</td>
-                          <td>{t("TABLE.STATUS")}</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        { agencyAdditionalInfo.officers.map((officer, ind) => {
-                          const status = officer.active ? "active" : "inactive";
-                          return (
-                            <tr className="table-row" key={ind}>
-                              <td>
-                                <div className="flex-row align-center">
-                                  <UserPhoto
-                                    imageId={officer.profilePic || ""}
-                                    defaultIcon={false}
-                                  /><Highlighter
-                                    highlightClassName="highlighted"
-                                    searchWords={[]}
-                                    autoEscape={true}
-                                    textToHighlight={`${officer.name.first} ${officer.name.last}`}
-                                  />
-                                </div>
-                              </td>
-                              <td>
-                                {isGlobalAdmin
-                                  ? officer.group
-                                    ? officer.group.name
-                                    : officer.userGroup
-                                      ? officer.userGroup.name
-                                      : "N/A"
-                                  : officer.userGroup}
-                              </td>
-                              <td>{(officer.global || officer.agency) ? checkUserType(officer) : "N/A"}</td>
-                              {isFieldOfficer && !isGlobalAdmin && (
-                                <td>{officer.email}</td>
-                              )}
-                              <td>
-                                <div className={`status-icon ${status}-status-icon`}>
-                                  {status}
-                                </div>
-                              </td>
-                              {isAgencyAdmin && officer._id && (
+                      <table className="custom-table">
+                        <thead>
+                          <tr className="table-row border-bottom officer-table-border-width">
+                            <td>{t("TABLE.NAME")} </td>
+                            <td>{t("CREATE_USER_PAGE.USER_GROUP")}</td>
+                            <td>{t("CREATE_USER_PAGE.ROLE")}</td>
+                            <td>{t("TABLE.STATUS")}</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {agencyAdditionalInfo.officers.map((officer, ind) => {
+                            const status = officer.active ? "active" : "inactive";
+                            return (
+                              <tr className="table-row" key={ind}>
                                 <td>
-                                  <div
-                                    className="pointer see-all"
-                                    onClick={() => this.goEditUser(officer._id)}
-                                  >
-                                    {t("BUTTONS.EDIT")}
+                                  <div className="flex-row align-center">
+                                    <UserPhoto
+                                      imageId={officer.profilePic || ""}
+                                      defaultIcon={false}
+                                    /><Highlighter
+                                      highlightClassName="highlighted"
+                                      searchWords={[]}
+                                      autoEscape={true}
+                                      textToHighlight={`${officer.name.first} ${officer.name.last}`}
+                                    />
                                   </div>
                                 </td>
-                              )}
-                            </tr>)
-                        })}
-                      </tbody>
-                    </table>
+                                <td>
+                                  {isGlobalAdmin
+                                    ? officer.group
+                                      ? officer.group.name
+                                      : officer.userGroup
+                                        ? officer.userGroup.name
+                                        : "N/A"
+                                    : officer.userGroup}
+                                </td>
+                                <td>{(officer.global || officer.agency) ? checkUserType(officer) : "N/A"}</td>
+                                {isFieldOfficer && !isGlobalAdmin && (
+                                  <td>{officer.email}</td>
+                                )}
+                                <td>
+                                  <div className={`status-icon ${status}-status-icon`}>
+                                    {status}
+                                  </div>
+                                </td>
+                                {isAgencyAdmin && officer._id && (
+                                  <td>
+                                    <div
+                                      className="pointer see-all"
+                                      onClick={() => this.goEditUser(officer._id)}
+                                    >
+                                      {t("BUTTONS.EDIT")}
+                                    </div>
+                                  </td>
+                                )}
+                              </tr>)
+                          })}
+                        </tbody>
+                      </table>
                     </div>
-                    { total > limit && (
-                  <Pagination
-                    page={page}
-                    count={Math.ceil(total / limit)}
-                    shape="rounded"
-                    onChange={this.handlePageChange}
-                  />
-                )}
+                    {total > limit && (
+                      <Pagination
+                        page={page}
+                        count={Math.ceil(total / limit)}
+                        shape="rounded"
+                        onChange={this.handlePageChange}
+                      />
+                    )}
                   </div>
                 ) : t("WARNINGS.NO_OFFICERS")}
               </div>
@@ -286,4 +287,4 @@ class ViewAgency extends Component {
   }
 }
 
-export default withTranslation("translation")(ViewAgency);
+export default withRouter(withTranslation("translation")(ViewAgency));

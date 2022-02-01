@@ -5,7 +5,7 @@ import StitchService from "./stitch.service";
 const stitchService = StitchService.getInstance();
 
 export default class AgencyService {
-  static serviceInstance: AgencyService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (AgencyService.serviceInstance == null) {
@@ -21,7 +21,7 @@ export default class AgencyService {
       .collection("Agency")
       .findOne({ _id: objectId });
   }
-  
+
   getAgencyByName(name) {
     return stitchService.database.collection("Agency").findOne({ name });
   }

@@ -13,6 +13,7 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
 import { GLOBAL_AGENCIES_PAGE } from "../../root/root.constants.js";
+import withRouter from "../../helpers/withRouter";
 const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
 class ChartsPage extends Component {
@@ -43,7 +44,7 @@ class ChartsPage extends Component {
   };
 
   loadData(newState) {
-    const agencyName = this.props.match.params.id;
+    const agencyName = this.props.router.params.id;
     const datesFilter = {
       ...this.state.datesFilter,
       agency: agencyName
@@ -109,4 +110,4 @@ class ChartsPage extends Component {
   }
 }
 
-export default withTranslation("translation")(ChartsPage);
+export default withRouter(withTranslation("translation")(ChartsPage));

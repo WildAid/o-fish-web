@@ -9,6 +9,7 @@ import UserService from "./../../services/user.service";
 import Alert from "@material-ui/lab/Alert";
 
 import "./profile.css";
+import withRouter from "../../helpers/withRouter";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
@@ -113,4 +114,4 @@ class Profile extends Component {
   }
 }
 
-export default withTranslation("translation")(Profile);
+export default withRouter(withTranslation("translation")(Profile));

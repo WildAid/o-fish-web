@@ -7,9 +7,10 @@ import Pagination from "@material-ui/lab/Pagination";
 import ChartBox from "../../charts/chart-box.component";
 import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
-import { goBoardingViewPage } from "./../../../helpers/get-data";
 
 import StitchService from "./../../../services/stitch.service";
+import withRouter from "../../../helpers/withRouter";
+import { VIEW_BOARDING_PAGE } from "../../../root/root.constants";
 
 const stitchService = StitchService.getInstance();
 
@@ -32,6 +33,7 @@ class BoardingsTable extends Component {
       total,
       page,
       limit,
+      router,
     } = this.props;
 
     boardingsChartOptions.filter = {
@@ -64,7 +66,7 @@ class BoardingsTable extends Component {
                 <tr
                   className="table-row row-body"
                   key={ind}
-                  onClick={() => goBoardingViewPage(item._id)}
+                  onClick={() => router.navigate(VIEW_BOARDING_PAGE.replace(":id", item._id))}
                 >
                   <td> {moment(item.date).format("L")}</td>
                   <td> {moment(item.date).format("LT")}</td>
@@ -88,7 +90,7 @@ class BoardingsTable extends Component {
                     <RiskIcon
                       safetyLevel={
                         item.inspection.summary.safetyLevel &&
-                        item.inspection.summary.safetyLevel.level
+                          item.inspection.summary.safetyLevel.level
                           ? item.inspection.summary.safetyLevel.level
                           : item.inspection.summary.safetyLevel
                       }
@@ -112,4 +114,4 @@ class BoardingsTable extends Component {
   }
 }
 
-export default withTranslation("translation")(BoardingsTable);
+export default withRouter(withTranslation("translation")(BoardingsTable));

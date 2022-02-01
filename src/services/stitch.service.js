@@ -10,7 +10,7 @@ import { BSON } from "mongodb-stitch-browser-sdk";
 import config from "../config";
 
 export default class StitchService {
-  static serviceInstance: StitchService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (StitchService.serviceInstance == null) {

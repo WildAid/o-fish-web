@@ -10,7 +10,7 @@ import {
   getHighlightedText,
   getCountryCode,
   getSharedAgenciesList,
-  goVesselViewPage
+  getVesselViewPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -24,6 +24,7 @@ import StitchService from "./../../services/stitch.service";
 import AuthService from "../../services/auth.service";
 
 import "./vessels.css";
+import withRouter from "../../helpers/withRouter";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
@@ -200,8 +201,8 @@ class Vessels extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.filter) {
-      const filter = JSON.parse(this.props.match.params.filter);
+    if (this.props.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
       this.loadData({ mounted: true, currentFilter: filter });
       //The loadData will be called automatically from filter-panel
     } else {
@@ -221,7 +222,7 @@ class Vessels extends Component {
       mounted,
     } = this.state;
 
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     return (
       mounted && (
@@ -265,7 +266,7 @@ class Vessels extends Component {
                         <tr
                           className="table-row row-body"
                           key={ind}
-                          onClick={() => goVesselViewPage(item)}
+                          onClick={() => router.navigate(getVesselViewPageWithFilter(item))}
                         >
                           <td>
                             <Highlighter
@@ -301,12 +302,12 @@ class Vessels extends Component {
                           <td>
                             {item.homePort
                               ? Array.from(
-                                  new Set(
-                                    item.homePort
-                                      .filter((port) => port !== "")
-                                      .slice(0, 4)
-                                  )
-                                ).join(", ")
+                                new Set(
+                                  item.homePort
+                                    .filter((port) => port !== "")
+                                    .slice(0, 4)
+                                )
+                              ).join(", ")
                               : "N/A"}
                           </td>
                           <td>
@@ -349,4 +350,4 @@ class Vessels extends Component {
   }
 }
 
-export default withTranslation("translation")(Vessels);
+export default withRouter(withTranslation("translation")(Vessels));

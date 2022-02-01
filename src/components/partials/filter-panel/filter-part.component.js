@@ -15,10 +15,10 @@ import "./filter-panel.css";
 class FilterPart extends Component {
   state = { searchPanelShown: false, filterValue: "", searchQuery: "" };
 
-  componentDidMount(){
-    const {value} = this.props;
-    if (value){
-      this.setState({filterValue: value, searchQuery: value});
+  componentDidMount() {
+    const { value } = this.props;
+    if (value) {
+      this.setState({ filterValue: value, searchQuery: value });
     }
   }
 
@@ -128,11 +128,11 @@ class FilterPart extends Component {
               className="show-panel-btn pointer"
               onClick={this.showSearchPanel}
             >
-          <img
-              className="icon"
-              src={require("../../../assets/filled-arrow.svg").default}
-              alt="Use/change this filter"
-            />
+              <img
+                className="icon"
+                src={require("../../../assets/filled-arrow.svg").default}
+                alt="Use/change this filter"
+              />
             </div>
             <Icon
               className="remove-filter-btn pointer"

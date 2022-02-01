@@ -3,7 +3,7 @@ import StitchService from "./stitch.service";
 const stitchService = StitchService.getInstance();
 
 export default class CustomMenuService {
-  static serviceInstance: CustomMenuService = null;
+  static serviceInstance = null;
 
   static getInstance() {
     if (CustomMenuService.serviceInstance == null) {
@@ -13,11 +13,11 @@ export default class CustomMenuService {
   }
 
   getMenus(agencyName) {
-    return stitchService.database.collection("MenuData").findOne({agency: agencyName});
+    return stitchService.database.collection("MenuData").findOne({ agency: agencyName });
   }
 
   updateMenus(id, data) {
-    return stitchService.database.collection("MenuData").updateOne({_id: id}, data, true);
+    return stitchService.database.collection("MenuData").updateOne({ _id: id }, data, true);
   }
 
   createMenus(data) {

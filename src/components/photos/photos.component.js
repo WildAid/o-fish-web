@@ -13,6 +13,7 @@ import OverviewService from "./../../services/overview.service";
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
 import './photos.css';
+import withRouter from "../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -120,26 +121,26 @@ class PhotosPage extends Component {
   };
 
   componentDidMount() {
-    const filter = JSON.parse(this.props.match.params.filter);
+    const filter = JSON.parse(this.props.router.params.filter);
 
-      this.setState({ loading: true, mounted: true }, () => {
-        const licenseNumber = filter["crew.license"];
+    this.setState({ loading: true, mounted: true }, () => {
+      const licenseNumber = filter["crew.license"];
 
-        overviewService
-          .getBoardingsByFilter(filter)
-          .then((data) => {
-            const dataHelper = new BoardingDataHelper(data);
+      overviewService
+        .getBoardingsByFilter(filter)
+        .then((data) => {
+          const dataHelper = new BoardingDataHelper(data);
 
-            const newState = {
-              loading: false,
-              photos: dataHelper.getPhotos(licenseNumber),
-            };
-            this.setState(newState);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
+          const newState = {
+            loading: false,
+            photos: dataHelper.getPhotos(licenseNumber),
+          };
+          this.setState(newState);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
   }
 
   render() {
@@ -214,4 +215,4 @@ class PhotosPage extends Component {
   }
 }
 
-export default withTranslation("translation")(PhotosPage);
+export default withRouter(withTranslation("translation")(PhotosPage));

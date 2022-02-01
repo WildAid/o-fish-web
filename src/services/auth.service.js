@@ -58,7 +58,7 @@ export default class AuthService extends EventEmitter {
   authenticateAnonymous() {
     return stitchService.authenticateAnonymousStitch();
   }
-  
+
   reloadCurrentUser(user) {
     this._user = user;
     storage.setAuthInfo(this._user);

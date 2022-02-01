@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import { BSON } from "mongodb-stitch-browser-sdk";
 import { withTranslation } from "react-i18next";
 
@@ -72,7 +72,7 @@ class BoardingEditPage extends Component {
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.router.params;
     if (!id) {
       const obj = {
         ...initialState,
@@ -130,8 +130,8 @@ class BoardingEditPage extends Component {
                 "BOARDING_PAGE.VIEW_BOARDING.LAST_MODIFIED"
               )}
                 ${new Date(
-                  dataObject ? dataObject.date : null
-                ).toLocaleString()}
+                dataObject ? dataObject.date : null
+              ).toLocaleString()}
                 by Officer Krupke`}</div>
             )}
           </div>

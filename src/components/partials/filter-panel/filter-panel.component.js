@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
+import withRouter from "../../../helpers/withRouter";
 import moment from "moment";
 import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 
-import history from "../../../root/root.history";
 import FilterPart from "./filter-part.component";
 import FilterLine from "./filter-line.component";
 
@@ -23,8 +22,8 @@ class FilterPanel extends Component {
 
   componentDidMount() {
     let filter = [];
-    if (this.props.match.params.filter) {
-      filter = this.convertFilter(JSON.parse(this.props.match.params.filter));
+    if (this.props.router.params.filter) {
+      filter = this.convertFilter(JSON.parse(this.props.router.params.filter));
     }
     const { configuration } = this.props;
     if (configuration && filter && filter.length) {
@@ -71,10 +70,12 @@ class FilterPanel extends Component {
           //{"$date": item.value};
           break;
         case "violation":
-          filterObject = {$or: [
-            {"inspection.summary.violations.offence.code": {$regex: item.value, $options: "i"}},
-            {"inspection.summary.violations.offence.explanation": {$regex: item.value, $options: "i"}},
-          ]};
+          filterObject = {
+            $or: [
+              { "inspection.summary.violations.offence.code": { $regex: item.value, $options: "i" } },
+              { "inspection.summary.violations.offence.explanation": { $regex: item.value, $options: "i" } },
+            ]
+          };
           break;
         //TODO: Use Other field types
         default:
@@ -117,9 +118,9 @@ class FilterPanel extends Component {
 
   applyFilterChanges() {
     const { filterParts } = this.state;
-    const path = this.props.match.path;
+    const path = this.props.router.location.pathname;
     const filter = JSON.stringify(this.constructFilter(filterParts));
-    history.push(path.replace(":filter", filter));
+    this.props.router.navigate(path.replace(":filter", filter));
     if (this.props.onFilterChanged) {
       this.props.onFilterChanged(this.constructFilter(filterParts));
     }
@@ -175,8 +176,8 @@ class FilterPanel extends Component {
           ))}
         </div>
         <div className="relative">
-        <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
-            <span className="material-icons icon-font">filter_alt</span> { filterParts.length ? `(${filterParts.length})` : "" }
+          <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
+            <span className="material-icons icon-font">filter_alt</span> {filterParts.length ? `(${filterParts.length})` : ""}
           </div>
           <div
             className={
