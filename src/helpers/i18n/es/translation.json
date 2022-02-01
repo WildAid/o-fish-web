@@ -238,7 +238,7 @@
       },
       "VESSEL_INFO": {
         "NAME": "Información del Barco",
-        "NATIONALITY": "Nacionalidad"
+        "NATIONALITY": "Abanderamiento"
       },
       "LAST_DELIVERY": {
         "NAME": "Última Entrega",

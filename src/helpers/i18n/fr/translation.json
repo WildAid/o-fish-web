@@ -120,7 +120,7 @@
       "AGENCY_INFO": "Information de l'Agence",
       "DATA_ACCESS": "Accès aux données",
       "READ_ACCESS": "READ ACCESS",
-      "FLAG_STATE": "FLAG STATE",
+      "FLAG_STATE": "État du Pavillon",
       "ELECTRONIC_SYSTEM": "ELECTRONIC SYSTEM",
       "RESULT_OF_VIOLATION": "RESULT OF VIOLATION",
       "VIOLATION_ISSUED_TO": "VIOLATION ISSUED TO",
@@ -262,7 +262,7 @@
       },
       "VESSEL_INFO": {
         "NAME": "Vaisseau",
-        "NATIONALITY": "Nationalité"
+        "NATIONALITY": "État du Pavillon"
       },
       "LAST_DELIVERY": {
         "NAME": "Dernière Livraison",
