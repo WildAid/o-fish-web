@@ -2,17 +2,25 @@ import React from 'react';
 import Login from '../login.component';
 import { render, screen, waitFor, userEvent } from '../../../testUtils'
 
-import history from "../../../root/root.history"
 
 import { HOME_PAGE, RESTORE_PASSWORD_PAGE } from "../../../root/root.constants.js";
 
-import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, MOCK_INCORRECT_USERNAME,
+import {
+    MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, MOCK_INCORRECT_USERNAME,
     MOCK_INCORRECT_PASSWORD, LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, FORGOT_PASSWORD
 } from "../__fixtures__/data"
 
 // --- mock AuthService ---
-const mockLoginSuccess = jest.fn()
-const mockLoginFailed = jest.fn()
+const mockLoginSuccess = jest.fn();
+const mockLoginFailed = jest.fn();
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
+
 
 const mockAuthenticate = (login, password) => {
     if (login === MOCK_CORRECT_USERNAME && password === MOCK_CORRECT_PASSWORD) {
@@ -20,7 +28,7 @@ const mockAuthenticate = (login, password) => {
         return Promise.resolve()
     } else {
         mockLoginFailed()
-        return Promise.reject({message: "invalid username/password"})
+        return Promise.reject({ message: "invalid username/password" })
     }
 }
 
@@ -35,12 +43,11 @@ jest.mock('../../../services/auth.service', () => ({
     }))
 }))
 
-jest.mock("../../../root/root.history")
 
 describe('Login form UI', () => {
     test('renders initial form', () => {
         render(<Login />);
-    
+
         expect(screen.getByAltText(/WildAid.*MongoDB/)).toBeInTheDocument();
         expect(screen.getByText(LOGIN_LABEL)).toBeInTheDocument();
         expect(screen.getByText(`${PASSWORD_LABEL}:`)).toBeInTheDocument();
@@ -50,9 +57,9 @@ describe('Login form UI', () => {
 })
 
 describe('Login failed', () => {
-    test('Wrong username, correct password', async() => {
+    test('Wrong username, correct password', async () => {
         render(<Login />);
-        
+
         userEvent.type(screen.getByLabelText("Email/Username::"), MOCK_INCORRECT_USERNAME)
         expect(await screen.findByDisplayValue(MOCK_INCORRECT_USERNAME)).toBeInTheDocument()
 
@@ -67,9 +74,9 @@ describe('Login failed', () => {
         expect(screen.getByText(/invalid username/i)).toBeInTheDocument()
     })
 
-    test('Wrong password, correct username', async() => {
+    test('Wrong password, correct username', async () => {
         render(<Login />);
-        
+
         userEvent.type(screen.getByLabelText("Email/Username::"), MOCK_CORRECT_USERNAME)
         expect(await screen.findByDisplayValue(MOCK_CORRECT_USERNAME)).toBeInTheDocument()
 
@@ -102,16 +109,16 @@ describe('Login success', () => {
 
         // ASSERT redirect
         await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-        expect(history.push).toHaveBeenCalledWith(HOME_PAGE)
+        expect(mockedUsedNavigate).toHaveBeenCalledWith(HOME_PAGE)
     });
 })
 
 
 describe('Forgot password', () => {
-    test('Links to restore_password page', async() => {
+    test('Links to restore_password page', async () => {
         render(<Login />);
 
-        const forgotPasswordLink = screen.getByRole('link', {name: FORGOT_PASSWORD })
+        const forgotPasswordLink = screen.getByRole('link', { name: FORGOT_PASSWORD })
         expect(forgotPasswordLink.getAttribute("href")).toEqual(RESTORE_PASSWORD_PAGE)
 
         userEvent.click(forgotPasswordLink)

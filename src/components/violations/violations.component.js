@@ -9,6 +9,7 @@ import RiskIcon from "./../partials/risk-icon/risk-icon.component";
 
 import BoardingDataHelper from "../partials/boarding-data.helper.js";
 import OverviewService from "./../../services/overview.service";
+import withRouter from "../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -197,4 +198,4 @@ class ViolationsPage extends Component {
   }
 }
 
-export default withTranslation("translation")(ViolationsPage);
+export default withRouter(withTranslation("translation")(ViolationsPage));

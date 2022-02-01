@@ -50,3 +50,7 @@
 .material-btn.primary:hover{
   background-color: #787878;
 }
+
+.root + div {
+  display:  none;
+}

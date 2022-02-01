@@ -185,7 +185,6 @@ class Boardings extends Component {
 
   goNewBoarding = () => {
     this.props.router.navigate(NEW_BOARDING_PAGE)
-    // history.push(NEW_BOARDING_PAGE);
   };
 
   loadData = (newState) => {

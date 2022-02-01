@@ -13,6 +13,7 @@ import OverviewService from "./../../services/overview.service";
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
 import './photos.css';
+import withRouter from "../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -189,7 +190,7 @@ class PhotosPage extends Component {
                         <div className="photo-icon">
                           <img
                             className="icon"
-                            src={require("../../assets/photo-big-icon.png")}
+                            src={require("../../assets/photo-big-icon.png").default}
                             alt="no logo"
                           />
                         </div>
@@ -214,4 +215,4 @@ class PhotosPage extends Component {
   }
 }
 
-export default withTranslation("translation")(PhotosPage);
+export default withRouter(withTranslation("translation")(PhotosPage));

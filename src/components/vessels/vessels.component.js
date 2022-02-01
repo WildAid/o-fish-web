@@ -10,7 +10,7 @@ import {
   getHighlightedText,
   getCountryCode,
   getSharedAgenciesList,
-  goVesselViewPage
+  getVesselViewPageWithFilter
 } from "./../../helpers/get-data";
 
 import SearchPanel from "./../partials/search-panel/search-panel.component";
@@ -222,7 +222,7 @@ class Vessels extends Component {
       mounted,
     } = this.state;
 
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     return (
       mounted && (
@@ -266,7 +266,7 @@ class Vessels extends Component {
                         <tr
                           className="table-row row-body"
                           key={ind}
-                          onClick={() => goVesselViewPage(item)}
+                          onClick={() => router.navigate(getVesselViewPageWithFilter(item))}
                         >
                           <td>
                             <Highlighter

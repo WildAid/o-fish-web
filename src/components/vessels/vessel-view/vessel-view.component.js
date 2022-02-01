@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import moment from "moment";
 
-import { goToPageWithFilter } from "./../../../helpers/get-data";
+import { getCrewViewPageWithFilter } from "./../../../helpers/get-data";
 import SeeLink from "../../partials/see-all-link/see-all-link";
 
 import VesselHeaderInfo from "./../../partials/overview-pages/vessel-header-info/vessel-header-info.component";
@@ -15,14 +15,13 @@ import LoadingPanel from "./../../partials/loading-panel/loading-panel.component
 import BoardingDataHelper from "../../partials/boarding-data.helper.js";
 import OverviewService from "./../../../services/overview.service";
 
-import { goCrewViewPage } from "./../../../helpers/get-data";
-
 import {
   CREW_PAGE,
   DELIVERIES_PAGE,
 } from "../../../root/root.constants.js";
 
 import "./vessel-view.css";
+import withRouter from "../../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -91,7 +90,7 @@ class VesselViewPage extends Component {
       notes,
       filter,
     } = this.state;
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     return (
       <div className="flex-column align-center padding-top vessel-view-page">
@@ -151,18 +150,18 @@ class VesselViewPage extends Component {
                           <tr
                             key={ind}
                             className="table-row row-body"
-                            onClick={() => goCrewViewPage(crewMember)}
+                            onClick={() => router.navigate(getCrewViewPageWithFilter(crewMember))}
                           >
                             <td>{crewMember.name}</td>
                             <td>{crewMember.license}</td>
                             <td>
                               {crewMember.attachements &&
-                              crewMember.attachements.photoIDs ? (
+                                crewMember.attachements.photoIDs ? (
                                 <div className="flex-column">
                                   <div className="sm-photo-icon">
                                     <img
                                       className="icon"
-                                      src={require("../../../assets/photo-icon.png")}
+                                      src={require("../../../assets/photo-icon.png").default}
                                       alt="no logo"
                                     />
                                   </div>
@@ -179,7 +178,7 @@ class VesselViewPage extends Component {
                             </td>
                             <td>
                               {crewMember.attachements &&
-                              !crewMember.attachements.notes ? (
+                                !crewMember.attachements.notes ? (
                                 <div className="flex-column">
                                   <div className="flex-row">
                                     <div className="note">
@@ -207,7 +206,7 @@ class VesselViewPage extends Component {
                     <div
                       className="flex-row justify-center padding-top padding-bottom"
                       onClick={() =>
-                        goToPageWithFilter(CREW_PAGE, filter)
+                        router.navigate(CREW_PAGE.replace(":filter", JSON.stringify(filter)))
                       }
                     >
                       <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
@@ -256,7 +255,7 @@ class VesselViewPage extends Component {
                     <div
                       className="flex-row justify-center padding-top"
                       onClick={() =>
-                        goToPageWithFilter(DELIVERIES_PAGE, filter)
+                        router.navigate(DELIVERIES_PAGE.replace(":filter", JSON.stringify(filter)))
                       }
                     >
                       <SeeLink linkText={t("BUTTONS.SEE_ALL")} />
@@ -283,4 +282,4 @@ class VesselViewPage extends Component {
   }
 }
 
-export default withTranslation("translation")(VesselViewPage);
+export default withRouter(withTranslation("translation")(VesselViewPage));

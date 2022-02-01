@@ -2,15 +2,22 @@ import React from 'react';
 import Login from '../login.component';
 import { render, screen, waitFor, userEvent } from '../../../testUtils'
 
-import history from "../../../root/root.history"
 
 import { CHARTS_PAGE } from "../../../root/root.constants";
 
-import { MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD, 
-         LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON, 
+import {
+    MOCK_CORRECT_USERNAME, MOCK_CORRECT_PASSWORD,
+    LOGIN_LABEL, PASSWORD_LABEL, LOGIN_BUTTON,
 } from "../__fixtures__/data"
 
-const mockLoginSuccess = jest.fn()
+const mockLoginSuccess = jest.fn();
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
 
 jest.mock('../../../services/auth.service', () => {
     const user = {
@@ -22,7 +29,7 @@ jest.mock('../../../services/auth.service', () => {
         },
     }
 
-    const authenticate = function() {
+    const authenticate = function () {
         mockLoginSuccess()
         return Promise.resolve()
     }
@@ -36,8 +43,6 @@ jest.mock('../../../services/auth.service', () => {
 })
 
 
-jest.mock("../../../root/root.history")
-
 test('Successful login of an Agency Admin', async () => {
     render(<Login />);
 
@@ -50,6 +55,6 @@ test('Successful login of an Agency Admin', async () => {
     userEvent.click(screen.getByRole('button', { name: LOGIN_BUTTON }))
 
     // ASSERT
-    await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled())
-    expect(history.push).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"))
+    await waitFor(() => expect(mockLoginSuccess).toHaveBeenCalled());
+    expect(mockedUsedNavigate).toHaveBeenCalledWith(CHARTS_PAGE.replace(":id", "test-agency"));
 });

@@ -7,9 +7,10 @@ class CrewSection extends Component {
   state = { count: 0, crew: [], captain: { name: "", license: "" } };
 
   componentDidMount() {
+    console.log(this.props);
     this.setState({
       count: this.props.count,
-      crew: this.props.dataObject.crew,
+      crew: this.props.dataObject.crew || [],
       captain: this.props.dataObject.captain,
     });
   }
@@ -65,6 +66,7 @@ class CrewSection extends Component {
   render() {
     const { crew, captain } = this.state;
     const { t } = this.props;
+    console.log(crew);
 
     return (
       <div className="flex-column">

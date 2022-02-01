@@ -18,6 +18,7 @@ import UserPhoto from "../../partials/user-photo/user-photo.component";
 import Highlighter from "react-highlight-words";
 
 import "./view-agency.css";
+import withRouter from "../../../helpers/withRouter";
 
 const agencyService = AgencyService.getInstance();
 const authService = AuthService.getInstance();
@@ -111,7 +112,7 @@ class ViewAgency extends Component {
                   <div className="agency-box-img">
                     <img
                       className="icon"
-                      src={require("../../../assets/site-icon.png")}
+                      src={require("../../../assets/site-icon.png").default}
                       alt="no logo"
                     />
                   </div>
@@ -121,7 +122,7 @@ class ViewAgency extends Component {
                   <div className="agency-box-img">
                     <img
                       className="icon"
-                      src={require("../../../assets/email-icon.png")}
+                      src={require("../../../assets/email-icon.png").default}
                       alt="no logo"
                     />
                   </div>
@@ -286,4 +287,4 @@ class ViewAgency extends Component {
   }
 }
 
-export default withTranslation("translation")(ViewAgency);
+export default withRouter(withTranslation("translation")(ViewAgency));

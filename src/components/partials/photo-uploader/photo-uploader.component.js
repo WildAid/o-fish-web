@@ -85,7 +85,7 @@ export default class PhotoUploader extends Component {
                 ? imgData
                 : src
                 ? src
-                : require("../../../assets/download-img-icon.jpg")
+                : require("../../../assets/download-img-icon.jpg").default
             }
             alt="no logo"
           />

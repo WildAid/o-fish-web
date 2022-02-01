@@ -146,7 +146,7 @@ class VesselSection extends Component {
                   <div className="nationality-img">
                     <img
                       className="full-view"
-                      src={require("../../../../assets/nationality.png")}
+                      src={require("../../../../assets/nationality.png").default}
                       alt="no icon"
                     />
                   </div>

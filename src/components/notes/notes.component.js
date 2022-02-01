@@ -13,6 +13,7 @@ import OverviewService from "./../../services/overview.service";
 // import UserPhoto from "../../components/partials/user-photo/user-photo.component";
 
 import "./notes.css";
+import withRouter from "../../helpers/withRouter";
 
 const overviewService = OverviewService.getInstance();
 
@@ -204,4 +205,4 @@ class NotesPage extends Component {
   }
 }
 
-export default withTranslation("translation")(NotesPage);
+export default withRouter(withTranslation("translation")(NotesPage));

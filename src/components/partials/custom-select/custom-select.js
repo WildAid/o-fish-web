@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import withRouter from "../../../helpers/withRouter";
-import history from "../../../root/root.history";
 
 import { resetSearch } from "./../../../helpers/get-data";
 
@@ -25,7 +24,7 @@ class CustomSelect extends Component {
 
   setSelected = (option) => {
     const newPath = !option ? "home" : option.toLowerCase();
-    history.push(`/${newPath}`);
+    this.props.router.navigate(`/${newPath}`);
 
     resetSearch();
 

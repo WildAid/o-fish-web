@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import { withTranslation } from "react-i18next";
 import { TextField } from "@material-ui/core";
 
-import history from "../../root/root.history";
+import withRouter from '../../helpers/withRouter';
 
 import UserService from "../../services/user.service";
 
@@ -30,22 +30,22 @@ class ResetPassword extends Component {
     const token = params.get("token");
     const tokenId = params.get("tokenId");
 
-    if(values.password === values.confirmPassword) {
-      const newPassword = values.password; 
+    if (values.password === values.confirmPassword) {
+      const newPassword = values.password;
       userService
-      .resetPassword(token, tokenId, newPassword)
-      .then(() => {
-        this.setState({
-          loading: false,
+        .resetPassword(token, tokenId, newPassword)
+        .then(() => {
+          this.setState({
+            loading: false,
+          });
+          this.props.router.navigate(LOGIN_PAGE);
+        })
+        .catch((error) => {
+          this.setState({
+            error: error.message,
+            loading: false,
+          });
         });
-        history.push(LOGIN_PAGE);
-      })
-      .catch((error) => {
-        this.setState({
-          error: error.message,
-          loading: false,
-        });
-      });
     } else {
       this.setState({
         error: "Passwords do not match. Please try again!",
@@ -64,7 +64,7 @@ class ResetPassword extends Component {
             <div className="login-logo-img">
               <img
                 className="full-view"
-                src={require("../../assets/login-logo.png")}
+                src={require("../../assets/login-logo.png").default}
                 alt="no logo"
               />
             </div>
@@ -123,4 +123,4 @@ class ResetPassword extends Component {
   }
 }
 
-export default withTranslation("translation")(ResetPassword);
+export default withRouter(withTranslation("translation")(ResetPassword));

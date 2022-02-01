@@ -2,13 +2,13 @@ import React, { Component, Fragment } from "react";
 import { withTranslation } from "react-i18next";
 import withRouter from "../../../helpers/withRouter";
 import { Formik, Form } from "formik";
-import { TextField } from "@material-ui/core";
+import { capitalize, TextField } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import history from "../../../root/root.history";
+import Alert from "@material-ui/lab/Alert";
 import LoadingPanel from "./../../partials/loading-panel/loading-panel.component";
 import PhotoUploader from "./../../partials/photo-uploader/photo-uploader.component";
 import { checkUserRole } from "./../../../helpers/get-data";
@@ -38,7 +38,10 @@ export default withRouter(withTranslation("translation")(
       agencies: [],
       imgData: null,
       imageId: null,
+      successMsg: null,
     };
+
+    formikRef = React.createRef();
 
     removeErrMsg = () => {
       this.setState({ error: null });
@@ -49,10 +52,26 @@ export default withRouter(withTranslation("translation")(
     };
 
     changePassword = (event) => {
-      if (event.target.value) {
-        userService.resetPasswordRequest(this.state.user.email, event.target.value);
+      if (this.formikRef.current.values.password) {
+        userService.resetPasswordRequest(this.state.user.email, this.formikRef.current.values.password)
+          .then(() => {
+            this.setState({
+              successMsg: "Password  is reseted successfully."
+            })
+          })
+          .catch((error) => {
+            error.message
+              ? this.setState({ error: `${capitalize(error.message)}` })
+              : this.setState({ error: "An unexpected error occurred!" });
+          });;
       }
     };
+
+    dismissSuccess = () => {
+      this.setState({
+        successMsg: null,
+      })
+    }
 
     saveUser = (values) => {
       const { imgData, user } = this.state;
@@ -88,7 +107,7 @@ export default withRouter(withTranslation("translation")(
           .then(() => this.goRedirect())
           .catch((error) => {
             error.message
-              ? this.setState({ error: `${error.name}: ${error.message}` })
+              ? this.setState({ error: `${capitalize(error.message)}` })
               : this.setState({ error: "An unexpected error occurred!" });
           });
       };
@@ -102,7 +121,7 @@ export default withRouter(withTranslation("translation")(
           })
           .catch((error) => {
             error.message
-              ? this.setState({ error: `${error.name}: ${error.message}` })
+              ? this.setState({ error: `${capitalize(error.message)}` })
               : this.setState({ error: "An unexpected error occurred!" });
           });
       } else {
@@ -111,7 +130,7 @@ export default withRouter(withTranslation("translation")(
     };
 
     goRedirect() {
-      history.push(USERS_PAGE);
+      this.props.router.navigate(USERS_PAGE);
     }
 
     clearForm = () => {
@@ -134,7 +153,7 @@ export default withRouter(withTranslation("translation")(
           });
         })
         .catch((error) => {
-          this.setState({ error: error });
+          this.setState({ error: error.message });
           console.error(error);
         });
       if (userId) {
@@ -154,7 +173,7 @@ export default withRouter(withTranslation("translation")(
 
     render() {
       const { t } = this.props;
-      const { user, isLoaded, error, activeTab, agencies } = this.state;
+      const { user, isLoaded, error, activeTab, agencies, successMsg } = this.state;
       const isAdminUser = authService.userRole === "global" || authService.userRole === "agency";
 
       const initialValues = user
@@ -189,6 +208,11 @@ export default withRouter(withTranslation("translation")(
               <div className="item-name">{isLoaded && user ? user.name.first + " " + user.name.last : t("LOADING.LOADING")}</div>
             </div>
           </div>
+          {successMsg && (
+            <Alert icon={false} onClose={this.dismissSuccess}>
+              {successMsg}
+            </Alert>
+          )}
           {error &&
             (<div className="flex-row justify-between standard-view">
               <div className="flex-row justify-between error-message-box">
@@ -224,6 +248,7 @@ export default withRouter(withTranslation("translation")(
                   <Formik
                     initialValues={initialValues}
                     onSubmit={this.saveUser}
+                    innerRef={this.formikRef}
                     render={({
                       errors,
                       values,
@@ -292,6 +317,7 @@ export default withRouter(withTranslation("translation")(
                             <button
                               className="white-btn"
                               onClick={this.changePassword}
+                              type="button"
                             >
                               {t("BUTTONS.CHANGE_PASSWORD")}
                             </button>

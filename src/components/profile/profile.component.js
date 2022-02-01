@@ -67,8 +67,6 @@ class Profile extends Component {
     const { errorMsg, successMsg, dialogDisplayed } = this.state;
     const { t } = this.props;
 
-    console.log(this.props.router);
-
     return (
       <div className="flex-column align-center padding-top">
         <div className="flex-row justify-between standard-view ">

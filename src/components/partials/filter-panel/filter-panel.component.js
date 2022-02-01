@@ -4,7 +4,6 @@ import moment from "moment";
 import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 
-import history from "../../../root/root.history";
 import FilterPart from "./filter-part.component";
 import FilterLine from "./filter-line.component";
 
@@ -121,7 +120,7 @@ class FilterPanel extends Component {
     const { filterParts } = this.state;
     const path = this.props.router.location.pathname;
     const filter = JSON.stringify(this.constructFilter(filterParts));
-    history.push(path.replace(":filter", filter));
+    this.props.router.navigate(path.replace(":filter", filter));
     if (this.props.onFilterChanged) {
       this.props.onFilterChanged(this.constructFilter(filterParts));
     }

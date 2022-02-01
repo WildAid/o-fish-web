@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import history from "../../../root/root.history";
 import { HOME_PAGE, LOGIN_PAGE } from "../../../root/root.constants";
 import config from "../../../config";
 
@@ -10,6 +9,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import AuthService from "./../../../services/auth.service";
 import UserService from "./../../../services/user.service";
+import withRouter from "../../../helpers/withRouter";
 
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
@@ -43,7 +43,7 @@ class NewDevUser extends Component {
                   authService
                     .authenticate(values.email, values.password)
                     .then(() => {
-                      history.push(HOME_PAGE);
+                      this.props.router.navigate(HOME_PAGE);
                     });
                 })
                 .catch((error) => {
@@ -73,7 +73,7 @@ class NewDevUser extends Component {
   };
 
   clearForm = () => {
-    history.push(LOGIN_PAGE);
+    this.props.router.navigate(LOGIN_PAGE);
   };
 
   componentDidMount() {
@@ -225,4 +225,4 @@ class NewDevUser extends Component {
   }
 }
 
-export default withTranslation("translation")(NewDevUser);
+export default withRouter(withTranslation("translation")(NewDevUser));

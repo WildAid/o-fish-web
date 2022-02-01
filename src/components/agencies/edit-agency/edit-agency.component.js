@@ -8,6 +8,7 @@ import AgencyService from "./../../../services/agency.service";
 import IOSSwitch from "../../partials/ios-switch/ios-switch";
 
 import "./edit-agency.css";
+import withRouter from "../../../helpers/withRouter";
 
 const agencyService = AgencyService.getInstance();
 
@@ -202,4 +203,4 @@ class EditAgency extends Component {
   }
 }
 
-export default withTranslation("translation")(EditAgency);
+export default withRouter(withTranslation("translation")(EditAgency));

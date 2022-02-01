@@ -54,7 +54,7 @@ class UserPhoto extends Component {
             src={
               userPhoto ||
               require(`../../../assets/user${defaultIcon ? "-header" : ""
-                }-icon.svg`)
+                }-icon.svg`).default
             }
             alt="no user"
           />

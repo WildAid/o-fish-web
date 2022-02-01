@@ -13,7 +13,6 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 import {
   checkUserType,
   getHighlightedText,
-  goToPage,
 } from "../../helpers/get-data";
 
 import UserService from "./../../services/user.service";
@@ -51,7 +50,7 @@ class UsersMain extends React.Component {
 
   goEditUser = (id) => {
     //TODO: Use router!
-    goToPage(EDIT_USER_PAGE, id);
+    this.props.router.navigate(EDIT_USER_PAGE.replace(":id", id));
   };
 
   search = (value) => {
