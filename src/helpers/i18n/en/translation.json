@@ -272,7 +272,7 @@
       },
       "VESSEL_INFO": {
         "NAME": "Vessel Information",
-        "NATIONALITY": "Nationality"
+        "NATIONALITY": "Flag State"
       },
       "LAST_DELIVERY": {
         "NAME": "Last Delivery",
