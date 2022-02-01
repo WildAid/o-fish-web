@@ -56,7 +56,7 @@ export default withRouter(withTranslation("translation")(
         userService.resetPasswordRequest(this.state.user.email, this.formikRef.current.values.password)
           .then(() => {
             this.setState({
-              successMsg: "Password  is reseted successfully."
+              successMsg: "Password is successfully reset."
             })
           })
           .catch((error) => {
