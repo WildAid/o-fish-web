@@ -43,7 +43,6 @@ class UserPhoto extends Component {
   render() {
     const { userPhoto, loading } = this.state;
     const { defaultIcon } = this.props;
-
     return (
       <div className="user-photo">
         {loading ? (

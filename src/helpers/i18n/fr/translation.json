@@ -72,6 +72,12 @@
       "FISHERY": "Pêcherie",
       "GEAR": "Equipement"
     },
+    "SEIZURES": {
+      "TITLE": "Saisies",
+      "DESCRIPTION": "Description",
+      "PHOTOS": "Photos",
+      "NOTES": "Remarques"
+    },
     "EDIT_BOARDING": {
       "BASIC_INFO": "Information de Base",
       "INLINE_DATE_PICKER": "Saisir la date",

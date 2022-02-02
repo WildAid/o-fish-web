@@ -72,6 +72,12 @@
       "FISHERY": "Fishery",
       "GEAR": "Gear"
     },
+    "SEIZURES": {
+      "TITLE": "Seizures",
+      "DESCRIPTION": "Description",
+      "PHOTOS": "Photos",
+      "NOTES": "Notes"
+    },
     "EDIT_BOARDING": {
       "BASIC_INFO": "Basic Information",
       "INLINE_DATE_PICKER": "Date picker inline",
