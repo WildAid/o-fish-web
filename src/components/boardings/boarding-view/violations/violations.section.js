@@ -3,14 +3,14 @@ import { withTranslation } from "react-i18next";
 //import PhotosOverview from "./../../../partials/overview-pages/photo-overview/photo-overview.component";
 
 class ViolationsSection extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       count: props.count,
-      data: 
+      data:
         props.dataObject.inspection &&
-        props.dataObject.inspection.summary &&
-        Array.isArray(props.dataObject.inspection.summary.violations)
+          props.dataObject.inspection.summary &&
+          Array.isArray(props.dataObject.inspection.summary.violations)
           ? props.dataObject.inspection.summary.violations
           : [],
     };
@@ -27,7 +27,7 @@ class ViolationsSection extends Component {
         </div>
         <div className="table-wrapper">
           <table className="custom-table">
-            <thead> 
+            <thead>
               <tr className="table-row row-head border-bottom">
                 <td>{t("FILTER.MAIN.VIOLATIONS.VIOLATION")}</td>
                 <td>{t("FILTER.MAIN.VIOLATIONS.RESULT")}</td>
@@ -37,22 +37,22 @@ class ViolationsSection extends Component {
               </tr>
             </thead>
             <tbody>
-              { data[0] ? data.map((item, ind) => (
+              {data[0] ? data.map((item, ind) => (
                 <tr className="table-row row-body" key={ind}>
                   <td><strong>{item.offence.code}</strong><br />{item.offence.explanation}</td>
                   <td>{item.disposition}</td>
                   <td>{item.crewMember.name}</td>
-                  <td>{item.attachments 
+                  <td>{item.attachments
                     // ? <PhotosOverview photos={item.attachments.photoIDs} />
                     ? item.attachments.photoIDs
                     : 'N/A'}</td>
-                  <td>{item.attachments 
+                  <td>{item.attachments?.notes?.length > 0
                     ? item.attachments.notes.map((note) => (
-                     `${note}`
-                      ))
+                      `${note}`
+                    ))
                     : 'N/A'}</td>
                 </tr>
-              )) : <tr className="table-row row-body"><td>N/A</td></tr> }
+              )) : <tr className="table-row row-body"><td>N/A</td></tr>}
             </tbody>
           </table>
         </div>

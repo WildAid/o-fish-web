@@ -235,13 +235,14 @@ export const getSharedAgenciesList = async (name, user) => {
       const agencies = agency.inboundPartnerAgencies
         .filter((item) => (item.agencyWideAccess ? item.name : ""))
         .map((el) => el.name);
-        
+
       return [...agencies, name];
     }
   }
 };
 
 export const getVesselViewPageWithFilter = (vessel) => {
+  console.log(vessel);
   const filter = {};
   if (vessel.permitNumber) {
     filter["vessel.permitNumber"] = vessel.permitNumber;
@@ -252,6 +253,8 @@ export const getVesselViewPageWithFilter = (vessel) => {
   if (vesselName) {
     filter["vessel.name"] = vesselName;
   }
+
+  console.log(filter, vesselName);
 
   return VIEW_VESSEL_PAGE.replace(":filter", JSON.stringify(filter))
 }

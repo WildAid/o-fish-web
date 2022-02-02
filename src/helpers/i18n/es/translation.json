@@ -72,6 +72,12 @@
       "FISHERY": "Pesca",
       "GEAR": "Equipo"
     },
+    "SEIZURES": {
+      "TITLE": "Decomisos",
+      "DESCRIPTION": "Descripción",
+      "PHOTOS": "Fotos",
+      "NOTES": "Notas"
+    },
     "EDIT_BOARDING": {
       "BASIC_INFO": "Información Básica",
       "INLINE_DATE_PICKER": "Selector de fechas",

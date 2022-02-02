@@ -10,7 +10,7 @@ import VersionControlPanel from "../version-control/version-control.panel";
 
 //TODO: Fix the modules to correctly view
 import ViolationsSection from './violations/violations.section';
-// import SeizuresSection from './seizures/seizures.section';
+import SeizuresSection from './seizures/seizures.section';
 import NotesSection from './notes/notes.section';
 
 import RiskIcon from "../../partials/risk-icon/risk-icon.component";
@@ -104,6 +104,7 @@ class BoardingViewPage extends Component {
             <ActivitySection dataObject={boarding} />
             <CatchSection dataObject={boarding} />
             <ViolationsSection dataObject={boarding}></ViolationsSection>
+            <SeizuresSection seizures={boarding?.inspection?.summary?.seizures}></SeizuresSection>
             <NotesSection dataObject={boarding}></NotesSection>
           </div>
         ) : (
