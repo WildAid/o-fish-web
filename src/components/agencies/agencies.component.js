@@ -9,7 +9,6 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import {
   getHighlightedText,
-  goToPage,
 } from "./../../helpers/get-data";
 
 import AgencyService from "./../../services/agency.service";
@@ -133,7 +132,7 @@ class AgenciesMain extends React.Component {
       isAdmin,
       isAgencyAdmin,
     } = this.state;
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     return isAdmin || isAgencyAdmin ? (
       <div className="padding-bottom flex-column align-center agencies-page">
@@ -199,9 +198,9 @@ class AgenciesMain extends React.Component {
                         (!authService.user.agency.admin &&
                           authService.user.global.admin) ||
                           authService.user.global.admin
-                          ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                          ? router.navigate(VIEW_AGENCIES_PAGE.replace(":id", item._id))
                           : authService.user.agency.name === item.name
-                            ? goToPage(VIEW_AGENCIES_PAGE, item._id)
+                            ? router.navigate(VIEW_AGENCIES_PAGE.replace(":id", item._id))
                             : ""
                       }
                     >
@@ -220,7 +219,7 @@ class AgenciesMain extends React.Component {
                           className="blue-color"
                           onClick={(e) => {
                             e.stopPropagation();
-                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                            router.navigate(EDIT_AGENCIES_PAGE.replace(":id", item._id));
                           }}
                         >
                           {t("BUTTONS.EDIT")}
@@ -230,7 +229,7 @@ class AgenciesMain extends React.Component {
                           className="blue-color"
                           onClick={(e) => {
                             e.stopPropagation();
-                            goToPage(EDIT_AGENCIES_PAGE, item._id);
+                            router.navigate(EDIT_AGENCIES_PAGE.replace(":id", item._id));
                           }}
                         >
                           {t("BUTTONS.EDIT")}
