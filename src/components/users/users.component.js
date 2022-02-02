@@ -20,7 +20,7 @@ import SearchService from "./../../services/search.service";
 import AuthService from "./../../services/auth.service";
 
 import {
-  USERS_ACTIVITIES_PAGE,
+  // USERS_ACTIVITIES_PAGE,
   EDIT_USER_PAGE,
   NEW_USER_PAGE,
 } from "./../../root/root.constants";
