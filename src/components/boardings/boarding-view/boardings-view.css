@@ -19,3 +19,7 @@
 .boarding-view .title-row{
   position: relative;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

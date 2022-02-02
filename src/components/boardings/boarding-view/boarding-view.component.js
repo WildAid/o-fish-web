@@ -82,7 +82,7 @@ class BoardingViewPage extends Component {
             </button>
             {boarding && (
               <div
-                className="item-label modified-info margin-bottom margin-right"
+                className="blue-color modified-info margin-bottom margin-right cursor-pointer"
                 onClick={this.showVersions}
               >{`${t("BOARDING_PAGE.VIEW_BOARDING.LAST_MODIFIED")}
                 ${new Date(boarding ? boarding.date : null).toLocaleString()}
