@@ -3,7 +3,6 @@ import withRouter from "../../helpers/withRouter";
 import { NavLink } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import Logo from '../../assets/logo.png';
-import AngleArrowDownIcon from "../../assets/angle-arrow-down.svg";
 
 import {
   HOME_PAGE,
@@ -15,7 +14,6 @@ import {
   PROFILE_PAGE,
   GLOBAL_AGENCIES_PAGE,
   CHARTS_PAGE,
-  USERS_GROUP_PAGE,
   DATA_SHARING_PAGE,
 } from "../../root/root.constants.js";
 
@@ -225,38 +223,13 @@ class Header extends Component {
                       </div>
                     )}
                   </div>
-                  <div
-                    className="flex-row align-center relative nav-menu-item pointer"
-                    onMouseEnter={() => this.showActiveMenu("users")}
-                    onMouseLeave={() => this.showActiveMenu()}
+                  <NavLink
+                    className="flex-row align-center nav-menu-item"
+                    to={USERS_PAGE}
+                    onMouseLeave={this.navigate}
                   >
-                    <div className="flex-row">
-                      <div className="nav-item">{t("NAVIGATION.USERS")}</div>
-                      <img
-                        className="custom-down-arrow"
-                        src={AngleArrowDownIcon}
-                        alt="no arrow img"
-                      />
-                    </div>
-                    {activeMenu === "users" && (
-                      <div className="flex-column absolute box-shadow white-bg nav-menu users-menu">
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={USERS_PAGE}
-                        >
-                          {t("NAVIGATION.ALL_USERS")}
-                        </NavLink>
-                        <NavLink
-                          onClick={this.navigate}
-                          className="nav-link"
-                          to={USERS_GROUP_PAGE}
-                        >
-                          {t("NAVIGATION.USER_GROUP")}
-                        </NavLink>
-                      </div>
-                    )}
-                  </div>
+                    {t("NAVIGATION.USERS")}
+                  </NavLink>
                   {(currentUser.global.admin || currentUser.agency.admin) && (
                     <NavLink
                       className="flex-row align-center nav-menu-item"
