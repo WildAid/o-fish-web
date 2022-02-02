@@ -158,9 +158,9 @@ class UsersMain extends React.Component {
           </div>
           {(isAgencyAdmin || isGlobalAdmin) && (
             <div className="flex-row align-center padding-right">
-              <NavLink to={USERS_ACTIVITIES_PAGE} className="blue-btn">
+              {/* <NavLink to={USERS_ACTIVITIES_PAGE} className="blue-btn">
                 {t("BUTTONS.CREATE_REPORT")}
-              </NavLink>
+              </NavLink> */}
               <NavLink className="white-btn" to={NEW_USER_PAGE}>
                 {t("NAVIGATION.ADD_NEW_USER")}
               </NavLink>
