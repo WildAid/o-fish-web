@@ -13,7 +13,6 @@ const SEARCH_OPTIONS = [
   { name: "Crew", translateKey: "NAVIGATION.CREW", path: "crew/null" },
   { name: "Users", translateKey: "NAVIGATION.USERS", path: "users" },
   { name: "Agencies", translateKey: "NAVIGATION.AGENCIES", path: "agencies" },
-  { name: "Reports", translateKey: "SEARCH.REPORTS", path: "reports" },
 ];
 
 class CustomSelect extends Component {
