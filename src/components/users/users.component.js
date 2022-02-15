@@ -262,7 +262,7 @@ class UsersMain extends React.Component {
                           {status}
                         </div>
                       </td>
-                      {isAgencyAdmin && (
+                      {isAgencyAdmin || isGlobalAdmin && (
                         <td>
                           <div
                             className="pointer see-all"
