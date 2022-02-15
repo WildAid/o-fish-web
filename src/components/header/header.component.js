@@ -125,7 +125,7 @@ class Header extends Component {
               <div className="flex-row align-center justify-between full-view padding-left">
                 <div className="flex-row align-center padding-left">
                   {!currentUser.global.admin && !currentUser.agency.admin && (
-                    <NavLink to={HOME_PAGE} className="nav-menu-item">
+                    <NavLink to={HOME_PAGE} className="flex-row align-center nav-menu-item">
                       {t("NAVIGATION.MY_DASHBOARD")}
                     </NavLink>
                   )}
