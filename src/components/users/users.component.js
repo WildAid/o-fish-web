@@ -272,15 +272,6 @@ class UsersMain extends React.Component {
                           </div>
                         </td>
                       )}
-                      {/* {(!isGlobalAdmin || !isAgencyAdmin) && !isFieldOfficer && (
-                        <td>
-                          <div className="pointer see-all view-activity">
-                            {`${t("BUTTONS.VIEW")} ${t(
-                              "BOARDING_PAGE.VIEW_BOARDING.ACTIVITY"
-                            )}`}
-                          </div>
-                        </td>
-                      )} */}
                     </tr>
                   );
                 })}
