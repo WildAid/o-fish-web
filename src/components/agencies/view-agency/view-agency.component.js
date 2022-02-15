@@ -6,7 +6,7 @@ import Pagination from "@material-ui/lab/Pagination";
 
 import { EDIT_AGENCIES_PAGE, NEW_USER_PAGE, EDIT_USER_PAGE } from "./../../../root/root.constants";
 
-import { checkUserType, goToPage } from "../../../helpers/get-data";
+import { checkUserType } from "../../../helpers/get-data";
 
 import AgencyService from "./../../../services/agency.service";
 import AuthService from "../../../services/auth.service";
@@ -44,7 +44,7 @@ class ViewAgency extends Component {
   };
 
   goEditUser = (id) => {
-    goToPage(EDIT_USER_PAGE, id);
+    this.props.router.navigate(EDIT_USER_PAGE.replace(":id", id));
   };
 
   searchOfficers = (event) => {

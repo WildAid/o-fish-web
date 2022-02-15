@@ -4,9 +4,9 @@ import { withTranslation } from "react-i18next";
 
 import TextViewer from "../../../partials/text-viewer/text-viewer";
 
-import { goToPageWithFilter } from "./../../../../helpers/get-data";
 
 import { VIEW_VESSEL_PAGE } from "../../../../root/root.constants.js";
+import withRouter from "../../../../helpers/withRouter";
 
 class VesselSection extends Component {
   setFieldValue = (name, value) => {
@@ -15,7 +15,7 @@ class VesselSection extends Component {
 
   render() {
     const { vessel } = this.props.dataObject;
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     const ems = vessel.ems && vessel.ems.length ? vessel.ems[0] : null;
 
@@ -30,10 +30,10 @@ class VesselSection extends Component {
             <div
               className="pointer"
               onClick={() =>
-                goToPageWithFilter(VIEW_VESSEL_PAGE, {
+                router.navigate(VIEW_VESSEL_PAGE.replace(":filter", JSON.stringify({
                   "vessel.permitNumber": vessel.permitNumber,
                   "vessel.name": vessel.name,
-                })
+                })))
               }
             >
               <TextViewer
@@ -102,4 +102,4 @@ class VesselSection extends Component {
   }
 }
 
-export default withTranslation("translation")(VesselSection);
+export default withRouter(withTranslation("translation")(VesselSection));
