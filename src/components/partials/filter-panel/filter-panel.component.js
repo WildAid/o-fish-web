@@ -155,7 +155,7 @@ class FilterPanel extends Component {
 
   render() {
     const { isFilterPanelShown, filterParts } = this.state;
-    const { options, configuration } = this.props;
+    const { options, configuration, t } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
 
     return (
@@ -177,7 +177,8 @@ class FilterPanel extends Component {
         </div>
         <div className="relative">
           <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
-            <span className="material-icons icon-font">filter_alt</span> {filterParts.length ? `(${filterParts.length})` : ""}
+            {t('FILTER.FILTER')}
+            <span  className="material-icons icon-font">{`expand_${isFilterPanelShown ? 'less' : 'more'}`}</span> {filterParts.length ? `(${filterParts.length})` : ""}
           </div>
           <div
             className={
