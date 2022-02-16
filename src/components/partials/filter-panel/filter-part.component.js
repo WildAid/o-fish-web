@@ -61,8 +61,8 @@ class FilterPart extends Component {
   };
 
   render() {
-    const { searchPanelShown, searchQuery, filterValue, onFilterChange } = this.state;
-    const { title, partType, value, t, filterPartNames } = this.props;
+    const { searchPanelShown, searchQuery, filterValue } = this.state;
+    const { title, partType, t } = this.props;
 
 
     return (
@@ -108,12 +108,7 @@ class FilterPart extends Component {
           </div>
         )}
         {partType === "risk" ? (
-          <FilterRisk
-            value={value}
-            onRemove={this.removeFilterPart}
-            onCheck={(part) => onFilterChange(part.name, part.value)}
-            filterPartNames={filterPartNames}
-          />
+          <FilterRisk />
         ) : (
           <div className="filter-part-tag">
             <div className="filter-part-name">
