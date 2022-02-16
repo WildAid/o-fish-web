@@ -69,6 +69,15 @@ export const FilterRisk = () => {
         setIsOpen(false);
     }
 
+    const handleClose = () => {
+
+        if (filters[selectedRisk.field] !== selectedRisk.value) {
+            setSelectedRisk(Risks.find(risk => risk.value === filters[selectedRisk.field]));
+        }
+
+        setIsOpen(false);
+    }
+
 
     return (
         <>
@@ -102,9 +111,7 @@ export const FilterRisk = () => {
                         <button className="blue-btn" onClick={handleApply}>
                             {t("BUTTONS.APPLY")}
                         </button>
-                        <button className="white-btn" onClick={() => {
-                            setIsOpen(false);
-                        }}>
+                        <button className="white-btn" onClick={handleClose}>
                             {t("BUTTONS.CLOSE")}
                         </button>
                     </div>
