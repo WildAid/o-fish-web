@@ -5,16 +5,13 @@ import Pagination from "@material-ui/lab/Pagination";
 import DatesRange from "./../partials/dates-range/dates-range.component";
 import SearchPanel from "./../partials/search-panel/search-panel.component";
 
-import {
-  getHighlightedText,
-  goToPage,
-  goToPageWithFilter,
-} from "./../../helpers/get-data";
+import { getHighlightedText } from "./../../helpers/get-data";
 
 import SearchService from "./../../services/search.service";
 import AgencyService from "./../../services/agency.service";
 
 import { CHARTS_PAGE, BOARDINGS_PAGE } from "./../../root/root.constants";
+import withRouter from "../../helpers/withRouter";
 
 const searchService = SearchService.getInstance();
 const agencyService = AgencyService.getInstance();
@@ -92,7 +89,7 @@ class AgenciesDashboard extends Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, router } = this.props;
 
     const {
       boardings,
@@ -159,7 +156,7 @@ class AgenciesDashboard extends Component {
                         <tr
                           className="table-row row-body"
                           key={ind}
-                          onClick={() => goToPage(CHARTS_PAGE, item.name)}
+                          onClick={() => router.navigate(CHARTS_PAGE.replace(":id", item.name))}
                         >
                           <td className="blue-color">{item.name}</td>
                           <td>{item.boardings}</td>
@@ -167,10 +164,10 @@ class AgenciesDashboard extends Component {
                           <td>
                             {item.boardings
                               ? Math.round(
-                                  ((item.boardings - item.violations) /
-                                    item.boardings) *
-                                    100
-                                )
+                                ((item.boardings - item.violations) /
+                                  item.boardings) *
+                                100
+                              )
                               : 100}
                             %
                           </td>
@@ -178,9 +175,9 @@ class AgenciesDashboard extends Component {
                             className="blue-color"
                             onClick={(e) => {
                               e.stopPropagation();
-                              goToPageWithFilter(BOARDINGS_PAGE, {
+                              router.navigate(BOARDINGS_PAGE.replace(":filter", JSON.stringify({
                                 agency: item.name,
-                              });
+                              })));
                             }}
                           >
                             {`${t("BUTTONS.VIEW")} ${t(
@@ -211,4 +208,4 @@ class AgenciesDashboard extends Component {
   }
 }
 
-export default withTranslation("translation")(AgenciesDashboard);
+export default withRouter(withTranslation("translation")(AgenciesDashboard));
