@@ -249,7 +249,6 @@ class Boardings extends Component {
         isObject(this.state.currentFilter) &&
         !deepEqual(filter, this.state.currentFilter)
       ) {
-        console.log(filter, this.state.currentFilter);
         this.handleFilterChanged(filter);
       }
 
