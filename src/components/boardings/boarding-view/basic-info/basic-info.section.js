@@ -5,6 +5,7 @@ import TextField from "../text-field.component";
 import ChartBox from "../../../charts/chart-box.component";
 
 import StitchService from "./../../../../services/stitch.service";
+import { convertCooardinatetoDMS } from "../../../../helpers/geolocation";
 
 const stitchService = StitchService.getInstance();
 
@@ -23,6 +24,9 @@ class BasicInfoSection extends Component {
 
     boardingChartOptions.filter = { _id: _id };
 
+    const latDMS = location[1] ? convertCooardinatetoDMS(location[1]) : 0;
+    const longDMS = location[0] ? convertCooardinatetoDMS(location[0]) : 0;
+
     return (
       <div className="flex-column basic-info">
         <section className="box-shadow padding white-bg margin-top">
@@ -35,13 +39,13 @@ class BasicInfoSection extends Component {
               label={t("BOARDING_PAGE.VIEW_BOARDING.LATITUDE")}
               className="half-row-view"
               name="latitude"
-              value={location[1]}
+              value={`${latDMS} ${location[1] >= 0 ? "N" : "S"}`}
             />
             <TextField
               label={t("BOARDING_PAGE.VIEW_BOARDING.LONGITUDE")}
               className="half-row-view"
               name="time"
-              value={location[0]}
+              value={`${longDMS} ${location[0] >= 0 ? "E" : "W"}`}
             />
           </div>
         </section>
