@@ -135,6 +135,11 @@ class UsersMain extends React.Component {
     const isFieldOfficer =
       !authService.user.global.admin && !authService.user.agency.admin;
 
+    console.log("Global admin", isGlobalAdmin);
+    console.log("Agency admin", isAgencyAdmin);
+    console.log("officer", isFieldOfficer);
+
+
     return (
       <div
         className={`padding-bottom flex-column align-center users-page ${isAgencyAdmin && !isGlobalAdmin ? "agency-admin" : ""
@@ -262,7 +267,7 @@ class UsersMain extends React.Component {
                           {status}
                         </div>
                       </td>
-                      {isAgencyAdmin && (
+                      {(isAgencyAdmin || isGlobalAdmin) && (
                         <td>
                           <div
                             className="pointer see-all"
