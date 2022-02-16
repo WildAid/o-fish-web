@@ -118,9 +118,12 @@ class FilterPanel extends Component {
 
   applyFilterChanges() {
     const { filterParts } = this.state;
+
     const path = this.props.router.location.pathname;
     const filter = JSON.stringify(this.constructFilter(filterParts));
-    this.props.router.navigate(path.replace(":filter", filter));
+    const pathParts = path.split("/");
+    pathParts[pathParts.length - 1] = filter;
+    this.props.router.navigate(pathParts.join("/"));
     if (this.props.onFilterChanged) {
       this.props.onFilterChanged(this.constructFilter(filterParts));
     }
@@ -171,6 +174,7 @@ class FilterPanel extends Component {
               onRemove={() => {
                 this.removeFilterPart(ind);
               }}
+              filterPartNames={filterPartNames}
               onFilterChange={this.handleFilterChanged}
             />
           ))}

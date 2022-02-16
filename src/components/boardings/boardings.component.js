@@ -21,6 +21,7 @@ import AuthService from "../../services/auth.service";
 import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
+import { deepEqual, isObject } from "../../helpers";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
@@ -236,6 +237,22 @@ class Boardings extends Component {
       this.loadData({ mounted: true, currentFilter: filter });
     } else {
       this.loadData({ mounted: true });
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
+
+      if (
+        isObject(filter) &&
+        isObject(this.state.currentFilter) &&
+        !deepEqual(filter, this.state.currentFilter)
+      ) {
+        console.log(filter, this.state.currentFilter);
+        this.handleFilterChanged(filter);
+      }
+
     }
   }
 
