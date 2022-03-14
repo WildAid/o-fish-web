@@ -6,11 +6,11 @@
  * @returns 
  */
 export const convertCooardinatetoDMS = (coordinate) => {
-    var absolute = Math.abs(coordinate);
-    var degrees = Math.floor(absolute);
-    var minutesNotTruncated = (absolute - degrees) * 60;
-    var minutes = Math.floor(minutesNotTruncated);
-    var seconds = Math.floor((minutesNotTruncated - minutes) * 60);
+    const absolute = Math.abs(coordinate);
+    const degrees = Math.floor(absolute);
+    const minutesNotTruncated = (absolute - degrees) * 60;
+    const minutes = Math.floor(minutesNotTruncated);
+    const seconds = (minutesNotTruncated - minutes) * 60;
 
     return `${degrees}° ${minutes}' ${seconds.toFixed(2)}"`;
 
