@@ -16,13 +16,18 @@ import { withTranslation } from "react-i18next";
 import "./dates-range.css";
 
 export default withTranslation("translation")(class DatesRange extends Component {
-  state = {
-    dateStart: moment().subtract(1, "week").startOf('day').toDate(),
-    dateEnd: moment().endOf('day').toDate(),
-    currentRange: "week",
-    panelShown: false,
-    filterValue: "",
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dateStart: props.isFilterPanel ? null : moment().subtract(1, "week").startOf('day').toDate(),
+      dateEnd: props.isFilterPanel ? null : moment().endOf('day').toDate(),
+      currentRange: props.isFilterPanel ? "custom" : "week",
+      panelShown: false,
+      filterValue: "",
+    }
+
+  }
 
   dateChanged = (start, end, customRange) => {
     if (customRange === "today") {
@@ -132,10 +137,9 @@ export default withTranslation("translation")(class DatesRange extends Component
           )}
         </div> : (
           <div style={{ cursor: 'pointer' }} className="flex-row align-center" onClick={() => this.setState({ panelShown: !panelShown })}>
-            {!value ? t("BOARDING_PAGE.ALL_DATES") : ''}
-            {value ? ` ${moment(dateStart).format("MMMM DD, YYYY h:mm a")} -  
-                       ${moment(dateEnd).format("MMMM DD, YYYY h:mm a")}`
-              : ''}
+            {!value.start || !value.end ? t("BOARDING_PAGE.ALL_DATES") :
+              ` ${moment(dateStart).format("MMMM DD, YYYY h:mm a")} -  
+                       ${moment(dateEnd).format("MMMM DD, YYYY h:mm a")}`}
             <Icon>expand_more</Icon>
           </div>
         )}

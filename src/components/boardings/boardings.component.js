@@ -258,6 +258,13 @@ class Boardings extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.router.params.filter !== prevProps.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
+      this.loadData({ mounted: true, currentFilter: filter });
+    }
+  }
+
   render() {
     const {
       boardings,
