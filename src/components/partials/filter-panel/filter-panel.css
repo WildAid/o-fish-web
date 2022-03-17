@@ -19,6 +19,10 @@
    font-size: 15px;
  }
 
+.filter-btn {
+   border-radius: 18px;
+ }
+
 .filter-panel.invisible {
   height: 0;
   overflow-y: hidden;
