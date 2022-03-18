@@ -17,8 +17,9 @@ import SearchService from "./../../services/search.service";
 import StitchService from "./../../services/stitch.service";
 import BoardingService from "./../../services/boarding.service";
 import AuthService from "../../services/auth.service";
+import DatesRange from "../partials/dates-range/dates-range.component";
 
-import { NEW_BOARDING_PAGE } from "../../root/root.constants.js";
+import { BOARDINGS_PAGE, NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
 
@@ -230,12 +231,37 @@ class Boardings extends Component {
     });
   };
 
+  handleDateRange = (dates) => {
+    let filter = {
+      "date-from": dates.start,
+      "date-to": dates.end,
+    };
+    if (this.props.router.params.filter) {
+      const currentFilter = JSON.parse(this.props.router.params.filter);
+      if (currentFilter) {
+        filter = {
+          ...currentFilter,
+          ...filter,
+        }
+
+      }
+    }
+    this.props.router.navigate(BOARDINGS_PAGE.replace(':filter', JSON.stringify(filter)));
+  }
+
   componentDidMount() {
     if (this.props.router.params.filter) {
       const filter = JSON.parse(this.props.router.params.filter);
       this.loadData({ mounted: true, currentFilter: filter });
     } else {
       this.loadData({ mounted: true });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.router.params.filter !== prevProps.router.params.filter) {
+      const filter = JSON.parse(this.props.router.params.filter);
+      this.loadData({ mounted: true, currentFilter: filter });
     }
   }
 
@@ -278,7 +304,6 @@ class Boardings extends Component {
           </button>
         </div>
         <div className="flex-row align-center standard-view">
-          <div>{t("BOARDING_PAGE.ALL_DATES")} &#11206;</div>
           <div className="flex-row align-center show-map-handler">
             <input
               className="map-handler"
@@ -287,6 +312,16 @@ class Boardings extends Component {
               onChange={this.showMap}
             />
             <p>{t("BOARDING_PAGE.MAP")}</p>
+          </div>
+          <div className="boardings-page__date-range">
+            <DatesRange
+              value={{
+                start: this.state.currentFilter?.["date-from"],
+                end: this.state.currentFilter?.["date-to"],
+              }}
+              isFilterPanel={true}
+              onFilterChange={this.handleDateRange}
+            />
           </div>
           <FilterPanel
             options={{ searchByFilter: true }}

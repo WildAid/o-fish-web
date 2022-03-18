@@ -3,7 +3,7 @@
 }
 
 .map-handler {
-    margin-top: 8px;
+    margin-right: 8px;
 }
 
 .all-boardings-map {
@@ -26,3 +26,7 @@
     width: 10%;
 }
 
+
+.boardings-page__date-range {
+    margin: 0 20px;
+}
