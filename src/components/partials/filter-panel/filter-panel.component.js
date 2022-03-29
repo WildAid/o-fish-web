@@ -55,7 +55,11 @@ class FilterPanel extends Component {
       switch (item.type) {
         case "value":
         case "risk":
-          filterObject[item.field ? item.field : item.name] = item.value;
+          filterObject[item.field ? item.field : item.name] = Array.from(
+            new Set(
+              [].concat(
+                filterObject[item.field ? item.field : item.name] || [],
+                item.value)));
           break;
         case "date":
           if (options && options.useChartsSyntax) {
@@ -160,6 +164,7 @@ class FilterPanel extends Component {
     const { isFilterPanelShown, filterParts } = this.state;
     const { options, configuration, t } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
+    console.log(filterParts);
 
     return (
       <div className="flex-row align-center">
@@ -182,7 +187,7 @@ class FilterPanel extends Component {
         <div className="relative">
           <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
             {t('FILTER.FILTER')}
-            <span  className="material-icons icon-font">{`expand_${isFilterPanelShown ? 'less' : 'more'}`}</span> {filterParts.length ? `(${filterParts.length})` : ""}
+            <span className="material-icons icon-font">{`expand_${isFilterPanelShown ? 'less' : 'more'}`}</span> {filterParts.length ? `(${filterParts.length})` : ""}
           </div>
           <div
             className={
@@ -208,7 +213,7 @@ class FilterPanel extends Component {
               <section key={key}>
                 <h3>{key}</h3>
                 {configuration[key].map((filterPart, index) => (
-                  <FilterLine
+                  filterPart.type !== "risk" ? (<FilterLine
                     key={index}
                     parts={filterPartNames}
                     partConfig={{
@@ -216,7 +221,17 @@ class FilterPanel extends Component {
                       ...filterPart,
                     }}
                     onCheck={this.checkFilterPart}
-                  />
+                  />)
+                    : (<FilterLine
+                      key={index}
+                      parts={filterPartNames}
+                      partConfig={{
+                        name: ("" + Math.random()).replace("0.", ""),
+                        ...filterPart,
+                      }}
+                      check={filterParts?.[filterPart.name]}
+                      onCheck={this.checkFilterPart}
+                    />)
                 ))}
               </section>
             ))}

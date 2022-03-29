@@ -34,45 +34,19 @@ const Risks = [
     },
 ]
 
-
-export const FilterRisk = () => {
-    const dropdownRef = React.useRef(null);
-    const [selectedRisk, setSelectedRisk] = React.useState({});
+const FilterRiskItem = ({ handleApply, handleRemove, selectedRisk }) => {
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = React.useState(false);
-    const { t } = useTranslation("translation");
-    const params = useParams();
-    const location = useLocation();
-    const navigate = useNavigate();
-    const filters = React.useMemo(() => params.filter ? JSON.parse(params.filter) : {}, [params.filter]);
+    const [currentValue, changeCurrentValue] = React.useState(selectedRisk.value);
+    const dropdownRef = React.useRef(null);
 
     React.useEffect(() => {
-        const key = Object.keys(filters).find((key) => !!Risks.find((risk) => risk.field === key));
-        if (key) {
-            setSelectedRisk(Risks.find((risk) => risk.value === filters[key]));
-        }
-    }, [filters]);
-
-
-    const handleRemove = () => {
-        if (filters.hasOwnProperty(selectedRisk.field)) {
-            delete filters[selectedRisk.field];
-            const pathParts = location.pathname.split("/");
-            pathParts[pathParts.length - 1] = JSON.stringify(filters);
-            navigate(pathParts.join('/'));
-        }
-    }
-
-    const handleApply = () => {
-        const pathParts = location.pathname.split("/");
-        pathParts[pathParts.length - 1] = JSON.stringify({ ...filters, [selectedRisk.field]: selectedRisk.value });
-        navigate(pathParts.join('/'));
-        setIsOpen(false);
-    }
+        changeCurrentValue(selectedRisk.value);
+    }, [selectedRisk]);
 
     const handleClose = () => {
-
-        if (filters[selectedRisk.field] !== selectedRisk.value) {
-            setSelectedRisk(Risks.find(risk => risk.value === filters[selectedRisk.field]));
+        if (currentValue !== selectedRisk) {
+            changeCurrentValue(selectedRisk.value);
         }
 
         setIsOpen(false);
@@ -83,10 +57,13 @@ export const FilterRisk = () => {
         <>
             <div className="filter-part-tag">
                 <div className="filter-part-name">{t("TABLE.RISK")}:</div>
-                <RiskIcon safetyLevel={selectedRisk.value} />
+                <RiskIcon safetyLevel={currentValue} />
                 <Icon
                     className="remove-filter-btn pointer"
-                    onClick={handleRemove}
+                    onClick={() => {
+                        handleRemove(currentValue);
+                        setIsOpen(false);
+                    }}
                 >
                     cancel
                 </Icon>
@@ -101,14 +78,17 @@ export const FilterRisk = () => {
                                 parts={[]}
                                 partConfig={filterPart}
                                 onCheck={() => {
-                                    setSelectedRisk(filterPart);
+                                    changeCurrentValue(filterPart.value);
                                 }}
-                                check={filterPart.value === selectedRisk.value}
+                                check={filterPart.value === currentValue}
                             />
                         ))}
                     </section>
                     <div className="flex-row">
-                        <button className="blue-btn" onClick={handleApply}>
+                        <button className="blue-btn" onClick={() => {
+                            handleApply(currentValue);
+                            setIsOpen(false);
+                        }}>
                             {t("BUTTONS.APPLY")}
                         </button>
                         <button className="white-btn" onClick={handleClose}>
@@ -119,4 +99,57 @@ export const FilterRisk = () => {
             )}
         </>
     )
+}
+
+
+export const FilterRisk = () => {
+    const [selectedRisks, setSelectedRisks] = React.useState([]);
+    const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const filters = React.useMemo(() => params.filter ? JSON.parse(params.filter) : {}, [params.filter]);
+
+    React.useEffect(() => {
+        const key = Object.keys(filters).find((key) => !!Risks.find((risk) => risk.field === key));
+        if (key) {
+            setSelectedRisks(Risks.filter((risk) => filters[key].includes(risk.value)));
+        }
+    }, [filters]);
+
+
+    const handleRemove = (item) => {
+        if (filters.hasOwnProperty(Risks[0].field) && !!filters[Risks[0].field]) {
+            if (filters[Risks[0].field]?.length > 0) {
+                filters[Risks[0].field] = filters[Risks[0].field].filter((risk) => risk !== item);
+            } else {
+                delete filters[Risks[0].field];
+            }
+            const pathParts = location.pathname.split("/");
+            pathParts[pathParts.length - 1] = JSON.stringify(filters);
+            navigate(pathParts.join('/'));
+        }
+    }
+
+    const handleApply = (item) => {
+        const pathParts = location.pathname.split("/");
+        pathParts[pathParts.length - 1] = JSON.stringify({
+            ...filters, [item.field]: Array.from(
+                new Set(
+                    [].concat(
+                        filters[Risks[0].field] || [],
+                        item)))
+        });
+        navigate(pathParts.join('/'));
+    }
+
+
+    return <div className="flex-row">
+        {selectedRisks.map((item, index) =>
+            <FilterRiskItem
+                handleApply={handleApply}
+                handleRemove={handleRemove}
+                selectedRisk={item}
+                key={index}
+            />)}
+    </div>
 }
