@@ -86,7 +86,7 @@ const FilterRiskItem = ({ handleApply, handleRemove, selectedRisk }) => {
                     </section>
                     <div className="flex-row">
                         <button className="blue-btn" onClick={() => {
-                            handleApply(currentValue);
+                            handleApply(currentValue, selectedRisk);
                             setIsOpen(false);
                         }}>
                             {t("BUTTONS.APPLY")}
@@ -107,19 +107,18 @@ export const FilterRisk = () => {
     const params = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const filters = React.useMemo(() => params.filter ? JSON.parse(params.filter) : {}, [params.filter]);
+    const filters = React.useMemo(() => params.filter && params.filter !== 'null' ? JSON.parse(params.filter) : {}, [params.filter]);
 
     React.useEffect(() => {
-        const key = Object.keys(filters).find((key) => !!Risks.find((risk) => risk.field === key));
-        if (key) {
-            setSelectedRisks(Risks.filter((risk) => filters[key].includes(risk.value)));
-        }
+        const values = Object.entries(filters).find(([key, value]) => key === Risks[0].field)?.[1] || [];
+        const riskList = values.map(x => Risks.find(y => y.value === x));
+        setSelectedRisks(riskList);
     }, [filters]);
 
 
     const handleRemove = (item) => {
         if (filters.hasOwnProperty(Risks[0].field) && !!filters[Risks[0].field]) {
-            if (filters[Risks[0].field]?.length > 0) {
+            if (filters[Risks[0].field]?.length > 1) {
                 filters[Risks[0].field] = filters[Risks[0].field].filter((risk) => risk !== item);
             } else {
                 delete filters[Risks[0].field];
@@ -130,13 +129,13 @@ export const FilterRisk = () => {
         }
     }
 
-    const handleApply = (item) => {
+    const handleApply = (item, beforeValue) => {
         const pathParts = location.pathname.split("/");
         pathParts[pathParts.length - 1] = JSON.stringify({
-            ...filters, [item.field]: Array.from(
+            ...filters, [Risks[0].field]: Array.from(
                 new Set(
                     [].concat(
-                        filters[Risks[0].field] || [],
+                        filters[Risks[0].field]?.filter(x => x !== beforeValue.value) || [],
                         item)))
         });
         navigate(pathParts.join('/'));

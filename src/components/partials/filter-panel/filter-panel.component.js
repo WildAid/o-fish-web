@@ -5,6 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { withTranslation } from "react-i18next";
 
 import FilterPart from "./filter-part.component";
+import { FilterRisk } from "./risk/filter-risk.component";
 import FilterLine from "./filter-line.component";
 
 import "./filter-panel.css";
@@ -150,6 +151,37 @@ class FilterPanel extends Component {
     }
   };
 
+  checkRiskFilter = (risk) => {
+    const { filterParts } = this.state;
+    let riskList = filterParts.find(x => x.type === "risk")?.value;
+    if (riskList && riskList.length > 0) {
+      const index = riskList.findIndex(x => x === risk.value);
+      if (index >= 0) {
+        riskList.splice(index, 1);
+      } else {
+        riskList.push(risk.value);
+      }
+    } else {
+      riskList = [risk.value];
+    }
+    if (riskList.length > 0) {
+      filterParts.push({
+        name: "risk",
+        value: riskList,
+        type: "risk",
+        field: "inspection.summary.safetyLevel.level",
+      });
+    } else {
+      filterParts.splice(filterParts.findIndex(x => x.type === "risk"), 1);
+    }
+    this.setState({
+      filterParts: filterParts,
+      isFilterPanelShown: false,
+    }, () => {
+      this.applyFilterChanges();
+    })
+  }
+
   removeFilterPart = (index) => {
     const { filterParts } = this.state;
     filterParts.splice(index, 1);
@@ -164,80 +196,85 @@ class FilterPanel extends Component {
     const { isFilterPanelShown, filterParts } = this.state;
     const { options, configuration, t } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
-    console.log(filterParts);
-
     return (
-      <div className="flex-row align-center">
-        <div className="flex-row">
-          {filterParts.map((item, ind) => (
-            <FilterPart
-              key={"filterPart" + ind}
-              partType={item.type}
-              partName={item.name}
-              value={item.value}
-              title={item.partTitle ? item.partTitle : item.title}
-              onRemove={() => {
-                this.removeFilterPart(ind);
-              }}
-              filterPartNames={filterPartNames}
-              onFilterChange={this.handleFilterChanged}
-            />
-          ))}
-        </div>
-        <div className="relative">
-          <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
-            {t('FILTER.FILTER')}
-            <span className="material-icons icon-font">{`expand_${isFilterPanelShown ? 'less' : 'more'}`}</span> {filterParts.length ? `(${filterParts.length})` : ""}
+      <>
+        <div className="flex-row align-center">
+          <div className="filter-part relative">
+            <FilterRisk />
           </div>
-          <div
-            className={
-              "flex-column justify-start align-stretch absolute white-bg margin-bottom box-shadow filter-panel" +
-              (isFilterPanelShown ? "" : " invisible")
-            }
-          >
-            {options && options.searchByFilter && (
-              <div className="search">
-                <div className="search-icon">
-                  <SearchIcon />
+          <div className="flex-row">
+            {filterParts.filter(x => x.type !== "risk").map((item, ind) => (
+              <FilterPart
+                key={"filterPart" + ind}
+                partType={item.type}
+                partName={item.name}
+                value={item.value}
+                title={item.partTitle ? item.partTitle : item.title}
+                onRemove={() => {
+                  this.removeFilterPart(ind);
+                }}
+                filterPartNames={filterPartNames}
+                onFilterChange={this.handleFilterChanged}
+              />
+            ))}
+          </div>
+          <div className="relative">
+            <div className="filter-btn blue-btn icon-radius d-flex flex-row align-end" onClick={this.showFilter}>
+              {t('FILTER.FILTER')}
+              <span className="material-icons icon-font">{`expand_${isFilterPanelShown ? 'less' : 'more'}`}</span> {filterParts.length ? `(${filterParts.length})` : ""}
+            </div>
+            <div
+              className={
+                "flex-column justify-start align-stretch absolute white-bg margin-bottom box-shadow filter-panel" +
+                (isFilterPanelShown ? "" : " invisible")
+              }
+            >
+              {options && options.searchByFilter && (
+                <div className="search">
+                  <div className="search-icon">
+                    <SearchIcon />
+                  </div>
+                  <input
+                    className="search-field"
+                    type="search"
+                    placeholder="Search"
+                    value={this.state.searchQuery}
+                    onChange={this.setSearch}
+                  ></input>
                 </div>
-                <input
-                  className="search-field"
-                  type="search"
-                  placeholder="Search"
-                  value={this.state.searchQuery}
-                  onChange={this.setSearch}
-                ></input>
-              </div>
-            )}
-            {Object.keys(configuration).map((key) => (
-              <section key={key}>
-                <h3>{key}</h3>
-                {configuration[key].map((filterPart, index) => (
-                  filterPart.type !== "risk" ? (<FilterLine
-                    key={index}
-                    parts={filterPartNames}
-                    partConfig={{
-                      name: ("" + Math.random()).replace("0.", ""),
-                      ...filterPart,
-                    }}
-                    onCheck={this.checkFilterPart}
-                  />)
-                    : (<FilterLine
+              )}
+              {Object.keys(configuration).map((key) => (
+                <section key={key}>
+                  <h3>{key}</h3>
+                  {configuration[key].map((filterPart, index) => (
+                    filterPart.type !== "risk" ? (<FilterLine
                       key={index}
                       parts={filterPartNames}
                       partConfig={{
                         name: ("" + Math.random()).replace("0.", ""),
                         ...filterPart,
                       }}
-                      check={filterParts?.[filterPart.name]}
                       onCheck={this.checkFilterPart}
                     />)
-                ))}
-              </section>
-            ))}
+                      : (<FilterLine
+                        key={index}
+                        parts={filterPartNames}
+                        partConfig={{
+                          name: ("" + Math.random()).replace("0.", ""),
+                          ...filterPart,
+                        }}
+                        check={filterParts
+                          .find(x => x.type === "risk")
+                          ?.value.includes(filterPart.value)}
+                        onCheck={this.checkRiskFilter}
+                      />)
+                  ))}
+                </section>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
