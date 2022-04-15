@@ -196,6 +196,9 @@ class FilterPanel extends Component {
     const { isFilterPanelShown, filterParts } = this.state;
     const { options, configuration, t } = this.props;
     const filterPartNames = filterParts.map((item) => item.name);
+
+    const uInt32Arr = new Uint32Array(1);
+
     return (
       <>
         <div className="flex-row align-center">
@@ -251,7 +254,7 @@ class FilterPanel extends Component {
                       key={index}
                       parts={filterPartNames}
                       partConfig={{
-                        name: ("" + Math.random()).replace("0.", ""),
+                        name: window.crypto.getRandomValues(uInt32Arr).toString(),
                         ...filterPart,
                       }}
                       onCheck={this.checkFilterPart}
@@ -260,7 +263,7 @@ class FilterPanel extends Component {
                         key={index}
                         parts={filterPartNames}
                         partConfig={{
-                          name: ("" + Math.random()).replace("0.", ""),
+                          name: window.crypto.getRandomValues(uInt32Arr).toString(),
                           ...filterPart,
                         }}
                         check={filterParts
