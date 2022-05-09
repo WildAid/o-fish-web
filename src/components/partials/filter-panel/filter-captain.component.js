@@ -28,9 +28,13 @@ export const FilterCaptain = () => {
             setCaptains(result);
             return result;
         }).then((result) => {
-            setSelectedList(result.filter((item) => filters["captain.lastName"].includes(item)));
+
         }).finally(() => setIsLoading(false));
     }, []);
+
+    React.useEffect(() => {
+        setSelectedList(captains.filter((item) => filters["captain.lastName"].includes(item)));
+    }, [filters, captains]);
 
     const handleRemove = () => {
         setSelectedList([]);
