@@ -26,6 +26,9 @@ export const FilterCaptain = () => {
         setIsLoading(true);
         captainService.getCaptains().then(result => {
             setCaptains(result);
+            return result;
+        }).then((result) => {
+            setSelectedList(result.filter((item) => filters["captain.lastName"].includes(item)));
         }).finally(() => setIsLoading(false));
     }, []);
 
