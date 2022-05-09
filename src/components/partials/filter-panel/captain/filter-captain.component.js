@@ -1,10 +1,13 @@
+import './filter-captain.css';
+
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
 import Loading from '@material-ui/core/CircularProgress';
-import FilterLine from "./filter-line.component";
+import FilterLine from "../filter-line.component";
 import { useTranslation } from "react-i18next";
-import CaptainService from '../../../services/captain.service';
+import CaptainService from '../../../../services/captain.service';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
 
 
 const captainService = CaptainService.getInstance();
@@ -17,6 +20,8 @@ export const FilterCaptain = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = React.useState(false);
     const [captains, setCaptains] = React.useState([]);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [searchResult, setSearchResult] = React.useState([]);
     const [selectedList, setSelectedList] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -28,17 +33,39 @@ export const FilterCaptain = () => {
             setCaptains(result);
             return result;
         }).then((result) => {
+            setSearchQuery('');
+            setSearchResult(result);
 
         }).finally(() => setIsLoading(false));
     }, []);
 
     React.useEffect(() => {
-        setSelectedList(captains.filter((item) => filters["captain.lastName"].includes(item)));
+        if (filters['captain.lastName']?.length > 0) {
+            setSelectedList(captains.filter((item) => filters["captain.lastName"].includes(item)));
+        }
+        setSearchQuery('');
     }, [filters, captains]);
+
+    React.useEffect(() => {
+        if (!searchQuery) {
+            setSearchResult(captains);
+        }
+    }, [searchQuery, captains]);
+
+
+    const handleSearch = ({ target: { value } }) => {
+        setSearchQuery(value);
+
+        setSearchResult(captains.filter(x => x.includes(value)));
+    }
+
 
     const handleRemove = () => {
         setSelectedList([]);
-        handleApply();
+        const pathParts = location.pathname.split("/");
+        delete filters['captain.lastName'];
+        pathParts[pathParts.length - 1] = JSON.stringify({ ...filters });
+        navigate(pathParts.join('/'));
         setIsOpen(false);
     }
 
@@ -83,8 +110,12 @@ export const FilterCaptain = () => {
 
         {isOpen && (
             <div className="filter-search-panel absolute white-bg box-shadow">
-                <section className='filter-risk-check-container'>
-                    {!isLoading ? captains.map((name, index) => (
+                <div className="filter-captain-search-panel">
+                    <Icon className="filter-captain-search-panel__icon" >search</Icon>
+                    <input className="filter-captain-search-panel__input" placeholder={t('SEARCH.FILTER_SEARCH')} onChange={handleSearch} value={searchQuery} />
+                </div>
+                <section className='filter-captain-list'>
+                    {!isLoading ? searchResult.map((name, index) => (
                         <FilterLine
                             key={index}
                             parts={[]}
@@ -99,7 +130,7 @@ export const FilterCaptain = () => {
                         />
                     )) : <Loading />}
                 </section>
-                <div className="flex-row">
+                <div className="flex-row filter-captain-footer">
                     <button className="blue-btn" onClick={handleApply}>
                         {t("BUTTONS.APPLY")}
                     </button>

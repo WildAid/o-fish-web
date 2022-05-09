@@ -11,7 +11,7 @@ import { withTranslation } from "react-i18next";
 import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
 import "./filter-panel.css";
-import { FilterCaptain } from "./filter-captain.component";
+import { FilterCaptain } from "./captain/filter-captain.component";
 
 class FilterPart extends Component {
   state = { searchPanelShown: false, filterValue: "", searchQuery: "" };
