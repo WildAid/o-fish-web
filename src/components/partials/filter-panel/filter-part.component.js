@@ -11,6 +11,7 @@ import { withTranslation } from "react-i18next";
 
 import "./filter-panel.css";
 import { FilterRisk } from "./risk/filter-risk.component";
+import { FilterCaptain } from "./captain/filter-captain.component";
 
 class FilterPart extends Component {
   state = { searchPanelShown: false, filterValue: "", searchQuery: "" };
@@ -110,6 +111,18 @@ class FilterPart extends Component {
         {partType === "risk" ? (
           <FilterRisk />
         ) : (
+          <div className="filter-part-tag">
+            <div className="filter-part-name">{t("TABLE.RISK")}:</div>
+            <RiskIcon safetyLevel={value} />
+            <Icon
+              className="remove-filter-btn pointer"
+              onClick={this.removeFilterPart}
+            >
+              cancel
+            </Icon>
+            <Icon>expand_more</Icon>
+          </div>
+        ) : partType === "captain_name" ? <FilterCaptain /> : (
           <div className="filter-part-tag">
             <div className="filter-part-name">
               {filterValue ? `${title}:` : title}

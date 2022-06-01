@@ -132,6 +132,7 @@ const filterConfiguration = {
       name: "captainName",
       field: "captain.lastName",
       title: "Captain name",
+      type: 'captain_name',
     },
   ],
 };
