@@ -8,9 +8,9 @@ import {
 import DateFnsUtils from "@date-io/moment";
 import { withTranslation } from "react-i18next";
 
-import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
 import "./filter-panel.css";
+import { FilterRisk } from "./risk/filter-risk.component";
 import { FilterCaptain } from "./captain/filter-captain.component";
 
 class FilterPart extends Component {
@@ -63,7 +63,8 @@ class FilterPart extends Component {
 
   render() {
     const { searchPanelShown, searchQuery, filterValue } = this.state;
-    const { title, partType, value, t } = this.props;
+    const { title, partType, t } = this.props;
+
 
     return (
       <div className="filter-part relative">
@@ -108,6 +109,8 @@ class FilterPart extends Component {
           </div>
         )}
         {partType === "risk" ? (
+          <FilterRisk />
+        ) : (
           <div className="filter-part-tag">
             <div className="filter-part-name">{t("TABLE.RISK")}:</div>
             <RiskIcon safetyLevel={value} />

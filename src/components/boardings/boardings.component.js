@@ -22,6 +22,7 @@ import DatesRange from "../partials/dates-range/dates-range.component";
 import { BOARDINGS_PAGE, NEW_BOARDING_PAGE } from "../../root/root.constants.js";
 
 import "./boardings.css";
+import { deepEqual, isObject } from "../../helpers";
 
 const searchService = SearchService.getInstance();
 const stitchService = StitchService.getInstance();
@@ -259,10 +260,18 @@ class Boardings extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.router.params.filter !== prevProps.router.params.filter) {
+  componentDidUpdate() {
+    if (this.props.router.params.filter) {
       const filter = JSON.parse(this.props.router.params.filter);
-      this.loadData({ mounted: true, currentFilter: filter });
+
+      if (
+        isObject(filter) &&
+        isObject(this.state.currentFilter) &&
+        !deepEqual(filter, this.state.currentFilter)
+      ) {
+        this.handleFilterChanged(filter);
+      }
+
     }
   }
 
