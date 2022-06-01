@@ -8,6 +8,7 @@ import {
 import DateFnsUtils from "@date-io/moment";
 import { withTranslation } from "react-i18next";
 
+import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
 import "./filter-panel.css";
 import { FilterRisk } from "./risk/filter-risk.component";
@@ -63,8 +64,7 @@ class FilterPart extends Component {
 
   render() {
     const { searchPanelShown, searchQuery, filterValue } = this.state;
-    const { title, partType, t } = this.props;
-
+    const { title, partType, value, t } = this.props;
 
     return (
       <div className="filter-part relative">
@@ -110,18 +110,6 @@ class FilterPart extends Component {
         )}
         {partType === "risk" ? (
           <FilterRisk />
-        ) : (
-          <div className="filter-part-tag">
-            <div className="filter-part-name">{t("TABLE.RISK")}:</div>
-            <RiskIcon safetyLevel={value} />
-            <Icon
-              className="remove-filter-btn pointer"
-              onClick={this.removeFilterPart}
-            >
-              cancel
-            </Icon>
-            <Icon>expand_more</Icon>
-          </div>
         ) : partType === "captain_name" ? <FilterCaptain /> : (
           <div className="filter-part-tag">
             <div className="filter-part-name">
