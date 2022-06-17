@@ -23,9 +23,9 @@ import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 import AuthService from "./../../../services/auth.service";
 import BoardingService from "./../../../services/boarding.service";
 
-import { goBoardingViewPage } from "../../../helpers/get-data"
 
 import "./boardings-edit.css";
+import { VIEW_BOARDING_PAGE } from "../../../root/root.constants";
 
 const boardingService = BoardingService.getInstance();
 const authService = AuthService.getInstance();
@@ -36,13 +36,14 @@ class BoardingEditPage extends Component {
   state = { dataObject: null, isValid: true, validationErrors: [] };
 
   validateSchema = () => {
-    if (!this.dataObject.inspection) {
-      this.dataObject.inspection = {};
+    const newEntry = { ...this.state.dataObject };
+    if (!newEntry.inspection) {
+      newEntry.inspection = {};
     }
-    if (!this.dataObject.inspection.actualCatch) {
-      this.dataObject.inspection.actualCatch = [];
+    if (!newEntry.inspection.actualCatch) {
+      newEntry.inspection.actualCatch = [];
     }
-    this.dataObject.inspection.actualCatch.map((item) => {
+    newEntry.inspection.actualCatch.map((item) => {
       if (!item.fish) item.fish = "";
       if (!item.unit) item.unit = "";
       if (!item.weight) item.weight = 0;
@@ -51,24 +52,30 @@ class BoardingEditPage extends Component {
       item.number = new BSON.Long(item.number);
       return item;
     });
-    if (!this.dataObject.inspection.summary.seizures) {
-      this.dataObject.inspection.summary.seizures = { text: "" };
+
+    if (!newEntry.inspection.summary.seizures) {
+      newEntry.inspection.summary.seizures = { text: "" };
     }
+
+    return newEntry;
   };
 
   saveBoarding = () => {
-    this.validateSchema();
-    boardingService.updateBoarding(this.dataObject).then((result) => {
+    const validData = this.validateSchema();
+    boardingService.updateBoarding(validData).then((result) => {
+      debugger;
       if (this.state.isNew) {
-        goBoardingViewPage(result.insertedId);
+        this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
       } else {
-        goBoardingViewPage(this.state.dataObject._id);
+        this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", this.state.dataObject._id));
       }
     });
   };
 
   handleDataChange = (newObject) => {
-    this.dataObject = newObject;
+    this.setState({
+      dataObject: { ...newObject }
+    });
   };
 
   componentDidMount() {
@@ -82,7 +89,6 @@ class BoardingEditPage extends Component {
         isNew: true,
         dataObject: obj,
       });
-      this.dataObject = initialState;
     } else {
       boardingService.getBoardingById(id).then((data) => {
         this.setState({

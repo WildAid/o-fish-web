@@ -9,16 +9,15 @@ import RiskIcon from "../../partials/risk-icon/risk-icon.component";
 import {
   getViolations,
   getCatches,
-  goBoardingViewPage,
 } from "./../../../helpers/get-data.js";
 
-import { BOARDINGS_PAGE } from "../../../root/root.constants.js";
+import { BOARDINGS_PAGE, VIEW_BOARDING_PAGE } from "../../../root/root.constants.js";
 
 import "../search-results.css";
 
 class FoundBoardings extends Component {
   render() {
-    const { boardingsList, total, searchWords } = this.props;
+    const { boardingsList, total, searchWords, router } = this.props;
 
     return (
       <div className="standard-view">
@@ -36,7 +35,7 @@ class FoundBoardings extends Component {
           <div className="items-list">
             <div
               className="flex-row align-center border-bottom padding pointer"
-              onClick={() => goBoardingViewPage(boardingsList[0]._id)}
+              onClick={() => router.navigate(VIEW_BOARDING_PAGE.replace(":id", boardingsList[0]._id))}
             >
               <div className="icon-img">
                 <img
