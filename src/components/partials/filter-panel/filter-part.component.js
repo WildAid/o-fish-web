@@ -8,7 +8,6 @@ import {
 import DateFnsUtils from "@date-io/moment";
 import { withTranslation } from "react-i18next";
 
-import RiskIcon from "./../../partials/risk-icon/risk-icon.component";
 
 import "./filter-panel.css";
 import { FilterRisk } from "./risk/filter-risk.component";
@@ -52,7 +51,7 @@ class FilterPart extends Component {
     }
   };
 
-  showSearchPanel = (event) => {
+  showSearchPanel = () => {
     this.setState({ searchPanelShown: true });
   };
 
@@ -62,9 +61,20 @@ class FilterPart extends Component {
     }
   };
 
+  showSpecFilterComponent = (partType) => {
+    switch (partType) {
+      case "risk":
+        return <FilterRisk />;
+      case "captain_name":
+        return <FilterCaptain />;
+      default:
+        return;
+    }
+  }
+
   render() {
     const { searchPanelShown, searchQuery, filterValue } = this.state;
-    const { title, partType, value, t } = this.props;
+    const { title, partType, t } = this.props;
 
     return (
       <div className="filter-part relative">
@@ -81,7 +91,7 @@ class FilterPart extends Component {
                     format="MM/DD/YYYY"
                     margin="normal"
                     id="date-picker-inline"
-                    value={searchQuery ? searchQuery : new Date()}
+                    value={searchQuery || new Date()}
                     onChange={(date) => this.setSearch(date.format("L"))}
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -108,9 +118,7 @@ class FilterPart extends Component {
             </div>
           </div>
         )}
-        {partType === "risk" ? (
-          <FilterRisk />
-        ) : partType === "captain_name" ? <FilterCaptain /> : (
+        {this.showSpecFilterComponent(partType) || (
           <div className="filter-part-tag">
             <div className="filter-part-name">
               {filterValue ? `${title}:` : title}
