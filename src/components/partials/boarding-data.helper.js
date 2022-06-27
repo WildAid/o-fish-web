@@ -49,10 +49,11 @@ export default class BoardingDataHelper {
               boarding.vessel && boarding.vessel.name
                 ? boarding.vessel.name
                 : boarding.vessel,
-            violation: violation.offence ? violation.offence.explanation : "",
+            violation: violation.offence?.explanation || "",
             issuedBy: violation.crewMember.name,
             license: violation.crewMember.license,
             result: violation.disposition,
+            code: violation.offence?.code || "",
             boardingDate: moment(boarding.date).format("MM/DD/yyyy"),
           });
           return "";
