@@ -1,6 +1,7 @@
 import React, { memo, Fragment } from "react";
 import moment from "moment";
 import { withTranslation } from "react-i18next";
+import UserPhoto from "../../user-photo/user-photo.component";
 
 
 import SeeLink from "../../../partials/see-all-link/see-all-link";
@@ -30,12 +31,7 @@ const PhotosOverview = ({ t, photos, photosId, filter }) => {
                 className="flex-column align-center margin-bottom photo-container"
               >
                 <div className="big-photo-icon">
-                  {/* <UserPhoto imageId={photo.url} defaultIcon={false} /> */}
-                  <img
-                    className="icon"
-                    src={require("../../../../assets/photo-big-icon.png").default}
-                    alt="no logo"
-                  />
+                  <UserPhoto imageId={photo.url} defaultIcon={false} />
                 </div>
                 <div className="item-label margin-top date-text">
                   {moment(photo.date).format("L")}

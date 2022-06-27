@@ -95,8 +95,8 @@ export default class BoardingDataHelper {
           });
         }
       } else {
-        if (boarding.vessel.attachments && boarding.vessel.attachments.photos) {
-          boarding.vessel.attachments.photos.forEach((photo) => {
+        if (boarding.vessel.attachments && boarding.vessel.attachments.photoIDs) {
+          boarding.vessel.attachments.photoIDs.forEach((photo) => {
             photos.push({
               url: photo,
               date: boarding.date,
