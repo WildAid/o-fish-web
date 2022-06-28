@@ -41,7 +41,7 @@ const ViolationsOverview = ({ t, filter, violations }) => {
                   <td>
                     <div className="flex-column">
                       <div>{violation.violation}</div>
-                      <div>{violation.license}</div>
+                      <div>{violation.code}</div>
                     </div>
                   </td>
                   <td>{violation.result}</td>
