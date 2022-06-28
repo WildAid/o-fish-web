@@ -14,3 +14,9 @@
   color: #2c5a87;
   font-weight: 500;
 }
+
+.photo-container .profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 0;
+}
