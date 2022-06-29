@@ -44,7 +44,6 @@ class UsersMain extends React.Component {
       searchService.searchResults && searchService.searchResults.query
         ? searchService.searchResults.query
         : "",
-    highlighted: [],
     currentFilter: null,
   };
 
@@ -102,10 +101,7 @@ class UsersMain extends React.Component {
           this.setState({
             loading: false,
             users: data.users || [],
-            total: data.amount && data.amount[0] ? data.amount[0].total : 0,
-            highlighted: data.highlighted
-              ? getHighlightedText(data.highlighted)
-              : [],
+            total: data.amount && data.amount[0] ? data.amount[0].total : 0
           });
         })
         .catch((error) => {
@@ -126,7 +122,6 @@ class UsersMain extends React.Component {
       limit,
       page,
       searchQuery,
-      highlighted,
       loading,
     } = this.state;
 
@@ -134,11 +129,6 @@ class UsersMain extends React.Component {
     const isAgencyAdmin = authService.user.agency.admin;
     const isFieldOfficer =
       !authService.user.global.admin && !authService.user.agency.admin;
-
-    console.log("Global admin", isGlobalAdmin);
-    console.log("Agency admin", isAgencyAdmin);
-    console.log("officer", isFieldOfficer);
-
 
     return (
       <div
@@ -230,7 +220,7 @@ class UsersMain extends React.Component {
                           />
                           <Highlighter
                             highlightClassName="highlighted"
-                            searchWords={highlighted}
+                            searchWords={[searchQuery]}
                             autoEscape={true}
                             textToHighlight={`${item.name.first} ${item.name.last}`}
                           />
@@ -240,7 +230,7 @@ class UsersMain extends React.Component {
                         <td>
                           <Highlighter
                             highlightClassName="highlighted"
-                            searchWords={highlighted}
+                            searchWords={[searchQuery]}
                             autoEscape={true}
                             textToHighlight={item.agency.name || ""}
                           />
