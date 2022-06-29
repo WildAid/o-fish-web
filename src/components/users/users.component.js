@@ -12,7 +12,6 @@ import SearchPanel from "../partials/search-panel/search-panel.component";
 
 import {
   checkUserType,
-  getHighlightedText,
 } from "../../helpers/get-data";
 
 import UserService from "./../../services/user.service";
