@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, FormControl, InputLabel, Select } from "@material-ui/core";
+import { TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
 import DateFnsUtils from "@date-io/moment";
 
@@ -98,7 +98,10 @@ class BasicInfoSection extends Component {
                   <InputLabel required id="latitudeDirection">
                     {t("BOARDING_PAGE.NEW_BOARDING.DIRECTION")}
                   </InputLabel>
-                  <Select readOnly={false} labelId="latitudeDirection"></Select>
+                  <Select readOnly={false} labelId="latitudeDirection">
+                    <MenuItem value="north">North</MenuItem>
+                    <MenuItem value="south">South</MenuItem>
+                  </Select>
                 </FormControl>
                 <TextField
                   required
@@ -136,7 +139,10 @@ class BasicInfoSection extends Component {
                     <Select
                       readOnly={false}
                       labelId="longituteDirection"
-                    ></Select>
+                    >
+                      <MenuItem value="east">East</MenuItem>
+                      <MenuItem value="west">West</MenuItem>
+                    </Select>
                   </FormControl>
                   <TextField
                     required

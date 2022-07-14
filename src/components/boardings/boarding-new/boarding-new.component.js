@@ -13,15 +13,16 @@ import CatchSection from "./catch/catch.section";
 import ViolationsSection from "./violations/violations.section";
 import RisksSection from "./risks/risks.section";
 import NotesSection from "./notes/notes.section";
+import BoardingService from "./../../../services/boarding.service";
 
-import { BOARDINGS_PAGE } from "./../../../root/root.constants";
+import { BOARDINGS_PAGE, VIEW_BOARDING_PAGE } from "./../../../root/root.constants";
 
 import AuthService from "./../../../services/auth.service";
 
 import "./boardings-new.css";
 
 const authService = AuthService.getInstance();
-
+const boardingService = BoardingService.getInstance();
 class BoardingNewPage extends Component {
   state = {
     basicInfoSection: {
@@ -154,7 +155,11 @@ class BoardingNewPage extends Component {
     this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
 
-  createBoarding = () => { };
+  createBoarding = () => {
+    boardingService.updateBoarding({ ...this.state.basicInfoSection, ...this.state.dataToSave }).then((result) => {
+      this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
+    });
+  };
 
   render() {
     const { t } = this.props;
@@ -184,7 +189,7 @@ class BoardingNewPage extends Component {
           <NotesSection />
         </div>
         <div className="flex-row standard-view justify-flex-end padding-top">
-          <ControlButtons onCancel={this.cancelCreation} />
+          <ControlButtons onCancel={this.cancelCreation} onSave={this.createBoarding} />
         </div>
       </div>
     );
