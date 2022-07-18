@@ -153,13 +153,13 @@ class BoardingNewPage extends Component {
 
   handleBasicInfoChange = (newObject) => {
     const { date, location } = newObject;
-   this.setState({
-    dataToSave: {
-      ...this.state.dataToSave,
-      date,
-      location,
-    }
-   })
+    this.setState({
+      dataToSave: {
+        ...this.state.dataToSave,
+        date,
+        location,
+      }
+    })
   }
 
   cancelCreation = () => {
@@ -167,7 +167,7 @@ class BoardingNewPage extends Component {
   };
 
   createBoarding = () => {
-    boardingService.updateBoarding({ ...this.state.basicInfoSection, ...this.state.dataToSave }).then((result) => {
+    boardingService.updateBoarding({ ...this.state.dataToSave }).then((result) => {
       this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
     });
   };
