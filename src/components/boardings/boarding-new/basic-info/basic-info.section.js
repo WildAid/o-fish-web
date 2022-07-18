@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
 import DateFnsUtils from "@date-io/moment";
 
@@ -7,8 +7,7 @@ import ChartBox from "../../../charts/chart-box.component";
 
 import {
   MuiPickersUtilsProvider,
-  TimePicker,
-  KeyboardDatePicker,
+  KeyboardDateTimePicker,
 } from "@material-ui/pickers";
 
 const boardingChartOptions = {
@@ -22,29 +21,35 @@ const boardingChartOptions = {
 class BasicInfoSection extends Component {
   state = {
     date: null,
-    time: null,
-    location: {
-      latitude: ["", "", "", ""],
-      longitude: ["", "", "", ""],
-    },
+    location: [0, 0],
   };
 
   handleChange = (field, value) => {
     this.setState({
       [field]: value,
+    }, () => {
+      this.props.onChange(this.state);
     });
-
-    this.props.onChange(this.state);
   };
+
+  handleLocationChange = (field, value) => {
+    let { location } = this.state;
+    location[field === 'lat' ? 0 : 1] = value;
+
+    this.setState({
+      ...this.state,
+      location,
+    }, () => {
+      this.props.onChange(this.state);
+    });
+  }
 
   render() {
     const { t } = this.props;
     const {
       date,
-      time,
-      location: { latitude, longitude },
+      location,
     } = this.state;
-
     return (
       <section className="flex-column basic-info box-shadow white-bg margin-top">
         <div className="table-name border-bottom">
@@ -53,32 +58,21 @@ class BasicInfoSection extends Component {
         <div className="padding-25">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <h3 className="item-name">{t("FILTER.HOME_PAGE.DATE_TIME")}</h3>
-            <div className="flex-row justify-between align-center">
-              <KeyboardDatePicker
-                required
-                disableToolbar
-                variant="inline"
-                format="yyyy/MM/DD"
-                margin="normal"
-                id="date-picker"
-                className="half-row-view"
-                label={t("TABLE.DATE")}
-                value={date}
-                onChange={(date) => this.handleChange("date", date)}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-              <TimePicker
-                required
-                className="time-picker half-row-view"
-                variant="inline"
-                ampm={false}
-                label={t("TABLE.TIME")}
-                value={time}
-                onChange={(time) => this.handleChange("time", time)}
-              />
-            </div>
+            <KeyboardDateTimePicker
+              required
+              disableToolbar
+              variant="inline"
+              format="YYYY/MM/DD HH:mm:ss"
+              margin="normal"
+              id="date-picker"
+              label={t("FILTER.HOME_PAGE.DATE_TIME")}
+              value={date}
+              onChange={(date) => this.handleChange("date", date.toDate())}
+              ampm={false}
+              style={{
+                width: '100%'
+              }}
+            />
           </MuiPickersUtilsProvider>
         </div>
         <div className="padding-25">
@@ -90,82 +84,25 @@ class BasicInfoSection extends Component {
           </div>
           <div className="flex-row justify-between padding-top">
             <div className="flex-column half-row-view">
-              <h3 className="item-name">
-                {t("BOARDING_PAGE.VIEW_BOARDING.LATITUDE")}
-              </h3>
-              <div className="flex-row margin-top justify-between">
-                <FormControl className="quarter-row-view">
-                  <InputLabel required id="latitudeDirection">
-                    {t("BOARDING_PAGE.NEW_BOARDING.DIRECTION")}
-                  </InputLabel>
-                  <Select readOnly={false} labelId="latitudeDirection">
-                    <MenuItem value="north">North</MenuItem>
-                    <MenuItem value="south">South</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  required
-                  id="latitudeDegrees"
-                  label={t("BOARDING_PAGE.NEW_BOARDING.DEGREES")}
-                  className="quarter-row-view"
-                  value={latitude[1]}
-                />
-                <TextField
-                  required
-                  id="latitudeMinutes"
-                  label={t("BOARDING_PAGE.NEW_BOARDING.MINUTES")}
-                  className="quarter-row-view"
-                  value={latitude[2]}
-                />
-                <TextField
-                  required
-                  id="latitudeSeconds"
-                  label={t("BOARDING_PAGE.NEW_BOARDING.SECONDS")}
-                  className="quarter-row-view"
-                  value={latitude[3]}
-                />
-              </div>
+              <TextField
+                required
+                id="latitude"
+                label={t("BOARDING_PAGE.VIEW_BOARDING.LATITUDE")}
+                value={location[0]}
+                onChange={({ target: { value } }) => this.handleLocationChange('lat', value)}
+                type="number"
+              />
             </div>
             <div className="flex-column half-row-view">
               <div className="flex-column">
-                <h3 className="item-name">
-                  {t("BOARDING_PAGE.VIEW_BOARDING.LONGTITUDE")}
-                </h3>
-                <div className="flex-row margin-top justify-between">
-                  <FormControl className="quarter-row-view">
-                    <InputLabel required id="longituteDirection">
-                      {t("BOARDING_PAGE.NEW_BOARDING.DIRECTION")}
-                    </InputLabel>
-                    <Select
-                      readOnly={false}
-                      labelId="longituteDirection"
-                    >
-                      <MenuItem value="east">East</MenuItem>
-                      <MenuItem value="west">West</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <TextField
-                    required
-                    id="longitudeDegrees"
-                    label={t("BOARDING_PAGE.NEW_BOARDING.DEGREES")}
-                    className="quarter-row-view"
-                    value={longitude[1]}
-                  />
-                  <TextField
-                    required
-                    id="longitudeMinutes"
-                    label={t("BOARDING_PAGE.NEW_BOARDING.MINUTES")}
-                    className="quarter-row-view"
-                    value={longitude[2]}
-                  />
-                  <TextField
-                    required
-                    id="longitudeSeconds"
-                    label={t("BOARDING_PAGE.NEW_BOARDING.SECONDS")}
-                    className="quarter-row-view"
-                    value={longitude[3]}
-                  />
-                </div>
+                <TextField
+                  required
+                  id="longitude"
+                  label={t("BOARDING_PAGE.VIEW_BOARDING.LONGITUDE")}
+                  value={location[1]}
+                  onChange={({ target: { value } }) => this.handleLocationChange('long', value)}
+                  type="number"
+                />
               </div>
             </div>
           </div>

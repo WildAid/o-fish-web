@@ -151,6 +151,17 @@ class BoardingNewPage extends Component {
     });
   };
 
+  handleBasicInfoChange = (newObject) => {
+    const { date, location } = newObject;
+   this.setState({
+    dataToSave: {
+      ...this.state.dataToSave,
+      date,
+      location,
+    }
+   })
+  }
+
   cancelCreation = () => {
     this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
@@ -176,7 +187,7 @@ class BoardingNewPage extends Component {
           <ControlButtons onCancel={this.cancelCreation} />
         </div>
         <div className="flex-column standard-view justify-stretch">
-          <BasicInfoSection onChange={this.handleDataChange} />
+          <BasicInfoSection onChange={this.handleBasicInfoChange} />
           <VesselSection onChange={this.handleDataChange} />
           <CrewSection onChange={this.handleDataChange} />
           <ActivitySection
