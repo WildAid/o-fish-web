@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -8,6 +7,8 @@ import {
 import DateFnsUtils from "@date-io/moment";
 
 import { withTranslation } from "react-i18next";
+import { AttachFile } from "../../../partials/attachment";
+import { ImagePreview } from "../../../partials/image-preview";
 
 class VesselSection extends Component {
   state = {
@@ -20,6 +21,8 @@ class VesselSection extends Component {
       business: "",
       location: "",
     },
+    vesselImage: '',
+    deliveryImage: '',
   };
 
   handleChange = (type, subType = false, value) => {
@@ -27,8 +30,8 @@ class VesselSection extends Component {
 
     subType
       ? (obj[type] = {
-          [subType]: value,
-        })
+        [subType]: value,
+      })
       : (obj[type] = value);
 
     this.setState((prevState) => {
@@ -67,7 +70,7 @@ class VesselSection extends Component {
           <div className="padding-25">
             <div className="flex-row justify-between">
               <h3 className="item-name">{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
-              <AttachFileIcon className="blue-color" />
+              <AttachFile onChange={(image) => this.setState({ vesselImage: image })} />
             </div>
             <div className="flex-row justify-between relative">
               <TextField
@@ -115,6 +118,11 @@ class VesselSection extends Component {
                 }
               />
             </div>
+            {
+              this.state.vesselImage && (
+                <ImagePreview src={this.state.vesselImage} onRemove={() => this.setState({ vesselImage: '' })} />
+              )
+            }
           </div>
         </section>
         <section className="box-shadow padding-25 white-bg">
@@ -122,7 +130,7 @@ class VesselSection extends Component {
             <h3 className="item-name">
               {t("BOARDING_PAGE.VIEW_BOARDING.DELIVERY_DATE")}
             </h3>
-            <AttachFileIcon className="blue-color" />
+            <AttachFile onChange={(image) => this.setState({ deliveryImage: image })} />
           </div>
           <div className="flex-row justify-between margin-bottom">
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -162,19 +170,11 @@ class VesselSection extends Component {
                 this.handleChange("lastDelivery", "location", e.target.value)
               }
             />
-          </div>
-        </section>
-        <section className="box-shadow padding-25 white-bg">
-          <h3 className="item-name">
-            {t("DATA_SHARING.MANAGE_SHARED_DATA.ELECTRONIC_SYSTEM")}
-          </h3>
-          <div className="flex-column align-center margin-bottom">
-            <span className="padding-25 font-17 grey-color">
-              {t("BOARDING_PAGE.NEW_BOARDING.NO_ELECTRONIC_SYSTEM")}
-            </span>
-            <button className="white-btn add-btn">
-              {`+ ${t("BUTTONS.ADD_MONITORING_SYSTEM")}`}
-            </button>
+            {this.state.deliveryImage
+              && (
+                <ImagePreview src={this.state.deliveryImage} onRemove={() => this.setState({ deliveryImage: '' })} />
+              )
+            }
           </div>
         </section>
       </div>
