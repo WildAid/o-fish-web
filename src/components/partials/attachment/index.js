@@ -6,7 +6,12 @@ export const AttachFile = ({ onChange, className = "blue-color" }) => {
     const inputRef = useRef(null);
 
     const handleFileSelect = (event) => {
-        onChange(URL.createObjectURL(event.target.files[0]));
+        const reader = new FileReader();
+        const file = event.target.files[0];
+        reader.onload = (e) => {
+            onChange(e.target.result);
+        }
+        reader.readAsArrayBuffer(file);
     };
 
     return (

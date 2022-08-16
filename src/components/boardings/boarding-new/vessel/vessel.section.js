@@ -9,6 +9,12 @@ import DateFnsUtils from "@date-io/moment";
 import { withTranslation } from "react-i18next";
 import { AttachFile } from "../../../partials/attachment";
 import { ImagePreview } from "../../../partials/image-preview";
+import StitchService from "../../../../services/stitch.service";
+import AuthService from "../../../../services/auth.service";
+import { bufferToBase64 } from "../../../../helpers/get-data";
+
+const stitchService = StitchService.getInstance();
+const authService = AuthService.getInstance();
 
 class VesselSection extends Component {
   state = {
@@ -16,6 +22,7 @@ class VesselSection extends Component {
     permitNumber: "",
     homePort: "",
     nationality: "",
+    attachments: [],
     lastDelivery: {
       date: null,
       business: "",
@@ -51,6 +58,28 @@ class VesselSection extends Component {
     this.props.onChange('vessel', this.state);
   };
 
+  handleUploadPhoto = (blob) => {
+    stitchService.uploadImage(blob, authService.user.agency.name).then((data) => {
+      this.setState({ attachments: [data.insertedId] }, () => {
+        stitchService.getPhoto(data.insertedId).then((photoObject) => {
+          this.setState({
+            vesselImage: "data:image/jpeg;base64," + bufferToBase64(photoObject.picture.buffer),
+          });
+        })
+      });
+    });
+  }
+
+  handleRemovePhoto = () => {
+    const image = this.state.attachments?.[0];
+    if (image) {
+      stitchService.deleteImage(image).then(() => this.setState({
+        attachments: [],
+        vesselImage: "",
+      }));
+    }
+  }
+
   render() {
     const {
       name,
@@ -70,7 +99,7 @@ class VesselSection extends Component {
           <div className="padding-25">
             <div className="flex-row justify-between">
               <h3 className="item-name">{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
-              <AttachFile onChange={(image) => this.setState({ vesselImage: image })} />
+              <AttachFile onChange={this.handleUploadPhoto} />
             </div>
             <div className="flex-row justify-between relative">
               <TextField
@@ -120,7 +149,7 @@ class VesselSection extends Component {
             </div>
             {
               this.state.vesselImage && (
-                <ImagePreview src={this.state.vesselImage} onRemove={() => this.setState({ vesselImage: '' })} />
+                <ImagePreview src={this.state.vesselImage} onRemove={this.handleRemovePhoto} />
               )
             }
           </div>
@@ -130,7 +159,6 @@ class VesselSection extends Component {
             <h3 className="item-name">
               {t("BOARDING_PAGE.VIEW_BOARDING.DELIVERY_DATE")}
             </h3>
-            <AttachFile onChange={(image) => this.setState({ deliveryImage: image })} />
           </div>
           <div className="flex-row justify-between margin-bottom">
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -170,11 +198,6 @@ class VesselSection extends Component {
                 this.handleChange("lastDelivery", "location", e.target.value)
               }
             />
-            {this.state.deliveryImage
-              && (
-                <ImagePreview src={this.state.deliveryImage} onRemove={() => this.setState({ deliveryImage: '' })} />
-              )
-            }
           </div>
         </section>
       </div>
