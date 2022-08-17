@@ -62,14 +62,6 @@ class BoardingNewPage extends Component {
         },
       },
       crew: [
-        {
-          name: " ",
-          license: "",
-          attachments: {
-            notes: [""],
-            photoIDs: [""],
-          },
-        },
       ],
       inspection: {
         activity: {
@@ -167,7 +159,7 @@ class BoardingNewPage extends Component {
   };
 
   createBoarding = () => {
-    boardingService.updateBoarding({ ...this.state.dataToSave }).then((result) => {
+    boardingService.updateBoarding({ ...this.state.dataToSave, crew: this.state.dataToSave.crew.map(x => ({ name: x.name, license: x.license })) }).then((result) => {
       this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
     });
   };
@@ -189,7 +181,7 @@ class BoardingNewPage extends Component {
         <div className="flex-column standard-view justify-stretch">
           <BasicInfoSection onChange={this.handleBasicInfoChange} />
           <VesselSection onChange={this.handleDataChange} />
-          <CrewSection onChange={this.handleDataChange} />
+          <CrewSection onChange={this.handleDataChange} crewList={this.state.dataToSave.crew} />
           <ActivitySection
             onChange={this.handleDataChange}
             inspection={this.state.dataToSave.inspection}

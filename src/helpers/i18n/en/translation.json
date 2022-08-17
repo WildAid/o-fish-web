@@ -210,6 +210,7 @@
     "EDIT_AGENCY": "Edit Agency Information",
     "ADD_SPECIES": "Add species",
     "ADD_CREW": "Add crew member",
+    "REMOVE_CREW": "Remove crew member",
     "ADD_CATCH": "Add catch",
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",

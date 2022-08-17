@@ -32,7 +32,8 @@
     "react-router-query-params": "1.0.4",
     "react-scripts": "4.0.3",
     "react-select-country-list": "^2.2.3",
-    "react-world-flags": "1.4.0"
+    "react-world-flags": "1.4.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
