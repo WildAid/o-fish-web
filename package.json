@@ -31,6 +31,7 @@
     "react-router-dom": "6.2.1",
     "react-router-query-params": "1.0.4",
     "react-scripts": "4.0.3",
+    "react-select-country-list": "^2.2.3",
     "react-world-flags": "1.4.0"
   },
   "scripts": {

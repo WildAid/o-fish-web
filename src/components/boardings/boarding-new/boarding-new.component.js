@@ -175,8 +175,6 @@ class BoardingNewPage extends Component {
   render() {
     const { t } = this.props;
 
-    console.log(this.state.dataToSave);
-
     return (
       <div className="flex-column justify-start align-center padding-top new-boarding">
         <div className="flex-row justify-between standard-view">

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField } from "@material-ui/core";
+import { FormControl, MenuItem, Select, TextField, InputLabel } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -12,6 +12,7 @@ import { ImagePreview } from "../../../partials/image-preview";
 import StitchService from "../../../../services/stitch.service";
 import AuthService from "../../../../services/auth.service";
 import { bufferToBase64 } from "../../../../helpers/get-data";
+import countryList from 'react-select-country-list';
 
 const stitchService = StitchService.getInstance();
 const authService = AuthService.getInstance();
@@ -29,7 +30,6 @@ class VesselSection extends Component {
       location: "",
     },
     vesselImage: '',
-    deliveryImage: '',
   };
 
   handleChange = (type, subType = false, value) => {
@@ -54,13 +54,18 @@ class VesselSection extends Component {
           [type]: value,
         };
       }
-    });
-    this.props.onChange('vessel', this.state);
+    }, this.updateParentState);
   };
+
+  updateParentState = () => {
+    const { vesselImage, ...formData } = this.state;
+    this.props.onChange('vessel', formData);
+  }
 
   handleUploadPhoto = (blob) => {
     stitchService.uploadImage(blob, authService.user.agency.name).then((data) => {
       this.setState({ attachments: [data.insertedId] }, () => {
+        this.updateParentState();
         stitchService.getPhoto(data.insertedId).then((photoObject) => {
           this.setState({
             vesselImage: "data:image/jpeg;base64," + bufferToBase64(photoObject.picture.buffer),
@@ -76,9 +81,11 @@ class VesselSection extends Component {
       stitchService.deleteImage(image).then(() => this.setState({
         attachments: [],
         vesselImage: "",
-      }));
+      }, this.updateParentState));
     }
   }
+
+  countryList = countryList().getData();
 
   render() {
     const {
@@ -137,15 +144,22 @@ class VesselSection extends Component {
                   this.handleChange("homePort", false, e.target.value)
                 }
               />
-              <TextField
-                label={t("DATA_SHARING.MANAGE_SHARED_DATA.FLAG_STATE")}
-                className="half-row-view"
-                name="flag-state"
-                value={nationality}
-                onChange={(e) =>
-                  this.handleChange("nationality", false, e.target.value)
-                }
-              />
+              <FormControl className="half-row-view">
+                <InputLabel id="nationality">{t("DATA_SHARING.MANAGE_SHARED_DATA.FLAG_STATE")}</InputLabel>
+                <Select
+                  onChange={(e) => this.handleChange("nationality", false, e.target.value)}
+                  value={nationality}
+                  labelId={"nationality"}
+                >
+                  {
+                    this.countryList.map((country) => (
+                      <MenuItem value={country.value} key={country.value}>
+                        {country.label}
+                      </MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
             </div>
             {
               this.state.vesselImage && (
