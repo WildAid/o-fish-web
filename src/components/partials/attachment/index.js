@@ -3,7 +3,7 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 export const AttachFile = ({ onChange, className = "blue-color" }) => {
     const crypto = window.crypto;
-    const id = useMemo(() => ("attach" + crypto.getRandomValues(new Uint32Array(1)).toString(), []));
+    const id = useMemo(() => "attach" + crypto.getRandomValues(new Uint32Array(1)).toString(), []);
     const inputRef = useRef(null);
 
     const handleFileSelect = (event) => {
