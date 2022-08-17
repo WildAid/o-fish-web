@@ -13,6 +13,7 @@ import StitchService from "../../../../services/stitch.service";
 import AuthService from "../../../../services/auth.service";
 import { bufferToBase64 } from "../../../../helpers/get-data";
 import countryList from 'react-select-country-list';
+import { EMSSection } from "../ems";
 
 const stitchService = StitchService.getInstance();
 const authService = AuthService.getInstance();
@@ -24,6 +25,7 @@ class VesselSection extends Component {
     homePort: "",
     nationality: "",
     attachments: [],
+    ems: [],
     lastDelivery: {
       date: null,
       business: "",
@@ -214,6 +216,7 @@ class VesselSection extends Component {
             />
           </div>
         </section>
+        <EMSSection onChange={this.handleChange} selectedEMS={this.state.ems} />
       </div>
     );
   }
