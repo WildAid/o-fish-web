@@ -212,6 +212,7 @@
     "ADD_CREW": "Add crew member",
     "REMOVE_CREW": "Remove crew member",
     "ADD_CATCH": "Add catch",
+    "REMOVE_CATCH": "Remove catch",
     "CREATE_REPORT": "Create Activity Report",
     "CREATE_USER": "Create User",
     "UPDATE_USER": "Update User",

@@ -70,15 +70,7 @@ class BoardingNewPage extends Component {
         fishery: {
           name: "",
         },
-        actualCatch: [
-          {
-            fish: "",
-            number: "",
-            weight: "",
-            unit: "",
-            count: "",
-          },
-        ],
+        actualCatch: [],
         summary: {
           safetyLevel: {
             level: "",
@@ -154,12 +146,35 @@ class BoardingNewPage extends Component {
     })
   }
 
+  handleActualCatchChange = (catches) => {
+    this.setState({
+      dataToSave: {
+        ...this.state.dataToSave,
+        inspection: {
+          ...this.state.dataToSave.inspection,
+          actualCatch: catches,
+        }
+      }
+    })
+  }
+
   cancelCreation = () => {
     this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
 
   createBoarding = () => {
-    boardingService.updateBoarding({ ...this.state.dataToSave, crew: this.state.dataToSave.crew.map(x => ({ name: x.name, license: x.license })) }).then((result) => {
+    const formData = {
+      ...this.state.dataToSave,
+      crew: this.state.dataToSave.crew.map(x => ({ name: x.name, license: x.license })),
+      inspection: {
+        ...this.state.dataToSave.inspection,
+        actualCatch: this.state.dataToSave.inspection.actualCatch.map(x => {
+          const { id, ...catchItem } = x;
+          return catchItem;
+        })
+      }
+    }
+    boardingService.updateBoarding(formData).then((result) => {
       this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
     });
   };
@@ -186,7 +201,7 @@ class BoardingNewPage extends Component {
             onChange={this.handleDataChange}
             inspection={this.state.dataToSave.inspection}
           />
-          <CatchSection />
+          <CatchSection onChange={this.handleActualCatchChange} catches={this.state.dataToSave.inspection.actualCatch} />
           <ViolationsSection onChange={this.handleDataChange} />
           <RisksSection saveNewRisk={this.saveRisk} />
           <NotesSection />

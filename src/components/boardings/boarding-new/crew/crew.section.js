@@ -75,7 +75,7 @@ class CrewSection extends Component {
           crewList.length > 0 && (
             crewList.map((crew, index) => (
               <CrewItem
-                handleDelete={(id) => this.props.onChange('crew', crewList.filter((crew) => crew.id === id))}
+                handleDelete={(id) => this.props.onChange('crew', crewList.filter((crew) => crew.id !== id))}
                 isLast={index === crewList.length - 1}
                 crew={crew}
                 handleAdd={() => this.props.onChange('crew', [...crewList, { name: '', license: '', id: uuidv() }])}
