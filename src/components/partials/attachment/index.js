@@ -1,8 +1,8 @@
 import React, { useRef, useMemo } from 'react';
 import AttachFileIcon from "@material-ui/icons/AttachFile";
+import crypto from 'crypto';
 
 export const AttachFile = ({ onChange, className = "blue-color" }) => {
-    const crypto = window.crypto;
     const id = useMemo(() => "attach" + crypto.getRandomValues(new Uint32Array(1)).toString(), []);
     const inputRef = useRef(null);
 
