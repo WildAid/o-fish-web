@@ -54,15 +54,8 @@ class BoardingNewPage extends Component {
           },
         },
       },
-      captain: {
-        name: "",
-        license: "",
-        attachments: {
-          notes: ["", "", "", "", ""],
-        },
-      },
-      crew: [
-      ],
+      captain: {},
+      crew: [],
       inspection: {
         activity: {
           name: "",
@@ -76,19 +69,7 @@ class BoardingNewPage extends Component {
             level: "",
             amberReason: "",
           },
-          violations: [
-            {
-              disposition: "",
-              offence: {
-                code: "",
-                explanation: "",
-              },
-              crewMember: {
-                name: "",
-                license: "",
-              },
-            },
-          ],
+          violations: [],
           seizures: {
             text: "",
           },
@@ -106,6 +87,7 @@ class BoardingNewPage extends Component {
         },
         email: authService.user.email,
       },
+      notes: [],
     },
   };
 
@@ -116,10 +98,8 @@ class BoardingNewPage extends Component {
         inspection: {
           ...this.state.dataToSave.inspection,
           summary: {
-            safetyLevel: {
-              level: risk,
-              amberReason: "",
-            },
+            ...this.state.dataToSave.inspection.summary,
+            safetyLevel: risk,
           },
         },
       },
@@ -158,6 +138,36 @@ class BoardingNewPage extends Component {
     })
   }
 
+  handleViolationsChange = (violations) => {
+    this.setState({
+      dataToSave: {
+        ...this.state.dataToSave,
+        inspection: {
+          ...this.state.dataToSave.inspection,
+          summary: {
+            ...this.state.dataToSave.inspection.summary,
+            violations,
+          }
+        }
+      }
+    });
+  }
+
+  handleSeizuresChange = (seizures) => {
+    this.setState({
+      dataToSave: {
+        ...this.state.dataToSave,
+        inspection: {
+          ...this.state.dataToSave.inspection,
+          summary: {
+            ...this.state.dataToSave.inspection.summary,
+            seizures,
+          }
+        }
+      }
+    });
+  }
+
   cancelCreation = () => {
     this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
@@ -182,6 +192,11 @@ class BoardingNewPage extends Component {
   render() {
     const { t } = this.props;
 
+    const crewMembers = [...this.state.dataToSave.crew];
+
+    if (this.state.dataToSave.captain?.name) {
+      crewMembers.push({ ...this.state.dataToSave.captain, captain: true })
+    }
     return (
       <div className="flex-column justify-start align-center padding-top new-boarding">
         <div className="flex-row justify-between standard-view">
@@ -202,9 +217,19 @@ class BoardingNewPage extends Component {
             inspection={this.state.dataToSave.inspection}
           />
           <CatchSection onChange={this.handleActualCatchChange} catches={this.state.dataToSave.inspection.actualCatch} />
-          <ViolationsSection onChange={this.handleDataChange} />
+          <ViolationsSection
+            onChange={this.handleDataChange}
+            violations={this.state.dataToSave.inspection.summary.violations}
+            seizures={this.state.dataToSave.inspection.summary.seizures}
+            onViolationsChange={this.handleViolationsChange}
+            onSeizuresChange={this.handleSeizuresChange}
+            crewMembers={crewMembers}
+          />
           <RisksSection saveNewRisk={this.saveRisk} />
-          <NotesSection />
+          <NotesSection
+            notes={this.state.dataToSave.notes}
+            onChange={(value) => this.handleDataChange('notes', value)}
+          />
         </div>
         <div className="flex-row standard-view justify-flex-end padding-top">
           <ControlButtons onCancel={this.cancelCreation} onSave={this.createBoarding} />

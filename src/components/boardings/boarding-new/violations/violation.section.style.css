@@ -1,0 +1,10 @@
+.issued_to__selectobox__captain-item {
+    font-family: 'SF Pro Text';
+    font-weight: 600;
+    font-size: 11px;
+    text-align: center;
+    padding: 4px 9px;
+    border-radius: 12px;
+    background: #E6EBF1;
+    text-transform: uppercase;
+}

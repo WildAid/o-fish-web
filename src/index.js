@@ -11,6 +11,7 @@ import * as serviceWorker from "./serviceWorker";
 import "./index.css";
 import "./styles/shared.css";
 import Routes from "./root/root.routes";
+import './styles/fonts.css';
 
 ReactDOM.render(
   <I18nextProvider i18n={i18next}>

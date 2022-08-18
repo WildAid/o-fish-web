@@ -8,7 +8,7 @@ import { v4 as uuidv } from 'uuid';
 
 class CrewSection extends Component {
   state = {
-    captainName: "",
+    name: "",
     license: ""
   };
 
@@ -16,12 +16,12 @@ class CrewSection extends Component {
     this.setState({
       [field]: value
     });
-    this.props.onChange('captian', this.state);
+    this.props.onChange('captain', this.state);
   };
 
   render() {
     const {
-      captainName,
+      name,
       license
     } = this.state;
     const { t, crewList } = this.props;
@@ -42,8 +42,8 @@ class CrewSection extends Component {
               label={t("TABLE.NAME")}
               className="half-row-view"
               name="name"
-              value={captainName}
-              onChange={e => this.handleChange("captainName", e.target.value)}
+              value={name}
+              onChange={e => this.handleChange("name", e.target.value)}
             />
             <TextField
               required
