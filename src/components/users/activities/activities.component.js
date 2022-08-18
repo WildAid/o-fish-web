@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import withRouter from "../../../helpers/withRouter";
 import UserService from '../../../services/user.service';
-import AuthService from "../../../services/auth.service";
 import FieldDashboardComponent from "../../dashboards/field-dashboard.component";
 
 const userService = UserService.getInstance();
-const authService = AuthService.getInstance();
 
 class UsersActivities extends Component {
   state = {
@@ -23,7 +21,7 @@ class UsersActivities extends Component {
       <div className="flex-column full-view align-center home">
         {user && <FieldDashboardComponent user={user} />}
       </div>
-      
+
     );
   }
 }
