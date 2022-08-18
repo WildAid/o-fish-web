@@ -9,7 +9,7 @@ const useStyles = makeStyles({
         minWidth: 138,
         backgroundColor: props => props.active ? '#0A4074' : '#FFFFFF',
         color: props => props.active ? '#FFFFFF' : '#0A4074',
-        fontFamily: 'SF Pro Text',
+        fontFamily: 'SF Pro Text, sans-serif',
         fontSize: 12,
         height: '100%',
         maxHeight: 40,
