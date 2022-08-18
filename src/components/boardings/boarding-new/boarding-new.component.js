@@ -172,8 +172,8 @@ class BoardingNewPage extends Component {
     this.props.router.navigate(BOARDINGS_PAGE.replace(":filter", null));
   };
 
-  createBoarding = () => {
-    const formData = {
+  createBoarding = (draft) => {
+    let formData = {
       ...this.state.dataToSave,
       crew: this.state.dataToSave.crew.map(x => ({ name: x.name, license: x.license })),
       inspection: {
@@ -183,6 +183,9 @@ class BoardingNewPage extends Component {
           return catchItem;
         })
       }
+    }
+    if (draft) {
+      formData['draft'] = true;
     }
     boardingService.updateBoarding(formData).then((result) => {
       this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
