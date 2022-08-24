@@ -22,6 +22,7 @@ import {
   // USERS_ACTIVITIES_PAGE,
   EDIT_USER_PAGE,
   NEW_USER_PAGE,
+  USERS_ACTIVITIES_PAGE,
 } from "./../../root/root.constants";
 
 import "./users.css";
@@ -50,6 +51,12 @@ class UsersMain extends React.Component {
     //TODO: Use router!
     this.props.router.navigate(EDIT_USER_PAGE.replace(":id", id));
   };
+
+  goUserActivities = (id) => {
+    //TODO: Use router!
+    this.props.router.navigate(USERS_ACTIVITIES_PAGE.replace(":id", id));
+  };
+
 
   search = (value) => {
     if (searchService.searchResults && searchService.searchResults.query) {
@@ -257,14 +264,31 @@ class UsersMain extends React.Component {
                         </div>
                       </td>
                       {(isAgencyAdmin || isGlobalAdmin) && (
-                        <td>
-                          <div
-                            className="pointer see-all"
-                            onClick={() => this.goEditUser(item._id)}
-                          >
-                            {t("BUTTONS.EDIT")}
-                          </div>
-                        </td>
+                        <>
+                          <td>
+                            <div className="flex-row align-items-center">
+                              <div
+                                className="pointer see-all"
+                                onClick={() => this.goUserActivities(item._id)}
+                                style={{
+                                  marginRight: 10
+                                }}
+                              >
+                                {t("BUTTONS.VIEW")}
+                              </div>
+                              <div
+                                className="pointer see-all"
+                                onClick={() => this.goEditUser(item._id)}
+                              >
+                                {t("BUTTONS.EDIT")}
+                              </div>
+                            </div>
+
+                          </td>
+                          <td>
+
+                          </td>
+                        </>
                       )}
                     </tr>
                   );

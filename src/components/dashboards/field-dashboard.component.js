@@ -18,21 +18,27 @@ const boardingService = BoardingService.getInstance();
 const agencyService = AgencyService.getInstance();
 
 class FieldDashboard extends Component {
-  state = {
-    boardings: [],
-    stats: {warnings: 0, citations: 0},
-    time: {days: 0, hours: 0},
-    total: 0,
-    limit: 50,
-    offset: 0,
-    isMapShown: true,
-    highlighted: [],
-    loading: true,
-    page: 1,
-    currentFilter: {
-      date: { $gt: moment().subtract(1, "year").toDate() },
-    },
-  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      boardings: [],
+      stats: { warnings: 0, citations: 0 },
+      time: { days: 0, hours: 0 },
+      total: 0,
+      limit: 50,
+      offset: 0,
+      isMapShown: true,
+      highlighted: [],
+      loading: true,
+      page: 1,
+      currentFilter: {
+        date: { $gt: moment().subtract(1, "year").toDate() },
+      },
+      user: props.user || authService.user,
+    }
+  }
 
   handlePageChange = (e, page) => {
     const { limit } = this.state;
@@ -53,33 +59,33 @@ class FieldDashboard extends Component {
     newState.loading = true;
 
     this.setState(newState, () => {
-      const { currentFilter, searchQuery } = this.state;
-          agencyService.getTime(searchQuery, {
-            ...currentFilter,
-            "reportingOfficer.email": authService.user.email,
-          }).then((data1)=>{
-            this.setState({
-              loading: false,
-              time: data1,
-            });
-          })
+      const { currentFilter, searchQuery, user } = this.state;
+      agencyService.getTime(searchQuery, {
+        ...currentFilter,
+        "reportingOfficer.email": user.email,
+      }).then((data1) => {
+        this.setState({
+          loading: false,
+          time: data1,
+        });
+      })
         .catch((error) => {
           console.error(error);
         });
     });
 
     this.setState(newState, () => {
-      const { limit, offset, currentFilter, searchQuery } = this.state;
+      const { limit, offset, currentFilter, searchQuery, user } = this.state;
       boardingService
         .getBoardingsWithFacet(limit, offset, searchQuery, {
           ...currentFilter,
-          "reportingOfficer.email": authService.user.email,
+          "reportingOfficer.email": user.email,
         }, null)
         .then((data) => {
           agencyService.getStats(searchQuery, {
             ...currentFilter,
-            "reportingOfficer.email": authService.user.email,
-          }).then((stats)=>{
+            "reportingOfficer.email": user.email,
+          }).then((stats) => {
             this.setState({
               loading: false,
               boardings: data.boardings,
@@ -126,14 +132,15 @@ class FieldDashboard extends Component {
       page,
       loading,
       stats,
-      time
+      time,
+      user
     } = this.state;
-    const { user } = authService;
+    const isFromActivities = !!this.props.user;
 
     return (
       <Fragment>
         <div className="standard-view page-header">
-          <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>
+          {!isFromActivities && <div className="item-label">{t("HOME_PAGE.DASHBOARD")}</div>}
           <div className="flex-row full-view justify-between align-center">
             <div className="flex-row align-center officer-info">
               <UserPhoto imageId={user.profilePic || ""} defaultIcon={false} />
@@ -144,7 +151,7 @@ class FieldDashboard extends Component {
                     : t("LOADING.LOADING")}
                 </div>
                 <div>
-                  {!loading && user ? user.agency.name : t("LOADING.LOADING")}
+                  {!loading ? user.agency.name : t("LOADING.LOADING")}
                 </div>
               </div>
             </div>
@@ -154,18 +161,18 @@ class FieldDashboard extends Component {
         <div className="white-bg box-shadow standard-view margin-bottom">
           <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
             <div className="main-info">
-              <div className="item-name">{t("HOME_PAGE.MY_ACTIVITY")}</div>
+              <div className="item-name">{t(!isFromActivities ? "HOME_PAGE.MY_ACTIVITY" : "CUSTOM_MENU.ACTIVITIES")}</div>
             </div>
           </div>
           <div className="flex-row justify-around">
             <div className="flex-column align-center field-item">
-              <div className="field-number">{Number(Math.round(time.days+'e1')+'e-1')}</div>
+              <div className="field-number">{Number(Math.round(time.days + 'e1') + 'e-1')}</div>
               <div className="item-label">
                 {t("HOME_PAGE.DAYS").toUpperCase()}
               </div>
             </div>
             <div className="flex-column align-center field-item">
-              <div className="field-number">{Number(Math.round(time.hours+'e1')+'e-1')}</div>
+              <div className="field-number">{Number(Math.round(time.hours + 'e1') + 'e-1')}</div>
               <div className="item-label">
                 {t("HOME_PAGE.HOURS").toUpperCase()}
               </div>
