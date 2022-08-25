@@ -17,7 +17,7 @@
   padding-right: 15px;
   padding-left: 15px;
   font-weight: normal;
-  color: #0a4074;  
+  color: #0a4074;
 }
 
 .new-boarding .table-name {
@@ -48,6 +48,7 @@
   border: 0;
   font-weight: 600;
   text-transform: uppercase;
+  transition: all .3s ease;
 }
 
 .checkbox-wrapper {

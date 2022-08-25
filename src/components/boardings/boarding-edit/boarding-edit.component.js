@@ -63,7 +63,6 @@ class BoardingEditPage extends Component {
   saveBoarding = () => {
     const validData = this.validateSchema();
     boardingService.updateBoarding(validData).then((result) => {
-      debugger;
       if (this.state.isNew) {
         this.props.router.navigate(VIEW_BOARDING_PAGE.replace(":id", result.insertedId));
       } else {

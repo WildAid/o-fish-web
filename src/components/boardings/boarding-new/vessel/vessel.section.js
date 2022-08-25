@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { TextField } from "@material-ui/core";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
+import { FormControl, MenuItem, Select, TextField, InputLabel } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -8,6 +7,16 @@ import {
 import DateFnsUtils from "@date-io/moment";
 
 import { withTranslation } from "react-i18next";
+import { AttachFile } from "../../../partials/attachment";
+import { ImagePreview } from "../../../partials/image-preview";
+import StitchService from "../../../../services/stitch.service";
+import AuthService from "../../../../services/auth.service";
+import { bufferToBase64 } from "../../../../helpers/get-data";
+import countryList from 'react-select-country-list';
+import { EMSSection } from "../ems";
+
+const stitchService = StitchService.getInstance();
+const authService = AuthService.getInstance();
 
 class VesselSection extends Component {
   state = {
@@ -15,11 +24,14 @@ class VesselSection extends Component {
     permitNumber: "",
     homePort: "",
     nationality: "",
+    attachments: [],
+    ems: [],
     lastDelivery: {
       date: null,
       business: "",
       location: "",
     },
+    vesselImage: '',
   };
 
   handleChange = (type, subType = false, value) => {
@@ -27,8 +39,8 @@ class VesselSection extends Component {
 
     subType
       ? (obj[type] = {
-          [subType]: value,
-        })
+        [subType]: value,
+      })
       : (obj[type] = value);
 
     this.setState((prevState) => {
@@ -44,9 +56,38 @@ class VesselSection extends Component {
           [type]: value,
         };
       }
-    });
-    this.props.onChange('vessel', this.state);
+    }, this.updateParentState);
   };
+
+  updateParentState = () => {
+    const { vesselImage, ...formData } = this.state;
+    this.props.onChange('vessel', formData);
+  }
+
+  handleUploadPhoto = (blob) => {
+    stitchService.uploadImage(blob, authService.user.agency.name).then((data) => {
+      this.setState({ attachments: [data.insertedId] }, () => {
+        this.updateParentState();
+        stitchService.getPhoto(data.insertedId).then((photoObject) => {
+          this.setState({
+            vesselImage: "data:image/jpeg;base64," + bufferToBase64(photoObject.picture.buffer),
+          });
+        })
+      });
+    });
+  }
+
+  handleRemovePhoto = () => {
+    const image = this.state.attachments?.[0];
+    if (image) {
+      stitchService.deleteImage(image).then(() => this.setState({
+        attachments: [],
+        vesselImage: "",
+      }, this.updateParentState));
+    }
+  }
+
+  countryList = countryList().getData();
 
   render() {
     const {
@@ -67,7 +108,7 @@ class VesselSection extends Component {
           <div className="padding-25">
             <div className="flex-row justify-between">
               <h3 className="item-name">{t("FILTER.MAIN.VESSEL_INFO.NAME")}</h3>
-              <AttachFileIcon className="blue-color" />
+              <AttachFile onChange={this.handleUploadPhoto} />
             </div>
             <div className="flex-row justify-between relative">
               <TextField
@@ -105,16 +146,28 @@ class VesselSection extends Component {
                   this.handleChange("homePort", false, e.target.value)
                 }
               />
-              <TextField
-                label={t("DATA_SHARING.MANAGE_SHARED_DATA.FLAG_STATE")}
-                className="half-row-view"
-                name="flag-state"
-                value={nationality}
-                onChange={(e) =>
-                  this.handleChange("nationality", false, e.target.value)
-                }
-              />
+              <FormControl className="half-row-view">
+                <InputLabel id="nationality">{t("DATA_SHARING.MANAGE_SHARED_DATA.FLAG_STATE")}</InputLabel>
+                <Select
+                  onChange={(e) => this.handleChange("nationality", false, e.target.value)}
+                  value={nationality}
+                  labelId={"nationality"}
+                >
+                  {
+                    this.countryList.map((country) => (
+                      <MenuItem value={country.value} key={country.value}>
+                        {country.label}
+                      </MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
             </div>
+            {
+              this.state.vesselImage && (
+                <ImagePreview src={this.state.vesselImage} onRemove={this.handleRemovePhoto} />
+              )
+            }
           </div>
         </section>
         <section className="box-shadow padding-25 white-bg">
@@ -122,7 +175,6 @@ class VesselSection extends Component {
             <h3 className="item-name">
               {t("BOARDING_PAGE.VIEW_BOARDING.DELIVERY_DATE")}
             </h3>
-            <AttachFileIcon className="blue-color" />
           </div>
           <div className="flex-row justify-between margin-bottom">
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -164,19 +216,7 @@ class VesselSection extends Component {
             />
           </div>
         </section>
-        <section className="box-shadow padding-25 white-bg">
-          <h3 className="item-name">
-            {t("DATA_SHARING.MANAGE_SHARED_DATA.ELECTRONIC_SYSTEM")}
-          </h3>
-          <div className="flex-column align-center margin-bottom">
-            <span className="padding-25 font-17 grey-color">
-              {t("BOARDING_PAGE.NEW_BOARDING.NO_ELECTRONIC_SYSTEM")}
-            </span>
-            <button className="white-btn add-btn">
-              {`+ ${t("BUTTONS.ADD_MONITORING_SYSTEM")}`}
-            </button>
-          </div>
-        </section>
+        <EMSSection onChange={this.handleChange} selectedEMS={this.state.ems} />
       </div>
     );
   }

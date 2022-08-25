@@ -3,26 +3,28 @@ import { TextField } from "@material-ui/core";
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 import { withTranslation } from "react-i18next";
+import { CrewItem } from "./CrewItem";
+import { v4 as uuidv } from 'uuid';
 
 class CrewSection extends Component {
   state = {
-    captainName: "",
+    name: "",
     license: ""
   };
 
   handleChange = (field, value) => {
     this.setState({
-      [field]: value      
+      [field]: value
     });
-    this.props.onChange('crew', this.state);
+    this.props.onChange('captain', this.state);
   };
 
   render() {
-    const { 
-      captainName,
+    const {
+      name,
       license
     } = this.state;
-    const { t } = this.props;
+    const { t, crewList } = this.props;
 
     return (
       <section className="flex-column box-shadow white-bg margin-top">
@@ -32,7 +34,7 @@ class CrewSection extends Component {
         <div className="padding-25">
           <div className="flex-row justify-between">
             <h3 className="item-name">{t("TABLE.CAPTAIN")}</h3>
-            <AttachFileIcon className="blue-color"/>
+            <AttachFileIcon className="blue-color" />
           </div>
           <div className="flex-row justify-between relative padding-bottom margin-bottom">
             <TextField
@@ -40,8 +42,8 @@ class CrewSection extends Component {
               label={t("TABLE.NAME")}
               className="half-row-view"
               name="name"
-              value={captainName}
-              onChange={e => this.handleChange("captainName", e.target.value)}
+              value={name}
+              onChange={e => this.handleChange("name", e.target.value)}
             />
             <TextField
               required
@@ -61,10 +63,27 @@ class CrewSection extends Component {
               </span>
             </div>
           </div>
-          <span className="blue-color font-16 pointer margin-top">
-            {`+ ${t("BUTTONS.ADD_CREW")}`}
-          </span>
+          {
+            crewList.length === 0 && (
+              <span onClick={() => this.props.onChange('crew', [...crewList, { name: '', license: '', id: uuidv() }])} className="blue-color font-16 pointer margin-top">
+                {`+ ${t("BUTTONS.ADD_CREW")}`}
+              </span>
+            )
+          }
         </div>
+        {
+          crewList.length > 0 && (
+            crewList.map((crew, index) => (
+              <CrewItem
+                handleDelete={(id) => this.props.onChange('crew', crewList.filter((crew) => crew.id !== id))}
+                isLast={index === crewList.length - 1}
+                crew={crew}
+                handleAdd={() => this.props.onChange('crew', [...crewList, { name: '', license: '', id: uuidv() }])}
+                onChange={(crew) => this.props.onChange('crew', crewList.map((x) => x.id === crew.id ? crew : x))}
+              />
+            ))
+          )
+        }
       </section>
     );
   }

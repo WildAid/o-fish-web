@@ -44,8 +44,8 @@ export default class StitchService {
       //Check if URL is correctly filled
       const stitchConfig = config.realmBaseUrl
         ? new StitchAppClientConfiguration({
-            baseUrl: config.realmBaseUrl,
-          })
+          baseUrl: config.realmBaseUrl,
+        })
         : new StitchAppClientConfiguration();
       this._localStitchClient = Stitch.initializeDefaultAppClient(
         config.realmAppId,
@@ -128,6 +128,12 @@ export default class StitchService {
       referencingReportID: recordId ? recordId : "",
       pictureURL: "",
       thumbNail: img,
+    });
+  }
+
+  deleteImage(id) {
+    return this.database.collection("Photo").deleteOne({
+      _id: id
     });
   }
 }
