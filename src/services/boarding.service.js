@@ -1,6 +1,8 @@
 import { BSON } from "mongodb-stitch-browser-sdk";
 import StitchService from "./stitch.service";
+import AuthService from "./auth.service";
 
+const authService = AuthService.getInstance();
 const stitchService = StitchService.getInstance();
 
 const sampleData = {
@@ -130,6 +132,22 @@ export default class BoardingService {
       offset,
       filter,
     ]);
+  }
+
+  getDraftBoardings() {
+    return stitchService.database
+      .collection("BoardingReports")
+      .find({ draft: true, "reportingOfficer.email": authService.user.email }).toArray();
+  }
+
+  deleteBoarding(id) {
+
+
+    const objectId = new BSON.ObjectId(id);
+
+    return stitchService.database
+      .collection("BoardingReports")
+      .deleteOne({ _id: objectId });
   }
 
   getBoardingsWithFacet(limit, offset, search, filter, agenciesToShareData) {

@@ -59,9 +59,9 @@ export const ViolationItem = ({
                             const values = e.target.value.split("@@@");
                             onChange({
                                 ...violation,
-                                offence: {
-                                    code: values[0],
-                                    explanation: values[1],
+                                crewMember: {
+                                    name: values[0],
+                                    license: values[1],
                                 }
                             })
                         }}
