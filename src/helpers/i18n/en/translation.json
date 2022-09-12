@@ -28,6 +28,7 @@
   "HOME_PAGE": {
     "DASHBOARD": "Dashboard",
     "MY_BOARDINGS": "My Boardings",
+    "MY_DRAFT_BOARDINGS": "My Draft Boardings",
     "MY_ACTIVITY": "My Activity",
     "OVERVIEW": "Overview for",
     "COMPLIANCE_RATE": "Compliance Rate",

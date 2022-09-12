@@ -12,6 +12,7 @@ import { getHighlightedText } from "./../../helpers/get-data";
 import BoardingService from "./../../services/boarding.service";
 import AuthService from "./../../services/auth.service";
 import AgencyService from "./../../services/agency.service";
+import DraftBoardingList from "./draft-boarding.component";
 
 const authService = AuthService.getInstance();
 const boardingService = BoardingService.getInstance();
@@ -158,6 +159,7 @@ class FieldDashboard extends Component {
             <DatesRange onFilterChange={this.changeFilter} />
           </div>
         </div>
+        {!isFromActivities && <DraftBoardingList />}
         <div className="white-bg box-shadow standard-view margin-bottom">
           <div className="flex-row justify-between align-end full-view padding-top padding-bottom border-bottom">
             <div className="main-info">

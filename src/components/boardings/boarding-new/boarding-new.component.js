@@ -176,6 +176,7 @@ class BoardingNewPage extends Component {
     let formData = {
       ...this.state.dataToSave,
       crew: this.state.dataToSave.crew.map(x => ({ name: x.name, license: x.license })),
+      timestamp: Date.now(),
       inspection: {
         ...this.state.dataToSave.inspection,
         actualCatch: this.state.dataToSave.inspection.actualCatch.map(x => {

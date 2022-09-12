@@ -89,7 +89,7 @@ class BasicInfoSection extends Component {
                 id="latitude"
                 label={t("BOARDING_PAGE.VIEW_BOARDING.LATITUDE")}
                 value={location[0]}
-                onChange={({ target: { value } }) => this.handleLocationChange('lat', value)}
+                onChange={({ target }) => this.handleLocationChange('lat', parseFloat(target.value))}
                 type="number"
               />
             </div>
@@ -100,7 +100,7 @@ class BasicInfoSection extends Component {
                   id="longitude"
                   label={t("BOARDING_PAGE.VIEW_BOARDING.LONGITUDE")}
                   value={location[1]}
-                  onChange={({ target: { value } }) => this.handleLocationChange('long', value)}
+                  onChange={({ target }) => this.handleLocationChange('long', parseFloat(target.value))}
                   type="number"
                 />
               </div>

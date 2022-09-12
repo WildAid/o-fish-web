@@ -45,7 +45,7 @@ export const CatchItem = ({ catchItem, species, onChange, handleAdd, handleDelet
                     className="new-boarding__catch--weight"
                     name="weight"
                     value={catchItem.weight}
-                    onChange={e => onChange({ ...catchItem, weight: e.target.value })}
+                    onChange={e => onChange({ ...catchItem, weight: parseFloat(e.target.value) })}
                 />
                 <FormControl className="new-boarding__catch--units">
                     <InputLabel id={`catch-units-${catchItem.id}`}>
@@ -72,7 +72,7 @@ export const CatchItem = ({ catchItem, species, onChange, handleAdd, handleDelet
                     className="new-boarding__catch--count"
                     name="number"
                     value={catchItem.number}
-                    onChange={e => onChange({ ...catchItem, number: e.target.value })}
+                    onChange={e => onChange({ ...catchItem, number: e.target.valueAsNumber })}
                 />
             </div>
             <p onClick={handleDelete} style={{ textAlign: "right" }} className="blue-color font-16 pointer margin-top">

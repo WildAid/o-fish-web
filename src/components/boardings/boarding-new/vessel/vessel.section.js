@@ -182,14 +182,14 @@ class VesselSection extends Component {
                 required
                 disableToolbar
                 variant="inline"
-                format="yyyy/MM/DD"
+                format="YYYY/MM/DD"
                 margin="normal"
                 id="ldd-date-picker"
                 className="third-row-view last-date-delivery"
                 label={t("TABLE.DATE")}
                 value={date}
                 onChange={(date) =>
-                  this.handleChange("lastDelivery", "date", date)
+                  this.handleChange("lastDelivery", "date", date.toDate())
                 }
                 KeyboardButtonProps={{
                   "aria-label": "change date",
